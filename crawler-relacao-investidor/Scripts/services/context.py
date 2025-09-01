@@ -207,6 +207,33 @@ class RelatoriosFinanceirosContext:
         else:
             for i, relatorio in enumerate(tqdm(self._relatorios, desc="Extraindo texto dos PDFs")):
                 self._relatorios[i] = _processar_pdf(relatorio, self.cache_dir)
+
+    def processar_relatorios_existentes(self, empresa: str) -> List[RelatorioFinanceiro]:
+        """
+        Cria objetos RelatorioFinanceiro a partir de PDFs já existentes em disco
+        e processa todos os relatórios.
+        """
+        pdf_dir = Path(f"./pdfs/{empresa}")  # pasta base
+        relatorios_existentes = []
+
+        for pdf_path in pdf_dir.rglob("*.pdf"):  # procura todos os PDFs nas subpastas
+            ano = pdf_path.parts[-3]  # ajustar conforme estrutura pdfs/empresa/ano/originais/
+            trimestre = pdf_path.stem.split("_")[-1]  # tenta inferir trimestre do nome do arquivo
+            relatorios_existentes.append(RelatorioFinanceiro(
+                empresa=empresa,
+                categoria="Desconhecida",  # ajuste se souber a categoria
+                ano=ano,
+                trimestre=trimestre,
+                download_url=None,
+                caminho_arquivo=str(pdf_path)
+            ))
+
+        if not relatorios_existentes:
+            print(f"Nenhum PDF encontrado para {empresa} em {pdf_dir}")
+            return []
+
+        self._relatorios = relatorios_existentes
+        return self.processar_relatorios()
     
     def processar_relatorios(self) -> List[RelatorioFinanceiro]:
         """
