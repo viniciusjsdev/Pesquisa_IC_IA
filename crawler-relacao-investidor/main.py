@@ -22,8 +22,9 @@ def processar_empresa(empresa: str, apenas_extrair: bool = False,
         usar_arquivos_existentes (bool, opcional): Se True, ignora a raspagem e utiliza arquivos PDFs já existentes em disco.
         max_workers (int, opcional): Número máximo de processos paralelos para processamento.
         usar_cache (bool, opcional): Se True, utiliza cache para evitar reprocessamento de PDFs.
-
+        
     Retorna:
+    
         List[RelatorioFinanceiro]: Lista de objetos contendo os dados dos relatórios processados.
     """
     
@@ -152,4 +153,4 @@ def main():
     print(f"{'=' * 60}")
 
 if __name__ == "__main__":
-    processar_empresa("Gerdau", apenas_extrair=True)
+    processar_empresa("Gerdau")

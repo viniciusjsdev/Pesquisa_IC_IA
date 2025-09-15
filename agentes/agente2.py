@@ -1,4 +1,3 @@
-import os
 import json
 import csv
 import pandas as pd
@@ -7,6 +6,12 @@ import time
 import logging
 from typing import List, Dict, Any
 import re
+from config import (
+    AZURE_OPENAI_API_KEY,
+    AZURE_INFERENCE_ENDPOINT,
+    AZURE_OPENAI_DEPLOYMENT_NAME,
+    AZURE_API_VERSION,
+)
 
 # === Configuração de logging ===
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -14,19 +19,24 @@ logger = logging.getLogger(__name__)
 
 class FinancialDataNormalizer:
     def __init__(self):
-        # === Configurar Azure OpenAI ===
         self.setup_azure_client()
         
         # === Definir schema completo de colunas ===
         self.csv_columns = [
+
             # Identificação
             "Ano", "Trimestre", "Arquivo",
-            # Financeiro Core
+
+            # Financeiro
             "Receita", "EBITDA", "Lucro_liquido", "Lucro_bruto", "Margem_EBITDA", "Margem_liquida",
-            "Despesas", "Divida_liquida", "Investimento_capital", "Receita_perdida",
+            "Despesas", "Divida_liquida", "Investimento_capital", "Receita_perdida", "ROE", "ROA",
+            "Fluxo_Caixa_Operacional", "Fluxo_Caixa_Livre", "Fluxo_Caixa_Investimento", "Fluxo_Caixa_Financiamento",
+            "Divida_Bruta", "Divida_Curto_Prazo", "Divida_Longo_Prazo", "Dividendos"
+
             # Produção / Operacional
             "Producao", "Capacidade", "Falha_maquina", "Horas_paradas", "Unidades_perdidas",
             "Energia_consumida_kwh", "Tipo_evento", "Descricao_falha", "Responsavel", "Linha_producao",
+
             # Híbrido financeiro + produção
             "Custo_manutencao", "Receita_impactada", "Perda_eficiencia", "Capacidade_utilizada"
         ]
@@ -34,15 +44,10 @@ class FinancialDataNormalizer:
     def setup_azure_client(self):
         """Configurar cliente Azure OpenAI com validação"""
         try:
-            # Definir credenciais
-            os.environ["AZURE_OPENAI_API_KEY"] = "2RqPmZXkJFTihAPvhpr4UQtLWLeIeCgj4u7VUIcXJMo2651D3ZneJQQJ99BFACHYHv6XJ3w3AAAAACOGtmyP"
-            os.environ["AZURE_INFERENCE_ENDPOINT"] = "https://chatgpt-resourc.openai.azure.com/"
-            os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"] = "gpt-4.1"
-
             self.llm = AzureOpenAI(
-                api_key=os.environ["AZURE_OPENAI_API_KEY"],
-                azure_endpoint=os.environ["AZURE_INFERENCE_ENDPOINT"],
-                api_version="2025-01-01-preview"
+                api_key=AZURE_OPENAI_API_KEY,
+                azure_endpoint=AZURE_INFERENCE_ENDPOINT,
+                api_version=AZURE_API_VERSION
             )
             logger.info("Cliente Azure OpenAI configurado com sucesso")
         except Exception as e:
@@ -92,10 +97,14 @@ class FinancialDataNormalizer:
         - Lucro_liquido: resultado líquido do período
         - Margem_EBITDA: EBITDA/Receita * 100 (formato: "X.X%")
         - Margem_liquida: Lucro_liquido/Receita * 100 (formato: "X.X%")
+        - ROE e ROA: retornar percentual ou "Não informado"
+        - Fluxos de Caixa e Dividendos: retornar valor numérico ou "Não informado"
+        - Dívidas (Liquida, Bruta, Curto Prazo, Longo Prazo): normalizar para milhões ou bilhões
         
         3. PRODUÇÃO:
         - Producao: volume em "X.XXX mil toneladas"
         - Capacidade: utilização em "XX%" ou capacidade instalada
+        - Campos textuais: usar "Não informado" se ausente
         
         4. VALIDAÇÕES:
         - EBITDA deve ser ≥ Lucro_liquido (logicamente)
@@ -107,7 +116,8 @@ class FinancialDataNormalizer:
         - NÃO invente valores
         
         FORMATO DE SAÍDA:
-        Retorne APENAS um JSON array válido, sem texto adicional:
+        Retorne APENAS um JSON array válido, sem texto adicional.
+        Exemplo de objeto JSON:
         [
             {{
                 "Ano": "2025",
@@ -136,7 +146,17 @@ class FinancialDataNormalizer:
                 "Custo_manutencao": "Não informado",
                 "Receita_impactada": "Não informado",
                 "Perda_eficiencia": "Não informado",
-                "Capacidade_utilizada": "Não informado"
+                "Capacidade_utilizada": "Não informado",
+                "ROE": "Não informado",
+                "ROA": "Não informado",
+                "Fluxo_Caixa_Operacional": "Não informado",
+                "Fluxo_Caixa_Livre": "Não informado",
+                "Fluxo_Caixa_Investimento": "Não informado",
+                "Fluxo_Caixa_Financiamento": "Não informado",
+                "Divida_Bruta": "Não informado",
+                "Divida_Curto_Prazo": "Não informado",
+                "Divida_Longo_Prazo": "Não informado",
+                "Dividendos": "Não informado"
             }}
         ]
         """
@@ -158,7 +178,7 @@ class FinancialDataNormalizer:
                 prompt = self.create_enhanced_prompt(batch)
                 
                 response = self.llm.chat.completions.create(
-                    model=os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"],
+                    model=AZURE_OPENAI_DEPLOYMENT_NAME,
                     messages=[{"role": "user", "content": prompt}],
                     temperature=0.1,  # Baixa temperatura para consistência
                     max_tokens=4000
@@ -386,7 +406,7 @@ class FinancialDataNormalizer:
                     prompt = self.create_enhanced_prompt(batch)
                     
                     response = self.llm.chat.completions.create(
-                        model=os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"],
+                        model=AZURE_OPENAI_DEPLOYMENT_NAME,
                         messages=[{"role": "user", "content": prompt}],
                         temperature=0.1,
                         max_tokens=6000
@@ -430,9 +450,9 @@ def main():
         )
         
         print("\n=== NORMALIZAÇÃO CONCLUÍDA ===")
-        print(f"✓ Registros processados: {resultado['registros_processados']}")
-        print(f"✓ Arquivo gerado: {resultado['arquivo_saida']}")
-        print(f"✓ Colunas estruturadas: {resultado['colunas']}")
+        print(f"Registros processados: {resultado['registros_processados']}")
+        print(f"Arquivo gerado: {resultado['arquivo_saida']}")
+        print(f" Colunas estruturadas: {resultado['colunas']}")
         
         # Mostrar preview dos dados
         df = pd.read_csv(resultado['arquivo_saida'])

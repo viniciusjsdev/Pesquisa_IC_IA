@@ -1,22 +1,20 @@
 import os
-from langchain_community.document_loaders import TextLoader, PythonLoader, NotebookLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import time
-from langchain_community.document_loaders import TextLoader, PythonLoader, NotebookLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from openai import AzureOpenAI
 import json
-
-# === 1. Definir chave da API===
-os.environ["AZURE_OPENAI_API_KEY"] = "2RqPmZXkJFTihAPvhpr4UQtLWLeIeCgj4u7VUIcXJMo2651D3ZneJQQJ99BFACHYHv6XJ3w3AAAAACOGtmyP"
-os.environ["AZURE_INFERENCE_ENDPOINT"] =  "https://chatgpt-resourc.openai.azure.com/"
-os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"] = "gpt-4.1"  
+from config import (
+    AZURE_OPENAI_API_KEY,
+    AZURE_INFERENCE_ENDPOINT,
+    AZURE_OPENAI_DEPLOYMENT_NAME,
+    AZURE_API_VERSION,
+)
 
 # === 2. Inicializar LLM ===
 llm = AzureOpenAI(
-    api_key=os.environ["AZURE_OPENAI_API_KEY"],
-    azure_endpoint=os.environ["AZURE_INFERENCE_ENDPOINT"],
-    api_version="2025-01-01-preview"
+    api_key=AZURE_OPENAI_API_KEY,
+    azure_endpoint=AZURE_INFERENCE_ENDPOINT,
+    api_version=AZURE_API_VERSION
 )
 
 def load_txt_from_anos(base_folder: str):
@@ -74,11 +72,10 @@ def analyze_documents_llm(documents, llm, chunk_size=2000, chunk_overlap=200, ba
         prompt = f"""
         Documentos financeiros da Gerdau:
         {combined_content}
-
         Ação:
         - Analise o conteúdo e extraia apenas dados financeiros relevantes: Receita, EBITDA, Lucro líquido,
           Produção, Capacidade instalada, Despesas operacionais, Dívida líquida.
-        - Ignore textos institucionais, gráficos e informações irrelevantes.
+        - Ignore textos institucionais e informações irrelevantes.
         - Retorne em JSON-like, incluindo o nome do arquivo:
         {{
             "Arquivo": "...",
@@ -89,27 +86,48 @@ def analyze_documents_llm(documents, llm, chunk_size=2000, chunk_overlap=200, ba
             "Capacidade": "...",
             "Despesas": "...",
             "Divida_liquida": "..."
+            "Retorno sobre Patrimônio Líquido (ROE)": "..."
+            "Retorno sobre Ativos (ROA)": "..."
+            "Fluxo de Caixa Operacional": "..."
+            "Fluxo de Caixa Livre": "..."
+            "Fluxo de Caixa de Investimento": "..."
+            "Fluxo de Caixa de Financiamento": "..."
+            "Divida Bruta": "..."
+            "Divida de Curto Prazo": "..."
+            "Divida de Longo Prazo": "..."
+            "Dividendos": "..."
         }}
+
+        - Retorne apenas um objeto JSON válido por arquivo.
+        - Se não encontrar dados financeiros, retorne null para esses campos.
+        - Não inclua comentários, explicações ou texto adicional.
         """
 
         try:
             response = llm.chat.completions.create(
-                model=os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"],
+                model=AZURE_OPENAI_DEPLOYMENT_NAME,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.3
             )
-            data = response.content if hasattr(response, "content") else str(response)
-            all_results.append({"batch": i//batch_size + 1, "data": data})
-            print(f"✓ Processado batch {i//batch_size + 1}/{(len(all_chunks)-1)//batch_size + 1}")
+            if hasattr(response, "content"):
+                content = response.content
+            elif hasattr(response, "choices") and len(response.choices) > 0:
+                content = response.choices[0].message.content
+            else:
+                content = str(response)
+
+            all_results.append({"batch": i//batch_size + 1, "data": content})
+            print(f"Processado batch {i//batch_size + 1}/{(len(all_chunks)-1)//batch_size + 1}")
             time.sleep(1)
+
         except Exception as e:
-            print(f"✗ Erro no batch {i//batch_size + 1}: {e}")
+            print(f"Erro no batch {i//batch_size + 1}: {e}")
             all_results.append({"batch": i//batch_size + 1, "data": None})
 
     return all_results
 
 def main():
-    base_folder = r"C:\Users\welli\OneDrive\Documentos\GitHub\Pesquisa_IC_DataSciente_4SM\crawler-relacao-investidor\pdfs\Gerdau"
+    base_folder = r"E:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA\crawler-relacao-investidor\pdfs\Gerdau"
     documents = load_txt_from_anos(base_folder)
     if not documents:
         print("Nenhum arquivo .txt encontrado na pasta 'textos'.")
