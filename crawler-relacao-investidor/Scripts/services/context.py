@@ -12,6 +12,10 @@ import fitz
 import tempfile
 from ..strategies.interface import RaspagemStrategy
 from model import RelatorioFinanceiro
+import re
+import pytesseract
+from pdf2image import convert_from_path
+
 
 # Função utilitária de preparação das pastas
 def preparar_pastas_base(empresa: str, ano: str):
@@ -20,6 +24,27 @@ def preparar_pastas_base(empresa: str, ano: str):
     (base / "textos").mkdir(parents=True, exist_ok=True)
     (base / "jsons").mkdir(parents=True, exist_ok=True)
     return base
+
+def limpar_texto_extraido(texto: str) -> str:
+    if not texto:
+        return ""
+    # Remove múltiplos espaços/quebras de linha
+    texto = re.sub(r"\s+", " ", texto)
+    # Corrige números quebrados por quebras de linha (ex: "1 000" -> "1000")
+    texto = re.sub(r"(\d)\s+(\d)", r"\1\2", texto)
+    return texto.strip()
+
+def extrair_texto_ocr(caminho_pdf: str) -> str:
+    try:
+        print(f"Nenhum texto extraído de {Path(caminho_pdf).name}. Aplicando OCR...")
+        imagens = convert_from_path(caminho_pdf, dpi=300)
+        texto_ocr = ""
+        for img in imagens:
+            texto_ocr += pytesseract.image_to_string(img, lang="por") + "\n"
+        return texto_ocr
+    except Exception as e:
+        print(f"Erro no OCR de {caminho_pdf}: {e}")
+        return ""
 
 def _processar_pdf(relatorio: RelatorioFinanceiro, cache_dir: Optional[Path] = None) -> RelatorioFinanceiro:
     """
@@ -111,6 +136,13 @@ def _processar_pdf(relatorio: RelatorioFinanceiro, cache_dir: Optional[Path] = N
         print(f"Erro ao extrair texto de {caminho_pdf}: {e}")
         texto_completo = ""
 
+    #Fallback para OCR se nenhum texto foi extraído
+    if not texto_completo.strip():
+        texto_completo = extrair_texto_ocr(caminho_pdf)
+
+    # Limpeza
+    texto_completo = limpar_texto_extraido(texto_completo)
+
     # Calcular o checksum a partir do texto extraído
     try:
         checksum = hashlib.sha256(texto_completo.encode("utf-8")).hexdigest()
@@ -189,7 +221,6 @@ class RelatoriosFinanceirosContext:
             # Salvar arquivos de saída
             relatorio.salvar_texto(pasta_textos)
             relatorio.salvar_json(pasta_jsons)    
-    
     def _executar_processamento(self):
         """
         Executa o processamento dos relatórios PDF.
