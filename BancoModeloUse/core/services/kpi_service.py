@@ -96,3 +96,38 @@ class KPIService:
             "energia_por_unidade_kwh": round(energia_por_unidade, 4) if energia_por_unidade else None,
             "quantidade_produzida": int(total_produzida)
         }
+
+
+
+
+
+
+
+
+
+
+
+from math import sqrt
+
+def calcular_oee(disponibilidade: float, performance: float, qualidade: float) -> float:
+    return round(disponibilidade * performance * qualidade, 4)
+
+def calcular_taxa_producao(producao_total: float, tempo: float) -> float:
+    return round(producao_total / tempo, 4) if tempo > 0 else 0.0
+
+def calcular_eficiencia_linha(saida_linha: float, smv: float, num_operadores: int, minutos_trabalhados: float) -> float:
+    return round((saida_linha * smv * 100) / (num_operadores * minutos_trabalhados), 4) if num_operadores > 0 else 0.0
+
+def calcular_produtividade_mao_obra(saida_total: float, mao_obra_total: float) -> float:
+    return round(saida_total / mao_obra_total, 4) if mao_obra_total > 0 else 0.0
+
+def calcular_vazao(area1: float, v1: float, area2: float) -> float:
+    # A1 * v1 = A2 * v2 => v2 = (A1 * v1) / A2
+    return round((area1 * v1) / area2, 4) if area2 > 0 else 0.0
+
+def calcular_transferencia_calor(massa: float, c: float, delta_t: float) -> float:
+    return round(massa * c * delta_t, 4)
+
+def calcular_taxa_defeito(defeitos: int, unidades: int) -> float:
+    return round((defeitos / unidades) * 100, 4) if unidades > 0 else 0.0
+
