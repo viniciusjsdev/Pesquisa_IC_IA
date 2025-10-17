@@ -31,3 +31,36 @@ class FinanceiroRepository(BaseRepository):
 
     # Adicione outros métodos conforme necessário para operações CRUD ou consultas específicas
 
+
+
+
+
+# --- CRUD PARA NOVAS TABELAS ---
+
+from app.models_financeiro import CustoProducao, ResultadoFinanceiro
+
+
+def criar_custo_producao(db, dados: dict):
+    novo = CustoProducao(**dados)
+    db.add(novo)
+    db.commit()
+    db.refresh(novo)
+    return novo
+
+
+def listar_custos_producao(db):
+    return db.query(CustoProducao).all()
+
+
+def criar_resultado_financeiro(db, dados: dict):
+    novo = ResultadoFinanceiro(**dados)
+    db.add(novo)
+    db.commit()
+    db.refresh(novo)
+    return novo
+
+
+def listar_resultados_financeiros(db):
+    return db.query(ResultadoFinanceiro).all()
+
+
