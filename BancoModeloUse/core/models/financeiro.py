@@ -172,3 +172,32 @@ class ResultadoFinanceiro(Base):
     capital_de_giro = Column(Float, nullable=True)
     data_registro = Column(DateTime, default=datetime.utcnow)
 
+
+
+
+
+
+
+
+
+from datetime import datetime
+from app.db_financeiro import Base #______________________________________---- VERIFICAR SE O CAMINHO ESTÁ CERTO
+
+class AnaliseFinanceira(Base):
+    __tablename__ = "analises_financeiras"
+    id = Column(Integer, primary_key=True, index=True)
+    vendas_totais = Column(Float, default=0.0)
+    lucro_bruto = Column(Float, default=0.0)
+    estoque_inicial = Column(Float, default=0.0)
+    compras = Column(Float, default=0.0)
+    estoque_final = Column(Float, default=0.0)
+    custo_por_minuto = Column(Float, default=0.0)
+    investimento = Column(Float, default=0.0)
+    retorno = Column(Float, default=0.0)
+    ponto_equilibrio = Column(Float, default=0.0)
+    margem_lucro_bruto = Column(Float, default=0.0)
+    cmv = Column(Float, default=0.0)
+    roi = Column(Float, default=0.0)
+    data_registro = Column(DateTime, default=datetime.utcnow)
+
+
