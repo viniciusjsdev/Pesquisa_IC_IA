@@ -149,3 +149,53 @@ class RegistroDefeito(Base):
 
     controle = relationship("ControleQualidade")
     defeito = relationship("Defeito")
+
+
+
+
+
+
+
+from sqlalchemy.orm import relationship
+from datetime import datetime
+from app.db_industrial import Base #__________________________________________ CORRIGIR CAMINHO E NOME DO ARQUIVO CHAMADO
+
+class Equipamento(Base):
+    __tablename__ = "equipamentos"
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String, nullable=False)
+    disponibilidade = Column(Float, default=0.0)
+    performance = Column(Float, default=0.0)
+    qualidade = Column(Float, default=0.0)
+    oee = Column(Float, default=0.0)  # Eficiência geral
+    taxa_producao = Column(Float, default=0.0)
+    capacidade_producao = Column(Float, default=0.0)
+    eficiencia_linha = Column(Float, default=0.0)
+    produtividade_mao_obra = Column(Float, default=0.0)
+    data_registro = Column(DateTime, default=datetime.utcnow)
+
+class ProcessoIndustrial(Base):
+    __tablename__ = "processos_industriais"
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String, nullable=False)
+    area1 = Column(Float, default=0.0)  # Para cálculo de vazão
+    velocidade1 = Column(Float, default=0.0)
+    area2 = Column(Float, default=0.0)
+    velocidade2 = Column(Float, default=0.0)
+    massa = Column(Float, default=0.0)
+    calor_especifico = Column(Float, default=0.0)
+    delta_t = Column(Float, default=0.0)
+    calor_transferido = Column(Float, default=0.0)
+    data_registro = Column(DateTime, default=datetime.utcnow)
+
+class ControleQualidade(Base):
+    __tablename__ = "controle_qualidade"
+    id = Column(Integer, primary_key=True, index=True)
+    unidades_inspecionadas = Column(Integer, default=0)
+    defeitos = Column(Integer, default=0)
+    taxa_defeito = Column(Float, default=0.0)
+    desvio_padrao = Column(Float, default=0.0)
+    cp = Column(Float, default=0.0)
+    cpk = Column(Float, default=0.0)
+    data_registro = Column(DateTime, default=datetime.utcnow)
+
