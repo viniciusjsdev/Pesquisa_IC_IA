@@ -113,3 +113,62 @@ class ContaContabilDetalhe(Base):
     conta = relationship("ContaContabil")
     subcategoria = relationship("SubcategoriaContabilPadrao")
 
+
+
+# --- NOVAS TABELAS E COLUNAS PARA CÁLCULOS FINANCEIROS E INDUSTRIAIS ---
+
+from sqlalchemy import Column, Integer, String, Float, DateTime
+from datetime import datetime
+
+
+class CustoProducao(Base):
+    """
+    Representa o custo de produção (CPP, CPA, CPV e custo unitário).
+    """
+    __tablename__ = "custos_producao"
+
+    id = Column(Integer, primary_key=True, index=True)
+    materia_prima = Column(Float, nullable=False)
+    mao_obra_direta = Column(Float, nullable=False)
+    custos_indiretos = Column(Float, nullable=False)
+    estoque_inicial_elaboracao = Column(Float, nullable=False)
+    estoque_final_elaboracao = Column(Float, nullable=False)
+    estoque_inicial_acabados = Column(Float, nullable=False)
+    estoque_final_acabados = Column(Float, nullable=False)
+    unidades_produzidas = Column(Float, nullable=False)
+    custo_total = Column(Float, nullable=True)
+    custo_unitario = Column(Float, nullable=True)
+    data_registro = Column(DateTime, default=datetime.utcnow)
+
+
+class ResultadoFinanceiro(Base):
+    """
+    Representa o resultado financeiro e indicadores de desempenho.
+    """
+    __tablename__ = "resultados_financeiros"
+
+    id = Column(Integer, primary_key=True, index=True)
+    receita_total = Column(Float, nullable=False)
+    custos_variaveis = Column(Float, nullable=False)
+    despesas_variaveis = Column(Float, nullable=False)
+    custos_fixos = Column(Float, nullable=False)
+    despesas_operacionais = Column(Float, nullable=False)
+    juros = Column(Float, nullable=False)
+    impostos = Column(Float, nullable=False)
+    custo_ativo = Column(Float, nullable=False)
+    valor_residual = Column(Float, nullable=False)
+    vida_util_anos = Column(Float, nullable=False)
+    custo_investimento = Column(Float, nullable=False)
+    ativos_circulantes = Column(Float, nullable=False)
+    passivos_circulantes = Column(Float, nullable=False)
+
+    # Resultados calculados
+    margem_contribuicao = Column(Float, nullable=True)
+    ponto_equilibrio = Column(Float, nullable=True)
+    lucro_bruto = Column(Float, nullable=True)
+    lucro_liquido = Column(Float, nullable=True)
+    depreciacao_anual = Column(Float, nullable=True)
+    roi_percentual = Column(Float, nullable=True)
+    capital_de_giro = Column(Float, nullable=True)
+    data_registro = Column(DateTime, default=datetime.utcnow)
+
