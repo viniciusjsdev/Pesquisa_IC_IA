@@ -1,0 +1,385 @@
+{
+  "schema_version": "1.0",
+  "description": "Schema da Data Warehouse - Sistema Integrado Financeiro-Industrial",
+  "last_updated": "2025-01-17",
+  "databases": {
+    "financeiro": {
+      "description": "Banco de dados financeiro (ERP/Contábil)",
+      "host": "localhost",
+      "port": 5432,
+      "database": "db_financeiro",
+      "schema": "financeiro",
+      "tables": {
+        "custos_padrao": {
+          "description": "Custos padrão por tipo",
+          "columns": {
+            "custo_padrao_id": {"type": "integer", "primary_key": true, "description": "ID único do custo padrão"},
+            "tipo_custo": {"type": "string", "description": "Tipo do custo (materia_prima, mao_obra, etc.)"},
+            "unidade_medida": {"type": "string", "description": "Unidade de medida"},
+            "valor_unitario_padrao": {"type": "decimal", "description": "Valor unitário padrão"},
+            "data_vigencia": {"type": "date", "description": "Data de vigência do custo"}
+          }
+        },
+        "custos_producao": {
+          "description": "Custos de produção (CPP, CPA, CPV)",
+          "columns": {
+            "id": {"type": "integer", "primary_key": true, "description": "ID único do custo"},
+            "materia_prima": {"type": "float", "description": "Custo de matéria-prima"},
+            "mao_obra_direta": {"type": "float", "description": "Custo de mão de obra direta"},
+            "custos_indiretos": {"type": "float", "description": "Custos indiretos"},
+            "estoque_inicial_elaboracao": {"type": "float", "description": "Estoque inicial em elaboração"},
+            "estoque_final_elaboracao": {"type": "float", "description": "Estoque final em elaboração"},
+            "estoque_inicial_acabados": {"type": "float", "description": "Estoque inicial de acabados"},
+            "estoque_final_acabados": {"type": "float", "description": "Estoque final de acabados"},
+            "unidades_produzidas": {"type": "float", "description": "Unidades produzidas"},
+            "custo_total": {"type": "float", "description": "Custo total calculado"},
+            "custo_unitario": {"type": "float", "description": "Custo unitário calculado"},
+            "data_registro": {"type": "datetime", "description": "Data de registro do custo"}
+          }
+        },
+        "vendas": {
+          "description": "Registros de vendas",
+          "columns": {
+            "venda_id": {"type": "integer", "primary_key": true, "description": "ID único da venda"},
+            "produto_id": {"type": "integer", "description": "ID do produto vendido"},
+            "cliente_id": {"type": "integer", "description": "ID do cliente"},
+            "quantidade_vendida": {"type": "integer", "description": "Quantidade vendida"},
+            "preco_unitario_venda": {"type": "decimal", "description": "Preço unitário da venda"},
+            "data_venda": {"type": "date", "description": "Data da venda"}
+          }
+        },
+        "lancamentos_financeiros": {
+          "description": "Lançamentos financeiros contábeis",
+          "columns": {
+            "lancamento_id": {"type": "integer", "primary_key": true, "description": "ID único do lançamento"},
+            "conta_id": {"type": "integer", "description": "ID da conta contábil"},
+            "data_lancamento": {"type": "date", "description": "Data do lançamento"},
+            "valor": {"type": "decimal", "description": "Valor do lançamento"},
+            "descricao": {"type": "text", "description": "Descrição do lançamento"}
+          }
+        }
+      }
+    },
+    "industrial": {
+      "description": "Banco de dados industrial (MES/SCADA)",
+      "host": "localhost",
+      "port": 5433,
+      "database": "db_industrial",
+      "schema": "industrial",
+      "tables": {
+        "produtos": {
+          "description": "Cadastro de produtos",
+          "columns": {
+            "produto_id": {"type": "integer", "primary_key": true, "description": "ID único do produto"},
+            "nome_produto": {"type": "string", "description": "Nome do produto"},
+            "descricao": {"type": "text", "description": "Descrição do produto"},
+            "unidade_medida": {"type": "string", "description": "Unidade de medida"}
+          }
+        },
+        "maquinas": {
+          "description": "Cadastro de máquinas",
+          "columns": {
+            "maquina_id": {"type": "integer", "primary_key": true, "description": "ID único da máquina"},
+            "nome_maquina": {"type": "string", "description": "Nome da máquina"},
+            "linha_producao": {"type": "string", "description": "Linha de produção"},
+            "capacidade_producao_max": {"type": "decimal", "description": "Capacidade máxima de produção"}
+          }
+        },
+        "ordens_producao": {
+          "description": "Ordens de produção",
+          "columns": {
+            "ordem_producao_id": {"type": "integer", "primary_key": true, "description": "ID único da ordem"},
+            "produto_id": {"type": "integer", "description": "ID do produto"},
+            "quantidade_planejada": {"type": "integer", "description": "Quantidade planejada"},
+            "data_planejamento": {"type": "date", "description": "Data de planejamento"},
+            "data_inicio_real": {"type": "datetime", "description": "Data real de início"},
+            "data_fim_real": {"type": "datetime", "description": "Data real de fim"},
+            "status_ordem": {"type": "string", "description": "Status da ordem"}
+          }
+        },
+        "registros_operacao": {
+          "description": "Registros de operação das máquinas",
+          "columns": {
+            "registro_id": {"type": "integer", "primary_key": true, "description": "ID único do registro"},
+            "ordem_producao_id": {"type": "integer", "description": "ID da ordem de produção"},
+            "maquina_id": {"type": "integer", "description": "ID da máquina"},
+            "operador_id": {"type": "integer", "description": "ID do operador"},
+            "hora_inicio": {"type": "datetime", "description": "Hora de início da operação"},
+            "hora_fim": {"type": "datetime", "description": "Hora de fim da operação"},
+            "tempo_setup_real_min": {"type": "decimal", "description": "Tempo real de setup em minutos"},
+            "quantidade_produzida_real": {"type": "integer", "description": "Quantidade real produzida"},
+            "consumo_energia_kwh": {"type": "decimal", "description": "Consumo de energia em kWh"}
+          }
+        },
+        "controle_qualidade": {
+          "description": "Controles de qualidade",
+          "columns": {
+            "controle_id": {"type": "integer", "primary_key": true, "description": "ID único do controle"},
+            "lote_producao_id": {"type": "integer", "description": "ID do lote de produção"},
+            "data_inspecao": {"type": "datetime", "description": "Data da inspeção"},
+            "inspetor_id": {"type": "integer", "description": "ID do inspetor"},
+            "unidades_aprovadas": {"type": "integer", "description": "Unidades aprovadas"},
+            "unidades_rejeitadas": {"type": "integer", "description": "Unidades rejeitadas"},
+            "motivo_rejeicao": {"type": "string", "description": "Motivo da rejeição"}
+          }
+        }
+      }
+    },
+    "dw": {
+      "description": "Data Warehouse consolidado",
+      "host": "localhost",
+      "port": 5434,
+      "database": "db_datamind_dw",
+      "schema": "dw",
+      "tables": {
+        "dim_produto": {
+          "description": "Dimensão Produto - consolida dados de ambos os sistemas",
+          "columns": {
+            "produto_sk": {"type": "integer", "primary_key": true, "description": "Surrogate Key do produto"},
+            "produto_id_financeiro": {"type": "integer", "description": "ID do produto no sistema financeiro"},
+            "produto_id_industrial": {"type": "integer", "description": "ID do produto no sistema industrial"},
+            "nome_produto": {"type": "string", "description": "Nome do produto"},
+            "categoria": {"type": "string", "description": "Categoria do produto"},
+            "unidade_medida": {"type": "string", "description": "Unidade de medida"},
+            "preco_unitario": {"type": "decimal", "description": "Preço unitário"},
+            "data_inicio_vigencia": {"type": "date", "description": "Data de início da vigência"},
+            "data_fim_vigencia": {"type": "date", "description": "Data de fim da vigência"},
+            "ativo": {"type": "boolean", "description": "Se o produto está ativo"}
+          }
+        },
+        "dim_tempo": {
+          "description": "Dimensão Tempo - calendário unificado com granularidade diária",
+          "columns": {
+            "tempo_sk": {"type": "integer", "primary_key": true, "description": "Surrogate Key do tempo"},
+            "data": {"type": "date", "description": "Data específica"},
+            "dia": {"type": "integer", "description": "Dia do mês"},
+            "mes": {"type": "integer", "description": "Mês"},
+            "trimestre": {"type": "integer", "description": "Trimestre"},
+            "ano": {"type": "integer", "description": "Ano"},
+            "dia_semana": {"type": "integer", "description": "Dia da semana (0-6)"},
+            "nome_dia_semana": {"type": "string", "description": "Nome do dia da semana"},
+            "nome_mes": {"type": "string", "description": "Nome do mês"},
+            "nome_trimestre": {"type": "string", "description": "Nome do trimestre"},
+            "feriado": {"type": "boolean", "description": "Se é feriado"},
+            "periodo_fiscal": {"type": "string", "description": "Período fiscal"},
+            "semana_ano": {"type": "integer", "description": "Semana do ano"},
+            "dia_ano": {"type": "integer", "description": "Dia do ano"}
+          }
+        },
+        "dim_maquina": {
+          "description": "Dimensão Máquina - consolida equipamentos",
+          "columns": {
+            "maquina_sk": {"type": "integer", "primary_key": true, "description": "Surrogate Key da máquina"},
+            "maquina_id_industrial": {"type": "integer", "description": "ID da máquina no sistema industrial"},
+            "nome_maquina": {"type": "string", "description": "Nome da máquina"},
+            "linha_producao": {"type": "string", "description": "Linha de produção"},
+            "capacidade_max": {"type": "decimal", "description": "Capacidade máxima"},
+            "centro_custo": {"type": "string", "description": "Centro de custo"},
+            "data_inicio_vigencia": {"type": "date", "description": "Data de início da vigência"},
+            "data_fim_vigencia": {"type": "date", "description": "Data de fim da vigência"},
+            "ativo": {"type": "boolean", "description": "Se a máquina está ativa"}
+          }
+        },
+        "fato_vendas": {
+          "description": "Fato Vendas - transações de vendas (granularidade diária)",
+          "columns": {
+            "venda_sk": {"type": "integer", "primary_key": true, "description": "Surrogate Key da venda"},
+            "produto_sk": {"type": "integer", "description": "SK do produto"},
+            "tempo_sk": {"type": "integer", "description": "SK do tempo"},
+            "cliente_sk": {"type": "integer", "description": "SK do cliente"},
+            "quantidade_vendida": {"type": "integer", "description": "Quantidade vendida"},
+            "valor_unitario": {"type": "decimal", "description": "Valor unitário"},
+            "valor_total": {"type": "decimal", "description": "Valor total"},
+            "desconto": {"type": "decimal", "description": "Desconto aplicado"},
+            "margem_contribuicao": {"type": "decimal", "description": "Margem de contribuição"},
+            "data_venda": {"type": "date", "description": "Data específica da venda"}
+          }
+        },
+        "fato_producao": {
+          "description": "Fato Produção - registros de produção (granularidade diária)",
+          "columns": {
+            "producao_sk": {"type": "integer", "primary_key": true, "description": "Surrogate Key da produção"},
+            "produto_sk": {"type": "integer", "description": "SK do produto"},
+            "maquina_sk": {"type": "integer", "description": "SK da máquina"},
+            "tempo_sk": {"type": "integer", "description": "SK do tempo"},
+            "quantidade_produzida": {"type": "integer", "description": "Quantidade produzida"},
+            "quantidade_planejada": {"type": "integer", "description": "Quantidade planejada"},
+            "tempo_producao_min": {"type": "decimal", "description": "Tempo de produção em minutos"},
+            "tempo_setup_min": {"type": "decimal", "description": "Tempo de setup em minutos"},
+            "consumo_energia_kwh": {"type": "decimal", "description": "Consumo de energia em kWh"},
+            "eficiencia_percent": {"type": "decimal", "description": "Eficiência percentual"},
+            "defeitos_quantidade": {"type": "integer", "description": "Quantidade de defeitos"},
+            "defeitos_percent": {"type": "decimal", "description": "Percentual de defeitos"},
+            "data_producao": {"type": "date", "description": "Data específica da produção"}
+          }
+        },
+        "fato_custos": {
+          "description": "Fato Custos - custos integrados (granularidade diária)",
+          "columns": {
+            "custo_sk": {"type": "integer", "primary_key": true, "description": "Surrogate Key do custo"},
+            "produto_sk": {"type": "integer", "description": "SK do produto"},
+            "maquina_sk": {"type": "integer", "description": "SK da máquina"},
+            "tempo_sk": {"type": "integer", "description": "SK do tempo"},
+            "custo_materia_prima": {"type": "decimal", "description": "Custo de matéria-prima"},
+            "custo_mao_obra": {"type": "decimal", "description": "Custo de mão de obra"},
+            "custo_indireto": {"type": "decimal", "description": "Custo indireto"},
+            "custo_energia": {"type": "decimal", "description": "Custo de energia"},
+            "custo_total": {"type": "decimal", "description": "Custo total"},
+            "custo_unitario": {"type": "decimal", "description": "Custo unitário"},
+            "data_custo": {"type": "date", "description": "Data específica do custo"}
+          }
+        },
+        "kpi_integrado": {
+          "description": "KPIs Integrados - correlação financeiro-industrial",
+          "columns": {
+            "kpi_integrado_sk": {"type": "integer", "primary_key": true, "description": "Surrogate Key do KPI"},
+            "produto_sk": {"type": "integer", "description": "SK do produto"},
+            "tempo_sk": {"type": "integer", "description": "SK do tempo"},
+            "receita_por_unidade_produzida": {"type": "decimal", "description": "Receita por unidade produzida"},
+            "custo_por_unidade_produzida": {"type": "decimal", "description": "Custo por unidade produzida"},
+            "margem_por_unidade": {"type": "decimal", "description": "Margem por unidade"},
+            "eficiencia_producao_vs_vendas": {"type": "decimal", "description": "Eficiência produção vs vendas"},
+            "correlacao_custo_qualidade": {"type": "decimal", "description": "Correlação custo-qualidade"},
+            "correlacao_energia_lucro": {"type": "decimal", "description": "Correlação energia-lucro"},
+            "anomalia_custo": {"type": "string", "description": "Anomalia de custo (normal, alto, baixo)"},
+            "anomalia_producao": {"type": "string", "description": "Anomalia de produção (normal, alta, baixa)"},
+            "anomalia_qualidade": {"type": "string", "description": "Anomalia de qualidade (normal, alta, baixa)"},
+            "periodo_tipo": {"type": "string", "description": "Tipo de período (semanal, mensal, trimestral)"},
+            "data_referencia": {"type": "date", "description": "Data de referência"}
+          }
+        }
+      }
+    }
+  },
+  "relationships": {
+    "financeiro_to_dw": {
+      "description": "Relacionamentos entre banco financeiro e DW",
+      "mappings": {
+        "vendas": "fato_vendas",
+        "custos_producao": "fato_custos",
+        "lancamentos_financeiros": "fato_vendas"
+      }
+    },
+    "industrial_to_dw": {
+      "description": "Relacionamentos entre banco industrial e DW",
+      "mappings": {
+        "produtos": "dim_produto",
+        "maquinas": "dim_maquina",
+        "registros_operacao": "fato_producao",
+        "controle_qualidade": "fato_qualidade"
+      }
+    },
+    "dw_internal": {
+      "description": "Relacionamentos internos da DW",
+      "foreign_keys": {
+        "fato_vendas": {
+          "produto_sk": "dim_produto.produto_sk",
+          "tempo_sk": "dim_tempo.tempo_sk",
+          "cliente_sk": "dim_cliente.cliente_sk"
+        },
+        "fato_producao": {
+          "produto_sk": "dim_produto.produto_sk",
+          "maquina_sk": "dim_maquina.maquina_sk",
+          "tempo_sk": "dim_tempo.tempo_sk"
+        },
+        "fato_custos": {
+          "produto_sk": "dim_produto.produto_sk",
+          "maquina_sk": "dim_maquina.maquina_sk",
+          "tempo_sk": "dim_tempo.tempo_sk"
+        }
+      }
+    }
+  },
+  "queryable_fields": {
+    "financeiro": {
+      "description": "Campos disponíveis para consulta no domínio financeiro",
+      "fields": [
+        "vendas.quantidade_vendida",
+        "vendas.preco_unitario_venda",
+        "vendas.data_venda",
+        "custos_producao.materia_prima",
+        "custos_producao.mao_obra_direta",
+        "custos_producao.custo_total",
+        "lancamentos_financeiros.valor",
+        "lancamentos_financeiros.data_lancamento"
+      ]
+    },
+    "industrial": {
+      "description": "Campos disponíveis para consulta no domínio industrial",
+      "fields": [
+        "produtos.nome_produto",
+        "maquinas.nome_maquina",
+        "ordens_producao.quantidade_planejada",
+        "registros_operacao.quantidade_produzida_real",
+        "registros_operacao.consumo_energia_kwh",
+        "controle_qualidade.unidades_aprovadas",
+        "controle_qualidade.unidades_rejeitadas"
+      ]
+    },
+    "dw": {
+      "description": "Campos disponíveis para consulta na DW",
+      "fields": [
+        "fato_vendas.quantidade_vendida",
+        "fato_vendas.valor_total",
+        "fato_producao.quantidade_produzida",
+        "fato_producao.eficiencia_percent",
+        "fato_custos.custo_total",
+        "fato_custos.custo_unitario",
+        "kpi_integrado.margem_por_unidade",
+        "kpi_integrado.correlacao_custo_qualidade"
+      ]
+    }
+  },
+  "examples": {
+    "financeiro_queries": [
+      {
+        "description": "Vendas por período",
+        "query": "SELECT * FROM vendas WHERE data_venda BETWEEN '2025-01-01' AND '2025-01-31'",
+        "parameters": {
+          "data_inicio": "2025-01-01",
+          "data_fim": "2025-01-31"
+        }
+      },
+      {
+        "description": "Custos de produção por produto",
+        "query": "SELECT produto_id, SUM(custo_total) FROM custos_producao GROUP BY produto_id",
+        "parameters": {
+          "group_by": "produto_id"
+        }
+      }
+    ],
+    "industrial_queries": [
+      {
+        "description": "Produção por máquina",
+        "query": "SELECT maquina_id, SUM(quantidade_produzida_real) FROM registros_operacao GROUP BY maquina_id",
+        "parameters": {
+          "group_by": "maquina_id"
+        }
+      },
+      {
+        "description": "Qualidade por período",
+        "query": "SELECT * FROM controle_qualidade WHERE data_inspecao BETWEEN '2025-01-01' AND '2025-01-31'",
+        "parameters": {
+          "data_inicio": "2025-01-01",
+          "data_fim": "2025-01-31"
+        }
+      }
+    ],
+    "dw_queries": [
+      {
+        "description": "Vendas vs Produção integradas",
+        "query": "SELECT p.nome_produto, SUM(v.quantidade_vendida) as vendas, SUM(pr.quantidade_produzida) as producao FROM fato_vendas v JOIN fato_producao pr ON v.produto_sk = pr.produto_sk JOIN dim_produto p ON v.produto_sk = p.produto_sk GROUP BY p.nome_produto",
+        "parameters": {
+          "join_tables": ["fato_vendas", "fato_producao", "dim_produto"]
+        }
+      },
+      {
+        "description": "KPIs integrados por produto",
+        "query": "SELECT p.nome_produto, k.margem_por_unidade, k.correlacao_custo_qualidade FROM kpi_integrado k JOIN dim_produto p ON k.produto_sk = p.produto_sk",
+        "parameters": {
+          "join_tables": ["kpi_integrado", "dim_produto"]
+        }
+      }
+    ]
+  }
+}
