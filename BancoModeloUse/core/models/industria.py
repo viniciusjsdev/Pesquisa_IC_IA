@@ -12,12 +12,14 @@ class Produto(Base):
     nome_produto = Column(String, nullable=False)
     descricao = Column(Text)
     unidade_medida = Column(String)
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
 class Material(Base):
     __tablename__ = "materiais"
     material_id = Column(Integer, primary_key=True, index=True)
     nome_material = Column(String, nullable=False)
     unidade_medida = Column(String)
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
 class Maquina(Base):
     __tablename__ = "maquinas"
@@ -25,11 +27,13 @@ class Maquina(Base):
     nome_maquina = Column(String, nullable=False)
     linha_producao = Column(String)
     capacidade_producao_max = Column(DECIMAL)
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
 class Fornecedor(Base):
     __tablename__ = "fornecedores"
     fornecedor_id = Column(Integer, primary_key=True, index=True)
     nome_fornecedor = Column(String, nullable=False)
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
 # Ordens e Roteiros
 class OrdemProducao(Base):
@@ -44,13 +48,6 @@ class OrdemProducao(Base):
 
     produto = relationship("Produto")
 
-class RoteiroProducao(Base):
-    __tablename__ = "roteiros_producao"
-    roteiro_id = Column(Integer, primary_key=True, index=True)
-    produto_id = Column(Integer, ForeignKey("produtos.produto_id"))
-    versao = Column(Integer)
-
-    produto = relationship("Produto")
 
 class OperacaoRoteiro(Base):
     __tablename__ = "operacoes_roteiro"
@@ -60,9 +57,9 @@ class OperacaoRoteiro(Base):
     maquina_id = Column(Integer, ForeignKey("maquinas.maquina_id"))
     tempo_ideal_min = Column(DECIMAL)
     tempo_setup_ideal_min = Column(DECIMAL)
-
     roteiro = relationship("RoteiroProducao")
     maquina = relationship("Maquina")
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
 # Execução chão de fábrica
 class RegistroOperacao(Base):
@@ -76,9 +73,9 @@ class RegistroOperacao(Base):
     tempo_setup_real_min = Column(DECIMAL)
     quantidade_produzida_real = Column(Integer)
     consumo_energia_kwh = Column(DECIMAL)
-
     ordem = relationship("OrdemProducao")
     maquina = relationship("Maquina")
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
 class ParadaMaquina(Base):
     __tablename__ = "paradas_maquinas"
@@ -87,8 +84,8 @@ class ParadaMaquina(Base):
     hora_inicio_parada = Column(DateTime)
     hora_fim_parada = Column(DateTime)
     motivo_parada = Column(String)
-
     maquina = relationship("Maquina")
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
 # Materiais e Lotes
 class ConsumoMaterial(Base):
@@ -98,7 +95,7 @@ class ConsumoMaterial(Base):
     material_id = Column(Integer, ForeignKey("materiais.material_id"))
     lote_material_id = Column(Integer, ForeignKey("lotes_materiais.lote_id"))
     quantidade_consumida = Column(DECIMAL)
-
+    data_registro = Column(DateTime, default=datetime.utcnow)
     registro = relationship("RegistroOperacao")
     material = relationship("Material")
 
@@ -109,7 +106,6 @@ class LoteMaterial(Base):
     fornecedor_id = Column(Integer, ForeignKey("fornecedores.fornecedor_id"))
     data_recebimento = Column(Date)
     lote_fornecedor = Column(String)
-
     material = relationship("Material")
     fornecedor = relationship("Fornecedor")
 
@@ -135,10 +131,6 @@ class ControleQualidade(Base):
 
     lote = relationship("LoteProducao")
 
-class Defeito(Base):
-    __tablename__ = "defeitos"
-    defeito_id = Column(Integer, primary_key=True, index=True)
-    nome_defeito = Column(String)
 
 class RegistroDefeito(Base):
     __tablename__ = "registros_defeitos"
@@ -146,9 +138,11 @@ class RegistroDefeito(Base):
     controle_id = Column(Integer, ForeignKey("controle_qualidade.controle_id"))
     defeito_id = Column(Integer, ForeignKey("defeitos.defeito_id"))
     quantidade_defeito = Column(Integer)
-
     controle = relationship("ControleQualidade")
     defeito = relationship("Defeito")
+    defeito_id = Column(Integer, primary_key=True, index=True)
+    nome_defeito = Column(String)
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
 
 
