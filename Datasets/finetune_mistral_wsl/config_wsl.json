@@ -1,0 +1,155 @@
+{
+  "model_info": {
+    "name": "Mistral-7B-Instruct-v0.3-LoRA-WSL",
+    "base_model": "mistralai/Mistral-7B-Instruct-v0.3",
+    "version": "1.0.0",
+    "description": "Modelo Mistral-7B fine-tuned com LoRA para análise financeira e industrial integrada (WSL)",
+    "author": "Sistema de IA",
+    "date": "2025-01-19",
+    "environment": "WSL Ubuntu"
+  },
+  
+  "paths": {
+    "base_model_path": "/mnt/e/Mistral/models--mistralai--Mistral-7B-Instruct-v0.3/snapshots",
+    "adapter_path": "/mnt/e/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/Datasets/finetune_mistral_wsl/output",
+    "data_path": "/mnt/e/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/Datasets/data_ft",
+    "cache_dir": "/mnt/e/Mistral",
+    "output_dir": "/mnt/e/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/Datasets/finetune_mistral_wsl/output"
+  },
+  
+  "data_config": {
+    "use_original_data": true,
+    "no_transformation": true,
+    "preserve_full_context": true,
+    "max_context_length": 2048,
+    "description": "Usa dados originais completos sem transformação RAG para máxima qualidade"
+  },
+  
+  "lora_config": {
+    "task_type": "CAUSAL_LM",
+    "r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.1,
+    "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj"],
+    "bias": "none",
+    "inference_mode": false
+  },
+  
+  "quantization": {
+    "load_in_4bit": true,
+    "bnb_4bit_compute_dtype": "float16",
+    "bnb_4bit_use_double_quant": true,
+    "bnb_4bit_quant_type": "nf4"
+  },
+  
+  "training_config": {
+    "num_train_epochs": 3,
+    "per_device_train_batch_size": 1,
+    "per_device_eval_batch_size": 1,
+    "gradient_accumulation_steps": 32,
+    "warmup_steps": 100,
+    "learning_rate": 2e-4,
+    "weight_decay": 0.01,
+    "max_length": 1024,
+    "fp16": true,
+    "gradient_checkpointing": true,
+    "dataloader_pin_memory": false,
+    "dataloader_num_workers": 0,
+    "max_memory": {"0": "10GB", "cpu": "30GB"}
+  },
+  
+  "memory_optimization": {
+    "max_memory": {
+      "0": "8GB",
+      "cpu": "20GB"
+    },
+    "device_map": "auto",
+    "torch_dtype": "float16",
+    "cpu_offloading": true
+  },
+  
+  "data_files": {
+    "train": "/mnt/e/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/Datasets/data_ft/train.jsonl",
+    "validation": "/mnt/e/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/Datasets/data_ft/val.jsonl",
+    "test": "/mnt/e/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/Datasets/data_ft/test.jsonl"
+  },
+  
+  "instruction_template": {
+    "format": "### Instruction:\n{instruction}\n\n### Context:\n{context}\n\n### Response:\n{response}",
+    "description": "Template para fine-tuning com contexto estruturado"
+  },
+  
+  "capabilities": {
+    "financial_analysis": {
+      "description": "Análise financeira de empresas",
+      "examples": [
+        "Análise de rentabilidade",
+        "Avaliação de risco",
+        "Projeções financeiras",
+        "Análise de balanço"
+      ]
+    },
+    "industrial_analysis": {
+      "description": "Análise industrial e operacional",
+      "examples": [
+        "Otimização de processos",
+        "Análise de eficiência energética",
+        "Gestão de produção",
+        "Controle de qualidade"
+      ]
+    },
+    "integrated_analysis": {
+      "description": "Análise integrada financeiro-industrial",
+      "examples": [
+        "Impacto financeiro de paradas",
+        "ROI de melhorias operacionais",
+        "Análise de custos integrada",
+        "Otimização financeiro-operacional"
+      ]
+    }
+  },
+  
+  "usage": {
+    "inference_script": "python 4_inferencia_wsl.py",
+    "interactive_mode": "python 4_inferencia_wsl.py --interactive",
+    "examples_mode": "python 4_inferencia_wsl.py --exemplos",
+    "custom_question": "python 4_inferencia_wsl.py --pergunta 'Sua pergunta' --contexto 'Contexto'"
+  },
+  
+  "requirements": {
+    "python": ">=3.8",
+    "pytorch": ">=2.0.0",
+    "transformers": ">=4.35.0",
+    "peft": ">=0.6.0",
+    "bitsandbytes": ">=0.41.0",
+    "datasets": ">=2.14.0",
+    "accelerate": ">=0.24.0"
+  },
+  
+  "environment_variables": {
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True",
+    "CUDA_VISIBLE_DEVICES": "0",
+    "TOKENIZERS_PARALLELISM": "false",
+    "HF_HUB_DISABLE_TELEMETRY": "1",
+    "TRANSFORMERS_CACHE": "/mnt/e/Mistral",
+    "HF_HOME": "/mnt/e/Mistral"
+  },
+  
+  "performance": {
+    "expected_vram_usage": "6-8GB",
+    "expected_training_time": "2-4 hours",
+    "expected_inference_time": "2-5 seconds per response",
+    "optimization_level": "WSL-optimized"
+  },
+  
+  "replication": {
+    "steps": [
+      "1. Execute: python 1_download_wsl.py",
+      "2. Execute: python 2_treinar_wsl.py", 
+      "3. Execute: python 3_testar_wsl.py",
+      "4. Execute: python 4_inferencia_wsl.py"
+    ],
+    "data_requirements": "Datasets em formato JSONL com template de instrução",
+    "hardware_requirements": "GPU com 8GB+ VRAM, WSL Ubuntu"
+  }
+}
