@@ -201,3 +201,65 @@ class AnaliseFinanceira(Base):
     data_registro = Column(DateTime, default=datetime.utcnow)
 
 
+
+
+
+
+class IndicadoresFinanceiros(Base):
+    __tablename__ = "indicadores_financeiros"
+
+    id = Column(Integer, primary_key=True, index=True)
+    
+    # --- Rentabilidade ---
+    receita_liquida = Column(Float, default=0.0)
+    cpv = Column(Float, default=0.0)
+    lucro_liquido = Column(Float, default=0.0)
+    lucro_operacional = Column(Float, default=0.0)
+    depreciacao = Column(Float, default=0.0)
+    amortizacao = Column(Float, default=0.0)
+    ativo_total = Column(Float, default=0.0)
+    patrimonio_liquido = Column(Float, default=0.0)
+    margem_bruta = Column(Float, default=0.0)
+    margem_liquida = Column(Float, default=0.0)
+    roa = Column(Float, default=0.0)
+    roe = Column(Float, default=0.0)
+    ebitda = Column(Float, default=0.0)
+
+    # --- Liquidez ---
+    ativo_circulante = Column(Float, default=0.0)
+    passivo_circulante = Column(Float, default=0.0)
+    estoques = Column(Float, default=0.0)
+    disponivel = Column(Float, default=0.0)
+    realizavel_longo_prazo = Column(Float, default=0.0)
+    exigivel_longo_prazo = Column(Float, default=0.0)
+    liquidez_corrente = Column(Float, default=0.0)
+    liquidez_seca = Column(Float, default=0.0)
+    liquidez_imediata = Column(Float, default=0.0)
+    liquidez_geral = Column(Float, default=0.0)
+
+    # --- Endividamento ---
+    passivo_exigivel = Column(Float, default=0.0)
+    passivo_total = Column(Float, default=0.0)
+    grau_endividamento = Column(Float, default=0.0)
+    indice_endividamento_total = Column(Float, default=0.0)
+
+    # --- Eficiência ---
+    contas_a_receber = Column(Float, default=0.0)
+    periodo = Column(Float, default=0.0)
+    vendas_a_prazo = Column(Float, default=0.0)
+    giro_ativo = Column(Float, default=0.0)
+    prazo_medio_recebimento = Column(Float, default=0.0)
+
+    # --- Outros ---
+    custos_fixos = Column(Float, default=0.0)
+    margem_contribuicao = Column(Float, default=0.0)
+    ponto_equilibrio = Column(Float, default=0.0)
+    valor_presente = Column(Float, default=0.0)
+    valor_futuro = Column(Float, default=0.0)
+    taxa_juros = Column(Float, default=0.0)
+    tempo = Column(Float, default=0.0)
+
+    data_registro = Column(DateTime, default=datetime.utcnow)
+
+
+
