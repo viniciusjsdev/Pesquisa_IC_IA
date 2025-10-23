@@ -1,0 +1,61 @@
+lancamento_id,conta_id,data_lancamento,valor,descricao
+1,4,2017-01-01,816.61,Receita venda produto
+2,1,2017-01-16,8413.29,Pagamento energia
+3,8,2017-01-31,12551.5,Pagamento energia
+4,2,2017-02-15,12749.46,Pagamento manutenção
+5,8,2017-03-02,12250.64,Pagamento energia
+6,3,2017-03-17,3902.57,Pagamento manutenção
+7,3,2017-04-01,12867.31,Pagamentos salários
+8,8,2017-04-16,3617.41,Pagamento manutenção
+9,6,2017-05-01,854.44,Receita venda produto
+10,8,2017-05-16,14275.29,Compra de materiais
+11,1,2017-05-31,9437.68,Pagamentos salários
+12,1,2017-06-15,13787.81,Pagamento energia
+13,4,2017-06-30,9197.21,Compra de materiais
+14,4,2017-07-15,1707.79,Receita venda produto
+15,2,2017-07-30,4466.5,Pagamentos salários
+16,2,2017-08-14,1491.45,Compra de materiais
+17,9,2017-08-29,11198.9,Pagamentos salários
+18,9,2017-09-13,8244.32,Compra de materiais
+19,2,2017-09-28,12627.7,Pagamento energia
+20,8,2017-10-13,728.45,Pagamento energia
+21,5,2017-10-28,9580.4,Pagamento energia
+22,4,2017-11-12,3025.73,Compra de materiais
+23,6,2017-11-27,1421.68,Pagamento manutenção
+24,5,2017-12-12,12004.8,Receita venda produto
+25,1,2017-12-27,9922.7,Pagamento energia
+26,3,2018-01-11,12769.6,Pagamentos salários
+27,7,2018-01-26,10241.51,Compra de materiais
+28,8,2018-02-10,8570.94,Compra de materiais
+29,3,2018-02-25,1655.67,Receita venda produto
+30,2,2018-03-12,5171.63,Compra de materiais
+31,4,2018-03-27,9398.86,Pagamento manutenção
+32,5,2018-04-11,1559.24,Pagamento energia
+33,7,2018-04-26,7359.77,Pagamento manutenção
+34,2,2018-05-11,8238.18,Pagamentos salários
+35,7,2018-05-26,1894.35,Receita venda produto
+36,8,2018-06-10,8223.85,Pagamento manutenção
+37,9,2018-06-25,9089.38,Pagamentos salários
+38,1,2018-07-10,688.16,Pagamento energia
+39,2,2018-07-25,12309.37,Pagamentos salários
+40,8,2018-08-09,2273.39,Receita venda produto
+41,10,2018-08-24,4916.35,Receita venda produto
+42,3,2018-09-08,10821.48,Receita venda produto
+43,2,2018-09-23,1109.81,Compra de materiais
+44,7,2018-10-08,3673.87,Pagamento energia
+45,8,2018-10-23,4926.14,Pagamentos salários
+46,2,2018-11-07,9660.75,Compra de materiais
+47,1,2018-11-22,12337.55,Receita venda produto
+48,6,2018-12-07,3533.92,Compra de materiais
+49,9,2018-12-22,12735.02,Pagamentos salários
+50,1,2019-01-06,14723.91,Pagamento energia
+51,7,2019-01-21,11501.16,Pagamentos salários
+52,7,2019-02-05,1617.87,Compra de materiais
+53,7,2019-02-20,3894.72,Pagamento energia
+54,2,2019-03-07,8283.58,Pagamento manutenção
+55,8,2019-03-22,7364.37,Pagamentos salários
+56,7,2019-04-06,1580.55,Pagamentos salários
+57,7,2019-04-21,13674.0,Receita venda produto
+58,4,2019-05-06,3268.92,Compra de materiais
+59,2,2019-05-21,13257.34,Compra de materiais
+60,5,2019-06-05,8067.64,Pagamento manutenção

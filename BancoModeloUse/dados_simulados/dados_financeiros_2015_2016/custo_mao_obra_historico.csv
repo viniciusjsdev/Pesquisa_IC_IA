@@ -1,0 +1,11 @@
+custo_mo_id,operador_id,custo_hora,data_vigencia,tipo_custo
+1,6,33.67,2015-01-01,Turno noite
+2,8,31.74,2015-03-02,Turno dia
+3,2,27.1,2015-05-01,Turno dia
+4,6,20.24,2015-06-30,Turno dia
+5,8,23.22,2015-08-29,Turno noite
+6,6,21.37,2015-10-28,Turno noite
+7,4,29.27,2015-12-27,Turno noite
+8,7,27.66,2016-02-25,Turno dia
+9,6,28.05,2016-04-25,Turno noite
+10,6,26.02,2016-06-24,Turno dia

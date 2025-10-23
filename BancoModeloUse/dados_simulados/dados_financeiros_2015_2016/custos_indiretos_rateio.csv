@@ -1,0 +1,13 @@
+rateio_id,descricao,custo_total_mes,base_rateio,data_referencia
+1,Energia fabril,9022.52,Horas Maquina,2015-01-01
+2,Limpeza,14701.61,Horas Maquina,2015-01-31
+3,Supervisao,12868.35,Horas Maquina,2015-03-02
+4,Infraestrutura,12520.48,Horas Maquina,2015-04-01
+5,Energia fabril,10684.16,Horas Maquina,2015-05-01
+6,Limpeza,8962.85,Horas Maquina,2015-05-31
+7,Supervisao,14458.62,Horas Maquina,2015-06-30
+8,Infraestrutura,12131.78,Horas Maquina,2015-07-30
+9,Energia fabril,12675.8,Horas Maquina,2015-08-29
+10,Limpeza,10034.97,Horas Maquina,2015-09-28
+11,Supervisao,8838.88,Horas Maquina,2015-10-28
+12,Infraestrutura,9845.54,Horas Maquina,2015-11-27

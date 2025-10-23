@@ -1,0 +1,6 @@
+produto_id,nome_produto,descricao,unidade_medida,data_registro
+1,Componente_1,Componente eletronico para veiculos,un,2017-01-01
+2,Componente_2,Componente eletronico para veiculos,un,2017-01-31
+3,Componente_3,Componente eletronico para veiculos,un,2017-03-02
+4,Componente_4,Componente eletronico para veiculos,un,2017-04-01
+5,Componente_5,Componente eletronico para veiculos,un,2017-05-01

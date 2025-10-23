@@ -1,0 +1,13 @@
+kpi_id,nome_kpi,valor_kpi,data_referencia
+1,Lucro Bruto,52.53,2015-01-01
+2,Margem Operacional,52.96,2015-01-31
+3,Eficiência Maq,48.7,2015-03-02
+4,Custo Total,12.84,2015-04-01
+5,Lucro Bruto,75.93,2015-05-01
+6,Margem Operacional,50.99,2015-05-31
+7,Eficiência Maq,59.88,2015-06-30
+8,Custo Total,67.9,2015-07-30
+9,Lucro Bruto,81.71,2015-08-29
+10,Margem Operacional,41.56,2015-09-28
+11,Eficiência Maq,73.71,2015-10-28
+12,Custo Total,88.72,2015-11-27

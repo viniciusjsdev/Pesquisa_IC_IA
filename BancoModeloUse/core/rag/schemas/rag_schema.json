@@ -1,0 +1,278 @@
+{
+  "schema_version": "1.0",
+  "description": "Schema do Sistema RAG - Agentes e Ferramentas",
+  "last_updated": "2025-01-17",
+  "rag_architecture": {
+    "description": "Arquitetura RAG com agentes especializados",
+    "components": {
+      "orquestrador": {
+        "description": "Agente Orquestrador - interpreta prompts e direciona consultas",
+        "responsibilities": [
+          "Interpretar consultas em linguagem natural",
+          "Classificar domínio da consulta (financeiro, industrial, integração)",
+          "Extrair parâmetros da consulta",
+          "Direcionar para agente especializado"
+        ],
+        "input": "Consulta em linguagem natural",
+        "output": "Interpretação com agente destino e parâmetros",
+        "keywords": {
+          "financeiro": [
+            "venda", "vendas", "receita", "lucro", "custo", "custos", "margem", "roi",
+            "financeiro", "contábil", "orçamento", "lancamento", "conta", "cliente",
+            "faturamento", "despesa", "investimento", "retorno", "lucratividade"
+          ],
+          "industrial": [
+            "produção", "produto", "máquina", "equipamento", "operação", "ordem",
+            "industrial", "qualidade", "defeito", "parada", "eficiencia", "oee",
+            "disponibilidade", "performance", "energia", "consumo", "lote", "inspeção"
+          ],
+          "integracao": [
+            "correlação", "integração", "dashboard", "kpi", "indicador", "análise",
+            "comparação", "tendência", "anomalia", "alerta", "executivo", "consolidado"
+          ]
+        }
+      },
+      "agente_financeiro": {
+        "description": "Agente Financeiro - especializado em consultas financeiras",
+        "responsibilities": [
+          "Analisar dados financeiros (vendas, custos, lançamentos)",
+          "Calcular indicadores financeiros (margem, ROI, lucratividade)",
+          "Gerar insights sobre performance financeira",
+          "Sugerir ações para otimização financeira"
+        ],
+        "tools": [
+          "query_financeira",
+          "calcular_margem_contribuicao",
+          "obter_indicadores_financeiros"
+        ],
+        "query_types": [
+          "vendas",
+          "custos",
+          "lancamentos",
+          "orcamentos",
+          "indicadores"
+        ]
+      },
+      "agente_industrial": {
+        "description": "Agente Industrial - especializado em consultas operacionais",
+        "responsibilities": [
+          "Analisar dados operacionais (produção, equipamentos, qualidade)",
+          "Calcular KPIs industriais (OEE, eficiência, produtividade)",
+          "Gerar insights sobre performance operacional",
+          "Sugerir ações para melhoria operacional"
+        ],
+        "tools": [
+          "query_operacional",
+          "calcular_kpis_ordem",
+          "obter_indicadores_operacionais"
+        ],
+        "query_types": [
+          "producao",
+          "equipamentos",
+          "qualidade",
+          "paradas",
+          "indicadores"
+        ]
+      },
+      "agente_finalizador": {
+        "description": "Agente Finalizador - consolida respostas e produz resultado final",
+        "responsibilities": [
+          "Consolidar respostas de múltiplos agentes",
+          "Identificar correlações entre domínios",
+          "Gerar insights integrados",
+          "Produzir recomendações estratégicas",
+          "Verificar coerência entre análises"
+        ],
+        "input": "Lista de respostas dos agentes especializados",
+        "output": "Resultado consolidado com insights integrados"
+      }
+    }
+  },
+  "tools": {
+    "financeiro_tools": {
+      "description": "Ferramentas para consultas financeiras",
+      "methods": {
+        "query_financeira": {
+          "description": "Executa consulta financeira genérica",
+          "parameters": {
+            "consulta": "Tipo de consulta (vendas, custos, lancamentos, orcamentos)",
+            "parametros": "Parâmetros da consulta (data_inicio, data_fim, produto_id, etc.)"
+          },
+          "returns": "Dict com resultados da consulta"
+        },
+        "calcular_margem_contribuicao": {
+          "description": "Calcula margem de contribuição para um produto",
+          "parameters": {
+            "produto_id": "ID do produto",
+            "data_inicio": "Data de início do período",
+            "data_fim": "Data de fim do período"
+          },
+          "returns": "Dict com margem de contribuição e análise"
+        },
+        "obter_indicadores_financeiros": {
+          "description": "Obtém indicadores financeiros consolidados",
+          "parameters": {
+            "data_inicio": "Data de início do período",
+            "data_fim": "Data de fim do período"
+          },
+          "returns": "Dict com indicadores financeiros"
+        }
+      }
+    },
+    "industrial_tools": {
+      "description": "Ferramentas para consultas industriais",
+      "methods": {
+        "query_operacional": {
+          "description": "Executa consulta operacional genérica",
+          "parameters": {
+            "consulta": "Tipo de consulta (producao, equipamentos, qualidade, paradas)",
+            "parametros": "Parâmetros da consulta (data_inicio, data_fim, maquina_id, etc.)"
+          },
+          "returns": "Dict com resultados da consulta"
+        },
+        "calcular_kpis_ordem": {
+          "description": "Calcula KPIs para uma ordem de produção",
+          "parameters": {
+            "ordem_id": "ID da ordem de produção"
+          },
+          "returns": "Dict com KPIs da ordem"
+        },
+        "obter_indicadores_operacionais": {
+          "description": "Obtém indicadores operacionais consolidados",
+          "parameters": {
+            "data_inicio": "Data de início do período",
+            "data_fim": "Data de fim do período"
+          },
+          "returns": "Dict com indicadores operacionais"
+        }
+      }
+    },
+    "integracao_tools": {
+      "description": "Ferramentas para consultas integradas (DW)",
+      "methods": {
+        "join_financeiro_industrial": {
+          "description": "Executa consulta integrada financeiro-industrial",
+          "parameters": {
+            "consulta": "Tipo de consulta (vendas_producao, custos_eficiencia, qualidade_lucratividade)",
+            "parametros": "Parâmetros da consulta (data_inicio, data_fim, produto_sk, etc.)"
+          },
+          "returns": "Dict com resultados da consulta integrada"
+        },
+        "obter_dashboard_executivo": {
+          "description": "Obtém dashboard executivo consolidado",
+          "parameters": {
+            "data_inicio": "Data de início do período",
+            "data_fim": "Data de fim do período"
+          },
+          "returns": "Dict com dashboard executivo"
+        }
+      }
+    }
+  },
+  "pipeline": {
+    "description": "Fluxo do pipeline RAG",
+    "steps": [
+      {
+        "step": 1,
+        "name": "Interpretação",
+        "agent": "orquestrador",
+        "description": "Interpreta consulta do usuário e determina agente destino"
+      },
+      {
+        "step": 2,
+        "name": "Processamento",
+        "agent": "especializado",
+        "description": "Agente especializado processa consulta com ferramentas específicas"
+      },
+      {
+        "step": 3,
+        "name": "Consolidação",
+        "agent": "finalizador",
+        "description": "Consolida respostas e produz resultado final"
+      }
+    ]
+  },
+  "examples": {
+    "consultas_exemplo": [
+      {
+        "consulta": "Quais foram as vendas do último mês?",
+        "agente_destino": "financeiro",
+        "tipo_consulta": "vendas",
+        "parametros": {
+          "data_inicio": "2025-01-01",
+          "data_fim": "2025-01-31"
+        }
+      },
+      {
+        "consulta": "Como está a produção da máquina 1?",
+        "agente_destino": "industrial",
+        "tipo_consulta": "producao",
+        "parametros": {
+          "maquina_id": 1
+        }
+      },
+      {
+        "consulta": "Qual a correlação entre custos e eficiência?",
+        "agente_destino": "integracao",
+        "tipo_consulta": "custos_eficiencia",
+        "parametros": {
+          "data_inicio": "2025-01-01",
+          "data_fim": "2025-01-31"
+        }
+      },
+      {
+        "consulta": "Mostre o dashboard executivo",
+        "agente_destino": "integracao",
+        "tipo_consulta": "dashboard_executivo",
+        "parametros": {
+          "data_inicio": "2025-01-01",
+          "data_fim": "2025-01-31"
+        }
+      }
+    ],
+    "respostas_exemplo": [
+      {
+        "agente": "financeiro",
+        "tipo_consulta": "vendas",
+        "resultado": {
+          "tipo": "vendas",
+          "total_registros": 150,
+          "total_quantidade": 2500,
+          "total_valor": 125000.00
+        },
+        "analise": {
+          "resumo": "Análise de vendas: 150 registros, 2500 unidades vendidas, R$ 125.000,00 em receita total.",
+          "insights": [
+            "Ticket médio: R$ 50,00 por unidade",
+            "Receita significativa acima de R$ 100.000"
+          ],
+          "recomendacoes": [
+            "Manter estratégia de vendas atual",
+            "Considerar expansão para novos mercados"
+          ]
+        }
+      },
+      {
+        "agente": "industrial",
+        "tipo_consulta": "producao",
+        "resultado": {
+          "tipo": "producao",
+          "total_registros": 45,
+          "total_produzido": 2800,
+          "total_energia_kwh": 1250.50
+        },
+        "analise": {
+          "resumo": "Análise de produção: 45 registros, 2800 unidades produzidas, 1250.50 kWh consumidos.",
+          "insights": [
+            "Produtividade: 62.2 unidades/hora",
+            "Eficiência energética: 2.2 unidades/kWh"
+          ],
+          "recomendacoes": [
+            "Alta produtividade - manter padrões atuais",
+            "Considerar otimização do consumo energético"
+          ]
+        }
+      }
+    ]
+  }
+}

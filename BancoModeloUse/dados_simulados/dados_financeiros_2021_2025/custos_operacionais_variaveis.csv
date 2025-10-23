@@ -1,0 +1,72 @@
+custo_operacional_id,insumo,valor_unitario,unidade_medida,data_leitura
+1,Lubrificante,7.46,l,2021-01-01
+2,Lubrificante,9.18,l,2021-01-26
+3,Detergente Industrial,7.04,l,2021-02-20
+4,Lubrificante,8.61,l,2021-03-17
+5,Agua de refrigeração,2.71,l,2021-04-11
+6,Lubrificante,2.82,l,2021-05-06
+7,Lubrificante,9.01,l,2021-05-31
+8,Detergente Industrial,9.19,l,2021-06-25
+9,Lubrificante,2.71,l,2021-07-20
+10,Detergente Industrial,4.7,l,2021-08-14
+11,Manutencao Tecnologica,7.51,l,2021-09-08
+12,Detergente Industrial,6.37,l,2021-10-03
+13,Agua de refrigeração,4.12,l,2021-10-28
+14,Energia,4.12,l,2021-11-22
+15,Manutencao Tecnologica,9.86,l,2021-12-17
+16,Lubrificante,8.52,l,2022-01-11
+17,Energia,5.1,l,2022-02-05
+18,Agua de refrigeração,1.36,l,2022-03-02
+19,Manutencao Tecnologica,6.46,l,2022-03-27
+20,Energia,3.55,l,2022-04-21
+21,Manutencao Tecnologica,5.85,l,2022-05-16
+22,Energia,3.14,l,2022-06-10
+23,Lubrificante,7.97,l,2022-07-05
+24,Lubrificante,1.36,l,2022-07-30
+25,Lubrificante,1.17,l,2022-08-24
+26,Energia,7.77,l,2022-09-18
+27,Detergente Industrial,8.73,l,2022-10-13
+28,Agua de refrigeração,9.08,l,2022-11-07
+29,Lubrificante,9.75,l,2022-12-02
+30,Manutencao Tecnologica,7.42,l,2022-12-27
+31,Energia,1.63,l,2023-01-21
+32,Energia,3.35,l,2023-02-15
+33,Agua de refrigeração,9.55,l,2023-03-12
+34,Energia,3.19,l,2023-04-06
+35,Detergente Industrial,3.79,l,2023-05-01
+36,Lubrificante,8.4,l,2023-05-26
+37,Detergente Industrial,4.01,l,2023-06-20
+38,Manutencao Tecnologica,8.82,l,2023-07-15
+39,Agua de refrigeração,6.0,l,2023-08-09
+40,Detergente Industrial,7.33,l,2023-09-03
+41,Manutencao Tecnologica,3.33,l,2023-09-28
+42,Lubrificante,5.82,l,2023-10-23
+43,Manutencao Tecnologica,9.56,l,2023-11-17
+44,Agua de refrigeração,5.33,l,2023-12-12
+45,Agua de refrigeração,9.78,l,2024-01-06
+46,Agua de refrigeração,5.68,l,2024-01-31
+47,Energia,6.3,l,2024-02-25
+48,Lubrificante,1.08,l,2024-03-21
+49,Manutencao Tecnologica,9.5,l,2024-04-15
+50,Energia,1.44,l,2024-05-10
+51,Agua de refrigeração,3.82,l,2024-06-04
+52,Energia,4.76,l,2024-06-29
+53,Manutencao Tecnologica,2.17,l,2024-07-24
+54,Lubrificante,2.67,l,2024-08-18
+55,Manutencao Tecnologica,6.72,l,2024-09-12
+56,Energia,6.81,l,2024-10-07
+57,Lubrificante,9.37,l,2024-11-01
+58,Detergente Industrial,3.45,l,2024-11-26
+59,Manutencao Tecnologica,3.54,l,2024-12-21
+60,Manutencao Tecnologica,2.97,l,2025-01-15
+61,Agua de refrigeração,9.7,l,2025-02-09
+62,Energia,2.01,l,2025-03-06
+63,Energia,8.04,l,2025-03-31
+64,Detergente Industrial,2.54,l,2025-04-25
+65,Detergente Industrial,3.12,l,2025-05-20
+66,Energia,5.05,l,2025-06-14
+67,Lubrificante,5.84,l,2025-07-09
+68,Detergente Industrial,2.31,l,2025-08-03
+69,Lubrificante,4.01,l,2025-08-28
+70,Agua de refrigeração,3.25,l,2025-09-22
+71,Detergente Industrial,6.89,l,2025-10-17

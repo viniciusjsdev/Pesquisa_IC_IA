@@ -1,0 +1,11 @@
+conta_id,numero_conta,nome_conta,tipo_conta
+1,1.1.001,Caixa,Ativo
+2,1.1.002,Clientes,Ativo
+3,1.1.003,Energia,Despesa
+4,1.1.004,Materiais,Ativo
+5,1.1.005,Receita Vendas,Receita
+6,1.1.006,Custo Produção,Despesa
+7,1.1.007,Folha Pagamento,Despesa
+8,1.1.008,Impostos,Despesa
+9,1.1.009,Despesas Gerais,Despesa
+10,1.1.010,Investimentos,Despesa

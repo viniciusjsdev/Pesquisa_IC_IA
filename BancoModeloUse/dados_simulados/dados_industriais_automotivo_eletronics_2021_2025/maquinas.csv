@@ -1,0 +1,6 @@
+maquina_id,nome_maquina,linha_producao,capacidade_producao_max,data_registro
+1,ROBO SMT,Linha SMT,105.84,2021-01-01
+2,ROBO PTH,Linha PTH,138.29,2021-01-11
+3,ROBO SCARA,Linha SCARA,127.82,2021-01-21
+4,MAQUINA SOLDA,Linha Solda,125.83,2021-01-31
+5,ROBO COBOT,Linha Cobots,115.34,2021-02-10

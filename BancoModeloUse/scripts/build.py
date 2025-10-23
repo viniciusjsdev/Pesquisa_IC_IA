@@ -84,8 +84,7 @@ def start_application():
     
     logger.info(f"Usando porta: {port}")
     
-    # Inicia thread para abrir Swagger automaticamente
-    open_swagger_in_browser(port)
+    # Swagger será acessível manualmente em /docs
     
     try:
         # Comando para iniciar o uvicorn
@@ -100,7 +99,7 @@ def start_application():
         
         logger.info(f"Executando: {' '.join(cmd)}")
         logger.info(f"Aplicação disponível em: http://localhost:{port}")
-        logger.info(f"Swagger será aberto automaticamente em: http://localhost:{port}/docs")
+        logger.info(f"Swagger disponível em: http://localhost:{port}/docs")
         subprocess.run(cmd)
         
     except KeyboardInterrupt:

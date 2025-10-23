@@ -1,0 +1,6 @@
+custo_padrao_id,tipo_custo,unidade_medida,valor_unitario_padrao,data_vigencia
+1,Material,un,12.5,2015-01-01
+2,Mao de Obra,h,25.0,2015-02-15
+3,Energia,kWh,0.8,2015-04-01
+4,Manutencao,servico,15.5,2015-05-16
+5,Transporte,kg,2.3,2015-06-30

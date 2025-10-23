@@ -10,7 +10,7 @@ MACHINE_DB_CONFIG = {
     "port": "5432", 
     "database": "db_datamind",
     "user": "postgres",
-    "password": "host"
+    "password": "root"
 }
 
 # Configurações específicas da máquina

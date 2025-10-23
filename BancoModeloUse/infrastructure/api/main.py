@@ -4,7 +4,8 @@ from fastapi import FastAPI
 from infrastructure.database.session import engine, Base
 from core.models import *  # Importa todos os modelos
 from infrastructure.api.routers.financeiro import router as financeiro_router
-from infrastructure.database.manager import db_manager
+from infrastructure.api.rag import rag_router, etl_router
+from infrastructure.database.multi_db_manager import multi_db_manager
 import logging
 
 # Adiciona o diretório raiz ao path para importar config
@@ -36,7 +37,7 @@ def create_tables():
 # Função para atualizar tabelas
 def update_tables():
     """Atualiza todas as tabelas no banco de dados"""
-    return db_manager.update_tables()
+    return multi_db_manager.ensure_all_databases_ready()
 
 # Verificação automática do banco na inicialização
 @app.on_event("startup")
@@ -44,18 +45,24 @@ async def startup_event():
     """Evento executado na inicialização da aplicação"""
     logger.info("Iniciando aplicação...")
     
-    # Garante que o banco e tabelas estão prontos
-    if db_manager.ensure_database_ready():
+    # Garante que todos os bancos e tabelas estão prontos
+    if multi_db_manager.ensure_all_databases_ready():
         logger.info("Aplicação iniciada com sucesso!")
     else:
-        logger.error("Falha na inicialização do banco de dados!")
-        raise Exception("Não foi possível inicializar o banco de dados")
+        logger.error("Falha na inicialização dos bancos de dados!")
+        raise Exception("Não foi possível inicializar os bancos de dados")
 
 app.include_router(financeiro_router)
+app.include_router(rag_router)
+app.include_router(etl_router)
 
 @app.get("/")
 def root():
-    return {"service": "descomplica hub - financeiro", "modules": ["financeiro"]}
+    return {
+        "service": "descomplica hub - sistema integrado", 
+        "modules": ["financeiro", "rag", "etl"],
+        "description": "Sistema integrado financeiro-industrial com RAG e ETL"
+    }
 
 @app.post("/create-tables")
 def create_tables_endpoint():

@@ -1,0 +1,11 @@
+material_id,nome_material,unidade_medida,data_registro
+1,Placa circuito impresso,un,2015-01-01
+2,Semicondutores,un,2015-01-16
+3,Bateria,un,2015-01-31
+4,Alternador,un,2015-02-15
+5,Motor de partida,un,2015-03-02
+6,Cabos,un,2015-03-17
+7,Fios,un,2015-04-01
+8,Conectores,un,2015-04-16
+9,Resistores,un,2015-05-01
+10,Capacitores,un,2015-05-16
