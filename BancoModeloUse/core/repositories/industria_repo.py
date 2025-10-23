@@ -1,6 +1,6 @@
 # app/repositories/industria_repo.py
-from app.repositories.base import BaseRepository
-from app import models
+from core.repositories.base import BaseRepository
+from core import models
 from sqlalchemy import func
 from datetime import datetime, date, timedelta
 

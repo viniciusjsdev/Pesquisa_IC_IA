@@ -1,13 +1,13 @@
 # app/api/industria_router.py
 from fastapi import APIRouter, Depends, HTTPException
-from app.db import get_db
+from infrastructure.database.sessions.industrial_session import get_industrial_db
 from sqlalchemy.orm import Session
-from app.services.kpi_service import KPIService
+from core.services.kpi_service import KPIService
 from datetime import datetime, timedelta
 
 router = APIRouter(prefix="/industria", tags=["Industria"])
 
-def get_kpi_service(db: Session = Depends(get_db)):
+def get_kpi_service(db: Session = Depends(get_industrial_db)):
     return KPIService(db)
 
 @router.get("/ordem/{ordem_id}/kpis")

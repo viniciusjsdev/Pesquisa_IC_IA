@@ -3,9 +3,9 @@
 Modelos de KPIs financeiros
 """
 from sqlalchemy import Column, Integer, String, Date, DECIMAL
-from . import FinanceiroBase
+from infrastructure.database.connections.financeiro_connection import Base
 
-class KPIGerencial(FinanceiroBase):
+class KPIGerencial(Base):
     __tablename__ = "kpis_gerenciais"
     kpi_id = Column(Integer, primary_key=True, index=True)
     nome_kpi = Column(String)

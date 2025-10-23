@@ -1,7 +1,7 @@
 # app/services/kpi_service.py
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
-from app.repositories.industria_repo import IndustriaRepository
+from core.repositories.industria_repo import IndustriaRepository
 import math
 
 class KPIService:

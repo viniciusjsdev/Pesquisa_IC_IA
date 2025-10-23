@@ -5,18 +5,19 @@ Modelos de custos financeiros
 from sqlalchemy import Column, Integer, String, Text, Date, DECIMAL, ForeignKey, Float, DateTime
 from sqlalchemy.orm import relationship
 from datetime import datetime
-from . import FinanceiroBase
+from infrastructure.database.connections.financeiro_connection import Base
 
 # Tabelas de Contabilidade de Custos
-class CustoPadrao(FinanceiroBase):
+class CustoPadrao(Base):
     __tablename__ = "custos_padrao"
     custo_padrao_id = Column(Integer, primary_key=True, index=True)
     tipo_custo = Column(String)
     unidade_medida = Column(String)
     valor_unitario_padrao = Column(DECIMAL)
     data_vigencia = Column(Date)
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
-class CustoIndiretoRateio(FinanceiroBase):
+class CustoIndiretoRateio(Base):
     __tablename__ = "custos_indiretos_rateio"
     rateio_id = Column(Integer, primary_key=True, index=True)
     descricao = Column(String)
@@ -24,7 +25,7 @@ class CustoIndiretoRateio(FinanceiroBase):
     base_rateio = Column(String)
     data_referencia = Column(Date)
 
-class MaterialCustoHistorico(FinanceiroBase):
+class MaterialCustoHistorico(Base):
     __tablename__ = "materiais_custo_historico"
     custo_material_id = Column(Integer, primary_key=True, index=True)
     material_id = Column(Integer) # FK para Material da tabela industrial
@@ -32,7 +33,7 @@ class MaterialCustoHistorico(FinanceiroBase):
     data_compra = Column(Date)
     lote_material_id = Column(Integer) # FK para LoteMaterial da tabela industrial
 
-class CustoMaoObraHistorico(FinanceiroBase):
+class CustoMaoObraHistorico(Base):
     __tablename__ = "custo_mao_obra_historico"
     custo_mo_id = Column(Integer, primary_key=True, index=True)
     operador_id = Column(Integer) # FK para Operador (se existir na industrial, ou criar aqui)
@@ -40,7 +41,7 @@ class CustoMaoObraHistorico(FinanceiroBase):
     data_vigencia = Column(Date)
     tipo_custo = Column(String)
 
-class CustoOperacionalVariavel(FinanceiroBase):
+class CustoOperacionalVariavel(Base):
     __tablename__ = "custos_operacionais_variaveis"
     custo_operacional_id = Column(Integer, primary_key=True, index=True)
     insumo = Column(String)
@@ -48,7 +49,7 @@ class CustoOperacionalVariavel(FinanceiroBase):
     unidade_medida = Column(String)
     data_leitura = Column(Date)
 
-class CustoProducao(FinanceiroBase):
+class CustoProducao(Base):
     """
     Representa o custo de produção (CPP, CPA, CPV e custo unitário).
     """
@@ -67,7 +68,7 @@ class CustoProducao(FinanceiroBase):
     custo_unitario = Column(Float, nullable=True)
     data_registro = Column(DateTime, default=datetime.utcnow)
 
-class ResultadoFinanceiro(FinanceiroBase):
+class ResultadoFinanceiro(Base):
     """
     Representa o resultado financeiro e indicadores de desempenho.
     """
@@ -98,7 +99,7 @@ class ResultadoFinanceiro(FinanceiroBase):
     capital_de_giro = Column(Float, nullable=True)
     data_registro = Column(DateTime, default=datetime.utcnow)
 
-class AnaliseFinanceira(FinanceiroBase):
+class AnaliseFinanceira(Base):
     __tablename__ = "analises_financeiras"
     id = Column(Integer, primary_key=True, index=True)
     vendas_totais = Column(Float, default=0.0)

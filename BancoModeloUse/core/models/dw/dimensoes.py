@@ -3,9 +3,9 @@
 Dimensões da Data Warehouse
 """
 from sqlalchemy import Column, Integer, String, Date, DECIMAL, Boolean
-from . import DWBase
+from infrastructure.database.connections.dw_connection import Base
 
-class DimProduto(DWBase):
+class DimProduto(Base):
     """Dimensão Produto - consolida dados de ambos os sistemas"""
     __tablename__ = "dim_produto"
     
@@ -20,7 +20,7 @@ class DimProduto(DWBase):
     data_fim_vigencia = Column(Date)
     ativo = Column(Boolean, default=True)
 
-class DimTempo(DWBase):
+class DimTempo(Base):
     """Dimensão Tempo - calendário unificado com granularidade diária"""
     __tablename__ = "dim_tempo"
     
@@ -39,7 +39,7 @@ class DimTempo(DWBase):
     semana_ano = Column(Integer)
     dia_ano = Column(Integer)
 
-class DimMaquina(DWBase):
+class DimMaquina(Base):
     """Dimensão Máquina - consolida equipamentos"""
     __tablename__ = "dim_maquina"
     
@@ -53,7 +53,7 @@ class DimMaquina(DWBase):
     data_fim_vigencia = Column(Date)
     ativo = Column(Boolean, default=True)
 
-class DimCliente(DWBase):
+class DimCliente(Base):
     """Dimensão Cliente - consolida dados de clientes"""
     __tablename__ = "dim_cliente"
     
@@ -66,7 +66,7 @@ class DimCliente(DWBase):
     data_fim_vigencia = Column(Date)
     ativo = Column(Boolean, default=True)
 
-class DimFornecedor(DWBase):
+class DimFornecedor(Base):
     """Dimensão Fornecedor - consolida dados de fornecedores"""
     __tablename__ = "dim_fornecedor"
     

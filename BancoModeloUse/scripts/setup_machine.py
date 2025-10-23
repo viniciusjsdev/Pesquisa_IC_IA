@@ -35,18 +35,18 @@ def install_dependencies():
         return False
 
 def setup_database():
-    """Configura o banco de dados"""
-    logger.info("Configurando banco de dados...")
+    """Configura os bancos de dados"""
+    logger.info("Configurando bancos de dados...")
     try:
-        from infrastructure.database.manager import db_manager
-        if db_manager.ensure_database_ready():
-            logger.info("Banco de dados configurado com sucesso!")
+        from infrastructure.database.multi_db_manager import multi_db_manager
+        if multi_db_manager.ensure_all_databases_ready():
+            logger.info("Bancos de dados configurados com sucesso!")
             return True
         else:
-            logger.error("Falha na configuração do banco!")
+            logger.error("Falha na configuração dos bancos!")
             return False
     except Exception as e:
-        logger.error(f"Erro na configuração do banco: {e}")
+        logger.error(f"Erro na configuração dos bancos: {e}")
         return False
 
 def start_application():

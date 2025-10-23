@@ -44,7 +44,7 @@ FINANCEIRO_DB_CONFIG = {
 # Banco Industrial (MES/SCADA)
 INDUSTRIAL_DB_CONFIG = {
     "host": "localhost", 
-    "port": 5433,
+    "port": 5432,
     "database": "db_industrial",
     "user": "postgres",
     "password": "root",
@@ -54,7 +54,7 @@ INDUSTRIAL_DB_CONFIG = {
 # Data Warehouse (Consolidado)
 DW_DB_CONFIG = {
     "host": "localhost",
-    "port": 5434, 
+    "port": 5432, 
     "database": "db_datamind_dw",
     "user": "postgres",
     "password": "root",

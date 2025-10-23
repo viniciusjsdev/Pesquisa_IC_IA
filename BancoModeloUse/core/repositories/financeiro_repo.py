@@ -1,5 +1,5 @@
-from app.repositories.base import BaseRepository
-from app import models
+from core.repositories.base import BaseRepository
+from core import models
 from sqlalchemy.orm import Session
 from typing import List, Type
 
@@ -37,7 +37,7 @@ class FinanceiroRepository(BaseRepository):
 
 # --- CRUD PARA NOVAS TABELAS ---
 
-from app.models_financeiro import CustoProducao, ResultadoFinanceiro
+from core.models.financeiro import CustoProducao, ResultadoFinanceiro
 
 
 def criar_custo_producao(db, dados: dict):

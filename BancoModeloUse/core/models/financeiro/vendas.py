@@ -4,9 +4,9 @@ Modelos de vendas financeiros
 """
 from sqlalchemy import Column, Integer, String, Date, DECIMAL, ForeignKey
 from sqlalchemy.orm import relationship
-from . import FinanceiroBase
+from infrastructure.database.connections.financeiro_connection import Base
 
-class Venda(FinanceiroBase):
+class Venda(Base):
     __tablename__ = "vendas"
     venda_id = Column(Integer, primary_key=True, index=True)
     produto_id = Column(Integer) # FK para Produto da tabela industrial
@@ -15,7 +15,7 @@ class Venda(FinanceiroBase):
     data_venda = Column(Date)
     cliente_id = Column(Integer) # FK para Cliente (se existir na industrial, ou criar aqui)
 
-class Orcamento(FinanceiroBase):
+class Orcamento(Base):
     __tablename__ = "orcamentos"
     orcamento_id = Column(Integer, primary_key=True, index=True)
     conta_id = Column(Integer, ForeignKey("contas_contabeis.conta_id"))

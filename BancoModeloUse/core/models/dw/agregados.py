@@ -4,9 +4,9 @@ Agregados e KPIs da Data Warehouse - visões consolidadas
 """
 from sqlalchemy import Column, Integer, String, Date, DECIMAL, ForeignKey
 from sqlalchemy.orm import relationship
-from . import DWBase
+from infrastructure.database.connections.dw_connection import Base
 
-class KPIFinanceiro(DWBase):
+class KPIFinanceiro(Base):
     """KPIs Financeiros - agregados semanais/trimestrais"""
     __tablename__ = "kpi_financeiro"
     
@@ -22,7 +22,7 @@ class KPIFinanceiro(DWBase):
     periodo_tipo = Column(String)  # 'semanal', 'mensal', 'trimestral'
     data_referencia = Column(Date)
 
-class KPIIndustrial(DWBase):
+class KPIIndustrial(Base):
     """KPIs Industriais - agregados semanais/trimestrais"""
     __tablename__ = "kpi_industrial"
     
@@ -40,7 +40,7 @@ class KPIIndustrial(DWBase):
     periodo_tipo = Column(String)  # 'semanal', 'mensal', 'trimestral'
     data_referencia = Column(Date)
 
-class KPIIntegrado(DWBase):
+class KPIIntegrado(Base):
     """KPIs Integrados - correlação financeiro-industrial"""
     __tablename__ = "kpi_integrado"
     
@@ -64,7 +64,7 @@ class KPIIntegrado(DWBase):
     periodo_tipo = Column(String)  # 'semanal', 'mensal', 'trimestral'
     data_referencia = Column(Date)
 
-class DashboardExecutivo(DWBase):
+class DashboardExecutivo(Base):
     """Dashboard Executivo - visão consolidada"""
     __tablename__ = "dashboard_executivo"
     

@@ -4,9 +4,10 @@ Modelos de produção industrial
 """
 from sqlalchemy import Column, Integer, String, Date, DateTime, DECIMAL, ForeignKey
 from sqlalchemy.orm import relationship
-from . import IndustrialBase
+from datetime import datetime
+from infrastructure.database.connections.industrial_connection import Base
 
-class OrdemProducao(IndustrialBase):
+class OrdemProducao(Base):
     __tablename__ = "ordens_producao"
     ordem_producao_id = Column(Integer, primary_key=True, index=True)
     produto_id = Column(Integer, ForeignKey("produtos.produto_id"))
@@ -15,18 +16,20 @@ class OrdemProducao(IndustrialBase):
     data_inicio_real = Column(DateTime)
     data_fim_real = Column(DateTime)
     status_ordem = Column(String)
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
     produto = relationship("Produto")
 
-class RoteiroProducao(IndustrialBase):
+class RoteiroProducao(Base):
     __tablename__ = "roteiros_producao"
     roteiro_id = Column(Integer, primary_key=True, index=True)
     produto_id = Column(Integer, ForeignKey("produtos.produto_id"))
     versao = Column(Integer)
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
     produto = relationship("Produto")
 
-class OperacaoRoteiro(IndustrialBase):
+class OperacaoRoteiro(Base):
     __tablename__ = "operacoes_roteiro"
     operacao_roteiro_id = Column(Integer, primary_key=True, index=True)
     roteiro_id = Column(Integer, ForeignKey("roteiros_producao.roteiro_id"))
@@ -34,11 +37,12 @@ class OperacaoRoteiro(IndustrialBase):
     maquina_id = Column(Integer, ForeignKey("maquinas.maquina_id"))
     tempo_ideal_min = Column(DECIMAL)
     tempo_setup_ideal_min = Column(DECIMAL)
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
     roteiro = relationship("RoteiroProducao")
     maquina = relationship("Maquina")
 
-class RegistroOperacao(IndustrialBase):
+class RegistroOperacao(Base):
     __tablename__ = "registros_operacao"
     registro_id = Column(Integer, primary_key=True, index=True)
     ordem_producao_id = Column(Integer, ForeignKey("ordens_producao.ordem_producao_id"))
@@ -49,21 +53,23 @@ class RegistroOperacao(IndustrialBase):
     tempo_setup_real_min = Column(DECIMAL)
     quantidade_produzida_real = Column(Integer)
     consumo_energia_kwh = Column(DECIMAL)
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
     ordem = relationship("OrdemProducao")
     maquina = relationship("Maquina")
 
-class ParadaMaquina(IndustrialBase):
+class ParadaMaquina(Base):
     __tablename__ = "paradas_maquinas"
     parada_id = Column(Integer, primary_key=True, index=True)
     maquina_id = Column(Integer, ForeignKey("maquinas.maquina_id"))
     hora_inicio_parada = Column(DateTime)
     hora_fim_parada = Column(DateTime)
     motivo_parada = Column(String)
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
     maquina = relationship("Maquina")
 
-class ConsumoMaterial(IndustrialBase):
+class ConsumoMaterial(Base):
     __tablename__ = "consumo_materiais"
     consumo_id = Column(Integer, primary_key=True, index=True)
     registro_id = Column(Integer, ForeignKey("registros_operacao.registro_id"))
@@ -74,7 +80,7 @@ class ConsumoMaterial(IndustrialBase):
     registro = relationship("RegistroOperacao")
     material = relationship("Material")
 
-class LoteMaterial(IndustrialBase):
+class LoteMaterial(Base):
     __tablename__ = "lotes_materiais"
     lote_id = Column(Integer, primary_key=True, index=True)
     material_id = Column(Integer, ForeignKey("materiais.material_id"))
@@ -85,7 +91,7 @@ class LoteMaterial(IndustrialBase):
     material = relationship("Material")
     fornecedor = relationship("Fornecedor")
 
-class LoteProducao(IndustrialBase):
+class LoteProducao(Base):
     __tablename__ = "lotes_producao"
     lote_producao_id = Column(Integer, primary_key=True, index=True)
     ordem_producao_id = Column(Integer, ForeignKey("ordens_producao.ordem_producao_id"))

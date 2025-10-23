@@ -4,9 +4,9 @@ Modelos de qualidade industrial
 """
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from . import IndustrialBase
+from infrastructure.database.connections.industrial_connection import Base
 
-class ControleQualidade(IndustrialBase):
+class ControleQualidade(Base):
     __tablename__ = "controle_qualidade"
     controle_id = Column(Integer, primary_key=True, index=True)
     lote_producao_id = Column(Integer, ForeignKey("lotes_producao.lote_producao_id"))
@@ -18,12 +18,12 @@ class ControleQualidade(IndustrialBase):
 
     lote = relationship("LoteProducao")
 
-class Defeito(IndustrialBase):
+class Defeito(Base):
     __tablename__ = "defeitos"
     defeito_id = Column(Integer, primary_key=True, index=True)
     nome_defeito = Column(String)
 
-class RegistroDefeito(IndustrialBase):
+class RegistroDefeito(Base):
     __tablename__ = "registros_defeitos"
     registro_defeito_id = Column(Integer, primary_key=True, index=True)
     controle_id = Column(Integer, ForeignKey("controle_qualidade.controle_id"))

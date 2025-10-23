@@ -6,11 +6,15 @@ import os
 import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
 # Adiciona o diretório raiz ao path para importar config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
 
 from infrastructure.config.database_config import FINANCEIRO_DB_CONFIG, DB_SETTINGS
+
+# Base específica para modelos financeiros
+Base = declarative_base()
 
 class FinanceiroConnection:
     """Gerenciador de conexão para banco financeiro"""

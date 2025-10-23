@@ -4,9 +4,9 @@ Fatos da Data Warehouse - mantém granularidade diária
 """
 from sqlalchemy import Column, Integer, String, Date, DECIMAL, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
-from . import DWBase
+from infrastructure.database.connections.dw_connection import Base
 
-class FatoVendas(DWBase):
+class FatoVendas(Base):
     """Fato Vendas - transações de vendas (granularidade diária)"""
     __tablename__ = "fato_vendas"
     
@@ -22,7 +22,7 @@ class FatoVendas(DWBase):
     margem_contribuicao = Column(DECIMAL)
     data_venda = Column(Date)  # Data específica da venda
 
-class FatoProducao(DWBase):
+class FatoProducao(Base):
     """Fato Produção - registros de produção (granularidade diária)"""
     __tablename__ = "fato_producao"
     
@@ -41,7 +41,7 @@ class FatoProducao(DWBase):
     defeitos_percent = Column(DECIMAL)
     data_producao = Column(Date)  # Data específica da produção
 
-class FatoCustos(DWBase):
+class FatoCustos(Base):
     """Fato Custos - custos integrados (granularidade diária)"""
     __tablename__ = "fato_custos"
     
@@ -58,7 +58,7 @@ class FatoCustos(DWBase):
     custo_unitario = Column(DECIMAL)
     data_custo = Column(Date)  # Data específica do custo
 
-class FatoQualidade(DWBase):
+class FatoQualidade(Base):
     """Fato Qualidade - registros de qualidade (granularidade diária)"""
     __tablename__ = "fato_qualidade"
     
@@ -75,7 +75,7 @@ class FatoQualidade(DWBase):
     cpk = Column(DECIMAL)  # Capability Process Index
     data_qualidade = Column(Date)  # Data específica da inspeção
 
-class FatoEnergia(DWBase):
+class FatoEnergia(Base):
     """Fato Energia - consumo energético (granularidade diária)"""
     __tablename__ = "fato_energia"
     

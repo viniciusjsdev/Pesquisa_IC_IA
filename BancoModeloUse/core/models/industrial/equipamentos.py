@@ -4,9 +4,9 @@ Modelos de equipamentos industriais
 """
 from sqlalchemy import Column, Integer, String, Float, DateTime
 from datetime import datetime
-from . import IndustrialBase
+from infrastructure.database.connections.industrial_connection import Base
 
-class Equipamento(IndustrialBase):
+class Equipamento(Base):
     __tablename__ = "equipamentos"
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String, nullable=False)
@@ -20,7 +20,7 @@ class Equipamento(IndustrialBase):
     produtividade_mao_obra = Column(Float, default=0.0)
     data_registro = Column(DateTime, default=datetime.utcnow)
 
-class ProcessoIndustrial(IndustrialBase):
+class ProcessoIndustrial(Base):
     __tablename__ = "processos_industriais"
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String, nullable=False)

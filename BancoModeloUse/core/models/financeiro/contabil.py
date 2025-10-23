@@ -2,18 +2,20 @@
 """
 Modelos contábeis financeiros
 """
-from sqlalchemy import Column, Integer, String, Text, Date, DECIMAL, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, Date, DECIMAL, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
-from . import FinanceiroBase
+from datetime import datetime
+from infrastructure.database.connections.financeiro_connection import Base
 
-class ContaContabil(FinanceiroBase):
+class ContaContabil(Base):
     __tablename__ = "contas_contabeis"
     conta_id = Column(Integer, primary_key=True, index=True)
     numero_conta = Column(String)
     nome_conta = Column(String)
     tipo_conta = Column(String)
+    data_registro = Column(DateTime, default=datetime.utcnow)
 
-class LancamentoFinanceiro(FinanceiroBase):
+class LancamentoFinanceiro(Base):
     __tablename__ = "lancamentos_financeiros"
     lancamento_id = Column(Integer, primary_key=True, index=True)
     conta_id = Column(Integer, ForeignKey("contas_contabeis.conta_id"))
@@ -23,13 +25,13 @@ class LancamentoFinanceiro(FinanceiroBase):
 
     conta = relationship("ContaContabil")
 
-class CategoriaContabilPadrao(FinanceiroBase):
+class CategoriaContabilPadrao(Base):
     __tablename__ = "categorias_contabeis_padrao"
     categoria_id = Column(Integer, primary_key=True, index=True)
     nome_categoria = Column(String, unique=True, nullable=False) # Ex: Ativo, Passivo, Receita, Despesa
     tipo_categoria = Column(String) # Ex: Balanço Patrimonial, Demonstração de Resultado
 
-class SubcategoriaContabilPadrao(FinanceiroBase):
+class SubcategoriaContabilPadrao(Base):
     __tablename__ = "subcategorias_contabeis_padrao"
     subcategoria_id = Column(Integer, primary_key=True, index=True)
     categoria_id = Column(Integer, ForeignKey("categorias_contabeis_padrao.categoria_id"))
@@ -37,7 +39,7 @@ class SubcategoriaContabilPadrao(FinanceiroBase):
 
     categoria = relationship("CategoriaContabilPadrao")
 
-class ContaContabilDetalhe(FinanceiroBase):
+class ContaContabilDetalhe(Base):
     __tablename__ = "contas_contabeis_detalhe"
     conta_detalhe_id = Column(Integer, primary_key=True, index=True)
     conta_id = Column(Integer, ForeignKey("contas_contabeis.conta_id"))
