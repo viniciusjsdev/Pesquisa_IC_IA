@@ -1,0 +1,20 @@
+custo_mo_id,operador_id,custo_hora,data_vigencia,tipo_custo
+1,11,22.1,2017-01-01,Turno dia
+2,4,32.44,2017-03-02,Turno noite
+3,9,22.49,2017-05-01,Turno noite
+4,7,26.14,2017-06-30,Turno noite
+5,6,27.6,2017-08-29,Turno dia
+6,17,30.8,2017-10-28,Turno noite
+7,9,31.85,2017-12-27,Turno noite
+8,13,29.5,2018-02-25,Turno dia
+9,5,30.47,2018-04-26,Turno dia
+10,19,35.41,2018-06-25,Turno dia
+11,16,24.09,2018-08-24,Turno dia
+12,18,30.28,2018-10-23,Turno noite
+13,4,23.35,2018-12-22,Turno noite
+14,10,25.81,2019-02-20,Turno noite
+15,11,37.72,2019-04-21,Turno noite
+16,14,30.46,2019-06-20,Turno dia
+17,10,30.9,2019-08-19,Turno noite
+18,6,27.07,2019-10-18,Turno noite
+19,10,25.31,2019-12-17,Turno dia

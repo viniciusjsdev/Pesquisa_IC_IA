@@ -1,0 +1,25 @@
+custo_operacional_id,insumo,valor_unitario,unidade_medida,data_leitura
+1,Detergente Industrial,4.25,l,2015-01-01
+2,Energia,4.87,l,2015-01-31
+3,Lubrificante,3.32,l,2015-03-02
+4,Detergente Industrial,3.76,l,2015-04-01
+5,Energia,2.18,l,2015-05-01
+6,Agua de refrigeração,0.73,l,2015-05-31
+7,Lubrificante,0.84,l,2015-06-30
+8,Agua de refrigeração,3.93,l,2015-07-30
+9,Energia,3.61,l,2015-08-29
+10,Energia,2.21,l,2015-09-28
+11,Lubrificante,3.06,l,2015-10-28
+12,Detergente Industrial,4.71,l,2015-11-27
+13,Detergente Industrial,3.48,l,2015-12-27
+14,Energia,3.05,l,2016-01-26
+15,Energia,3.81,l,2016-02-25
+16,Agua de refrigeração,2.09,l,2016-03-26
+17,Detergente Industrial,1.76,l,2016-04-25
+18,Energia,3.17,l,2016-05-25
+19,Detergente Industrial,4.21,l,2016-06-24
+20,Lubrificante,4.03,l,2016-07-24
+21,Lubrificante,3.28,l,2016-08-23
+22,Detergente Industrial,4.66,l,2016-09-22
+23,Detergente Industrial,1.38,l,2016-10-22
+24,Detergente Industrial,2.07,l,2016-11-21

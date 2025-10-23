@@ -1,0 +1,61 @@
+rateio_id,descricao,custo_total_mes,base_rateio,data_referencia
+1,Energia fabril,16898.96,Horas Maquina,2021-01-01
+2,Limpeza,27445.85,Horas Maquina,2021-01-31
+3,Supervisao,24041.22,Horas Maquina,2021-03-02
+4,Infraestrutura,23395.17,Horas Maquina,2021-04-01
+5,Manutencao Tecnologica,19984.87,Horas Maquina,2021-05-01
+6,Energia fabril,16788.14,Horas Maquina,2021-05-31
+7,Limpeza,26994.58,Horas Maquina,2021-06-30
+8,Supervisao,22673.3,Horas Maquina,2021-07-30
+9,Infraestrutura,23683.62,Horas Maquina,2021-08-29
+10,Manutencao Tecnologica,18779.23,Horas Maquina,2021-09-28
+11,Energia fabril,16557.91,Horas Maquina,2021-10-28
+12,Limpeza,18427.43,Horas Maquina,2021-11-27
+13,Supervisao,16844.25,Horas Maquina,2021-12-27
+14,Infraestrutura,26938.13,Horas Maquina,2022-01-26
+15,Manutencao Tecnologica,26030.58,Horas Maquina,2022-02-25
+16,Energia fabril,17828.11,Horas Maquina,2022-03-27
+17,Limpeza,24470.34,Horas Maquina,2022-04-26
+18,Supervisao,17658.25,Horas Maquina,2022-05-26
+19,Infraestrutura,22713.19,Horas Maquina,2022-06-25
+20,Manutencao Tecnologica,25911.96,Horas Maquina,2022-07-25
+21,Energia fabril,20558.77,Horas Maquina,2022-08-24
+22,Limpeza,18383.83,Horas Maquina,2022-09-23
+23,Supervisao,17790.9,Horas Maquina,2022-10-23
+24,Infraestrutura,19659.04,Horas Maquina,2022-11-22
+25,Manutencao Tecnologica,26323.28,Horas Maquina,2022-12-22
+26,Energia fabril,21750.59,Horas Maquina,2023-01-21
+27,Limpeza,25548.98,Horas Maquina,2023-02-20
+28,Supervisao,18164.03,Horas Maquina,2023-03-22
+29,Infraestrutura,27415.47,Horas Maquina,2023-04-21
+30,Manutencao Tecnologica,17308.05,Horas Maquina,2023-05-21
+31,Energia fabril,27876.04,Horas Maquina,2023-06-20
+32,Limpeza,16883.81,Horas Maquina,2023-07-20
+33,Supervisao,21441.78,Horas Maquina,2023-08-19
+34,Infraestrutura,25863.8,Horas Maquina,2023-09-18
+35,Manutencao Tecnologica,18692.04,Horas Maquina,2023-10-18
+36,Energia fabril,24470.31,Horas Maquina,2023-11-17
+37,Limpeza,17068.33,Horas Maquina,2023-12-17
+38,Supervisao,18769.87,Horas Maquina,2024-01-16
+39,Infraestrutura,19531.49,Horas Maquina,2024-02-15
+40,Manutencao Tecnologica,15311.53,Horas Maquina,2024-03-16
+41,Energia fabril,22408.48,Horas Maquina,2024-04-15
+42,Limpeza,18914.19,Horas Maquina,2024-05-15
+43,Supervisao,17568.12,Horas Maquina,2024-06-14
+44,Infraestrutura,24939.65,Horas Maquina,2024-07-14
+45,Manutencao Tecnologica,17890.92,Horas Maquina,2024-08-13
+46,Energia fabril,16562.95,Horas Maquina,2024-09-12
+47,Limpeza,17870.48,Horas Maquina,2024-10-12
+48,Supervisao,25034.56,Horas Maquina,2024-11-11
+49,Infraestrutura,25937.0,Horas Maquina,2024-12-11
+50,Manutencao Tecnologica,25246.32,Horas Maquina,2025-01-10
+51,Energia fabril,24622.69,Horas Maquina,2025-02-09
+52,Limpeza,18036.07,Horas Maquina,2025-03-11
+53,Supervisao,21354.17,Horas Maquina,2025-04-10
+54,Infraestrutura,22969.84,Horas Maquina,2025-05-10
+55,Manutencao Tecnologica,25678.29,Horas Maquina,2025-06-09
+56,Energia fabril,24420.43,Horas Maquina,2025-07-09
+57,Limpeza,26096.87,Horas Maquina,2025-08-08
+58,Supervisao,25737.48,Horas Maquina,2025-09-07
+59,Infraestrutura,22729.17,Horas Maquina,2025-10-07
+60,Manutencao Tecnologica,27323.88,Horas Maquina,2025-11-06

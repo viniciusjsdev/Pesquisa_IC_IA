@@ -1,0 +1,6 @@
+custo_padrao_id,tipo_custo,unidade_medida,valor_unitario_padrao,data_vigencia
+1,Material,un,14.5,2021-01-01
+2,Mao de Obra,h,30.0,2021-02-15
+3,Energia,kWh,1.2,2021-04-01
+4,Manutencao,servico,22.5,2021-05-16
+5,Transporte,kg,2.7,2021-06-30

@@ -1,0 +1,49 @@
+rateio_id,descricao,custo_total_mes,base_rateio,data_referencia
+1,Energia fabril,11460.74,Horas Maquina,2017-01-01
+2,Limpeza,19573.73,Horas Maquina,2017-01-31
+3,Supervisao,16954.79,Horas Maquina,2017-03-02
+4,Infraestrutura,16457.82,Horas Maquina,2017-04-01
+5,Energia fabril,13834.52,Horas Maquina,2017-05-01
+6,Limpeza,11375.5,Horas Maquina,2017-05-31
+7,Supervisao,19226.6,Horas Maquina,2017-06-30
+8,Infraestrutura,15902.54,Horas Maquina,2017-07-30
+9,Energia fabril,16679.71,Horas Maquina,2017-08-29
+10,Limpeza,12907.1,Horas Maquina,2017-09-28
+11,Supervisao,11198.39,Horas Maquina,2017-10-28
+12,Infraestrutura,12636.48,Horas Maquina,2017-11-27
+13,Energia fabril,11418.65,Horas Maquina,2017-12-27
+14,Limpeza,19183.18,Horas Maquina,2018-01-26
+15,Supervisao,18485.06,Horas Maquina,2018-02-25
+16,Infraestrutura,12175.47,Horas Maquina,2018-03-27
+17,Energia fabril,17284.88,Horas Maquina,2018-04-26
+18,Limpeza,12044.81,Horas Maquina,2018-05-26
+19,Supervisao,15933.22,Horas Maquina,2018-06-25
+20,Infraestrutura,18393.82,Horas Maquina,2018-07-25
+21,Energia fabril,14275.98,Horas Maquina,2018-08-24
+22,Limpeza,12602.95,Horas Maquina,2018-09-23
+23,Supervisao,12146.85,Horas Maquina,2018-10-23
+24,Infraestrutura,13583.87,Horas Maquina,2018-11-22
+25,Energia fabril,18710.22,Horas Maquina,2018-12-22
+26,Limpeza,15192.76,Horas Maquina,2019-01-21
+27,Supervisao,18114.6,Horas Maquina,2019-02-20
+28,Infraestrutura,12433.87,Horas Maquina,2019-03-22
+29,Energia fabril,19550.36,Horas Maquina,2019-04-21
+30,Limpeza,11775.42,Horas Maquina,2019-05-21
+31,Supervisao,19904.64,Horas Maquina,2019-06-20
+32,Infraestrutura,11449.08,Horas Maquina,2019-07-20
+33,Energia fabril,14955.22,Horas Maquina,2019-08-19
+34,Limpeza,18356.77,Horas Maquina,2019-09-18
+35,Supervisao,12840.03,Horas Maquina,2019-10-18
+36,Infraestrutura,17284.86,Horas Maquina,2019-11-17
+37,Energia fabril,11591.02,Horas Maquina,2019-12-17
+38,Limpeza,12899.9,Horas Maquina,2020-01-16
+39,Supervisao,13485.76,Horas Maquina,2020-02-15
+40,Infraestrutura,10239.64,Horas Maquina,2020-03-16
+41,Energia fabril,15698.83,Horas Maquina,2020-04-15
+42,Limpeza,13010.91,Horas Maquina,2020-05-15
+43,Supervisao,11975.48,Horas Maquina,2020-06-14
+44,Infraestrutura,17645.88,Horas Maquina,2020-07-14
+45,Energia fabril,12223.78,Horas Maquina,2020-08-13
+46,Limpeza,11202.27,Horas Maquina,2020-09-12
+47,Supervisao,12208.06,Horas Maquina,2020-10-12
+48,Infraestrutura,17718.89,Horas Maquina,2020-11-11

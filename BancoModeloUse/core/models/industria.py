@@ -158,7 +158,7 @@ class RegistroDefeito(Base):
 
 from sqlalchemy.orm import relationship
 from datetime import datetime
-from app.db_industrial import Base #__________________________________________ CORRIGIR CAMINHO E NOME DO ARQUIVO CHAMADO
+from infrastructure.database.connections.industrial_connection import Base
 
 class Equipamento(Base):
     __tablename__ = "equipamentos"
