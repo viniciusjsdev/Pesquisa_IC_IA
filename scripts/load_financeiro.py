@@ -17,7 +17,7 @@ from typing import Optional
 
 import pandas as pd
 from sqlalchemy.orm import Session
-from sqlalchemy import inspect
+from sqlalchemy import inspect, Date, DateTime
 
 # Permite imports relativos ao projeto
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -57,11 +57,29 @@ def _read_csv(path: str) -> pd.DataFrame:
     return df
 
 
+def _coerce_df_types_for_model(model, df: pd.DataFrame) -> pd.DataFrame:
+    mapper = inspect(model)
+    df_conv = df.copy()
+    for col in mapper.columns:
+        name = col.key
+        if name not in df_conv.columns:
+            continue
+        try:
+            if isinstance(col.type, DateTime):
+                df_conv[name] = pd.to_datetime(df_conv[name], errors="coerce")
+            elif isinstance(col.type, Date):
+                df_conv[name] = pd.to_datetime(df_conv[name], errors="coerce").dt.date
+        except Exception:
+            pass
+    return df_conv
+
+
 def _bulk_upsert(session: Session, model, df: pd.DataFrame, pk_column: str) -> int:
     count = 0
     mapper = inspect(model)
     model_cols = {c.key for c in mapper.columns}
     df = df[[c for c in df.columns if c in model_cols]]
+    df = _coerce_df_types_for_model(model, df)
 
     for _, row in df.iterrows():
         payload = row.dropna().to_dict()
