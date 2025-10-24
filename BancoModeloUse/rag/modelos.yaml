@@ -1,0 +1,39 @@
+# Configuração de modelos LLM
+
+# Modelo fine-tuned local (Mistral-7B + FinQA + FailureSensorIQ)
+finetuned_mistral:
+  provider: finetuned_local
+  model_name: "mistral-7b-finqa-failuresensor"
+  model_path: "/models/finetuned/"
+  temperature: 0.2
+  max_tokens: 2000
+  extra:
+    device: "auto"
+
+# Fallback OpenAI GPT-4o
+gpt4o_fallback:
+  provider: openai
+  model_name: "gpt-4o"
+  temperature: 0.3
+  max_tokens: 4000
+  api_key: "${OPENAI_API_KEY}"
+  base_url: "https://api.openai.com/v1"
+
+# Fallback OpenAI GPT-4o Mini (mais barato)
+gpt4o_mini_fallback:
+  provider: openai
+  model_name: "gpt-4o-mini"
+  temperature: 0.3
+  max_tokens: 2000
+  api_key: "${OPENAI_API_KEY}"
+  base_url: "https://api.openai.com/v1"
+
+# Modelo local LlamaCPP (alternativa)
+llama_local:
+  provider: llama_cpp
+  model_name: "llama-2-7b"
+  model_path: "/models/llama/"
+  temperature: 0.1
+  max_tokens: 1500
+  extra:
+    device: "cpu"
