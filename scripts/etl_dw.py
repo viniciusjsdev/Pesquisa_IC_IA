@@ -52,7 +52,10 @@ from BancoModeloUse.core.models.dw.fatos import (  # type: ignore  # noqa: E402
 # Modelos origem
 from BancoModeloUse.core.models.industrial.cadastros import Produto as IndProduto, Maquina as IndMaquina  # type: ignore  # noqa: E402
 from BancoModeloUse.core.models.financeiro.vendas import Venda as FinVenda  # type: ignore  # noqa: E402
-from BancoModeloUse.core.models.industrial.producao import RegistroOperacao as IndRegistroOperacao  # type: ignore  # noqa: E402
+from BancoModeloUse.core.models.industrial.producao import (  # type: ignore  # noqa: E402
+    RegistroOperacao as IndRegistroOperacao,
+    OrdemProducao as IndOrdemProducao,
+)
 
 
 # --------- Utilitários ---------
@@ -164,6 +167,13 @@ def _populate_fato_vendas(session: Session, fin_session: Session) -> int:
     vendas: Iterable[FinVenda] = fin_session.query(FinVenda).all()
     for v in vendas:
         tempo_sk = int(pd.to_datetime(v.data_venda).strftime("%Y%m%d")) if v.data_venda else None
+        valor_total = None
+        try:
+            if v.preco_unitario_venda is not None and v.quantidade_vendida is not None:
+                valor_total = float(v.preco_unitario_venda) * float(v.quantidade_vendida)
+        except Exception:
+            pass
+
         payload = {
             "venda_sk": v.venda_id,
             "produto_sk": v.produto_id,  # assumindo alinhamento 1:1
@@ -171,7 +181,7 @@ def _populate_fato_vendas(session: Session, fin_session: Session) -> int:
             "cliente_sk": v.cliente_id if getattr(v, "cliente_id", None) is not None else None,
             "quantidade_vendida": v.quantidade_vendida,
             "valor_unitario": v.preco_unitario_venda,
-            "valor_total": None,
+            "valor_total": valor_total,
             "desconto": None,
             "margem_contribuicao": None,
             "data_venda": v.data_venda,
@@ -191,17 +201,35 @@ def _populate_fato_vendas(session: Session, fin_session: Session) -> int:
 def _populate_fato_producao(session: Session, ind_session: Session) -> int:
     inserted = 0
     regs: Iterable[IndRegistroOperacao] = ind_session.query(IndRegistroOperacao).all()
+    # Mapa de ordens para derivar produto e quantidade planejada
+    ordens: Iterable[IndOrdemProducao] = ind_session.query(IndOrdemProducao).all()
+    ordem_by_id = {o.ordem_producao_id: o for o in ordens}
     for r in regs:
         data_reg = pd.to_datetime(r.hora_inicio) if r.hora_inicio else None
         tempo_sk = int(data_reg.strftime("%Y%m%d")) if data_reg is not None else None
+        tempo_producao_min = None
+        if getattr(r, "hora_inicio", None) and getattr(r, "hora_fim", None):
+            try:
+                dt_i = pd.to_datetime(r.hora_inicio)
+                dt_f = pd.to_datetime(r.hora_fim)
+                tempo_producao_min = (dt_f - dt_i).total_seconds() / 60.0
+            except Exception:
+                tempo_producao_min = None
+
+        produto_sk = None
+        quantidade_planejada = None
+        ordem = ordem_by_id.get(getattr(r, "ordem_producao_id", None))
+        if ordem is not None:
+            produto_sk = ordem.produto_id
+            quantidade_planejada = ordem.quantidade_planejada
         payload = {
             "producao_sk": r.registro_id,
-            "produto_sk": None,  # não está direto no registro; poderia vir de ordem -> produto
+            "produto_sk": produto_sk,
             "maquina_sk": r.maquina_id,
             "tempo_sk": tempo_sk,
             "quantidade_produzida": r.quantidade_produzida_real,
-            "quantidade_planejada": None,
-            "tempo_producao_min": None,
+            "quantidade_planejada": quantidade_planejada,
+            "tempo_producao_min": tempo_producao_min,
             "tempo_setup_min": r.tempo_setup_real_min,
             "consumo_energia_kwh": r.consumo_energia_kwh,
             "eficiencia_percent": None,
