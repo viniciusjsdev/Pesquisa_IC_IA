@@ -1,0 +1,2239 @@
+{
+  "started_at": "2025-10-25T21:02:33.263125Z",
+  "dry_run": true,
+  "num_csvs_found": 75,
+  "files": [
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2015_2016/contas_contabeis.csv",
+      "status": "ok",
+      "target_table": "contas_contabeis",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "conta_id",
+        "numero_conta",
+        "nome_conta",
+        "tipo_conta"
+      ],
+      "model_columns": [
+        "conta_id",
+        "numero_conta",
+        "nome_conta",
+        "tipo_conta",
+        "data_registro"
+      ],
+      "missing_in_csv": [
+        "data_registro"
+      ],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 7,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2015_2016/custo_mao_obra_historico.csv",
+      "status": "ok",
+      "target_table": "custo_mao_obra_historico",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "custo_mo_id",
+        "operador_id",
+        "custo_hora",
+        "data_vigencia",
+        "tipo_custo"
+      ],
+      "model_columns": [
+        "custo_mo_id",
+        "operador_id",
+        "custo_hora",
+        "data_vigencia",
+        "tipo_custo"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 10,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2015_2016/custos_indiretos_rateio.csv",
+      "status": "ok",
+      "target_table": "custos_indiretos_rateio",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "rateio_id",
+        "descricao",
+        "custo_total_mes",
+        "base_rateio",
+        "data_referencia"
+      ],
+      "model_columns": [
+        "rateio_id",
+        "descricao",
+        "custo_total_mes",
+        "base_rateio",
+        "data_referencia"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 12,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2015_2016/custos_operacionais_variaveis.csv",
+      "status": "ok",
+      "target_table": "custos_operacionais_variaveis",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "custo_operacional_id",
+        "insumo",
+        "valor_unitario",
+        "unidade_medida",
+        "data_leitura"
+      ],
+      "model_columns": [
+        "custo_operacional_id",
+        "insumo",
+        "valor_unitario",
+        "unidade_medida",
+        "data_leitura"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 24,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2015_2016/custos_padrao.csv",
+      "status": "ok",
+      "target_table": "custos_padrao",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "custo_padrao_id",
+        "tipo_custo",
+        "unidade_medida",
+        "valor_unitario_padrao",
+        "data_vigencia"
+      ],
+      "model_columns": [
+        "custo_padrao_id",
+        "tipo_custo",
+        "unidade_medida",
+        "valor_unitario_padrao",
+        "data_vigencia",
+        "data_registro"
+      ],
+      "missing_in_csv": [
+        "data_registro"
+      ],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 5,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2015_2016/custos_producao.csv",
+      "status": "ok",
+      "target_table": "custos_producao",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "id",
+        "materia_prima",
+        "mao_obra_direta",
+        "custos_indiretos",
+        "estoque_inicial_elaboracao",
+        "estoque_final_elaboracao",
+        "estoque_inicial_acabados",
+        "estoque_final_acabados",
+        "unidades_produzidas",
+        "custo_total",
+        "custo_unitario",
+        "data_registro"
+      ],
+      "model_columns": [
+        "id",
+        "materia_prima",
+        "mao_obra_direta",
+        "custos_indiretos",
+        "estoque_inicial_elaboracao",
+        "estoque_final_elaboracao",
+        "estoque_inicial_acabados",
+        "estoque_final_acabados",
+        "unidades_produzidas",
+        "custo_total",
+        "custo_unitario",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 12,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2015_2016/kpis_gerenciais.csv",
+      "status": "ok",
+      "target_table": "kpis_gerenciais",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "kpi_id",
+        "nome_kpi",
+        "valor_kpi",
+        "data_referencia"
+      ],
+      "model_columns": [
+        "kpi_id",
+        "nome_kpi",
+        "valor_kpi",
+        "data_referencia"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 12,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2015_2016/lancamentos_financeiros.csv",
+      "status": "ok",
+      "target_table": "lancamentos_financeiros",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "lancamento_id",
+        "conta_id",
+        "data_lancamento",
+        "valor",
+        "descricao"
+      ],
+      "model_columns": [
+        "lancamento_id",
+        "conta_id",
+        "data_lancamento",
+        "valor",
+        "descricao"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 30,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2015_2016/materiais_custo_historico.csv",
+      "status": "ok",
+      "target_table": "materiais_custo_historico",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "custo_material_id",
+        "material_id",
+        "custo_unitario",
+        "data_compra",
+        "lote_material_id"
+      ],
+      "model_columns": [
+        "custo_material_id",
+        "material_id",
+        "custo_unitario",
+        "data_compra",
+        "lote_material_id"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 20,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2015_2016/resultados_financeiros.csv",
+      "status": "ok",
+      "target_table": "resultados_financeiros",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "id",
+        "receita_total",
+        "custos_variaveis",
+        "despesas_variaveis",
+        "custos_fixos",
+        "despesas_operacionais",
+        "juros",
+        "impostos",
+        "custo_ativo",
+        "valor_residual",
+        "vida_util_anos",
+        "custo_investimento",
+        "ativos_circulantes",
+        "passivos_circulantes",
+        "margem_contribuicao",
+        "ponto_equilibrio",
+        "lucro_bruto",
+        "lucro_liquido",
+        "depreciacao_anual",
+        "roi_percentual",
+        "capital_de_giro",
+        "data_registro"
+      ],
+      "model_columns": [
+        "id",
+        "receita_total",
+        "custos_variaveis",
+        "despesas_variaveis",
+        "custos_fixos",
+        "despesas_operacionais",
+        "juros",
+        "impostos",
+        "custo_ativo",
+        "valor_residual",
+        "vida_util_anos",
+        "custo_investimento",
+        "ativos_circulantes",
+        "passivos_circulantes",
+        "margem_contribuicao",
+        "ponto_equilibrio",
+        "lucro_bruto",
+        "lucro_liquido",
+        "depreciacao_anual",
+        "roi_percentual",
+        "capital_de_giro",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 12,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2015_2016/vendas.csv",
+      "status": "ok",
+      "target_table": "vendas",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "venda_id",
+        "produto_id",
+        "quantidade_vendida",
+        "preco_unitario_venda",
+        "data_venda",
+        "cliente_id"
+      ],
+      "model_columns": [
+        "venda_id",
+        "produto_id",
+        "quantidade_vendida",
+        "preco_unitario_venda",
+        "data_venda",
+        "cliente_id"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 20,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2017_2020/contas_contabeis.csv",
+      "status": "ok",
+      "target_table": "contas_contabeis",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "conta_id",
+        "numero_conta",
+        "nome_conta",
+        "tipo_conta"
+      ],
+      "model_columns": [
+        "conta_id",
+        "numero_conta",
+        "nome_conta",
+        "tipo_conta",
+        "data_registro"
+      ],
+      "missing_in_csv": [
+        "data_registro"
+      ],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 10,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2017_2020/custo_mao_obra_historico.csv",
+      "status": "ok",
+      "target_table": "custo_mao_obra_historico",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "custo_mo_id",
+        "operador_id",
+        "custo_hora",
+        "data_vigencia",
+        "tipo_custo"
+      ],
+      "model_columns": [
+        "custo_mo_id",
+        "operador_id",
+        "custo_hora",
+        "data_vigencia",
+        "tipo_custo"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 19,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2017_2020/custos_indiretos_rateio.csv",
+      "status": "ok",
+      "target_table": "custos_indiretos_rateio",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "rateio_id",
+        "descricao",
+        "custo_total_mes",
+        "base_rateio",
+        "data_referencia"
+      ],
+      "model_columns": [
+        "rateio_id",
+        "descricao",
+        "custo_total_mes",
+        "base_rateio",
+        "data_referencia"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 48,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2017_2020/custos_operacionais_variaveis.csv",
+      "status": "ok",
+      "target_table": "custos_operacionais_variaveis",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "custo_operacional_id",
+        "insumo",
+        "valor_unitario",
+        "unidade_medida",
+        "data_leitura"
+      ],
+      "model_columns": [
+        "custo_operacional_id",
+        "insumo",
+        "valor_unitario",
+        "unidade_medida",
+        "data_leitura"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 47,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2017_2020/custos_padrao.csv",
+      "status": "ok",
+      "target_table": "custos_padrao",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "custo_padrao_id",
+        "tipo_custo",
+        "unidade_medida",
+        "valor_unitario_padrao",
+        "data_vigencia"
+      ],
+      "model_columns": [
+        "custo_padrao_id",
+        "tipo_custo",
+        "unidade_medida",
+        "valor_unitario_padrao",
+        "data_vigencia",
+        "data_registro"
+      ],
+      "missing_in_csv": [
+        "data_registro"
+      ],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 5,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2017_2020/custos_producao.csv",
+      "status": "ok",
+      "target_table": "custos_producao",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "id",
+        "materia_prima",
+        "mao_obra_direta",
+        "custos_indiretos",
+        "estoque_inicial_elaboracao",
+        "estoque_final_elaboracao",
+        "estoque_inicial_acabados",
+        "estoque_final_acabados",
+        "unidades_produzidas",
+        "custo_total",
+        "custo_unitario",
+        "data_registro"
+      ],
+      "model_columns": [
+        "id",
+        "materia_prima",
+        "mao_obra_direta",
+        "custos_indiretos",
+        "estoque_inicial_elaboracao",
+        "estoque_final_elaboracao",
+        "estoque_inicial_acabados",
+        "estoque_final_acabados",
+        "unidades_produzidas",
+        "custo_total",
+        "custo_unitario",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 24,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2017_2020/kpis_gerenciais.csv",
+      "status": "ok",
+      "target_table": "kpis_gerenciais",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "kpi_id",
+        "nome_kpi",
+        "valor_kpi",
+        "data_referencia"
+      ],
+      "model_columns": [
+        "kpi_id",
+        "nome_kpi",
+        "valor_kpi",
+        "data_referencia"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 196,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2017_2020/lancamentos_financeiros.csv",
+      "status": "ok",
+      "target_table": "lancamentos_financeiros",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "lancamento_id",
+        "conta_id",
+        "data_lancamento",
+        "valor",
+        "descricao"
+      ],
+      "model_columns": [
+        "lancamento_id",
+        "conta_id",
+        "data_lancamento",
+        "valor",
+        "descricao"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 60,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2017_2020/materiais_custo_historico.csv",
+      "status": "ok",
+      "target_table": "materiais_custo_historico",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "custo_material_id",
+        "material_id",
+        "custo_unitario",
+        "data_compra",
+        "lote_material_id"
+      ],
+      "model_columns": [
+        "custo_material_id",
+        "material_id",
+        "custo_unitario",
+        "data_compra",
+        "lote_material_id"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 60,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2017_2020/resultados_financeiros.csv",
+      "status": "ok",
+      "target_table": "resultados_financeiros",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "id",
+        "receita_total",
+        "custos_variaveis",
+        "despesas_variaveis",
+        "custos_fixos",
+        "despesas_operacionais",
+        "juros",
+        "impostos",
+        "custo_ativo",
+        "valor_residual",
+        "vida_util_anos",
+        "custo_investimento",
+        "ativos_circulantes",
+        "passivos_circulantes",
+        "margem_contribuicao",
+        "ponto_equilibrio",
+        "lucro_bruto",
+        "lucro_liquido",
+        "depreciacao_anual",
+        "roi_percentual",
+        "capital_de_giro",
+        "data_registro"
+      ],
+      "model_columns": [
+        "id",
+        "receita_total",
+        "custos_variaveis",
+        "despesas_variaveis",
+        "custos_fixos",
+        "despesas_operacionais",
+        "juros",
+        "impostos",
+        "custo_ativo",
+        "valor_residual",
+        "vida_util_anos",
+        "custo_investimento",
+        "ativos_circulantes",
+        "passivos_circulantes",
+        "margem_contribuicao",
+        "ponto_equilibrio",
+        "lucro_bruto",
+        "lucro_liquido",
+        "depreciacao_anual",
+        "roi_percentual",
+        "capital_de_giro",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 24,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2017_2020/vendas.csv",
+      "status": "ok",
+      "target_table": "vendas",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "venda_id",
+        "produto_id",
+        "quantidade_vendida",
+        "preco_unitario_venda",
+        "data_venda",
+        "cliente_id"
+      ],
+      "model_columns": [
+        "venda_id",
+        "produto_id",
+        "quantidade_vendida",
+        "preco_unitario_venda",
+        "data_venda",
+        "cliente_id"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 40,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2021_2025/contas_contabeis.csv",
+      "status": "ok",
+      "target_table": "contas_contabeis",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "conta_id",
+        "numero_conta",
+        "nome_conta",
+        "tipo_conta"
+      ],
+      "model_columns": [
+        "conta_id",
+        "numero_conta",
+        "nome_conta",
+        "tipo_conta",
+        "data_registro"
+      ],
+      "missing_in_csv": [
+        "data_registro"
+      ],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 12,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2021_2025/custo_mao_obra_historico.csv",
+      "status": "ok",
+      "target_table": "custo_mao_obra_historico",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "custo_mo_id",
+        "operador_id",
+        "custo_hora",
+        "data_vigencia",
+        "tipo_custo"
+      ],
+      "model_columns": [
+        "custo_mo_id",
+        "operador_id",
+        "custo_hora",
+        "data_vigencia",
+        "tipo_custo"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 39,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2021_2025/custos_indiretos_rateio.csv",
+      "status": "ok",
+      "target_table": "custos_indiretos_rateio",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "rateio_id",
+        "descricao",
+        "custo_total_mes",
+        "base_rateio",
+        "data_referencia"
+      ],
+      "model_columns": [
+        "rateio_id",
+        "descricao",
+        "custo_total_mes",
+        "base_rateio",
+        "data_referencia"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 60,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2021_2025/custos_operacionais_variaveis.csv",
+      "status": "ok",
+      "target_table": "custos_operacionais_variaveis",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "custo_operacional_id",
+        "insumo",
+        "valor_unitario",
+        "unidade_medida",
+        "data_leitura"
+      ],
+      "model_columns": [
+        "custo_operacional_id",
+        "insumo",
+        "valor_unitario",
+        "unidade_medida",
+        "data_leitura"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 71,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2021_2025/custos_padrao.csv",
+      "status": "ok",
+      "target_table": "custos_padrao",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "custo_padrao_id",
+        "tipo_custo",
+        "unidade_medida",
+        "valor_unitario_padrao",
+        "data_vigencia"
+      ],
+      "model_columns": [
+        "custo_padrao_id",
+        "tipo_custo",
+        "unidade_medida",
+        "valor_unitario_padrao",
+        "data_vigencia",
+        "data_registro"
+      ],
+      "missing_in_csv": [
+        "data_registro"
+      ],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 5,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2021_2025/custos_producao.csv",
+      "status": "ok",
+      "target_table": "custos_producao",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "id",
+        "materia_prima",
+        "mao_obra_direta",
+        "custos_indiretos",
+        "estoque_inicial_elaboracao",
+        "estoque_final_elaboracao",
+        "estoque_inicial_acabados",
+        "estoque_final_acabados",
+        "unidades_produzidas",
+        "custo_total",
+        "custo_unitario",
+        "data_registro"
+      ],
+      "model_columns": [
+        "id",
+        "materia_prima",
+        "mao_obra_direta",
+        "custos_indiretos",
+        "estoque_inicial_elaboracao",
+        "estoque_final_elaboracao",
+        "estoque_inicial_acabados",
+        "estoque_final_acabados",
+        "unidades_produzidas",
+        "custo_total",
+        "custo_unitario",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 36,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2021_2025/kpis_gerenciais.csv",
+      "status": "ok",
+      "target_table": "kpis_gerenciais",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "kpi_id",
+        "nome_kpi",
+        "valor_kpi",
+        "data_referencia"
+      ],
+      "model_columns": [
+        "kpi_id",
+        "nome_kpi",
+        "valor_kpi",
+        "data_referencia"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 244,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2021_2025/lancamentos_financeiros.csv",
+      "status": "ok",
+      "target_table": "lancamentos_financeiros",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "lancamento_id",
+        "conta_id",
+        "data_lancamento",
+        "valor",
+        "descricao"
+      ],
+      "model_columns": [
+        "lancamento_id",
+        "conta_id",
+        "data_lancamento",
+        "valor",
+        "descricao"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 100,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2021_2025/materiais_custo_historico.csv",
+      "status": "ok",
+      "target_table": "materiais_custo_historico",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "custo_material_id",
+        "material_id",
+        "custo_unitario",
+        "data_compra",
+        "lote_material_id"
+      ],
+      "model_columns": [
+        "custo_material_id",
+        "material_id",
+        "custo_unitario",
+        "data_compra",
+        "lote_material_id"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 100,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2021_2025/resultados_financeiros.csv",
+      "status": "ok",
+      "target_table": "resultados_financeiros",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "id",
+        "receita_total",
+        "custos_variaveis",
+        "despesas_variaveis",
+        "custos_fixos",
+        "despesas_operacionais",
+        "juros",
+        "impostos",
+        "custo_ativo",
+        "valor_residual",
+        "vida_util_anos",
+        "custo_investimento",
+        "ativos_circulantes",
+        "passivos_circulantes",
+        "margem_contribuicao",
+        "ponto_equilibrio",
+        "lucro_bruto",
+        "lucro_liquido",
+        "depreciacao_anual",
+        "roi_percentual",
+        "capital_de_giro",
+        "data_registro"
+      ],
+      "model_columns": [
+        "id",
+        "receita_total",
+        "custos_variaveis",
+        "despesas_variaveis",
+        "custos_fixos",
+        "despesas_operacionais",
+        "juros",
+        "impostos",
+        "custo_ativo",
+        "valor_residual",
+        "vida_util_anos",
+        "custo_investimento",
+        "ativos_circulantes",
+        "passivos_circulantes",
+        "margem_contribuicao",
+        "ponto_equilibrio",
+        "lucro_bruto",
+        "lucro_liquido",
+        "depreciacao_anual",
+        "roi_percentual",
+        "capital_de_giro",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 36,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_financeiros_2021_2025/vendas.csv",
+      "status": "ok",
+      "target_table": "vendas",
+      "target_db": "financeiro",
+      "csv_columns": [
+        "venda_id",
+        "produto_id",
+        "quantidade_vendida",
+        "preco_unitario_venda",
+        "data_venda",
+        "cliente_id"
+      ],
+      "model_columns": [
+        "venda_id",
+        "produto_id",
+        "quantidade_vendida",
+        "preco_unitario_venda",
+        "data_venda",
+        "cliente_id"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 60,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/consumo_materiais.csv",
+      "status": "ok",
+      "target_table": "consumo_materiais",
+      "target_db": "industrial",
+      "csv_columns": [
+        "consumo_id",
+        "registro_id",
+        "material_id",
+        "lote_material_id",
+        "quantidade_consumida",
+        "data_registro"
+      ],
+      "model_columns": [
+        "consumo_id",
+        "registro_id",
+        "material_id",
+        "lote_material_id",
+        "quantidade_consumida"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [
+        "data_registro"
+      ],
+      "suggestions": [],
+      "rows_total": 300,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/controle_qualidade.csv",
+      "status": "ok",
+      "target_table": "controle_qualidade",
+      "target_db": "industrial",
+      "csv_columns": [
+        "controle_id",
+        "lote_producao_id",
+        "data_inspecao",
+        "inspetor_id",
+        "unidades_aprovadas",
+        "unidades_rejeitadas",
+        "motivo_rejeicao"
+      ],
+      "model_columns": [
+        "controle_id",
+        "lote_producao_id",
+        "data_inspecao",
+        "inspetor_id",
+        "unidades_aprovadas",
+        "unidades_rejeitadas",
+        "motivo_rejeicao"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 732,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/equipamentos.csv",
+      "status": "ok",
+      "target_table": "equipamentos",
+      "target_db": "industrial",
+      "csv_columns": [
+        "id",
+        "nome",
+        "disponibilidade",
+        "performance",
+        "qualidade",
+        "oee",
+        "taxa_producao",
+        "capacidade_producao",
+        "eficiencia_linha",
+        "produtividade_mao_obra",
+        "data_registro"
+      ],
+      "model_columns": [
+        "id",
+        "nome",
+        "disponibilidade",
+        "performance",
+        "qualidade",
+        "oee",
+        "taxa_producao",
+        "capacidade_producao",
+        "eficiencia_linha",
+        "produtividade_mao_obra",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 17545,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/fornecedores.csv",
+      "status": "ok",
+      "target_table": "fornecedores",
+      "target_db": "industrial",
+      "csv_columns": [
+        "fornecedor_id",
+        "nome_fornecedor",
+        "data_registro"
+      ],
+      "model_columns": [
+        "fornecedor_id",
+        "nome_fornecedor",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 10,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/lotes_materiais.csv",
+      "status": "ok",
+      "target_table": "lotes_materiais",
+      "target_db": "industrial",
+      "csv_columns": [
+        "lote_id",
+        "material_id",
+        "fornecedor_id",
+        "data_recebimento",
+        "lote_fornecedor"
+      ],
+      "model_columns": [
+        "lote_id",
+        "material_id",
+        "fornecedor_id",
+        "data_recebimento",
+        "lote_fornecedor"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 100,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/lotes_producao.csv",
+      "status": "ok",
+      "target_table": "lotes_producao",
+      "target_db": "industrial",
+      "csv_columns": [
+        "lote_producao_id",
+        "ordem_producao_id",
+        "data_lote",
+        "quantidade_total"
+      ],
+      "model_columns": [
+        "lote_producao_id",
+        "ordem_producao_id",
+        "data_lote",
+        "quantidade_total"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 100,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/maquinas.csv",
+      "status": "ok",
+      "target_table": "maquinas",
+      "target_db": "industrial",
+      "csv_columns": [
+        "maquina_id",
+        "nome_maquina",
+        "linha_producao",
+        "capacidade_producao_max",
+        "data_registro"
+      ],
+      "model_columns": [
+        "maquina_id",
+        "nome_maquina",
+        "linha_producao",
+        "capacidade_producao_max",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 4,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/materiais.csv",
+      "status": "ok",
+      "target_table": "materiais",
+      "target_db": "industrial",
+      "csv_columns": [
+        "material_id",
+        "nome_material",
+        "unidade_medida",
+        "data_registro"
+      ],
+      "model_columns": [
+        "material_id",
+        "nome_material",
+        "unidade_medida",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 10,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/ordens_producao.csv",
+      "status": "ok",
+      "target_table": "ordens_producao",
+      "target_db": "industrial",
+      "csv_columns": [
+        "ordem_producao_id",
+        "produto_id",
+        "quantidade_planejada",
+        "data_planejamento",
+        "data_inicio_real",
+        "data_fim_real",
+        "status_ordem"
+      ],
+      "model_columns": [
+        "ordem_producao_id",
+        "produto_id",
+        "quantidade_planejada",
+        "data_planejamento",
+        "data_inicio_real",
+        "data_fim_real",
+        "status_ordem",
+        "data_registro"
+      ],
+      "missing_in_csv": [
+        "data_registro"
+      ],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 100,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/paradas_maquinas.csv",
+      "status": "ok",
+      "target_table": "paradas_maquinas",
+      "target_db": "industrial",
+      "csv_columns": [
+        "parada_id",
+        "maquina_id",
+        "hora_inicio_parada",
+        "hora_fim_parada",
+        "motivo_parada",
+        "data_registro"
+      ],
+      "model_columns": [
+        "parada_id",
+        "maquina_id",
+        "hora_inicio_parada",
+        "hora_fim_parada",
+        "motivo_parada",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 200,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/processo_industrial.csv",
+      "status": "skipped",
+      "target_table": null,
+      "target_db": null,
+      "csv_columns": null,
+      "model_columns": null,
+      "missing_in_csv": null,
+      "extra_in_csv": null,
+      "suggestions": null,
+      "rows_total": null,
+      "rows_inserted": null,
+      "rows_skipped_duplicates": null,
+      "error": "Nenhuma tabela ORM correspondente encontrada pelo nome do arquivo"
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/produtos.csv",
+      "status": "ok",
+      "target_table": "produtos",
+      "target_db": "industrial",
+      "csv_columns": [
+        "produto_id",
+        "nome_produto",
+        "descricao",
+        "unidade_medida",
+        "data_registro"
+      ],
+      "model_columns": [
+        "produto_id",
+        "nome_produto",
+        "descricao",
+        "unidade_medida",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 5,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/registros_operacao.csv",
+      "status": "ok",
+      "target_table": "registros_operacao",
+      "target_db": "industrial",
+      "csv_columns": [
+        "registro_id",
+        "ordem_producao_id",
+        "maquina_id",
+        "operador_id",
+        "hora_inicio",
+        "hora_fim",
+        "tempo_setup_real_min",
+        "quantidade_produzida_real",
+        "consumo_energia_kwh",
+        "data_registro"
+      ],
+      "model_columns": [
+        "registro_id",
+        "ordem_producao_id",
+        "maquina_id",
+        "operador_id",
+        "hora_inicio",
+        "hora_fim",
+        "tempo_setup_real_min",
+        "quantidade_produzida_real",
+        "consumo_energia_kwh",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 70180,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/roteiros_producao.csv",
+      "status": "ok",
+      "target_table": "roteiros_producao",
+      "target_db": "industrial",
+      "csv_columns": [
+        "roteiro_id",
+        "produto_id",
+        "versao",
+        "data_registro"
+      ],
+      "model_columns": [
+        "roteiro_id",
+        "produto_id",
+        "versao",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 5,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/consumo_materiais.csv",
+      "status": "ok",
+      "target_table": "consumo_materiais",
+      "target_db": "industrial",
+      "csv_columns": [
+        "consumo_id",
+        "registro_id",
+        "material_id",
+        "lote_material_id",
+        "quantidade_consumida",
+        "data_registro"
+      ],
+      "model_columns": [
+        "consumo_id",
+        "registro_id",
+        "material_id",
+        "lote_material_id",
+        "quantidade_consumida"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [
+        "data_registro"
+      ],
+      "suggestions": [],
+      "rows_total": 600,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/controle_qualidade.csv",
+      "status": "ok",
+      "target_table": "controle_qualidade",
+      "target_db": "industrial",
+      "csv_columns": [
+        "controle_id",
+        "lote_producao_id",
+        "data_inspecao",
+        "inspetor_id",
+        "unidades_aprovadas",
+        "unidades_rejeitadas",
+        "motivo_rejeicao"
+      ],
+      "model_columns": [
+        "controle_id",
+        "lote_producao_id",
+        "data_inspecao",
+        "inspetor_id",
+        "unidades_aprovadas",
+        "unidades_rejeitadas",
+        "motivo_rejeicao"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 1462,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/equipamentos.csv",
+      "status": "ok",
+      "target_table": "equipamentos",
+      "target_db": "industrial",
+      "csv_columns": [
+        "id",
+        "nome",
+        "disponibilidade",
+        "performance",
+        "qualidade",
+        "oee",
+        "taxa_producao",
+        "capacidade_producao",
+        "eficiencia_linha",
+        "produtividade_mao_obra",
+        "data_registro"
+      ],
+      "model_columns": [
+        "id",
+        "nome",
+        "disponibilidade",
+        "performance",
+        "qualidade",
+        "oee",
+        "taxa_producao",
+        "capacidade_producao",
+        "eficiencia_linha",
+        "produtividade_mao_obra",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 35065,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/fornecedores.csv",
+      "status": "ok",
+      "target_table": "fornecedores",
+      "target_db": "industrial",
+      "csv_columns": [
+        "fornecedor_id",
+        "nome_fornecedor",
+        "data_registro"
+      ],
+      "model_columns": [
+        "fornecedor_id",
+        "nome_fornecedor",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 20,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/lotes_materiais.csv",
+      "status": "ok",
+      "target_table": "lotes_materiais",
+      "target_db": "industrial",
+      "csv_columns": [
+        "lote_id",
+        "material_id",
+        "fornecedor_id",
+        "data_recebimento",
+        "lote_fornecedor"
+      ],
+      "model_columns": [
+        "lote_id",
+        "material_id",
+        "fornecedor_id",
+        "data_recebimento",
+        "lote_fornecedor"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 200,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/lotes_producao.csv",
+      "status": "ok",
+      "target_table": "lotes_producao",
+      "target_db": "industrial",
+      "csv_columns": [
+        "lote_producao_id",
+        "ordem_producao_id",
+        "data_lote",
+        "quantidade_total"
+      ],
+      "model_columns": [
+        "lote_producao_id",
+        "ordem_producao_id",
+        "data_lote",
+        "quantidade_total"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 200,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/maquinas.csv",
+      "status": "ok",
+      "target_table": "maquinas",
+      "target_db": "industrial",
+      "csv_columns": [
+        "maquina_id",
+        "nome_maquina",
+        "linha_producao",
+        "capacidade_producao_max",
+        "data_registro"
+      ],
+      "model_columns": [
+        "maquina_id",
+        "nome_maquina",
+        "linha_producao",
+        "capacidade_producao_max",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 4,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/materiais.csv",
+      "status": "ok",
+      "target_table": "materiais",
+      "target_db": "industrial",
+      "csv_columns": [
+        "material_id",
+        "nome_material",
+        "unidade_medida",
+        "data_registro"
+      ],
+      "model_columns": [
+        "material_id",
+        "nome_material",
+        "unidade_medida",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 10,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/ordens_producao.csv",
+      "status": "ok",
+      "target_table": "ordens_producao",
+      "target_db": "industrial",
+      "csv_columns": [
+        "ordem_producao_id",
+        "produto_id",
+        "quantidade_planejada",
+        "data_planejamento",
+        "data_inicio_real",
+        "data_fim_real",
+        "status_ordem"
+      ],
+      "model_columns": [
+        "ordem_producao_id",
+        "produto_id",
+        "quantidade_planejada",
+        "data_planejamento",
+        "data_inicio_real",
+        "data_fim_real",
+        "status_ordem",
+        "data_registro"
+      ],
+      "missing_in_csv": [
+        "data_registro"
+      ],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 200,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/paradas_maquinas.csv",
+      "status": "ok",
+      "target_table": "paradas_maquinas",
+      "target_db": "industrial",
+      "csv_columns": [
+        "parada_id",
+        "maquina_id",
+        "hora_inicio_parada",
+        "hora_fim_parada",
+        "motivo_parada",
+        "data_registro"
+      ],
+      "model_columns": [
+        "parada_id",
+        "maquina_id",
+        "hora_inicio_parada",
+        "hora_fim_parada",
+        "motivo_parada",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 400,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/processo_industrial.csv",
+      "status": "skipped",
+      "target_table": null,
+      "target_db": null,
+      "csv_columns": null,
+      "model_columns": null,
+      "missing_in_csv": null,
+      "extra_in_csv": null,
+      "suggestions": null,
+      "rows_total": null,
+      "rows_inserted": null,
+      "rows_skipped_duplicates": null,
+      "error": "Nenhuma tabela ORM correspondente encontrada pelo nome do arquivo"
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/produtos.csv",
+      "status": "ok",
+      "target_table": "produtos",
+      "target_db": "industrial",
+      "csv_columns": [
+        "produto_id",
+        "nome_produto",
+        "descricao",
+        "unidade_medida",
+        "data_registro"
+      ],
+      "model_columns": [
+        "produto_id",
+        "nome_produto",
+        "descricao",
+        "unidade_medida",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 5,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/registros_operacao.csv",
+      "status": "ok",
+      "target_table": "registros_operacao",
+      "target_db": "industrial",
+      "csv_columns": [
+        "registro_id",
+        "ordem_producao_id",
+        "maquina_id",
+        "operador_id",
+        "hora_inicio",
+        "hora_fim",
+        "tempo_setup_real_min",
+        "quantidade_produzida_real",
+        "consumo_energia_kwh",
+        "data_registro"
+      ],
+      "model_columns": [
+        "registro_id",
+        "ordem_producao_id",
+        "maquina_id",
+        "operador_id",
+        "hora_inicio",
+        "hora_fim",
+        "tempo_setup_real_min",
+        "quantidade_produzida_real",
+        "consumo_energia_kwh",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 140260,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/roteiros_producao.csv",
+      "status": "ok",
+      "target_table": "roteiros_producao",
+      "target_db": "industrial",
+      "csv_columns": [
+        "roteiro_id",
+        "produto_id",
+        "versao",
+        "data_registro"
+      ],
+      "model_columns": [
+        "roteiro_id",
+        "produto_id",
+        "versao",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 10,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/consumo_materiais.csv",
+      "status": "ok",
+      "target_table": "consumo_materiais",
+      "target_db": "industrial",
+      "csv_columns": [
+        "consumo_id",
+        "registro_id",
+        "material_id",
+        "lote_material_id",
+        "quantidade_consumida",
+        "data_registro"
+      ],
+      "model_columns": [
+        "consumo_id",
+        "registro_id",
+        "material_id",
+        "lote_material_id",
+        "quantidade_consumida"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [
+        "data_registro"
+      ],
+      "suggestions": [],
+      "rows_total": 900,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/controle_qualidade.csv",
+      "status": "ok",
+      "target_table": "controle_qualidade",
+      "target_db": "industrial",
+      "csv_columns": [
+        "controle_id",
+        "lote_producao_id",
+        "data_inspecao",
+        "inspetor_id",
+        "unidades_aprovadas",
+        "unidades_rejeitadas",
+        "motivo_rejeicao"
+      ],
+      "model_columns": [
+        "controle_id",
+        "lote_producao_id",
+        "data_inspecao",
+        "inspetor_id",
+        "unidades_aprovadas",
+        "unidades_rejeitadas",
+        "motivo_rejeicao"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 1827,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/equipamentos.csv",
+      "status": "ok",
+      "target_table": "equipamentos",
+      "target_db": "industrial",
+      "csv_columns": [
+        "id",
+        "nome",
+        "disponibilidade",
+        "performance",
+        "qualidade",
+        "oee",
+        "taxa_producao",
+        "capacidade_producao",
+        "eficiencia_linha",
+        "produtividade_mao_obra",
+        "data_registro"
+      ],
+      "model_columns": [
+        "id",
+        "nome",
+        "disponibilidade",
+        "performance",
+        "qualidade",
+        "oee",
+        "taxa_producao",
+        "capacidade_producao",
+        "eficiencia_linha",
+        "produtividade_mao_obra",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 43825,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/fornecedores.csv",
+      "status": "ok",
+      "target_table": "fornecedores",
+      "target_db": "industrial",
+      "csv_columns": [
+        "fornecedor_id",
+        "nome_fornecedor",
+        "data_registro"
+      ],
+      "model_columns": [
+        "fornecedor_id",
+        "nome_fornecedor",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 30,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/lotes_materiais.csv",
+      "status": "ok",
+      "target_table": "lotes_materiais",
+      "target_db": "industrial",
+      "csv_columns": [
+        "lote_id",
+        "material_id",
+        "fornecedor_id",
+        "data_recebimento",
+        "lote_fornecedor"
+      ],
+      "model_columns": [
+        "lote_id",
+        "material_id",
+        "fornecedor_id",
+        "data_recebimento",
+        "lote_fornecedor"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 350,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/lotes_producao.csv",
+      "status": "ok",
+      "target_table": "lotes_producao",
+      "target_db": "industrial",
+      "csv_columns": [
+        "lote_producao_id",
+        "ordem_producao_id",
+        "data_lote",
+        "quantidade_total"
+      ],
+      "model_columns": [
+        "lote_producao_id",
+        "ordem_producao_id",
+        "data_lote",
+        "quantidade_total"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 350,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/maquinas.csv",
+      "status": "ok",
+      "target_table": "maquinas",
+      "target_db": "industrial",
+      "csv_columns": [
+        "maquina_id",
+        "nome_maquina",
+        "linha_producao",
+        "capacidade_producao_max",
+        "data_registro"
+      ],
+      "model_columns": [
+        "maquina_id",
+        "nome_maquina",
+        "linha_producao",
+        "capacidade_producao_max",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 5,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/materiais.csv",
+      "status": "ok",
+      "target_table": "materiais",
+      "target_db": "industrial",
+      "csv_columns": [
+        "material_id",
+        "nome_material",
+        "unidade_medida",
+        "data_registro"
+      ],
+      "model_columns": [
+        "material_id",
+        "nome_material",
+        "unidade_medida",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 10,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/ordens_producao.csv",
+      "status": "ok",
+      "target_table": "ordens_producao",
+      "target_db": "industrial",
+      "csv_columns": [
+        "ordem_producao_id",
+        "produto_id",
+        "quantidade_planejada",
+        "data_planejamento",
+        "data_inicio_real",
+        "data_fim_real",
+        "status_ordem"
+      ],
+      "model_columns": [
+        "ordem_producao_id",
+        "produto_id",
+        "quantidade_planejada",
+        "data_planejamento",
+        "data_inicio_real",
+        "data_fim_real",
+        "status_ordem",
+        "data_registro"
+      ],
+      "missing_in_csv": [
+        "data_registro"
+      ],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 350,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/paradas_maquinas.csv",
+      "status": "ok",
+      "target_table": "paradas_maquinas",
+      "target_db": "industrial",
+      "csv_columns": [
+        "parada_id",
+        "maquina_id",
+        "hora_inicio_parada",
+        "hora_fim_parada",
+        "motivo_parada",
+        "data_registro"
+      ],
+      "model_columns": [
+        "parada_id",
+        "maquina_id",
+        "hora_inicio_parada",
+        "hora_fim_parada",
+        "motivo_parada",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 600,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/processo_industrial.csv",
+      "status": "skipped",
+      "target_table": null,
+      "target_db": null,
+      "csv_columns": null,
+      "model_columns": null,
+      "missing_in_csv": null,
+      "extra_in_csv": null,
+      "suggestions": null,
+      "rows_total": null,
+      "rows_inserted": null,
+      "rows_skipped_duplicates": null,
+      "error": "Nenhuma tabela ORM correspondente encontrada pelo nome do arquivo"
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/produtos.csv",
+      "status": "ok",
+      "target_table": "produtos",
+      "target_db": "industrial",
+      "csv_columns": [
+        "produto_id",
+        "nome_produto",
+        "descricao",
+        "unidade_medida",
+        "data_registro"
+      ],
+      "model_columns": [
+        "produto_id",
+        "nome_produto",
+        "descricao",
+        "unidade_medida",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 5,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/registros_operacao.csv",
+      "status": "ok",
+      "target_table": "registros_operacao",
+      "target_db": "industrial",
+      "csv_columns": [
+        "registro_id",
+        "ordem_producao_id",
+        "maquina_id",
+        "operador_id",
+        "hora_inicio",
+        "hora_fim",
+        "tempo_setup_real_min",
+        "quantidade_produzida_real",
+        "consumo_energia_kwh",
+        "data_registro"
+      ],
+      "model_columns": [
+        "registro_id",
+        "ordem_producao_id",
+        "maquina_id",
+        "operador_id",
+        "hora_inicio",
+        "hora_fim",
+        "tempo_setup_real_min",
+        "quantidade_produzida_real",
+        "consumo_energia_kwh",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 219125,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    },
+    {
+      "file": "BancoModeloUse/dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/roteiros_producao.csv",
+      "status": "ok",
+      "target_table": "roteiros_producao",
+      "target_db": "industrial",
+      "csv_columns": [
+        "roteiro_id",
+        "produto_id",
+        "versao",
+        "data_registro"
+      ],
+      "model_columns": [
+        "roteiro_id",
+        "produto_id",
+        "versao",
+        "data_registro"
+      ],
+      "missing_in_csv": [],
+      "extra_in_csv": [],
+      "suggestions": [],
+      "rows_total": 15,
+      "rows_inserted": 0,
+      "rows_skipped_duplicates": 0,
+      "error": null
+    }
+  ],
+  "tables_updated": {},
+  "errors": [],
+  "finished_at": "2025-10-25T21:02:33.935136Z"
+}
