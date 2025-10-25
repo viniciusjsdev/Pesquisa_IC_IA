@@ -10,7 +10,7 @@ MACHINE_DB_CONFIG = {
     "port": "5432", 
     "database": "db_datamind",
     "user": "postgres",
-    "password": "root"
+    "password": "p4ss#5"
 }
 
 # Configurações específicas da máquina
