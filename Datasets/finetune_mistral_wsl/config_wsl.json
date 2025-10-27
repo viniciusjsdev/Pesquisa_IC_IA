@@ -1,12 +1,13 @@
 {
   "model_info": {
-    "name": "Mistral-7B-Instruct-v0.3-LoRA-WSL",
+    "name": "Mistral-7B-LoRA-TRL-Research-VNDatamind",
     "base_model": "mistralai/Mistral-7B-Instruct-v0.3",
     "version": "1.0.0",
-    "description": "Modelo Mistral-7B fine-tuned com LoRA para análise financeira e industrial integrada (WSL)",
-    "author": "Sistema de IA",
-    "date": "2025-01-19",
-    "environment": "WSL Ubuntu"
+    "description": "Modelo Mistral-7B fine-tuned com LoRA para análise financeira e industrial integrada usando TRL Framework e otimizações avançadas",
+    "author": "VNDatamind Research",
+    "date": "2025-10-26",
+    "environment": "WSL Ubuntu",
+    "optimization_level": "TRL-Flash-Attention-2-Optimized"
   },
   
   "paths": {
@@ -30,42 +31,66 @@
     "r": 8,
     "lora_alpha": 16,
     "lora_dropout": 0.1,
-    "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj"],
+    "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+    "lora_modules_to_save": ["lm_head", "embed_tokens"],
     "bias": "none",
     "inference_mode": false
   },
   
+  "model_config": {
+    "attn_implementation": "flash_attention_2",
+    "use_liger": true,
+    "torch_dtype": "bfloat16"
+  },
+  
   "quantization": {
     "load_in_4bit": true,
-    "bnb_4bit_compute_dtype": "float16",
+    "bnb_4bit_compute_dtype": "bfloat16",
     "bnb_4bit_use_double_quant": true,
-    "bnb_4bit_quant_type": "nf4"
+    "bnb_4bit_quant_type": "nf4",
+    "bnb_4bit_quant_storage": "bfloat16"
   },
   
   "training_config": {
-    "num_train_epochs": 3,
+    "num_train_epochs": 2,
     "per_device_train_batch_size": 1,
     "per_device_eval_batch_size": 1,
-    "gradient_accumulation_steps": 32,
-    "warmup_steps": 100,
-    "learning_rate": 2e-4,
+    "gradient_accumulation_steps": 18,
+    "learning_rate": 1e-4,
     "weight_decay": 0.01,
-    "max_length": 1024,
-    "fp16": true,
+    "warmup_ratio": 0.1,
+    "max_seq_length": 768,
+    "packing": true,
+    "dataset_text_field": "text",
+    "dataset_num_proc": 4,
+    "fp16": false,
+    "bf16": true,
     "gradient_checkpointing": true,
+    "gradient_checkpointing_kwargs": {
+      "use_reentrant": false
+    },
     "dataloader_pin_memory": false,
     "dataloader_num_workers": 0,
-    "max_memory": {"0": "10GB", "cpu": "30GB"}
+    "save_steps": 100,
+    "eval_steps": 100,
+    "logging_steps": 10,
+    "lr_scheduler_type": "constant",
+    "logging_strategy": "steps",
+    "save_strategy": "steps",
+    "eval_strategy": "steps",
+    "report_to": ["tensorboard", "wandb"],
+    "logging_first_step": true,
+    "max_memory": {"0": "10GB", "cpu": "22GB"}
   },
   
   "memory_optimization": {
     "max_memory": {
-      "0": "8GB",
-      "cpu": "20GB"
+      "0": "10GB",
+      "cpu": "22GB"
     },
     "device_map": "auto",
-    "torch_dtype": "float16",
-    "cpu_offloading": true
+    "torch_dtype": "bfloat16",
+    "cpu_offloading": false
   },
   
   "data_files": {
@@ -136,10 +161,12 @@
   },
   
   "performance": {
-    "expected_vram_usage": "6-8GB",
-    "expected_training_time": "2-4 hours",
-    "expected_inference_time": "2-5 seconds per response",
-    "optimization_level": "WSL-optimized"
+    "expected_vram_usage": "10GB",
+    "expected_training_time": "4-5 hours",
+    "expected_inference_time": "1-3 seconds per response",
+    "optimization_level": "TRL-Flash-Attention-2-Optimized",
+    "temperature_target": "60-65°C",
+    "quality_retention": "90-95%"
   },
   
   "replication": {

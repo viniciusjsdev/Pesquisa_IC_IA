@@ -1,0 +1,26 @@
+# Ambiente virtual
+venv/
+*.pyc
+__pycache__/
+
+# Modelos e cache
+wandb/
+*.safetensors
+*.bin
+*.pt
+
+# Logs
+*.log
+logs/
+
+# Temporários
+=*
+*.tmp
+
+# Arquivos específicos do projeto
+output/checkpoints/
+wandb/
+venv/
+
+# Manter apenas o modelo organizado
+!output/Mistral-7B-LoRA-TRL-Research-VNDatamind/
