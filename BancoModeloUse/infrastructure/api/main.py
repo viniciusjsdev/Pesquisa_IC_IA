@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from infrastructure.database.session import engine, Base
 from core.models import *  # Importa todos os modelos
 from infrastructure.api.routers.financeiro import router as financeiro_router
-from infrastructure.api.rag import rag_router, etl_router
+from infrastructure.api.rag import rag_router
 from infrastructure.database.multi_db_manager import multi_db_manager
 import logging
 
@@ -54,14 +54,13 @@ async def startup_event():
 
 app.include_router(financeiro_router)
 app.include_router(rag_router)
-app.include_router(etl_router)
 
 @app.get("/")
 def root():
     return {
         "service": "descomplica hub - sistema integrado", 
-        "modules": ["financeiro", "rag", "etl"],
-        "description": "Sistema integrado financeiro-industrial com RAG e ETL"
+        "modules": ["financeiro", "rag"],
+        "description": "Sistema integrado financeiro-industrial com RAG"
     }
 
 @app.post("/create-tables")

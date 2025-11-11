@@ -13,9 +13,9 @@ except ImportError:
     DEFAULT_DB_CONFIG = {
         "host": "localhost",
         "port": "5432",
-        "database": "db_datamind",
+        "database": "db_datamind_dw",
         "user": "postgres",
-        "password": "root"
+        "password": "host"
     }
 
 # Configurações adicionais do banco
@@ -37,7 +37,7 @@ FINANCEIRO_DB_CONFIG = {
     "port": 5432,
     "database": "db_financeiro",
     "user": "postgres",
-    "password": "root",
+    "password": "host",
     "schema": "financeiro"
 }
 
@@ -47,7 +47,7 @@ INDUSTRIAL_DB_CONFIG = {
     "port": 5432,
     "database": "db_industrial",
     "user": "postgres",
-    "password": "root",
+    "password": "host",
     "schema": "industrial"
 }
 
@@ -57,7 +57,7 @@ DW_DB_CONFIG = {
     "port": 5432, 
     "database": "db_datamind_dw",
     "user": "postgres",
-    "password": "root",
+    "password": "host",
     "schema": "dw"
 }
 
