@@ -18,7 +18,9 @@ from infrastructure.config.database_config import (
     FINANCEIRO_DB_CONFIG, 
     INDUSTRIAL_DB_CONFIG, 
     DW_DB_CONFIG,
-    MIGRATION_SETTINGS
+    MIGRATION_SETTINGS,
+    get_database_url,
+    DB_SETTINGS
 )
 
 # Configurar logging
@@ -105,10 +107,18 @@ class MultiDatabaseManager:
         """Obtém engine para um banco específico"""
         if db_name not in self.engines:
             config = self.configs[db_name]
-            params = self.get_connection_params(config)
             
-            database_url = f"postgresql://{params['user']}:{params['password']}@{params['host']}:{params['port']}/{params['database']}"
-            self.engines[db_name] = create_engine(database_url)
+            # Usa a função centralizada de database_config
+            database_url = get_database_url(config)
+            
+            self.engines[db_name] = create_engine(
+                database_url,
+                pool_size=DB_SETTINGS["pool_size"],
+                max_overflow=DB_SETTINGS["max_overflow"],
+                pool_pre_ping=DB_SETTINGS["pool_pre_ping"],
+                pool_recycle=DB_SETTINGS["pool_recycle"],
+                echo=DB_SETTINGS["echo"]
+            )
         
         return self.engines[db_name]
     

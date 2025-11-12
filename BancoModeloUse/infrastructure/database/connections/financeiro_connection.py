@@ -2,72 +2,24 @@
 """
 Conexão específica para o banco financeiro
 """
-import os
 import sys
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+import os
 
 # Adiciona o diretório raiz ao path para importar config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
 
-from infrastructure.config.database_config import FINANCEIRO_DB_CONFIG, DB_SETTINGS
+from sqlalchemy.ext.declarative import declarative_base
+from infrastructure.config.database_config import FINANCEIRO_DB_CONFIG
+from infrastructure.database.connections.base_connection import BaseConnection
 
 # Base específica para modelos financeiros
 Base = declarative_base()
 
-class FinanceiroConnection:
+class FinanceiroConnection(BaseConnection):
     """Gerenciador de conexão para banco financeiro"""
     
     def __init__(self):
-        self.config = FINANCEIRO_DB_CONFIG
-        self.engine = None
-        self.SessionLocal = None
-        self._create_engine()
-    
-    def _create_engine(self):
-        """Cria engine de conexão para banco financeiro"""
-        database_url = self._get_database_url()
-        
-        self.engine = create_engine(
-            database_url,
-            pool_size=DB_SETTINGS["pool_size"],
-            max_overflow=DB_SETTINGS["max_overflow"],
-            pool_pre_ping=DB_SETTINGS["pool_pre_ping"],
-            pool_recycle=DB_SETTINGS["pool_recycle"],
-            echo=DB_SETTINGS["echo"]
-        )
-        
-        self.SessionLocal = sessionmaker(bind=self.engine, autoflush=False, autocommit=False)
-    
-    def _get_database_url(self):
-        """Retorna URL de conexão para banco financeiro"""
-        # Permite sobrescrever via variáveis de ambiente
-        host = os.getenv("FINANCEIRO_DB_HOST", self.config["host"])
-        port = os.getenv("FINANCEIRO_DB_PORT", self.config["port"])
-        database = os.getenv("FINANCEIRO_DB_NAME", self.config["database"])
-        user = os.getenv("FINANCEIRO_DB_USER", self.config["user"])
-        password = os.getenv("FINANCEIRO_DB_PASSWORD", self.config["password"])
-        
-        return f"postgresql://{user}:{password}@{host}:{port}/{database}"
-    
-    def get_session(self):
-        """Retorna sessão do banco financeiro"""
-        return self.SessionLocal()
-    
-    def get_engine(self):
-        """Retorna engine do banco financeiro"""
-        return self.engine
-    
-    def test_connection(self):
-        """Testa conexão com banco financeiro"""
-        try:
-            with self.engine.connect() as conn:
-                conn.execute("SELECT 1")
-            return True
-        except Exception as e:
-            print(f"Erro na conexão financeira: {e}")
-            return False
+        super().__init__(FINANCEIRO_DB_CONFIG, env_prefix="FINANCEIRO_DB_")
 
 # Instância global da conexão financeira
 financeiro_connection = FinanceiroConnection()

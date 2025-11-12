@@ -78,12 +78,14 @@ def get_database_url(config: dict) -> str:
     Gera URL de conexão a partir da configuração
     
     Args:
-        config: Dicionário com configuração do banco
+        config: Dicionário com configuração do banco (host, port, database, user, password)
         
     Returns:
         URL de conexão PostgreSQL
     """
-    return f"postgresql://{config['user']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
+    # Garante que port seja string
+    port = str(config['port'])
+    return f"postgresql://{config['user']}:{config['password']}@{config['host']}:{port}/{config['database']}"
 
 def get_all_database_configs() -> dict:
     """

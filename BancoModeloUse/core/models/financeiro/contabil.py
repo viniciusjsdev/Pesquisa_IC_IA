@@ -9,7 +9,7 @@ from infrastructure.database.connections.financeiro_connection import Base
 
 class ContaContabil(Base):
     __tablename__ = "contas_contabeis"
-    conta_id = Column(Integer, primary_key=True, index=True)
+    conta_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     numero_conta = Column(String)
     nome_conta = Column(String)
     tipo_conta = Column(String)

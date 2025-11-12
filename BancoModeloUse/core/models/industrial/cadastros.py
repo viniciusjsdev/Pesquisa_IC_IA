@@ -9,7 +9,7 @@ from infrastructure.database.connections.industrial_connection import Base
 
 class Produto(Base):
     __tablename__ = "produtos"
-    produto_id = Column(Integer, primary_key=True, index=True)
+    produto_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     nome_produto = Column(String, nullable=False)
     descricao = Column(Text)
     unidade_medida = Column(String)
@@ -17,14 +17,14 @@ class Produto(Base):
 
 class Material(Base):
     __tablename__ = "materiais"
-    material_id = Column(Integer, primary_key=True, index=True)
+    material_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     nome_material = Column(String, nullable=False)
     unidade_medida = Column(String)
     data_registro = Column(DateTime, default=datetime.utcnow)
 
 class Maquina(Base):
     __tablename__ = "maquinas"
-    maquina_id = Column(Integer, primary_key=True, index=True)
+    maquina_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     nome_maquina = Column(String, nullable=False)
     linha_producao = Column(String)
     capacidade_producao_max = Column(DECIMAL)
@@ -32,6 +32,6 @@ class Maquina(Base):
 
 class Fornecedor(Base):
     __tablename__ = "fornecedores"
-    fornecedor_id = Column(Integer, primary_key=True, index=True)
+    fornecedor_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     nome_fornecedor = Column(String, nullable=False)
     data_registro = Column(DateTime, default=datetime.utcnow)

@@ -10,7 +10,7 @@ from infrastructure.database.connections.financeiro_connection import Base
 # Tabelas de Contabilidade de Custos
 class CustoPadrao(Base):
     __tablename__ = "custos_padrao"
-    custo_padrao_id = Column(Integer, primary_key=True, index=True)
+    custo_padrao_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     tipo_custo = Column(String)
     unidade_medida = Column(String)
     valor_unitario_padrao = Column(DECIMAL)
