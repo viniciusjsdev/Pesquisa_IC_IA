@@ -1,0 +1,126 @@
+{
+  "dataset_id": "hybrid_v1",
+  "source": "data_ft (snapshot lógico do dataset híbrido atual)",
+  "created_at": "2026-02-25T02:18:11.675941+00:00",
+  "created_by_script": "finetune_mistral_wsl/prepare_experiment_datasets.py",
+  "upstream_inputs": [
+    "data_ft/train.jsonl",
+    "data_ft/val.jsonl",
+    "data_ft/test.jsonl"
+  ],
+  "split_counts": {
+    "train": 11560,
+    "val": 1444,
+    "test": 1448
+  },
+  "by_domain_counts": {
+    "train": {
+      "FinQA": 4924,
+      "FailureSensorIQ": 6636
+    },
+    "val": {
+      "FinQA": 615,
+      "FailureSensorIQ": 829
+    },
+    "test": {
+      "FinQA": 617,
+      "FailureSensorIQ": 831
+    }
+  },
+  "max_length_policy": {
+    "max_length": 1024,
+    "rationale": "Mantido conforme EDA em analise_datasets.ipynb para limitar truncamento e preservar FinQA no cenário híbrido."
+  },
+  "token_stats_summary": {
+    "train": {
+      "prompt_tokens_approx": {
+        "min": 25,
+        "max": 2715,
+        "mean": 337.36,
+        "p95": 992
+      },
+      "response_tokens_approx": {
+        "min": 1,
+        "max": 69,
+        "mean": 4.09,
+        "p95": 10
+      },
+      "finqa_program_ops_top10": {
+        "subtract": 1863,
+        "divide": 1846,
+        "add": 690,
+        "multiply": 290,
+        "greater": 88,
+        "table_average": 71,
+        "table_max": 32,
+        "table_sum": 26,
+        "table_min": 18
+      }
+    },
+    "val": {
+      "prompt_tokens_approx": {
+        "min": 26,
+        "max": 2712,
+        "mean": 339.98,
+        "p95": 1011
+      },
+      "response_tokens_approx": {
+        "min": 1,
+        "max": 19,
+        "mean": 4.06,
+        "p95": 9
+      },
+      "finqa_program_ops_top10": {
+        "subtract": 242,
+        "divide": 214,
+        "add": 93,
+        "multiply": 29,
+        "table_average": 15,
+        "greater": 8,
+        "table_max": 7,
+        "table_min": 4,
+        "table_sum": 3
+      }
+    },
+    "test": {
+      "prompt_tokens_approx": {
+        "min": 27,
+        "max": 2065,
+        "mean": 338.5,
+        "p95": 1000
+      },
+      "response_tokens_approx": {
+        "min": 1,
+        "max": 20,
+        "mean": 4.07,
+        "p95": 9
+      },
+      "finqa_program_ops_top10": {
+        "subtract": 248,
+        "divide": 220,
+        "add": 75,
+        "multiply": 41,
+        "greater": 11,
+        "table_max": 8,
+        "table_average": 7,
+        "table_min": 4,
+        "table_sum": 3
+      }
+    }
+  },
+  "hashes": {
+    "train": {
+      "md5": "c829027eecb930ca0c83fd7b26355ec6",
+      "sha256": "db08fffa6038d4db77603e9d89423b23e9c0ce55f353595d0fcf0b53334a0c0f"
+    },
+    "val": {
+      "md5": "9754bb398b2a7e2c25d6a85a75bf5450",
+      "sha256": "98882a0f52330c76fae497f3be3b603a0c66823bd20f5bae5195e1731301b1b4"
+    },
+    "test": {
+      "md5": "87f1b07ea7b47b1e03ab9f4b66ca9581",
+      "sha256": "7e4102ca56cdb8154ca86b687be4eb9b5bb31702f8dd9f09ac6d4fd328860c0e"
+    }
+  },
+  "notes": "Dataset híbrido v1 derivado diretamente de data_ft legado."
+}

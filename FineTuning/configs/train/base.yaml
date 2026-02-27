@@ -1,0 +1,56 @@
+experiment:
+  id: ft_hibrido_v1
+  description: Fine-tuning híbrido financeiro-industrial (protocolo v1)
+data:
+  dataset_manifest: data/manifests/hybrid_v1.json
+  train_path: data/processed/hybrid_v1/train.jsonl
+  val_path: data/processed/hybrid_v1/val.jsonl
+  test_path: data/processed/hybrid_v1/test.jsonl
+model:
+  base_model: mistralai/Mistral-7B-Instruct-v0.3
+  cache_dir: "{hf_cache_dir}"
+  max_memory:
+    gpu0: 10GB
+    cpu: 30GB
+tokenization:
+  max_length: 1024
+  truncation: true
+  padding: false
+qlora:
+  load_in_4bit: true
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_compute_dtype: float16
+  bnb_4bit_use_double_quant: true
+lora:
+  r: 8
+  alpha: 16
+  dropout: 0.1
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+  bias: none
+  task_type: CAUSAL_LM
+training:
+  num_train_epochs: 3
+  per_device_train_batch_size: 1
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 32
+  learning_rate: 0.0002
+  weight_decay: 0.01
+  warmup_ratio: 0.05
+  evaluation_strategy: epoch
+  save_strategy: epoch
+  eval_steps:
+  save_steps:
+  logging_steps: 10
+  load_best_model_at_end: true
+  metric_for_best_model: eval_loss
+  greater_is_better: false
+  fp16: true
+  gradient_checkpointing: true
+  dataloader_pin_memory: false
+  dataloader_num_workers: 0
+  remove_unused_columns: false
+  seed: 42
+output:
+  root_runs_dir: runs
+  save_checkpoints: true
+  save_predictions_sample: false

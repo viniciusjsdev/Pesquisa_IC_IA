@@ -1,0 +1,123 @@
+{
+  "dataset_id": "finqa_v1",
+  "source": "data_ft filtrado por meta.dataset=FinQA",
+  "created_at": "2026-02-25T02:18:12.996645+00:00",
+  "created_by_script": "finetune_mistral_wsl/prepare_experiment_datasets.py",
+  "upstream_inputs": [
+    "data_ft/train.jsonl",
+    "data_ft/val.jsonl",
+    "data_ft/test.jsonl"
+  ],
+  "split_counts": {
+    "train": 4924,
+    "val": 615,
+    "test": 617
+  },
+  "by_domain_counts": {
+    "train": {
+      "FinQA": 4924
+    },
+    "val": {
+      "FinQA": 615
+    },
+    "test": {
+      "FinQA": 617
+    }
+  },
+  "max_length_policy": {
+    "max_length": 1024,
+    "rationale": "Mantido conforme EDA em analise_datasets.ipynb para limitar truncamento e preservar FinQA no cenário híbrido."
+  },
+  "token_stats_summary": {
+    "train": {
+      "prompt_tokens_approx": {
+        "min": 109,
+        "max": 2715,
+        "mean": 730.94,
+        "p95": 1107
+      },
+      "response_tokens_approx": {
+        "min": 1,
+        "max": 69,
+        "mean": 1.08,
+        "p95": 1
+      },
+      "finqa_program_ops_top10": {
+        "subtract": 1863,
+        "divide": 1846,
+        "add": 690,
+        "multiply": 290,
+        "greater": 88,
+        "table_average": 71,
+        "table_max": 32,
+        "table_sum": 26,
+        "table_min": 18
+      }
+    },
+    "val": {
+      "prompt_tokens_approx": {
+        "min": 110,
+        "max": 2712,
+        "mean": 737.49,
+        "p95": 1156
+      },
+      "response_tokens_approx": {
+        "min": 1,
+        "max": 12,
+        "mean": 1.05,
+        "p95": 1
+      },
+      "finqa_program_ops_top10": {
+        "subtract": 242,
+        "divide": 214,
+        "add": 93,
+        "multiply": 29,
+        "table_average": 15,
+        "greater": 8,
+        "table_max": 7,
+        "table_min": 4,
+        "table_sum": 3
+      }
+    },
+    "test": {
+      "prompt_tokens_approx": {
+        "min": 115,
+        "max": 2065,
+        "mean": 733.13,
+        "p95": 1101
+      },
+      "response_tokens_approx": {
+        "min": 1,
+        "max": 16,
+        "mean": 1.08,
+        "p95": 1
+      },
+      "finqa_program_ops_top10": {
+        "subtract": 248,
+        "divide": 220,
+        "add": 75,
+        "multiply": 41,
+        "greater": 11,
+        "table_max": 8,
+        "table_average": 7,
+        "table_min": 4,
+        "table_sum": 3
+      }
+    }
+  },
+  "hashes": {
+    "train": {
+      "md5": "0695b840b69b6e08e0a3b760fe5835d1",
+      "sha256": "d19d92c49c0c479247e22945dabe4486cb6f137f672f8005f0a9ae3e61ca8b21"
+    },
+    "val": {
+      "md5": "160fbd4ed3148dbd5ffb398cd168eb74",
+      "sha256": "e74a9ca07b5988f13b396a2f9731ba1915e93525ca0553b60729ba4e33eabb1a"
+    },
+    "test": {
+      "md5": "173d6ccb2268582d166f783621499089",
+      "sha256": "16dd6840c74e4ea4fd9fd90883651dba997595c002a8d616a3f974bdd016a562"
+    }
+  },
+  "notes": "Subconjunto FinQA preservando splits de data_ft."
+}

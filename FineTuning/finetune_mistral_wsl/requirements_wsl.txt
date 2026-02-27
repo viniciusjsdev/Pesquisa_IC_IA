@@ -1,0 +1,42 @@
+# Requirements para Mistral-7B LoRA Fine-tuning (WSL)
+# =================================================
+
+# Core ML Libraries
+torch>=2.0.0
+transformers>=4.35.0
+accelerate>=0.24.0
+datasets>=2.14.0
+
+# LoRA e PEFT
+peft>=0.6.0
+
+# Quantização
+bitsandbytes>=0.41.0
+
+# HuggingFace
+huggingface_hub>=0.17.0
+tokenizers>=0.14.0
+
+# Utilities
+numpy>=1.24.0
+pandas>=2.0.0
+psutil>=5.9.0
+
+# Evaluation Metrics
+rouge-score>=0.1.2
+nltk>=3.8.0
+sacrebleu>=2.3.0
+
+# Logging e Monitoring
+tqdm>=4.65.0
+wandb>=0.15.0
+
+# System
+pathlib2>=2.3.7
+typing-extensions>=4.7.0
+
+# WSL Specific
+# (Nenhuma dependência específica do WSL necessária)
+
+# Config files (YAML)
+PyYAML>=6.0

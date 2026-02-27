@@ -1,0 +1,1 @@
+# Legacy Run Catalog\n\nEste diretório cataloga logicamente o fine-tuning híbrido legado (`legacy_pre_protocol_v1`).\n\nArtefatos físicos permanecem em:\n- `D:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA\FineTuning\finetune_mistral_wsl\output\checkpoints`\n- `D:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA\FineTuning\finetune_mistral_wsl\output\Mistral-7B-LoRA-TRL-Research-VNDatamind`\n

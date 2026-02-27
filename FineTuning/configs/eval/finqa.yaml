@@ -1,0 +1,20 @@
+evaluation:
+  protocol_id: protocol_v1_finqa
+  domains: finqa
+  metrics:
+    finqa: [exact_match, numeric_accuracy, mae_numeric_parseable, mre_numeric_parseable]
+    failure: []
+  numeric_tolerance:
+    absolute: 0.001
+    relative: 0.001
+  generation:
+    max_new_tokens: 64
+    temperature: 0.0
+    top_p: 0.9
+    top_k: 50
+    do_sample: false
+    repetition_penalty: 1.0
+  save_predictions: true
+  save_error_analysis_sample: 20
+paths:
+  test_data_path: data/processed/finqa_v1/test.jsonl

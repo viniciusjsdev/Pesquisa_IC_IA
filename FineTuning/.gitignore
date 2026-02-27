@@ -1,0 +1,11 @@
+
+# Multi-fine-tuning local/runtime artifacts
+configs/paths.local.yaml
+finetune_mistral_wsl/output/
+finetune_mistral_wsl/venv/
+runs/**/logs/
+runs/**/predictions/
+runs/**/checkpoints/
+runs/**/adapter/
+__pycache__/
+*.pyc

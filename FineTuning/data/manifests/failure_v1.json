@@ -1,0 +1,93 @@
+{
+  "dataset_id": "failure_v1",
+  "source": "data_ft filtrado por meta.dataset=FailureSensorIQ",
+  "created_at": "2026-02-25T02:18:13.358767+00:00",
+  "created_by_script": "finetune_mistral_wsl/prepare_experiment_datasets.py",
+  "upstream_inputs": [
+    "data_ft/train.jsonl",
+    "data_ft/val.jsonl",
+    "data_ft/test.jsonl"
+  ],
+  "split_counts": {
+    "train": 6636,
+    "val": 829,
+    "test": 831
+  },
+  "by_domain_counts": {
+    "train": {
+      "FailureSensorIQ": 6636
+    },
+    "val": {
+      "FailureSensorIQ": 829
+    },
+    "test": {
+      "FailureSensorIQ": 831
+    }
+  },
+  "max_length_policy": {
+    "max_length": 1024,
+    "rationale": "Mantido conforme EDA em analise_datasets.ipynb para limitar truncamento e preservar FinQA no cenário híbrido."
+  },
+  "token_stats_summary": {
+    "train": {
+      "prompt_tokens_approx": {
+        "min": 25,
+        "max": 71,
+        "mean": 45.31,
+        "p95": 56
+      },
+      "response_tokens_approx": {
+        "min": 2,
+        "max": 20,
+        "mean": 6.32,
+        "p95": 11
+      },
+      "finqa_program_ops_top10": {}
+    },
+    "val": {
+      "prompt_tokens_approx": {
+        "min": 26,
+        "max": 69,
+        "mean": 45.07,
+        "p95": 55
+      },
+      "response_tokens_approx": {
+        "min": 2,
+        "max": 19,
+        "mean": 6.29,
+        "p95": 10
+      },
+      "finqa_program_ops_top10": {}
+    },
+    "test": {
+      "prompt_tokens_approx": {
+        "min": 27,
+        "max": 68,
+        "mean": 45.49,
+        "p95": 56
+      },
+      "response_tokens_approx": {
+        "min": 2,
+        "max": 20,
+        "mean": 6.3,
+        "p95": 10
+      },
+      "finqa_program_ops_top10": {}
+    }
+  },
+  "hashes": {
+    "train": {
+      "md5": "d86385c70f76319058c24eedd5f6c68f",
+      "sha256": "5afbc15d38675df093eefb73b02e15ba3dc5530dfe9df780bb9750b188e44c98"
+    },
+    "val": {
+      "md5": "5128a38dc9eb4ff13013235511cdd33f",
+      "sha256": "797cad0b853570024b57242dbf2ff09af33dbc00d75ed59dc38693719b208c45"
+    },
+    "test": {
+      "md5": "3b47d167e79201c9a3109e3fb4e04ef4",
+      "sha256": "6aa918a64757853657187511c9592bf3505d5985e3fe181b07673af7487c75ef"
+    }
+  },
+  "notes": "Subconjunto FailureSensorIQ preservando splits de data_ft."
+}

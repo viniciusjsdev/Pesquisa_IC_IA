@@ -1,0 +1,117 @@
+{
+  "experiment_id": "ft_hibrido_v1",
+  "run_name": "run_2026-02-24_seed42",
+  "dataset_manifest": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\FineTuning\\data\\manifests\\hybrid_v1.json",
+  "train_config_path": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\FineTuning\\configs\\train\\ft_hibrido_v1.yaml",
+  "resolved_config_snapshot": {
+    "experiment": {
+      "id": "ft_hibrido_v1",
+      "description": "Fine-tuning híbrido financeiro-industrial (protocolo v1)"
+    },
+    "data": {
+      "dataset_manifest": "data/manifests/hybrid_v1.json",
+      "train_path": "data/processed/hybrid_v1/train.jsonl",
+      "val_path": "data/processed/hybrid_v1/val.jsonl",
+      "test_path": "data/processed/hybrid_v1/test.jsonl"
+    },
+    "model": {
+      "base_model": "mistralai/Mistral-7B-Instruct-v0.3",
+      "cache_dir": "D:\\mnt\\e\\Mistral",
+      "max_memory": {
+        "gpu0": "10GB",
+        "cpu": "30GB"
+      }
+    },
+    "tokenization": {
+      "max_length": 1024,
+      "truncation": true,
+      "padding": false
+    },
+    "qlora": {
+      "load_in_4bit": true,
+      "bnb_4bit_quant_type": "nf4",
+      "bnb_4bit_compute_dtype": "float16",
+      "bnb_4bit_use_double_quant": true
+    },
+    "lora": {
+      "r": 8,
+      "alpha": 16,
+      "dropout": 0.1,
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ],
+      "bias": "none",
+      "task_type": "CAUSAL_LM"
+    },
+    "training": {
+      "num_train_epochs": 3,
+      "per_device_train_batch_size": 1,
+      "per_device_eval_batch_size": 1,
+      "gradient_accumulation_steps": 32,
+      "learning_rate": 0.0002,
+      "weight_decay": 0.01,
+      "warmup_ratio": 0.05,
+      "evaluation_strategy": "epoch",
+      "save_strategy": "epoch",
+      "eval_steps": null,
+      "save_steps": null,
+      "logging_steps": 10,
+      "load_best_model_at_end": true,
+      "metric_for_best_model": "eval_loss",
+      "greater_is_better": false,
+      "fp16": true,
+      "gradient_checkpointing": true,
+      "dataloader_pin_memory": false,
+      "dataloader_num_workers": 0,
+      "remove_unused_columns": false,
+      "seed": 42
+    },
+    "output": {
+      "root_runs_dir": "runs",
+      "save_checkpoints": true,
+      "save_predictions_sample": false
+    }
+  },
+  "git_commit": "7cdd0e7e51ef4ed4504445129b89acaeb913d316",
+  "start_time": "2026-02-25T02:20:00.831203Z",
+  "end_time": "2026-02-25T02:20:01.046203Z",
+  "hardware": {
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "machine": "AMD64",
+    "processor": "AMD64 Family 25 Model 117 Stepping 2, AuthenticAMD",
+    "torch": "2.5.1+cu121",
+    "cuda_available": true,
+    "cuda_version": "12.1",
+    "gpu_name": "NVIDIA GeForce RTX 3060",
+    "gpu_vram_gb": 12.0,
+    "transformers": "4.52.4",
+    "datasets": null,
+    "peft": null,
+    "trl": null,
+    "bitsandbytes": null
+  },
+  "software_versions": {},
+  "seed": 42,
+  "status": "dry_run_ok",
+  "best_checkpoint": null,
+  "best_metric": null,
+  "estimates": {
+    "train_samples": 11560,
+    "steps_per_epoch": 362,
+    "estimated_total_steps": 1086,
+    "epochs": 3
+  },
+  "resolved_paths": {
+    "train": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\FineTuning\\data\\processed\\hybrid_v1\\train.jsonl",
+    "val": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\FineTuning\\data\\processed\\hybrid_v1\\val.jsonl",
+    "test": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\FineTuning\\data\\processed\\hybrid_v1\\test.jsonl",
+    "dataset_manifest": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\FineTuning\\data\\manifests\\hybrid_v1.json"
+  }
+}
