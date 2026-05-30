@@ -7,7 +7,7 @@ data:
   val_path: data/processed/finqa_v1/val.jsonl
   test_path: data/processed/finqa_v1/test.jsonl
 model:
-  base_model: mistralai/Mistral-7B-Instruct-v0.3
+  base_model: Qwen/Qwen2.5-7B-Instruct
   cache_dir: "{hf_cache_dir}"
   max_memory:
     gpu0: 10GB

@@ -42,7 +42,7 @@ def limpar_cache_wsl():
     """Limpa cache do WSL de forma segura"""
     print("\n=== LIMPEZA DE CACHE WSL ===")
     
-    cache_dir = Path("/mnt/e/Mistral")
+    cache_dir = Path(os.environ.get("HF_HOME", "/mnt/e/Qwen"))
     
     if cache_dir.exists():
         try:
@@ -97,8 +97,8 @@ def baixar_modelo_wsl():
     print("\n=== DOWNLOAD WSL OTIMIZADO ===")
     
     # Configurações
-    model_name = "mistralai/Mistral-7B-Instruct-v0.3"
-    cache_dir = "/mnt/e/Mistral"
+    model_name = "Qwen/Qwen2.5-7B-Instruct"
+    cache_dir = os.environ.get("HF_HOME", "/mnt/e/Qwen")
     
     print(f"Modelo: {model_name}")
     print(f"Cache: {cache_dir}")
@@ -150,8 +150,8 @@ def configurar_ambiente_wsl():
         "CUDA_VISIBLE_DEVICES": "0",
         "TOKENIZERS_PARALLELISM": "false",
         "HF_HUB_DISABLE_TELEMETRY": "1",
-        "TRANSFORMERS_CACHE": "/mnt/e/Mistral",
-        "HF_HOME": "/mnt/e/Mistral"
+        "TRANSFORMERS_CACHE": os.environ.get("HF_HOME", "/mnt/e/Qwen"),
+        "HF_HOME": os.environ.get("HF_HOME", "/mnt/e/Qwen")
     }
     
     for key, value in env_vars.items():

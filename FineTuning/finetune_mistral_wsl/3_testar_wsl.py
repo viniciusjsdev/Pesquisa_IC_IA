@@ -110,7 +110,7 @@ def parse_args():
     p = argparse.ArgumentParser(description='Demo qualitativo base vs LoRA (script parametrizado)')
     p.add_argument('--adapter-path', default=None)
     p.add_argument('--cache-dir', default=None)
-    p.add_argument('--base-model', default='mistralai/Mistral-7B-Instruct-v0.3')
+    p.add_argument('--base-model', default='Qwen/Qwen2.5-7B-Instruct')
     p.add_argument('--paths-config', default='configs/paths.local.yaml')
     p.add_argument('--mode', choices=['base', 'lora', 'compare', 'full'], default=None)
     return p.parse_args()

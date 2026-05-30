@@ -28,6 +28,8 @@ def parse_args():
     p.add_argument('--experiment-id', default='ft_hibrido_v1')
     p.add_argument('--run-dir', help='Diretório de run (para localizar adapter e salvar outputs)')
     p.add_argument('--adapter-path', help='Caminho explícito do adapter LoRA')
+    p.add_argument('--base-model', default='Qwen/Qwen2.5-7B-Instruct',
+                   help='Modelo base HF (usado quando o run não registra resolved_train_config.json)')
     mode = p.add_mutually_exclusive_group()
     mode.add_argument('--base-only', action='store_true')
     mode.add_argument('--adapter-only', action='store_true')
@@ -196,7 +198,21 @@ def main() -> int:
         metrics_dir = tmp['metrics_dir']
         predictions_dir = tmp['predictions_dir']
 
-    base_model = 'mistralai/Mistral-7B-Instruct-v0.3'
+    # Resolve o modelo base: prioriza o registrado no run treinado (garante que o
+    # adapter seja carregado sobre a mesma base usada no treino); senão, usa --base-model.
+    base_model = args.base_model
+    if args.run_dir:
+        resolved_cfg_path = Path(args.run_dir) / 'meta' / 'resolved_train_config.json'
+        if resolved_cfg_path.exists():
+            import json
+            try:
+                trained_cfg = json.loads(resolved_cfg_path.read_text(encoding='utf-8'))
+                trained_base = nested_get(trained_cfg, 'model.base_model', None)
+                if trained_base:
+                    base_model = trained_base
+            except Exception as e:
+                print(f'[WARN] não foi possível ler resolved_train_config.json: {e}')
+    print(f'[INFO] base_model={base_model}')
     cache_dir = nested_get(paths_cfg, 'hf.cache_dir', None)
     adapter_path = args.adapter_path
     if not adapter_path and args.run_dir:

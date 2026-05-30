@@ -276,7 +276,7 @@ def train(cfg: Dict[str, Any], runtime: Dict[str, Any], resolved_paths: Dict[str
     )
     base_model = cfg['model']['base_model']
     cache_dir = cfg['model'].get('cache_dir')
-    tokenizer = AutoTokenizer.from_pretrained(base_model, cache_dir=cache_dir, trust_remote_code=True, use_fast=False)
+    tokenizer = AutoTokenizer.from_pretrained(base_model, cache_dir=cache_dir, trust_remote_code=True, use_fast=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
     model = AutoModelForCausalLM.from_pretrained(

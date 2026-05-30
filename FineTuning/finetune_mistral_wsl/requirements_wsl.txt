@@ -1,9 +1,10 @@
-# Requirements para Mistral-7B LoRA Fine-tuning (WSL)
+# Requirements para Qwen2.5-7B LoRA Fine-tuning (WSL/Cloud)
 # =================================================
+# Qwen2.5 requer transformers >= 4.43 (arquitetura Qwen2 entrou na 4.37).
 
 # Core ML Libraries
 torch>=2.0.0
-transformers>=4.35.0
+transformers>=4.45.0
 accelerate>=0.24.0
 datasets>=2.14.0
 
