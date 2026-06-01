@@ -1,0 +1,183 @@
+{
+  "model_label": "BASE",
+  "dataset": "hybrid_test_filtered",
+  "n_samples": 1448,
+  "metrics": {
+    "FinQA": {
+      "exact_match": 0.0,
+      "numeric_accuracy": 0.0182,
+      "numeric_total": 603,
+      "mae_numeric_parseable": 6600642.958713,
+      "mre_numeric_parseable": 237.736784,
+      "by_operation": {
+        "add": {
+          "n": 75,
+          "exact_match": 0.0,
+          "numeric_match": 0.0133
+        },
+        "divide": {
+          "n": 220,
+          "exact_match": 0.0,
+          "numeric_match": 0.0182
+        },
+        "greater": {
+          "n": 11,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        },
+        "multiply": {
+          "n": 41,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        },
+        "subtract": {
+          "n": 248,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        },
+        "table_average": {
+          "n": 7,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        },
+        "table_max": {
+          "n": 8,
+          "exact_match": 0.0,
+          "numeric_match": 0.5
+        },
+        "table_min": {
+          "n": 4,
+          "exact_match": 0.0,
+          "numeric_match": 0.5
+        },
+        "table_sum": {
+          "n": 3,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        }
+      },
+      "error_types": {
+        "non_numeric_mismatch": 14,
+        "numeric_parse_fail": 39
+      }
+    },
+    "FailureSensorIQ": {
+      "exact_match": 0.0,
+      "accuracy": 0.0012,
+      "f1_macro": 0.0,
+      "confusion_top": [
+        {
+          "gold": "b",
+          "pred": "the failure events that are irrelevant for a power transformer if there is an abnormal reading from the sensor dielectric frequency response (dfr), polarization and depolarization",
+          "count": 3
+        },
+        {
+          "gold": "a",
+          "pred": "when dealing with de-energized tap-changer condition or fault in a power transformer, the most relevant sensors for detecting this issue are those that can provide",
+          "count": 2
+        },
+        {
+          "gold": "c",
+          "pred": "if you want to build an anomaly detection model for a fuel injector fault in a reciprocating internal combustion engine, the most relevant sensor to monitor would be the",
+          "count": 2
+        },
+        {
+          "gold": "b",
+          "pred": "the most relevant failure modes for an aero gas turbine when pressure or pressure ratio exhibits abnormal readings are: a) air inlet blockage: this can lead",
+          "count": 2
+        },
+        {
+          "gold": "a",
+          "pred": "the abnormal reading in the sensor oil debris of a pump can indicate various issues, but some of these issues may be less significant compared to others. here's a",
+          "count": 2
+        },
+        {
+          "gold": "a",
+          "pred": "the irrelevant failure events for the reciprocating internal combustion engine, given that the sensor exhaust temperature exhibits an abnormal reading, are: a) air inlet blockage",
+          "count": 2
+        },
+        {
+          "gold": "a",
+          "pred": "the failure events that are irrelevant for an aero gas turbine if there is an abnormal reading from the sensor air flow are: - **b) power turbine dirty",
+          "count": 2
+        },
+        {
+          "gold": "c",
+          "pred": "the failure events that are irrelevant for a power transformer if there is an abnormal reading from the sensor dielectric frequency response (dfr), polarization and depolarization",
+          "count": 2
+        },
+        {
+          "gold": "a",
+          "pred": "the most important failure modes that could cause abnormal readings in axial flux of an electric generator are: - **b) rotor windings fault**: this is a",
+          "count": 1
+        },
+        {
+          "gold": "b",
+          "pred": "the sensors that are not effective in indicating the presence of unequal expansion in a steam turbine are: b) oil debris and d) steam leakage. explanation: une",
+          "count": 1
+        },
+        {
+          "gold": "b",
+          "pred": "the sensors that are not effective in indicating the presence of bearing wear in an industrial gas turbine are: b) compressor pressure d) turbine efficiency",
+          "count": 1
+        },
+        {
+          "gold": "d",
+          "pred": "the sensor that is not effective in indicating the presence of compressor stall in aero gas turbine is d) compressor temperature. compressor temperature can vary due to many",
+          "count": 1
+        },
+        {
+          "gold": "a",
+          "pred": "the best sensor to correlate with the presence of air inlet blockage in an industrial gas turbine is the **air flow** sensor (option a). an air flow",
+          "count": 1
+        },
+        {
+          "gold": "a",
+          "pred": "the failure events that are not pertinent if the sensor resistance registers an abnormal reading for a power transformer are: e) oil leak an oil leak would not directly",
+          "count": 1
+        },
+        {
+          "gold": "c",
+          "pred": "the option least likely to be relevant in identifying a fuel filter blockage for an aero gas turbine is: **c) oil debris** here's the reasoning",
+          "count": 1
+        },
+        {
+          "gold": "b",
+          "pred": "the most relevant failure modes when ultrasound detects abnormal readings in a power transformer are: b) overheating/auxiliary cooling system fault d) supply faults",
+          "count": 1
+        },
+        {
+          "gold": "d",
+          "pred": "the failure event that is not applicable when the sensor speed in pump displays an abnormal reading is **e) eccentric impeller**. an eccentric impeller can cause",
+          "count": 1
+        },
+        {
+          "gold": "c",
+          "pred": "the sensor resistance in a power transformer is a critical parameter for monitoring the overall health and integrity of the transformer. an abnormal reading can indicate various issues, but not",
+          "count": 1
+        },
+        {
+          "gold": "a",
+          "pred": "the sensor oil debris in a compressor displaying an abnormal reading is typically indicative of a condition that affects the lubrication or the integrity of the oil within the system.",
+          "count": 1
+        },
+        {
+          "gold": "a",
+          "pred": "the correct answer is a) oil consumption. when considering a burner blockage in an industrial gas turbine, the primary indicators would be related to the combustion process and",
+          "count": 1
+        }
+      ]
+    }
+  },
+  "generation_config": {
+    "max_new_tokens": 32,
+    "max_input_length": 4096,
+    "batch_size": 8,
+    "temperature": 0.0,
+    "top_p": 0.9,
+    "top_k": 50,
+    "do_sample": false,
+    "repetition_penalty": 1.0
+  },
+  "timestamp": "2026-06-01T05:48:32.716325Z"
+}

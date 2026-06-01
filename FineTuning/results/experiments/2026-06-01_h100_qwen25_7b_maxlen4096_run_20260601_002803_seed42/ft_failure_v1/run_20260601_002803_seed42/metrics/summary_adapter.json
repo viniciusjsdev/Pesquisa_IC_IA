@@ -1,0 +1,173 @@
+{
+  "model_label": "ADAPTER",
+  "dataset": "hybrid_test_filtered",
+  "n_samples": 1448,
+  "metrics": {
+    "FinQA": {
+      "exact_match": 0.0,
+      "numeric_accuracy": 0.0232,
+      "numeric_total": 603,
+      "mae_numeric_parseable": 6559403.242839,
+      "mre_numeric_parseable": 252.875162,
+      "by_operation": {
+        "add": {
+          "n": 75,
+          "exact_match": 0.0,
+          "numeric_match": 0.0133
+        },
+        "divide": {
+          "n": 220,
+          "exact_match": 0.0,
+          "numeric_match": 0.0227
+        },
+        "greater": {
+          "n": 11,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        },
+        "multiply": {
+          "n": 41,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        },
+        "subtract": {
+          "n": 248,
+          "exact_match": 0.0,
+          "numeric_match": 0.004
+        },
+        "table_average": {
+          "n": 7,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        },
+        "table_max": {
+          "n": 8,
+          "exact_match": 0.0,
+          "numeric_match": 0.625
+        },
+        "table_min": {
+          "n": 4,
+          "exact_match": 0.0,
+          "numeric_match": 0.5
+        },
+        "table_sum": {
+          "n": 3,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        }
+      },
+      "error_types": {
+        "non_numeric_mismatch": 14,
+        "numeric_parse_fail": 25
+      }
+    },
+    "FailureSensorIQ": {
+      "exact_match": 0.0,
+      "accuracy": 0.5427,
+      "f1_macro": 0.393,
+      "confusion_top": [
+        {
+          "gold": "b",
+          "pred": "a",
+          "count": 111
+        },
+        {
+          "gold": "c",
+          "pred": "a",
+          "count": 77
+        },
+        {
+          "gold": "d",
+          "pred": "a",
+          "count": 52
+        },
+        {
+          "gold": "c",
+          "pred": "b",
+          "count": 31
+        },
+        {
+          "gold": "d",
+          "pred": "b",
+          "count": 23
+        },
+        {
+          "gold": "a",
+          "pred": "b",
+          "count": 23
+        },
+        {
+          "gold": "e",
+          "pred": "a",
+          "count": 17
+        },
+        {
+          "gold": "b",
+          "pred": "c",
+          "count": 8
+        },
+        {
+          "gold": "e",
+          "pred": "d",
+          "count": 7
+        },
+        {
+          "gold": "d",
+          "pred": "c",
+          "count": 7
+        },
+        {
+          "gold": "b",
+          "pred": "d",
+          "count": 6
+        },
+        {
+          "gold": "a",
+          "pred": "d",
+          "count": 5
+        },
+        {
+          "gold": "a",
+          "pred": "e",
+          "count": 3
+        },
+        {
+          "gold": "e",
+          "pred": "b",
+          "count": 3
+        },
+        {
+          "gold": "d",
+          "pred": "e",
+          "count": 3
+        },
+        {
+          "gold": "c",
+          "pred": "d",
+          "count": 2
+        },
+        {
+          "gold": "a",
+          "pred": "c",
+          "count": 1
+        },
+        {
+          "gold": "c",
+          "pred": "e",
+          "count": 1
+        }
+      ]
+    }
+  },
+  "generation_config": {
+    "max_new_tokens": 32,
+    "max_input_length": 4096,
+    "batch_size": 8,
+    "temperature": 0.0,
+    "top_p": 0.9,
+    "top_k": 50,
+    "do_sample": false,
+    "repetition_penalty": 1.0
+  },
+  "timestamp": "2026-06-01T06:05:14.440844Z"
+}

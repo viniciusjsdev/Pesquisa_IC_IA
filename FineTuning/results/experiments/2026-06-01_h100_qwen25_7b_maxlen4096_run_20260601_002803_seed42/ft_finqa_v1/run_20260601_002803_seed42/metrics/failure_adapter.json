@@ -1,0 +1,123 @@
+{
+  "model_label": "ADAPTER",
+  "dataset": "FailureSensorIQ",
+  "n_samples": 831,
+  "metrics": {
+    "exact_match": 0.0,
+    "accuracy": 0.2286,
+    "f1_macro": 0.0096,
+    "confusion_top": [
+      {
+        "gold": "a",
+        "pred": "d",
+        "count": 68
+      },
+      {
+        "gold": "b",
+        "pred": "d",
+        "count": 50
+      },
+      {
+        "gold": "b",
+        "pred": "c",
+        "count": 49
+      },
+      {
+        "gold": "a",
+        "pred": "c",
+        "count": 44
+      },
+      {
+        "gold": "a",
+        "pred": "100% (100% (100% (100% (100% ) ) ) ) ) . t",
+        "count": 26
+      },
+      {
+        "gold": "b",
+        "pred": "a",
+        "count": 22
+      },
+      {
+        "gold": "a",
+        "pred": "b",
+        "count": 19
+      },
+      {
+        "gold": "c",
+        "pred": "d",
+        "count": 18
+      },
+      {
+        "gold": "d",
+        "pred": "c",
+        "count": 14
+      },
+      {
+        "gold": "c",
+        "pred": "a",
+        "count": 14
+      },
+      {
+        "gold": "b",
+        "pred": "2014201420142014201420142014201",
+        "count": 12
+      },
+      {
+        "gold": "b",
+        "pred": "100% (100% (100% (100% (100% ) ) ) ) ) . t",
+        "count": 11
+      },
+      {
+        "gold": "b",
+        "pred": "2014 , 2014 , 2014 , 2014 , 2014 , 2",
+        "count": 11
+      },
+      {
+        "gold": "e",
+        "pred": "d",
+        "count": 11
+      },
+      {
+        "gold": "d",
+        "pred": "a",
+        "count": 10
+      },
+      {
+        "gold": "a",
+        "pred": "2014 , 2014 , 2014 , 2014 , 2014 , 2",
+        "count": 8
+      },
+      {
+        "gold": "c",
+        "pred": "b",
+        "count": 8
+      },
+      {
+        "gold": "e",
+        "pred": "c",
+        "count": 7
+      },
+      {
+        "gold": "d",
+        "pred": "e",
+        "count": 7
+      },
+      {
+        "gold": "c",
+        "pred": "100% (100% (100% (100% (100% ) ) ) ) ) . t",
+        "count": 6
+      }
+    ]
+  },
+  "generation_config": {
+    "max_new_tokens": 32,
+    "max_input_length": 4096,
+    "batch_size": 8,
+    "temperature": 0.0,
+    "top_p": 0.9,
+    "top_k": 50,
+    "do_sample": false,
+    "repetition_penalty": 1.0
+  },
+  "timestamp": "2026-06-01T05:56:59.557678Z"
+}

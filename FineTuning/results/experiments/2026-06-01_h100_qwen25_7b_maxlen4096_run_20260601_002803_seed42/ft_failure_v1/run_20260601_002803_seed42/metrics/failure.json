@@ -1,0 +1,113 @@
+{
+  "model_label": "ADAPTER",
+  "dataset": "FailureSensorIQ",
+  "n_samples": 831,
+  "metrics": {
+    "exact_match": 0.0,
+    "accuracy": 0.5427,
+    "f1_macro": 0.393,
+    "confusion_top": [
+      {
+        "gold": "b",
+        "pred": "a",
+        "count": 111
+      },
+      {
+        "gold": "c",
+        "pred": "a",
+        "count": 77
+      },
+      {
+        "gold": "d",
+        "pred": "a",
+        "count": 52
+      },
+      {
+        "gold": "c",
+        "pred": "b",
+        "count": 31
+      },
+      {
+        "gold": "d",
+        "pred": "b",
+        "count": 23
+      },
+      {
+        "gold": "a",
+        "pred": "b",
+        "count": 23
+      },
+      {
+        "gold": "e",
+        "pred": "a",
+        "count": 17
+      },
+      {
+        "gold": "b",
+        "pred": "c",
+        "count": 8
+      },
+      {
+        "gold": "e",
+        "pred": "d",
+        "count": 7
+      },
+      {
+        "gold": "d",
+        "pred": "c",
+        "count": 7
+      },
+      {
+        "gold": "b",
+        "pred": "d",
+        "count": 6
+      },
+      {
+        "gold": "a",
+        "pred": "d",
+        "count": 5
+      },
+      {
+        "gold": "a",
+        "pred": "e",
+        "count": 3
+      },
+      {
+        "gold": "e",
+        "pred": "b",
+        "count": 3
+      },
+      {
+        "gold": "d",
+        "pred": "e",
+        "count": 3
+      },
+      {
+        "gold": "c",
+        "pred": "d",
+        "count": 2
+      },
+      {
+        "gold": "a",
+        "pred": "c",
+        "count": 1
+      },
+      {
+        "gold": "c",
+        "pred": "e",
+        "count": 1
+      }
+    ]
+  },
+  "generation_config": {
+    "max_new_tokens": 32,
+    "max_input_length": 4096,
+    "batch_size": 8,
+    "temperature": 0.0,
+    "top_p": 0.9,
+    "top_k": 50,
+    "do_sample": false,
+    "repetition_penalty": 1.0
+  },
+  "timestamp": "2026-06-01T06:05:14.440844Z"
+}

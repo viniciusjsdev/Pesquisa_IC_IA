@@ -2,3 +2,6 @@ venv/
 wandb/
 Datasets/finetune_mistral_wsl/output/
 .playwright-mcp/
+FineTuning/results/experiments/**/*.pt
+FineTuning/results/experiments/**/*.safetensors
+FineTuning/results/experiments/**/checkpoints/

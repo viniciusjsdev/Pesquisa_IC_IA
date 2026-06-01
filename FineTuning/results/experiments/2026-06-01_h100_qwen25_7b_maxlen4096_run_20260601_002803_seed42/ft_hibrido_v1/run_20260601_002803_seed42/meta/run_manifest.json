@@ -1,0 +1,133 @@
+{
+  "experiment_id": "ft_hibrido_v1",
+  "run_name": "run_20260601_002803_seed42",
+  "dataset_manifest": "/workspace/FineTuning/FineTuning/data/manifests/hybrid_v1.json",
+  "train_config_path": "/workspace/FineTuning/FineTuning/configs/train/ft_hibrido_v1.yaml",
+  "resolved_config_snapshot": {
+    "experiment": {
+      "id": "ft_hibrido_v1",
+      "description": "Fine-tuning híbrido financeiro-industrial (protocolo v1)"
+    },
+    "data": {
+      "dataset_manifest": "data/manifests/hybrid_v1.json",
+      "train_path": "data/processed/hybrid_v1/train.jsonl",
+      "val_path": "data/processed/hybrid_v1/val.jsonl",
+      "test_path": "data/processed/hybrid_v1/test.jsonl"
+    },
+    "model": {
+      "base_model": "Qwen/Qwen2.5-7B-Instruct",
+      "cache_dir": "/workspace/Qwen",
+      "max_memory": {
+        "gpu0": "72GB",
+        "cpu": "30GB"
+      }
+    },
+    "tokenization": {
+      "max_length": 4096,
+      "truncation": true,
+      "padding": false
+    },
+    "qlora": {
+      "load_in_4bit": true,
+      "bnb_4bit_quant_type": "nf4",
+      "bnb_4bit_compute_dtype": "float16",
+      "bnb_4bit_use_double_quant": true
+    },
+    "lora": {
+      "r": 8,
+      "alpha": 16,
+      "dropout": 0.1,
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ],
+      "bias": "none",
+      "task_type": "CAUSAL_LM"
+    },
+    "training": {
+      "num_train_epochs": 3,
+      "per_device_train_batch_size": 2,
+      "per_device_eval_batch_size": 4,
+      "gradient_accumulation_steps": 16,
+      "learning_rate": 5e-05,
+      "weight_decay": 0.01,
+      "warmup_ratio": 0.05,
+      "evaluation_strategy": "epoch",
+      "save_strategy": "epoch",
+      "eval_steps": null,
+      "save_steps": null,
+      "logging_steps": 10,
+      "load_best_model_at_end": true,
+      "metric_for_best_model": "eval_loss",
+      "greater_is_better": false,
+      "fp16": true,
+      "gradient_checkpointing": false,
+      "dataloader_pin_memory": false,
+      "dataloader_num_workers": 0,
+      "remove_unused_columns": false,
+      "seed": 42
+    },
+    "output": {
+      "root_runs_dir": "results/experiments/h100_qwen25_7b_maxlen4096",
+      "save_checkpoints": true,
+      "save_predictions_sample": false
+    }
+  },
+  "git_commit": "e4c8805ccc50c4e1a69bde5321baac4a06c3dc34",
+  "start_time": "2026-06-01T04:31:57.756993Z",
+  "end_time": "2026-06-01T05:39:05.036500Z",
+  "hardware": {
+    "python": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-90-generic-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "processor": "x86_64",
+    "torch": "2.12.0+cu130",
+    "cuda_available": true,
+    "cuda_version": "13.0",
+    "gpu_name": "NVIDIA H100 80GB HBM3",
+    "gpu_vram_gb": 79.18,
+    "transformers": "5.9.0",
+    "datasets": "4.8.5",
+    "peft": "0.19.1",
+    "trl": null,
+    "bitsandbytes": "0.49.2"
+  },
+  "software_versions": {
+    "torch": "2.12.0+cu130",
+    "transformers": "5.9.0",
+    "datasets": "4.8.5",
+    "peft": "0.19.1",
+    "trl": null,
+    "bitsandbytes": "0.49.2"
+  },
+  "seed": 42,
+  "status": "completed",
+  "best_checkpoint": "/workspace/FineTuning/FineTuning/results/experiments/h100_qwen25_7b_maxlen4096/ft_hibrido_v1/run_20260601_002803_seed42/checkpoints/checkpoint-1086",
+  "best_metric": 1.2826368808746338,
+  "estimates": {
+    "train_samples": 11560,
+    "steps_per_epoch": 362,
+    "estimated_total_steps": 1086,
+    "epochs": 3
+  },
+  "resolved_paths": {
+    "train": "/workspace/FineTuning/FineTuning/data/processed/hybrid_v1/train.jsonl",
+    "val": "/workspace/FineTuning/FineTuning/data/processed/hybrid_v1/val.jsonl",
+    "test": "/workspace/FineTuning/FineTuning/data/processed/hybrid_v1/test.jsonl",
+    "dataset_manifest": "/workspace/FineTuning/FineTuning/data/manifests/hybrid_v1.json"
+  },
+  "runtime": {
+    "global_step": 1086,
+    "epoch": 3.0,
+    "max_length": 4096,
+    "train_samples_used": 11560,
+    "val_samples_used": 1444,
+    "steps_por_epoca": 362,
+    "tokens_aproximados_processados": 142049280
+  }
+}

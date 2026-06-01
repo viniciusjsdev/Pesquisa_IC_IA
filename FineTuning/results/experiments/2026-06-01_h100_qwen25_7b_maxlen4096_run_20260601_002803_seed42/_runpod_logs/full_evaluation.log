@@ -1,0 +1,797 @@
+FULL_EVALUATION_START_2026-06-01T05:41:34+00:00
+EXPERIMENT_TAG=h100_qwen25_7b_maxlen4096
+RUN_NAME=run_20260601_002803_seed42
+RUNS_ROOT=/workspace/FineTuning/FineTuning/results/experiments/h100_qwen25_7b_maxlen4096
+2026/06/01 05:41:34.088, NVIDIA H100 80GB HBM3, 0 MiB, 81559 MiB, 0 %
+EVAL_START_base_2026-06-01T05:41:34+00:00
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[INFO] base_model=Qwen/Qwen2.5-7B-Instruct
+[INFO] test_data_path=/workspace/FineTuning/FineTuning/data/processed/hybrid_v1/test.jsonl
+[INFO] domain_filter=both | n=1448
+[INFO] run_dir=/workspace/FineTuning/FineTuning/results/experiments/h100_qwen25_7b_maxlen4096/base_eval/run_20260601_002803_seed42
+[INFO] adapter_path=None
+Loading weights:   0%|          | 0/339 [00:00<?, ?it/s]Loading weights:   0%|          | 1/339 [00:01<10:58,  1.95s/it]Loading weights:   1%|          | 2/339 [00:03<10:49,  1.93s/it]/workspace/FineTuning/FineTuning/finetune_qwen_wsl/venv/lib/python3.12/site-packages/bitsandbytes/backends/cuda/ops.py:213: FutureWarning: _check_is_size will be removed in a future PyTorch release along with guard_size_oblivious.     Use _check(i >= 0) instead.
+  torch._check_is_size(blocksize)
+Loading weights:   1%|          | 4/339 [00:04<05:13,  1.07it/s]Loading weights:   1%|▏         | 5/339 [00:04<04:12,  1.32it/s]Loading weights:   2%|▏         | 6/339 [00:05<03:25,  1.62it/s]Loading weights:   3%|▎         | 10/339 [00:05<01:22,  3.96it/s]Loading weights:   4%|▎         | 12/339 [00:05<01:03,  5.17it/s]Loading weights:   5%|▍         | 16/339 [00:05<00:48,  6.68it/s]Loading weights:   5%|▌         | 18/339 [00:06<01:07,  4.73it/s]Loading weights:   6%|▋         | 22/339 [00:06<00:44,  7.09it/s]Loading weights:   8%|▊         | 26/339 [00:07<00:31, 10.02it/s]Loading weights:   8%|▊         | 28/339 [00:07<00:38,  8.18it/s]Loading weights:   9%|▉         | 30/339 [00:08<00:56,  5.49it/s]Loading weights:  10%|█         | 34/339 [00:08<00:36,  8.34it/s]Loading weights:  11%|█         | 38/339 [00:08<00:26, 11.39it/s]Loading weights:  12%|█▏        | 41/339 [00:09<00:43,  6.88it/s]Loading weights:  13%|█▎        | 43/339 [00:09<00:46,  6.36it/s]Loading weights:  14%|█▎        | 46/339 [00:09<00:37,  7.78it/s]Loading weights:  15%|█▍        | 50/339 [00:10<00:28, 10.14it/s]Loading weights:  15%|█▌        | 52/339 [00:10<00:32,  8.78it/s]Loading weights:  16%|█▌        | 54/339 [00:11<00:51,  5.52it/s]Loading weights:  17%|█▋        | 58/339 [00:11<00:35,  8.01it/s]Loading weights:  18%|█▊        | 60/339 [00:11<00:35,  7.86it/s]Loading weights:  19%|█▉        | 64/339 [00:12<00:33,  8.22it/s]Loading weights:  19%|█▉        | 66/339 [00:12<00:49,  5.50it/s]Loading weights:  21%|██        | 70/339 [00:13<00:34,  7.77it/s]Loading weights:  21%|██        | 72/339 [00:13<00:29,  8.92it/s]Loading weights:  22%|██▏       | 74/339 [00:13<00:26, 10.07it/s]Loading weights:  22%|██▏       | 76/339 [00:13<00:32,  8.14it/s]Loading weights:  23%|██▎       | 78/339 [00:14<00:48,  5.38it/s]Loading weights:  24%|██▍       | 82/339 [00:14<00:31,  8.03it/s]Loading weights:  25%|██▌       | 86/339 [00:14<00:22, 11.36it/s]Loading weights:  26%|██▋       | 89/339 [00:15<00:37,  6.66it/s]Loading weights:  27%|██▋       | 91/339 [00:15<00:37,  6.61it/s]Loading weights:  28%|██▊       | 94/339 [00:16<00:29,  8.27it/s]Loading weights:  28%|██▊       | 96/339 [00:16<00:25,  9.54it/s]Loading weights:  29%|██▉       | 100/339 [00:16<00:25,  9.32it/s]Loading weights:  30%|███       | 102/339 [00:17<00:39,  5.93it/s]Loading weights:  31%|███▏      | 106/339 [00:17<00:28,  8.26it/s]Loading weights:  32%|███▏      | 108/339 [00:17<00:24,  9.45it/s]Loading weights:  33%|███▎      | 112/339 [00:18<00:24,  9.35it/s]Loading weights:  34%|███▎      | 114/339 [00:18<00:37,  6.00it/s]Loading weights:  35%|███▍      | 118/339 [00:19<00:25,  8.67it/s]Loading weights:  35%|███▌      | 120/339 [00:19<00:23,  9.23it/s]Loading weights:  37%|███▋      | 124/339 [00:19<00:23,  9.26it/s]Loading weights:  37%|███▋      | 126/339 [00:20<00:33,  6.28it/s]Loading weights:  38%|███▊      | 130/339 [00:20<00:24,  8.52it/s]Loading weights:  40%|███▉      | 134/339 [00:20<00:19, 10.74it/s]Loading weights:  40%|████      | 136/339 [00:21<00:23,  8.53it/s]Loading weights:  41%|████      | 138/339 [00:21<00:37,  5.31it/s]Loading weights:  42%|████▏     | 142/339 [00:22<00:25,  7.77it/s]Loading weights:  42%|████▏     | 144/339 [00:22<00:23,  8.41it/s]Loading weights:  44%|████▎     | 148/339 [00:22<00:21,  8.83it/s]Loading weights:  44%|████▍     | 150/339 [00:23<00:33,  5.67it/s]Loading weights:  45%|████▌     | 154/339 [00:23<00:24,  7.59it/s]Loading weights:  46%|████▌     | 156/339 [00:23<00:21,  8.52it/s]Loading weights:  47%|████▋     | 160/339 [00:24<00:21,  8.39it/s]Loading weights:  48%|████▊     | 162/339 [00:25<00:31,  5.68it/s]Loading weights:  49%|████▉     | 166/339 [00:25<00:22,  7.82it/s]Loading weights:  50%|████▉     | 168/339 [00:25<00:19,  8.76it/s]Loading weights:  51%|█████     | 172/339 [00:25<00:19,  8.77it/s]Loading weights:  51%|█████▏    | 174/339 [00:26<00:28,  5.81it/s]Loading weights:  53%|█████▎    | 178/339 [00:26<00:19,  8.08it/s]Loading weights:  54%|█████▎    | 182/339 [00:26<00:14, 11.08it/s]Loading weights:  54%|█████▍    | 184/339 [00:27<00:17,  8.78it/s]Loading weights:  55%|█████▍    | 186/339 [00:28<00:27,  5.66it/s]Loading weights:  56%|█████▌    | 190/339 [00:28<00:18,  7.99it/s]Loading weights:  57%|█████▋    | 194/339 [00:28<00:14, 10.24it/s]Loading weights:  58%|█████▊    | 196/339 [00:29<00:17,  8.24it/s]Loading weights:  58%|█████▊    | 198/339 [00:29<00:25,  5.62it/s]Loading weights:  60%|█████▉    | 202/339 [00:29<00:17,  8.00it/s]Loading weights:  60%|██████    | 204/339 [00:30<00:15,  8.70it/s]Loading weights:  61%|██████▏   | 208/339 [00:30<00:15,  8.64it/s]Loading weights:  62%|██████▏   | 210/339 [00:31<00:23,  5.45it/s]Loading weights:  63%|██████▎   | 214/339 [00:31<00:16,  7.69it/s]Loading weights:  64%|██████▍   | 217/339 [00:31<00:12,  9.81it/s]Loading weights:  65%|██████▍   | 220/339 [00:32<00:13,  8.76it/s]Loading weights:  65%|██████▌   | 222/339 [00:32<00:19,  5.91it/s]Loading weights:  67%|██████▋   | 226/339 [00:32<00:13,  8.52it/s]Loading weights:  67%|██████▋   | 228/339 [00:33<00:11,  9.71it/s]Loading weights:  68%|██████▊   | 232/339 [00:33<00:11,  9.46it/s]Loading weights:  69%|██████▉   | 234/339 [00:34<00:18,  5.82it/s]Loading weights:  70%|███████   | 238/339 [00:34<00:12,  8.33it/s]Loading weights:  71%|███████   | 240/339 [00:34<00:11,  8.57it/s]Loading weights:  72%|███████▏  | 244/339 [00:35<00:10,  8.81it/s]Loading weights:  73%|███████▎  | 246/339 [00:35<00:15,  5.92it/s]Loading weights:  74%|███████▍  | 251/339 [00:35<00:09,  9.55it/s]Loading weights:  75%|███████▍  | 254/339 [00:36<00:07, 10.64it/s]Loading weights:  76%|███████▌  | 256/339 [00:36<00:09,  9.03it/s]Loading weights:  76%|███████▌  | 258/339 [00:37<00:14,  5.74it/s]Loading weights:  77%|███████▋  | 262/339 [00:37<00:09,  8.16it/s]Loading weights:  78%|███████▊  | 266/339 [00:37<00:06, 11.24it/s]Loading weights:  79%|███████▉  | 269/339 [00:38<00:09,  7.17it/s]Loading weights:  80%|███████▉  | 271/339 [00:38<00:10,  6.59it/s]Loading weights:  81%|████████  | 274/339 [00:38<00:07,  8.16it/s]Loading weights:  81%|████████▏ | 276/339 [00:39<00:06,  9.37it/s]Loading weights:  82%|████████▏ | 278/339 [00:39<00:05, 10.72it/s]Loading weights:  83%|████████▎ | 280/339 [00:39<00:06,  8.95it/s]Loading weights:  83%|████████▎ | 282/339 [00:40<00:10,  5.64it/s]Loading weights:  84%|████████▍ | 286/339 [00:40<00:06,  8.53it/s]Loading weights:  86%|████████▌ | 290/339 [00:40<00:04, 12.01it/s]Loading weights:  86%|████████▋ | 293/339 [00:41<00:06,  7.28it/s]Loading weights:  87%|████████▋ | 295/339 [00:41<00:06,  6.99it/s]Loading weights:  88%|████████▊ | 298/339 [00:41<00:05,  8.07it/s]Loading weights:  89%|████████▉ | 302/339 [00:42<00:03, 10.46it/s]Loading weights:  90%|████████▉ | 304/339 [00:42<00:03,  8.85it/s]Loading weights:  90%|█████████ | 306/339 [00:43<00:05,  5.55it/s]Loading weights:  91%|█████████▏| 310/339 [00:43<00:03,  8.14it/s]Loading weights:  92%|█████████▏| 312/339 [00:43<00:02,  9.21it/s]Loading weights:  93%|█████████▎| 316/339 [00:44<00:02,  8.49it/s]Loading weights:  94%|█████████▍| 318/339 [00:44<00:03,  5.63it/s]Loading weights:  95%|█████████▍| 322/339 [00:44<00:02,  7.97it/s]Loading weights:  96%|█████████▌| 324/339 [00:45<00:01,  9.15it/s]Loading weights:  97%|█████████▋| 328/339 [00:45<00:01,  8.97it/s]Loading weights:  97%|█████████▋| 330/339 [00:46<00:01,  5.85it/s]Loading weights:  99%|█████████▊| 334/339 [00:46<00:00,  8.20it/s]Loading weights:  99%|█████████▉| 336/339 [00:46<00:00,  8.58it/s]Loading weights: 100%|██████████| 339/339 [00:46<00:00,  7.26it/s]
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+[INFO] generated 8/1448
+[INFO] generated 16/1448
+[INFO] generated 24/1448
+[INFO] generated 32/1448
+[INFO] generated 40/1448
+[INFO] generated 48/1448
+[INFO] generated 56/1448
+[INFO] generated 64/1448
+[INFO] generated 72/1448
+[INFO] generated 80/1448
+[INFO] generated 88/1448
+[INFO] generated 96/1448
+[INFO] generated 104/1448
+[INFO] generated 112/1448
+[INFO] generated 120/1448
+[INFO] generated 128/1448
+[INFO] generated 136/1448
+[INFO] generated 144/1448
+[INFO] generated 152/1448
+[INFO] generated 160/1448
+[INFO] generated 168/1448
+[INFO] generated 176/1448
+[INFO] generated 184/1448
+[INFO] generated 192/1448
+[INFO] generated 200/1448
+[INFO] generated 208/1448
+[INFO] generated 216/1448
+[INFO] generated 224/1448
+[INFO] generated 232/1448
+[INFO] generated 240/1448
+[INFO] generated 248/1448
+[INFO] generated 256/1448
+[INFO] generated 264/1448
+[INFO] generated 272/1448
+[INFO] generated 280/1448
+[INFO] generated 288/1448
+[INFO] generated 296/1448
+[INFO] generated 304/1448
+[INFO] generated 312/1448
+[INFO] generated 320/1448
+[INFO] generated 328/1448
+[INFO] generated 336/1448
+[INFO] generated 344/1448
+[INFO] generated 352/1448
+[INFO] generated 360/1448
+[INFO] generated 368/1448
+[INFO] generated 376/1448
+[INFO] generated 384/1448
+[INFO] generated 392/1448
+[INFO] generated 400/1448
+[INFO] generated 408/1448
+[INFO] generated 416/1448
+[INFO] generated 424/1448
+[INFO] generated 432/1448
+[INFO] generated 440/1448
+[INFO] generated 448/1448
+[INFO] generated 456/1448
+[INFO] generated 464/1448
+[INFO] generated 472/1448
+[INFO] generated 480/1448
+[INFO] generated 488/1448
+[INFO] generated 496/1448
+[INFO] generated 504/1448
+[INFO] generated 512/1448
+[INFO] generated 520/1448
+[INFO] generated 528/1448
+[INFO] generated 536/1448
+[INFO] generated 544/1448
+[INFO] generated 552/1448
+[INFO] generated 560/1448
+[INFO] generated 568/1448
+[INFO] generated 576/1448
+[INFO] generated 584/1448
+[INFO] generated 592/1448
+[INFO] generated 600/1448
+[INFO] generated 608/1448
+[INFO] generated 616/1448
+[INFO] generated 624/1448
+[INFO] generated 632/1448
+[INFO] generated 640/1448
+[INFO] generated 648/1448
+[INFO] generated 656/1448
+[INFO] generated 664/1448
+[INFO] generated 672/1448
+[INFO] generated 680/1448
+[INFO] generated 688/1448
+[INFO] generated 696/1448
+[INFO] generated 704/1448
+[INFO] generated 712/1448
+[INFO] generated 720/1448
+[INFO] generated 728/1448
+[INFO] generated 736/1448
+[INFO] generated 744/1448
+[INFO] generated 752/1448
+[INFO] generated 760/1448
+[INFO] generated 768/1448
+[INFO] generated 776/1448
+[INFO] generated 784/1448
+[INFO] generated 792/1448
+[INFO] generated 800/1448
+[INFO] generated 808/1448
+[INFO] generated 816/1448
+[INFO] generated 824/1448
+[INFO] generated 832/1448
+[INFO] generated 840/1448
+[INFO] generated 848/1448
+[INFO] generated 856/1448
+[INFO] generated 864/1448
+[INFO] generated 872/1448
+[INFO] generated 880/1448
+[INFO] generated 888/1448
+[INFO] generated 896/1448
+[INFO] generated 904/1448
+[INFO] generated 912/1448
+[INFO] generated 920/1448
+[INFO] generated 928/1448
+[INFO] generated 936/1448
+[INFO] generated 944/1448
+[INFO] generated 952/1448
+[INFO] generated 960/1448
+[INFO] generated 968/1448
+[INFO] generated 976/1448
+[INFO] generated 984/1448
+[INFO] generated 992/1448
+[INFO] generated 1000/1448
+[INFO] generated 1008/1448
+[INFO] generated 1016/1448
+[INFO] generated 1024/1448
+[INFO] generated 1032/1448
+[INFO] generated 1040/1448
+[INFO] generated 1048/1448
+[INFO] generated 1056/1448
+[INFO] generated 1064/1448
+[INFO] generated 1072/1448
+[INFO] generated 1080/1448
+[INFO] generated 1088/1448
+[INFO] generated 1096/1448
+[INFO] generated 1104/1448
+[INFO] generated 1112/1448
+[INFO] generated 1120/1448
+[INFO] generated 1128/1448
+[INFO] generated 1136/1448
+[INFO] generated 1144/1448
+[INFO] generated 1152/1448
+[INFO] generated 1160/1448
+[INFO] generated 1168/1448
+[INFO] generated 1176/1448
+[INFO] generated 1184/1448
+[INFO] generated 1192/1448
+[INFO] generated 1200/1448
+[INFO] generated 1208/1448
+[INFO] generated 1216/1448
+[INFO] generated 1224/1448
+[INFO] generated 1232/1448
+[INFO] generated 1240/1448
+[INFO] generated 1248/1448
+[INFO] generated 1256/1448
+[INFO] generated 1264/1448
+[INFO] generated 1272/1448
+[INFO] generated 1280/1448
+[INFO] generated 1288/1448
+[INFO] generated 1296/1448
+[INFO] generated 1304/1448
+[INFO] generated 1312/1448
+[INFO] generated 1320/1448
+[INFO] generated 1328/1448
+[INFO] generated 1336/1448
+[INFO] generated 1344/1448
+[INFO] generated 1352/1448
+[INFO] generated 1360/1448
+[INFO] generated 1368/1448
+[INFO] generated 1376/1448
+[INFO] generated 1384/1448
+[INFO] generated 1392/1448
+[INFO] generated 1400/1448
+[INFO] generated 1408/1448
+[INFO] generated 1416/1448
+[INFO] generated 1424/1448
+[INFO] generated 1432/1448
+[INFO] generated 1440/1448
+[INFO] generated 1448/1448
+/workspace/FineTuning/FineTuning/finetune_qwen_wsl/5_avaliar_batch_wsl.py:131: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  timestamp = __import__('datetime').datetime.utcnow().isoformat() + 'Z'
+[OK] Avaliação concluída.
+EVAL_DONE_base_2026-06-01T05:48:37+00:00
+2026/06/01 05:48:37.196, NVIDIA H100 80GB HBM3, 0 MiB, 81559 MiB, 0 %
+EVAL_START_ft_finqa_2026-06-01T05:48:37+00:00
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[INFO] base_model=Qwen/Qwen2.5-7B-Instruct
+[INFO] test_data_path=/workspace/FineTuning/FineTuning/data/processed/hybrid_v1/test.jsonl
+[INFO] domain_filter=both | n=1448
+[INFO] run_dir=/workspace/FineTuning/FineTuning/results/experiments/h100_qwen25_7b_maxlen4096/ft_finqa_v1/run_20260601_002803_seed42
+[INFO] adapter_path=/workspace/FineTuning/FineTuning/results/experiments/h100_qwen25_7b_maxlen4096/ft_finqa_v1/run_20260601_002803_seed42/adapter
+Loading weights:   0%|          | 0/339 [00:00<?, ?it/s]Loading weights:   0%|          | 1/339 [00:00<01:59,  2.84it/s]Loading weights:   1%|          | 2/339 [00:00<01:48,  3.12it/s]/workspace/FineTuning/FineTuning/finetune_qwen_wsl/venv/lib/python3.12/site-packages/bitsandbytes/backends/cuda/ops.py:213: FutureWarning: _check_is_size will be removed in a future PyTorch release along with guard_size_oblivious.     Use _check(i >= 0) instead.
+  torch._check_is_size(blocksize)
+Loading weights:   1%|▏         | 5/339 [00:00<00:39,  8.41it/s]Loading weights:   4%|▍         | 14/339 [00:00<00:12, 26.26it/s]Loading weights:   6%|▌         | 19/339 [00:01<00:12, 24.82it/s]Loading weights:   8%|▊         | 28/339 [00:01<00:08, 38.44it/s]Loading weights:  10%|█         | 34/339 [00:01<00:07, 42.29it/s]Loading weights:  12%|█▏        | 40/339 [00:01<00:06, 45.72it/s]Loading weights:  14%|█▎        | 46/339 [00:01<00:07, 40.67it/s]Loading weights:  16%|█▌        | 53/339 [00:01<00:06, 44.86it/s]Loading weights:  18%|█▊        | 60/339 [00:01<00:06, 45.31it/s]Loading weights:  19%|█▉        | 65/339 [00:01<00:06, 44.01it/s]Loading weights:  21%|██        | 70/339 [00:02<00:05, 45.17it/s]Loading weights:  23%|██▎       | 77/339 [00:02<00:06, 42.82it/s]Loading weights:  26%|██▌       | 88/339 [00:02<00:05, 47.83it/s]Loading weights:  27%|██▋       | 93/339 [00:02<00:05, 46.25it/s]Loading weights:  29%|██▉       | 100/339 [00:02<00:04, 51.18it/s]Loading weights:  31%|███▏      | 106/339 [00:02<00:05, 44.90it/s]Loading weights:  33%|███▎      | 112/339 [00:02<00:04, 46.48it/s]Loading weights:  35%|███▍      | 117/339 [00:03<00:04, 46.75it/s]Loading weights:  37%|███▋      | 124/339 [00:03<00:04, 52.21it/s]Loading weights:  38%|███▊      | 130/339 [00:03<00:04, 45.36it/s]Loading weights:  40%|████      | 136/339 [00:03<00:04, 46.82it/s]Loading weights:  42%|████▏     | 141/339 [00:03<00:04, 47.06it/s]Loading weights:  44%|████▎     | 148/339 [00:03<00:03, 52.05it/s]Loading weights:  45%|████▌     | 154/339 [00:03<00:04, 43.23it/s]Loading weights:  47%|████▋     | 161/339 [00:04<00:04, 40.52it/s]Loading weights:  51%|█████     | 172/339 [00:04<00:03, 45.91it/s]Loading weights:  52%|█████▏    | 177/339 [00:04<00:03, 46.12it/s]Loading weights:  54%|█████▍    | 184/339 [00:04<00:03, 50.70it/s]Loading weights:  56%|█████▌    | 190/339 [00:04<00:03, 42.99it/s]Loading weights:  58%|█████▊    | 197/339 [00:04<00:03, 40.64it/s]Loading weights:  61%|██████▏   | 208/339 [00:05<00:02, 45.41it/s]Loading weights:  63%|██████▎   | 213/339 [00:05<00:02, 44.49it/s]Loading weights:  65%|██████▌   | 221/339 [00:05<00:02, 44.17it/s]Loading weights:  67%|██████▋   | 228/339 [00:05<00:02, 49.07it/s]Loading weights:  69%|██████▉   | 234/339 [00:05<00:02, 37.05it/s]Loading weights:  72%|███████▏  | 244/339 [00:05<00:02, 47.31it/s]Loading weights:  74%|███████▎  | 250/339 [00:06<00:01, 47.95it/s]Loading weights:  76%|███████▌  | 257/339 [00:06<00:01, 44.81it/s]Loading weights:  77%|███████▋  | 262/339 [00:06<00:01, 45.51it/s]Loading weights:  79%|███████▉  | 269/339 [00:06<00:01, 42.06it/s]Loading weights:  83%|████████▎ | 280/339 [00:06<00:01, 46.86it/s]Loading weights:  84%|████████▍ | 285/339 [00:06<00:01, 46.68it/s]Loading weights:  86%|████████▌ | 292/339 [00:06<00:00, 51.47it/s]Loading weights:  88%|████████▊ | 298/339 [00:07<00:00, 44.63it/s]Loading weights:  90%|████████▉ | 304/339 [00:07<00:00, 47.41it/s]Loading weights:  91%|█████████▏| 310/339 [00:07<00:00, 48.47it/s]Loading weights:  94%|█████████▎| 317/339 [00:07<00:00, 44.41it/s]Loading weights:  97%|█████████▋| 328/339 [00:07<00:00, 48.30it/s]Loading weights:  98%|█████████▊| 333/339 [00:07<00:00, 47.19it/s]Loading weights: 100%|██████████| 339/339 [00:07<00:00, 43.05it/s]
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+[INFO] generated 8/1448
+[INFO] generated 16/1448
+[INFO] generated 24/1448
+[INFO] generated 32/1448
+[INFO] generated 40/1448
+[INFO] generated 48/1448
+[INFO] generated 56/1448
+[INFO] generated 64/1448
+[INFO] generated 72/1448
+[INFO] generated 80/1448
+[INFO] generated 88/1448
+[INFO] generated 96/1448
+[INFO] generated 104/1448
+[INFO] generated 112/1448
+[INFO] generated 120/1448
+[INFO] generated 128/1448
+[INFO] generated 136/1448
+[INFO] generated 144/1448
+[INFO] generated 152/1448
+[INFO] generated 160/1448
+[INFO] generated 168/1448
+[INFO] generated 176/1448
+[INFO] generated 184/1448
+[INFO] generated 192/1448
+[INFO] generated 200/1448
+[INFO] generated 208/1448
+[INFO] generated 216/1448
+[INFO] generated 224/1448
+[INFO] generated 232/1448
+[INFO] generated 240/1448
+[INFO] generated 248/1448
+[INFO] generated 256/1448
+[INFO] generated 264/1448
+[INFO] generated 272/1448
+[INFO] generated 280/1448
+[INFO] generated 288/1448
+[INFO] generated 296/1448
+[INFO] generated 304/1448
+[INFO] generated 312/1448
+[INFO] generated 320/1448
+[INFO] generated 328/1448
+[INFO] generated 336/1448
+[INFO] generated 344/1448
+[INFO] generated 352/1448
+[INFO] generated 360/1448
+[INFO] generated 368/1448
+[INFO] generated 376/1448
+[INFO] generated 384/1448
+[INFO] generated 392/1448
+[INFO] generated 400/1448
+[INFO] generated 408/1448
+[INFO] generated 416/1448
+[INFO] generated 424/1448
+[INFO] generated 432/1448
+[INFO] generated 440/1448
+[INFO] generated 448/1448
+[INFO] generated 456/1448
+[INFO] generated 464/1448
+[INFO] generated 472/1448
+[INFO] generated 480/1448
+[INFO] generated 488/1448
+[INFO] generated 496/1448
+[INFO] generated 504/1448
+[INFO] generated 512/1448
+[INFO] generated 520/1448
+[INFO] generated 528/1448
+[INFO] generated 536/1448
+[INFO] generated 544/1448
+[INFO] generated 552/1448
+[INFO] generated 560/1448
+[INFO] generated 568/1448
+[INFO] generated 576/1448
+[INFO] generated 584/1448
+[INFO] generated 592/1448
+[INFO] generated 600/1448
+[INFO] generated 608/1448
+[INFO] generated 616/1448
+[INFO] generated 624/1448
+[INFO] generated 632/1448
+[INFO] generated 640/1448
+[INFO] generated 648/1448
+[INFO] generated 656/1448
+[INFO] generated 664/1448
+[INFO] generated 672/1448
+[INFO] generated 680/1448
+[INFO] generated 688/1448
+[INFO] generated 696/1448
+[INFO] generated 704/1448
+[INFO] generated 712/1448
+[INFO] generated 720/1448
+[INFO] generated 728/1448
+[INFO] generated 736/1448
+[INFO] generated 744/1448
+[INFO] generated 752/1448
+[INFO] generated 760/1448
+[INFO] generated 768/1448
+[INFO] generated 776/1448
+[INFO] generated 784/1448
+[INFO] generated 792/1448
+[INFO] generated 800/1448
+[INFO] generated 808/1448
+[INFO] generated 816/1448
+[INFO] generated 824/1448
+[INFO] generated 832/1448
+[INFO] generated 840/1448
+[INFO] generated 848/1448
+[INFO] generated 856/1448
+[INFO] generated 864/1448
+[INFO] generated 872/1448
+[INFO] generated 880/1448
+[INFO] generated 888/1448
+[INFO] generated 896/1448
+[INFO] generated 904/1448
+[INFO] generated 912/1448
+[INFO] generated 920/1448
+[INFO] generated 928/1448
+[INFO] generated 936/1448
+[INFO] generated 944/1448
+[INFO] generated 952/1448
+[INFO] generated 960/1448
+[INFO] generated 968/1448
+[INFO] generated 976/1448
+[INFO] generated 984/1448
+[INFO] generated 992/1448
+[INFO] generated 1000/1448
+[INFO] generated 1008/1448
+[INFO] generated 1016/1448
+[INFO] generated 1024/1448
+[INFO] generated 1032/1448
+[INFO] generated 1040/1448
+[INFO] generated 1048/1448
+[INFO] generated 1056/1448
+[INFO] generated 1064/1448
+[INFO] generated 1072/1448
+[INFO] generated 1080/1448
+[INFO] generated 1088/1448
+[INFO] generated 1096/1448
+[INFO] generated 1104/1448
+[INFO] generated 1112/1448
+[INFO] generated 1120/1448
+[INFO] generated 1128/1448
+[INFO] generated 1136/1448
+[INFO] generated 1144/1448
+[INFO] generated 1152/1448
+[INFO] generated 1160/1448
+[INFO] generated 1168/1448
+[INFO] generated 1176/1448
+[INFO] generated 1184/1448
+[INFO] generated 1192/1448
+[INFO] generated 1200/1448
+[INFO] generated 1208/1448
+[INFO] generated 1216/1448
+[INFO] generated 1224/1448
+[INFO] generated 1232/1448
+[INFO] generated 1240/1448
+[INFO] generated 1248/1448
+[INFO] generated 1256/1448
+[INFO] generated 1264/1448
+[INFO] generated 1272/1448
+[INFO] generated 1280/1448
+[INFO] generated 1288/1448
+[INFO] generated 1296/1448
+[INFO] generated 1304/1448
+[INFO] generated 1312/1448
+[INFO] generated 1320/1448
+[INFO] generated 1328/1448
+[INFO] generated 1336/1448
+[INFO] generated 1344/1448
+[INFO] generated 1352/1448
+[INFO] generated 1360/1448
+[INFO] generated 1368/1448
+[INFO] generated 1376/1448
+[INFO] generated 1384/1448
+[INFO] generated 1392/1448
+[INFO] generated 1400/1448
+[INFO] generated 1408/1448
+[INFO] generated 1416/1448
+[INFO] generated 1424/1448
+[INFO] generated 1432/1448
+[INFO] generated 1440/1448
+[INFO] generated 1448/1448
+/workspace/FineTuning/FineTuning/finetune_qwen_wsl/5_avaliar_batch_wsl.py:131: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  timestamp = __import__('datetime').datetime.utcnow().isoformat() + 'Z'
+[OK] Avaliação concluída.
+EVAL_DONE_ft_finqa_2026-06-01T05:57:00+00:00
+2026/06/01 05:57:00.681, NVIDIA H100 80GB HBM3, 0 MiB, 81559 MiB, 2 %
+EVAL_START_ft_failure_2026-06-01T05:57:00+00:00
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+[INFO] base_model=Qwen/Qwen2.5-7B-Instruct
+[INFO] test_data_path=/workspace/FineTuning/FineTuning/data/processed/hybrid_v1/test.jsonl
+[INFO] domain_filter=both | n=1448
+[INFO] run_dir=/workspace/FineTuning/FineTuning/results/experiments/h100_qwen25_7b_maxlen4096/ft_failure_v1/run_20260601_002803_seed42
+[INFO] adapter_path=/workspace/FineTuning/FineTuning/results/experiments/h100_qwen25_7b_maxlen4096/ft_failure_v1/run_20260601_002803_seed42/adapter
+Loading weights:   0%|          | 0/339 [00:00<?, ?it/s]Loading weights:   0%|          | 1/339 [00:00<01:52,  3.00it/s]Loading weights:   1%|          | 2/339 [00:00<01:45,  3.20it/s]/workspace/FineTuning/FineTuning/finetune_qwen_wsl/venv/lib/python3.12/site-packages/bitsandbytes/backends/cuda/ops.py:213: FutureWarning: _check_is_size will be removed in a future PyTorch release along with guard_size_oblivious.     Use _check(i >= 0) instead.
+  torch._check_is_size(blocksize)
+Loading weights:   1%|▏         | 5/339 [00:00<00:38,  8.58it/s]Loading weights:   4%|▎         | 12/339 [00:00<00:14, 21.98it/s]Loading weights:   5%|▌         | 17/339 [00:00<00:11, 27.00it/s]Loading weights:   8%|▊         | 26/339 [00:01<00:07, 42.31it/s]Loading weights:   9%|▉         | 32/339 [00:01<00:08, 35.81it/s]Loading weights:  12%|█▏        | 40/339 [00:01<00:07, 39.31it/s]Loading weights:  13%|█▎        | 45/339 [00:01<00:07, 41.07it/s]Loading weights:  15%|█▌        | 52/339 [00:01<00:06, 47.10it/s]Loading weights:  17%|█▋        | 58/339 [00:01<00:06, 41.25it/s]Loading weights:  19%|█▉        | 64/339 [00:01<00:06, 45.11it/s]Loading weights:  20%|██        | 69/339 [00:02<00:06, 44.36it/s]Loading weights:  22%|██▏       | 76/339 [00:02<00:06, 43.49it/s]Loading weights:  24%|██▍       | 81/339 [00:02<00:05, 43.43it/s]Loading weights:  26%|██▌       | 88/339 [00:02<00:05, 49.59it/s]Loading weights:  28%|██▊       | 94/339 [00:02<00:05, 43.76it/s]Loading weights:  29%|██▉       | 100/339 [00:02<00:05, 45.46it/s]Loading weights:  31%|███       | 105/339 [00:02<00:05, 46.26it/s]Loading weights:  33%|███▎      | 112/339 [00:02<00:04, 51.30it/s]Loading weights:  35%|███▍      | 118/339 [00:03<00:05, 43.04it/s]Loading weights:  37%|███▋      | 125/339 [00:03<00:05, 41.22it/s]Loading weights:  40%|████      | 136/339 [00:03<00:03, 53.68it/s]Loading weights:  42%|████▏     | 142/339 [00:03<00:04, 45.19it/s]Loading weights:  44%|████▍     | 149/339 [00:03<00:04, 42.47it/s]Loading weights:  47%|████▋     | 160/339 [00:04<00:03, 46.80it/s]Loading weights:  49%|████▊     | 165/339 [00:04<00:03, 46.42it/s]Loading weights:  51%|█████     | 172/339 [00:04<00:03, 50.90it/s]Loading weights:  53%|█████▎    | 178/339 [00:04<00:03, 43.95it/s]Loading weights:  54%|█████▍    | 184/339 [00:04<00:03, 47.25it/s]Loading weights:  56%|█████▌    | 190/339 [00:04<00:03, 48.16it/s]Loading weights:  58%|█████▊    | 197/339 [00:04<00:03, 44.48it/s]Loading weights:  60%|█████▉    | 202/339 [00:04<00:03, 44.83it/s]Loading weights:  62%|██████▏   | 209/339 [00:05<00:03, 41.50it/s]Loading weights:  65%|██████▍   | 220/339 [00:05<00:02, 46.71it/s]Loading weights:  66%|██████▋   | 225/339 [00:05<00:02, 44.29it/s]Loading weights:  68%|██████▊   | 232/339 [00:05<00:02, 43.69it/s]Loading weights:  70%|██████▉   | 237/339 [00:05<00:02, 44.64it/s]Loading weights:  72%|███████▏  | 244/339 [00:05<00:01, 50.36it/s]Loading weights:  74%|███████▎  | 250/339 [00:06<00:02, 44.39it/s]Loading weights:  76%|███████▌  | 256/339 [00:06<00:01, 46.13it/s]Loading weights:  77%|███████▋  | 261/339 [00:06<00:01, 46.56it/s]Loading weights:  79%|███████▉  | 268/339 [00:06<00:01, 52.25it/s]Loading weights:  81%|████████  | 274/339 [00:06<00:01, 45.17it/s]Loading weights:  83%|████████▎ | 280/339 [00:06<00:01, 46.89it/s]Loading weights:  84%|████████▍ | 285/339 [00:06<00:01, 46.89it/s]Loading weights:  86%|████████▌ | 292/339 [00:06<00:00, 52.42it/s]Loading weights:  88%|████████▊ | 298/339 [00:07<00:00, 45.44it/s]Loading weights:  90%|████████▉ | 304/339 [00:07<00:00, 47.62it/s]Loading weights:  91%|█████████ | 309/339 [00:07<00:00, 47.01it/s]Loading weights:  93%|█████████▎| 316/339 [00:07<00:00, 52.90it/s]Loading weights:  95%|█████████▍| 322/339 [00:07<00:00, 45.34it/s]Loading weights:  97%|█████████▋| 328/339 [00:07<00:00, 46.65it/s]Loading weights:  98%|█████████▊| 333/339 [00:07<00:00, 46.86it/s]Loading weights: 100%|██████████| 339/339 [00:07<00:00, 43.15it/s]
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+[INFO] generated 8/1448
+[INFO] generated 16/1448
+[INFO] generated 24/1448
+[INFO] generated 32/1448
+[INFO] generated 40/1448
+[INFO] generated 48/1448
+[INFO] generated 56/1448
+[INFO] generated 64/1448
+[INFO] generated 72/1448
+[INFO] generated 80/1448
+[INFO] generated 88/1448
+[INFO] generated 96/1448
+[INFO] generated 104/1448
+[INFO] generated 112/1448
+[INFO] generated 120/1448
+[INFO] generated 128/1448
+[INFO] generated 136/1448
+[INFO] generated 144/1448
+[INFO] generated 152/1448
+[INFO] generated 160/1448
+[INFO] generated 168/1448
+[INFO] generated 176/1448
+[INFO] generated 184/1448
+[INFO] generated 192/1448
+[INFO] generated 200/1448
+[INFO] generated 208/1448
+[INFO] generated 216/1448
+[INFO] generated 224/1448
+[INFO] generated 232/1448
+[INFO] generated 240/1448
+[INFO] generated 248/1448
+[INFO] generated 256/1448
+[INFO] generated 264/1448
+[INFO] generated 272/1448
+[INFO] generated 280/1448
+[INFO] generated 288/1448
+[INFO] generated 296/1448
+[INFO] generated 304/1448
+[INFO] generated 312/1448
+[INFO] generated 320/1448
+[INFO] generated 328/1448
+[INFO] generated 336/1448
+[INFO] generated 344/1448
+[INFO] generated 352/1448
+[INFO] generated 360/1448
+[INFO] generated 368/1448
+[INFO] generated 376/1448
+[INFO] generated 384/1448
+[INFO] generated 392/1448
+[INFO] generated 400/1448
+[INFO] generated 408/1448
+[INFO] generated 416/1448
+[INFO] generated 424/1448
+[INFO] generated 432/1448
+[INFO] generated 440/1448
+[INFO] generated 448/1448
+[INFO] generated 456/1448
+[INFO] generated 464/1448
+[INFO] generated 472/1448
+[INFO] generated 480/1448
+[INFO] generated 488/1448
+[INFO] generated 496/1448
+[INFO] generated 504/1448
+[INFO] generated 512/1448
+[INFO] generated 520/1448
+[INFO] generated 528/1448
+[INFO] generated 536/1448
+[INFO] generated 544/1448
+[INFO] generated 552/1448
+[INFO] generated 560/1448
+[INFO] generated 568/1448
+[INFO] generated 576/1448
+[INFO] generated 584/1448
+[INFO] generated 592/1448
+[INFO] generated 600/1448
+[INFO] generated 608/1448
+[INFO] generated 616/1448
+[INFO] generated 624/1448
+[INFO] generated 632/1448
+[INFO] generated 640/1448
+[INFO] generated 648/1448
+[INFO] generated 656/1448
+[INFO] generated 664/1448
+[INFO] generated 672/1448
+[INFO] generated 680/1448
+[INFO] generated 688/1448
+[INFO] generated 696/1448
+[INFO] generated 704/1448
+[INFO] generated 712/1448
+[INFO] generated 720/1448
+[INFO] generated 728/1448
+[INFO] generated 736/1448
+[INFO] generated 744/1448
+[INFO] generated 752/1448
+[INFO] generated 760/1448
+[INFO] generated 768/1448
+[INFO] generated 776/1448
+[INFO] generated 784/1448
+[INFO] generated 792/1448
+[INFO] generated 800/1448
+[INFO] generated 808/1448
+[INFO] generated 816/1448
+[INFO] generated 824/1448
+[INFO] generated 832/1448
+[INFO] generated 840/1448
+[INFO] generated 848/1448
+[INFO] generated 856/1448
+[INFO] generated 864/1448
+[INFO] generated 872/1448
+[INFO] generated 880/1448
+[INFO] generated 888/1448
+[INFO] generated 896/1448
+[INFO] generated 904/1448
+[INFO] generated 912/1448
+[INFO] generated 920/1448
+[INFO] generated 928/1448
+[INFO] generated 936/1448
+[INFO] generated 944/1448
+[INFO] generated 952/1448
+[INFO] generated 960/1448
+[INFO] generated 968/1448
+[INFO] generated 976/1448
+[INFO] generated 984/1448
+[INFO] generated 992/1448
+[INFO] generated 1000/1448
+[INFO] generated 1008/1448
+[INFO] generated 1016/1448
+[INFO] generated 1024/1448
+[INFO] generated 1032/1448
+[INFO] generated 1040/1448
+[INFO] generated 1048/1448
+[INFO] generated 1056/1448
+[INFO] generated 1064/1448
+[INFO] generated 1072/1448
+[INFO] generated 1080/1448
+[INFO] generated 1088/1448
+[INFO] generated 1096/1448
+[INFO] generated 1104/1448
+[INFO] generated 1112/1448
+[INFO] generated 1120/1448
+[INFO] generated 1128/1448
+[INFO] generated 1136/1448
+[INFO] generated 1144/1448
+[INFO] generated 1152/1448
+[INFO] generated 1160/1448
+[INFO] generated 1168/1448
+[INFO] generated 1176/1448
+[INFO] generated 1184/1448
+[INFO] generated 1192/1448
+[INFO] generated 1200/1448
+[INFO] generated 1208/1448
+[INFO] generated 1216/1448
+[INFO] generated 1224/1448
+[INFO] generated 1232/1448
+[INFO] generated 1240/1448
+[INFO] generated 1248/1448
+[INFO] generated 1256/1448
+[INFO] generated 1264/1448
+[INFO] generated 1272/1448
+[INFO] generated 1280/1448
+[INFO] generated 1288/1448
+[INFO] generated 1296/1448
+[INFO] generated 1304/1448
+[INFO] generated 1312/1448
+[INFO] generated 1320/1448
+[INFO] generated 1328/1448
+[INFO] generated 1336/1448
+[INFO] generated 1344/1448
+[INFO] generated 1352/1448
+[INFO] generated 1360/1448
+[INFO] generated 1368/1448
+[INFO] generated 1376/1448
+[INFO] generated 1384/1448
+[INFO] generated 1392/1448
+[INFO] generated 1400/1448
+[INFO] generated 1408/1448
+[INFO] generated 1416/1448
+[INFO] generated 1424/1448
+[INFO] generated 1432/1448
+[INFO] generated 1440/1448
+[INFO] generated 1448/1448
+/workspace/FineTuning/FineTuning/finetune_qwen_wsl/5_avaliar_batch_wsl.py:131: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  timestamp = __import__('datetime').datetime.utcnow().isoformat() + 'Z'
+[OK] Avaliação concluída.
+EVAL_DONE_ft_failure_2026-06-01T06:05:15+00:00
+2026/06/01 06:05:15.752, NVIDIA H100 80GB HBM3, 0 MiB, 81559 MiB, 0 %
+EVAL_START_ft_hibrido_2026-06-01T06:05:15+00:00
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[INFO] base_model=Qwen/Qwen2.5-7B-Instruct
+[INFO] test_data_path=/workspace/FineTuning/FineTuning/data/processed/hybrid_v1/test.jsonl
+[INFO] domain_filter=both | n=1448
+[INFO] run_dir=/workspace/FineTuning/FineTuning/results/experiments/h100_qwen25_7b_maxlen4096/ft_hibrido_v1/run_20260601_002803_seed42
+[INFO] adapter_path=/workspace/FineTuning/FineTuning/results/experiments/h100_qwen25_7b_maxlen4096/ft_hibrido_v1/run_20260601_002803_seed42/adapter
+Loading weights:   0%|          | 0/339 [00:00<?, ?it/s]Loading weights:   0%|          | 1/339 [00:00<01:57,  2.88it/s]Loading weights:   1%|          | 2/339 [00:00<01:47,  3.15it/s]/workspace/FineTuning/FineTuning/finetune_qwen_wsl/venv/lib/python3.12/site-packages/bitsandbytes/backends/cuda/ops.py:213: FutureWarning: _check_is_size will be removed in a future PyTorch release along with guard_size_oblivious.     Use _check(i >= 0) instead.
+  torch._check_is_size(blocksize)
+Loading weights:   1%|▏         | 5/339 [00:00<00:39,  8.48it/s]Loading weights:   4%|▎         | 12/339 [00:00<00:15, 21.78it/s]Loading weights:   5%|▍         | 16/339 [00:00<00:12, 25.63it/s]Loading weights:   6%|▌         | 20/339 [00:01<00:11, 28.21it/s]Loading weights:   8%|▊         | 28/339 [00:01<00:07, 41.21it/s]Loading weights:  10%|▉         | 33/339 [00:01<00:07, 40.19it/s]Loading weights:  12%|█▏        | 40/339 [00:01<00:07, 41.04it/s]Loading weights:  13%|█▎        | 45/339 [00:01<00:06, 42.57it/s]Loading weights:  15%|█▌        | 52/339 [00:01<00:05, 48.99it/s]Loading weights:  17%|█▋        | 58/339 [00:01<00:06, 41.62it/s]Loading weights:  19%|█▉        | 65/339 [00:02<00:06, 40.33it/s]Loading weights:  22%|██▏       | 76/339 [00:02<00:04, 52.92it/s]Loading weights:  24%|██▍       | 82/339 [00:02<00:05, 44.65it/s]Loading weights:  26%|██▋       | 89/339 [00:02<00:05, 41.68it/s]Loading weights:  29%|██▉       | 100/339 [00:02<00:05, 46.10it/s]Loading weights:  31%|███       | 105/339 [00:02<00:05, 45.67it/s]Loading weights:  33%|███▎      | 113/339 [00:03<00:05, 44.70it/s]Loading weights:  35%|███▍      | 118/339 [00:03<00:04, 45.47it/s]Loading weights:  37%|███▋      | 125/339 [00:03<00:05, 42.02it/s]Loading weights:  38%|███▊      | 130/339 [00:03<00:04, 43.61it/s]Loading weights:  40%|████      | 137/339 [00:03<00:04, 40.85it/s]Loading weights:  44%|████▎     | 148/339 [00:03<00:04, 45.41it/s]Loading weights:  45%|████▌     | 153/339 [00:03<00:04, 45.88it/s]Loading weights:  47%|████▋     | 160/339 [00:04<00:03, 50.64it/s]Loading weights:  49%|████▉     | 166/339 [00:04<00:04, 43.19it/s]Loading weights:  51%|█████     | 173/339 [00:04<00:04, 41.03it/s]Loading weights:  54%|█████▍    | 184/339 [00:04<00:03, 46.52it/s]Loading weights:  56%|█████▌    | 189/339 [00:04<00:03, 45.52it/s]Loading weights:  58%|█████▊    | 196/339 [00:04<00:02, 50.10it/s]Loading weights:  60%|█████▉    | 202/339 [00:05<00:03, 43.02it/s]Loading weights:  62%|██████▏   | 209/339 [00:05<00:03, 41.67it/s]Loading weights:  65%|██████▍   | 220/339 [00:05<00:02, 53.06it/s]Loading weights:  67%|██████▋   | 226/339 [00:05<00:02, 45.18it/s]Loading weights:  69%|██████▊   | 233/339 [00:05<00:02, 42.36it/s]Loading weights:  72%|███████▏  | 244/339 [00:05<00:01, 54.30it/s]Loading weights:  74%|███████▍  | 251/339 [00:06<00:01, 47.73it/s]Loading weights:  76%|███████▌  | 257/339 [00:06<00:01, 47.48it/s]Loading weights:  78%|███████▊  | 266/339 [00:06<00:01, 51.64it/s]Loading weights:  80%|████████  | 272/339 [00:06<00:01, 42.62it/s]Loading weights:  83%|████████▎ | 280/339 [00:06<00:01, 49.52it/s]Loading weights:  84%|████████▍ | 286/339 [00:06<00:01, 50.12it/s]Loading weights:  86%|████████▋ | 293/339 [00:06<00:01, 45.46it/s]Loading weights:  88%|████████▊ | 298/339 [00:07<00:00, 46.14it/s]Loading weights:  90%|████████▉ | 305/339 [00:07<00:00, 42.41it/s]Loading weights:  93%|█████████▎| 316/339 [00:07<00:00, 46.85it/s]Loading weights:  95%|█████████▍| 321/339 [00:07<00:00, 45.97it/s]Loading weights:  97%|█████████▋| 329/339 [00:07<00:00, 45.02it/s]Loading weights:  99%|█████████▊| 334/339 [00:07<00:00, 45.89it/s]Loading weights: 100%|██████████| 339/339 [00:07<00:00, 42.90it/s]
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+[INFO] generated 8/1448
+[INFO] generated 16/1448
+[INFO] generated 24/1448
+[INFO] generated 32/1448
+[INFO] generated 40/1448
+[INFO] generated 48/1448
+[INFO] generated 56/1448
+[INFO] generated 64/1448
+[INFO] generated 72/1448
+[INFO] generated 80/1448
+[INFO] generated 88/1448
+[INFO] generated 96/1448
+[INFO] generated 104/1448
+[INFO] generated 112/1448
+[INFO] generated 120/1448
+[INFO] generated 128/1448
+[INFO] generated 136/1448
+[INFO] generated 144/1448
+[INFO] generated 152/1448
+[INFO] generated 160/1448
+[INFO] generated 168/1448
+[INFO] generated 176/1448
+[INFO] generated 184/1448
+[INFO] generated 192/1448
+[INFO] generated 200/1448
+[INFO] generated 208/1448
+[INFO] generated 216/1448
+[INFO] generated 224/1448
+[INFO] generated 232/1448
+[INFO] generated 240/1448
+[INFO] generated 248/1448
+[INFO] generated 256/1448
+[INFO] generated 264/1448
+[INFO] generated 272/1448
+[INFO] generated 280/1448
+[INFO] generated 288/1448
+[INFO] generated 296/1448
+[INFO] generated 304/1448
+[INFO] generated 312/1448
+[INFO] generated 320/1448
+[INFO] generated 328/1448
+[INFO] generated 336/1448
+[INFO] generated 344/1448
+[INFO] generated 352/1448
+[INFO] generated 360/1448
+[INFO] generated 368/1448
+[INFO] generated 376/1448
+[INFO] generated 384/1448
+[INFO] generated 392/1448
+[INFO] generated 400/1448
+[INFO] generated 408/1448
+[INFO] generated 416/1448
+[INFO] generated 424/1448
+[INFO] generated 432/1448
+[INFO] generated 440/1448
+[INFO] generated 448/1448
+[INFO] generated 456/1448
+[INFO] generated 464/1448
+[INFO] generated 472/1448
+[INFO] generated 480/1448
+[INFO] generated 488/1448
+[INFO] generated 496/1448
+[INFO] generated 504/1448
+[INFO] generated 512/1448
+[INFO] generated 520/1448
+[INFO] generated 528/1448
+[INFO] generated 536/1448
+[INFO] generated 544/1448
+[INFO] generated 552/1448
+[INFO] generated 560/1448
+[INFO] generated 568/1448
+[INFO] generated 576/1448
+[INFO] generated 584/1448
+[INFO] generated 592/1448
+[INFO] generated 600/1448
+[INFO] generated 608/1448
+[INFO] generated 616/1448
+[INFO] generated 624/1448
+[INFO] generated 632/1448
+[INFO] generated 640/1448
+[INFO] generated 648/1448
+[INFO] generated 656/1448
+[INFO] generated 664/1448
+[INFO] generated 672/1448
+[INFO] generated 680/1448
+[INFO] generated 688/1448
+[INFO] generated 696/1448
+[INFO] generated 704/1448
+[INFO] generated 712/1448
+[INFO] generated 720/1448
+[INFO] generated 728/1448
+[INFO] generated 736/1448
+[INFO] generated 744/1448
+[INFO] generated 752/1448
+[INFO] generated 760/1448
+[INFO] generated 768/1448
+[INFO] generated 776/1448
+[INFO] generated 784/1448
+[INFO] generated 792/1448
+[INFO] generated 800/1448
+[INFO] generated 808/1448
+[INFO] generated 816/1448
+[INFO] generated 824/1448
+[INFO] generated 832/1448
+[INFO] generated 840/1448
+[INFO] generated 848/1448
+[INFO] generated 856/1448
+[INFO] generated 864/1448
+[INFO] generated 872/1448
+[INFO] generated 880/1448
+[INFO] generated 888/1448
+[INFO] generated 896/1448
+[INFO] generated 904/1448
+[INFO] generated 912/1448
+[INFO] generated 920/1448
+[INFO] generated 928/1448
+[INFO] generated 936/1448
+[INFO] generated 944/1448
+[INFO] generated 952/1448
+[INFO] generated 960/1448
+[INFO] generated 968/1448
+[INFO] generated 976/1448
+[INFO] generated 984/1448
+[INFO] generated 992/1448
+[INFO] generated 1000/1448
+[INFO] generated 1008/1448
+[INFO] generated 1016/1448
+[INFO] generated 1024/1448
+[INFO] generated 1032/1448
+[INFO] generated 1040/1448
+[INFO] generated 1048/1448
+[INFO] generated 1056/1448
+[INFO] generated 1064/1448
+[INFO] generated 1072/1448
+[INFO] generated 1080/1448
+[INFO] generated 1088/1448
+[INFO] generated 1096/1448
+[INFO] generated 1104/1448
+[INFO] generated 1112/1448
+[INFO] generated 1120/1448
+[INFO] generated 1128/1448
+[INFO] generated 1136/1448
+[INFO] generated 1144/1448
+[INFO] generated 1152/1448
+[INFO] generated 1160/1448
+[INFO] generated 1168/1448
+[INFO] generated 1176/1448
+[INFO] generated 1184/1448
+[INFO] generated 1192/1448
+[INFO] generated 1200/1448
+[INFO] generated 1208/1448
+[INFO] generated 1216/1448
+[INFO] generated 1224/1448
+[INFO] generated 1232/1448
+[INFO] generated 1240/1448
+[INFO] generated 1248/1448
+[INFO] generated 1256/1448
+[INFO] generated 1264/1448
+[INFO] generated 1272/1448
+[INFO] generated 1280/1448
+[INFO] generated 1288/1448
+[INFO] generated 1296/1448
+[INFO] generated 1304/1448
+[INFO] generated 1312/1448
+[INFO] generated 1320/1448
+[INFO] generated 1328/1448
+[INFO] generated 1336/1448
+[INFO] generated 1344/1448
+[INFO] generated 1352/1448
+[INFO] generated 1360/1448
+[INFO] generated 1368/1448
+[INFO] generated 1376/1448
+[INFO] generated 1384/1448
+[INFO] generated 1392/1448
+[INFO] generated 1400/1448
+[INFO] generated 1408/1448
+[INFO] generated 1416/1448
+[INFO] generated 1424/1448
+[INFO] generated 1432/1448
+[INFO] generated 1440/1448
+[INFO] generated 1448/1448
+/workspace/FineTuning/FineTuning/finetune_qwen_wsl/5_avaliar_batch_wsl.py:131: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  timestamp = __import__('datetime').datetime.utcnow().isoformat() + 'Z'
+[OK] Avaliação concluída.
+EVAL_DONE_ft_hibrido_2026-06-01T06:13:38+00:00
+2026/06/01 06:13:38.102, NVIDIA H100 80GB HBM3, 0 MiB, 81559 MiB, 2 %
