@@ -25,6 +25,7 @@ source venv/bin/activate
 
 export HF_HOME=/workspace/Qwen
 export TRANSFORMERS_CACHE=/workspace/Qwen
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 export TOKENIZERS_PARALLELISM=false
 export WANDB_DISABLED=true
 
