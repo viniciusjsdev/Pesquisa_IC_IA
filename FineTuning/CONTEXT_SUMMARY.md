@@ -3,7 +3,7 @@
 Resumo central do projeto para handoff entre IAs (Codex/Cursor/CLI).
 
 ## 1) Objetivo do projeto
-Fine-tuning multi-dominio do `mistralai/Mistral-7B-Instruct-v0.3` com protocolo experimental v1 para comparar:
+Fine-tuning multi-dominio do `Qwen/Qwen2.5-7B-Instruct` com protocolo experimental v1 para comparar:
 - `Base`
 - `FT-Hibrido`
 - `FT-FinQA`
@@ -27,11 +27,11 @@ Objetivos experimentais:
 10. `data/manifests/hybrid_v1.json`
 11. `data/manifests/finqa_v1.json`
 12. `data/manifests/failure_v1.json`
-13. `finetune_mistral_wsl/2_treinar_wsl.py`
-14. `finetune_mistral_wsl/5_avaliar_batch_wsl.py`
-15. `finetune_mistral_wsl/common/config_utils.py`
-16. `finetune_mistral_wsl/common/dataset_utils.py`
-17. `finetune_mistral_wsl/common/metrics.py`
+13. `finetune_qwen_wsl/2_treinar_wsl.py`
+14. `finetune_qwen_wsl/5_avaliar_batch_wsl.py`
+15. `finetune_qwen_wsl/common/config_utils.py`
+16. `finetune_qwen_wsl/common/dataset_utils.py`
+17. `finetune_qwen_wsl/common/metrics.py`
 
 ## 3) Estrutura canonica (usar)
 - `configs/` -> protocolo de treino/avaliacao
@@ -42,32 +42,32 @@ Objetivos experimentais:
 
 ## 4) Estrutura legado (nao usar para novos experimentos)
 - `data_ft/` -> origem historica
-- `finetune_mistral_wsl/output/` -> outputs do fluxo antigo
+- `finetune_qwen_wsl/output/` -> outputs do fluxo antigo
 - `runs/ft_hibrido_legacy/` -> catalogo do modelo legado pre-v1
 
 ## 5) Comandos principais
 ### 5.1 Preparar datasets versionados
 ```bash
-python finetune_mistral_wsl/prepare_experiment_datasets.py
+python finetune_qwen_wsl/prepare_experiment_datasets.py
 ```
 
 ### 5.2 Treinar (atalho por modelo)
 ```bash
-python finetune_mistral_wsl/2_treinar_wsl.py --modelo finqa --dry-run
-python finetune_mistral_wsl/2_treinar_wsl.py --modelo finqa
+python finetune_qwen_wsl/2_treinar_wsl.py --modelo finqa --dry-run
+python finetune_qwen_wsl/2_treinar_wsl.py --modelo finqa
 
-python finetune_mistral_wsl/2_treinar_wsl.py --modelo failure --dry-run
-python finetune_mistral_wsl/2_treinar_wsl.py --modelo failure
+python finetune_qwen_wsl/2_treinar_wsl.py --modelo failure --dry-run
+python finetune_qwen_wsl/2_treinar_wsl.py --modelo failure
 
-python finetune_mistral_wsl/2_treinar_wsl.py --modelo hibrido --dry-run
-python finetune_mistral_wsl/2_treinar_wsl.py --modelo hibrido
+python finetune_qwen_wsl/2_treinar_wsl.py --modelo hibrido --dry-run
+python finetune_qwen_wsl/2_treinar_wsl.py --modelo hibrido
 ```
 
 ### 5.3 Avaliar em lote (oficial)
 ```bash
-python finetune_mistral_wsl/5_avaliar_batch_wsl.py --run-dir runs/ft_finqa_v1/<run_name> --compare
-python finetune_mistral_wsl/5_avaliar_batch_wsl.py --run-dir runs/ft_failure_v1/<run_name> --compare
-python finetune_mistral_wsl/5_avaliar_batch_wsl.py --run-dir runs/ft_hibrido_v1/<run_name> --compare
+python finetune_qwen_wsl/5_avaliar_batch_wsl.py --run-dir results/experiments/<protocol>/ft_finqa_v1/<run_name> --compare
+python finetune_qwen_wsl/5_avaliar_batch_wsl.py --run-dir results/experiments/<protocol>/ft_failure_v1/<run_name> --compare
+python finetune_qwen_wsl/5_avaliar_batch_wsl.py --run-dir results/experiments/<protocol>/ft_hibrido_v1/<run_name> --compare
 ```
 
 ## 6) Invariantes obrigatorias
@@ -98,4 +98,4 @@ python finetune_mistral_wsl/5_avaliar_batch_wsl.py --run-dir runs/ft_hibrido_v1/
 - `docs/models/ft_hibrido_v1.md`
 
 ## 10) Texto curto para handoff para outra IA
-"Leia primeiro `CONTEXT_SUMMARY.md`, depois `AGENTS.md` e `docs/protocol_v1.md`. Siga apenas o protocolo v1, trate `data_ft/` e `finetune_mistral_wsl/output/` como legado, e registre qualquer execucao em `runs/<experiment>/<run>/meta/run_manifest.json`."
+"Leia primeiro `CONTEXT_SUMMARY.md`, depois `AGENTS.md` e `docs/protocol_v1.md`. Siga apenas o protocolo v1, trate `data_ft/` e `finetune_qwen_wsl/output/` como legado, e registre qualquer execucao em `results/experiments/<protocol>/<experiment>/<run>/meta/run_manifest.json`."

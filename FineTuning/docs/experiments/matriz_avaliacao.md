@@ -10,4 +10,4 @@
 ## Objetivos avaliados
 - Generalização cruzada entre domínios
 - Transferência de raciocínio numérico
-- Ganho vs baseline base (`Mistral-7B-Instruct-v0.3`)
+- Ganho vs baseline base (`Qwen/Qwen2.5-7B-Instruct`)

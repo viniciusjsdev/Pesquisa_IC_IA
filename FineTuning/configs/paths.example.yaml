@@ -2,7 +2,7 @@ repo:
   root_windows: "D:/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/FineTuning"
   root_wsl: "/mnt/e/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/FineTuning"
 hf:
-  cache_dir: "/mnt/e/Mistral"
+  cache_dir: "/mnt/e/Qwen"
 legacy:
-  adapter_dir: "/mnt/e/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/FineTuning/finetune_mistral_wsl/output/Mistral-7B-LoRA-TRL-Research-VNDatamind"
-  checkpoints_dir: "/mnt/e/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/FineTuning/finetune_mistral_wsl/output/checkpoints"
+  adapter_dir: "/mnt/e/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/FineTuning/finetune_qwen_wsl/output/legacy"
+  checkpoints_dir: "/mnt/e/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/FineTuning/finetune_qwen_wsl/output/checkpoints"

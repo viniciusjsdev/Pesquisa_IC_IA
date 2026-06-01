@@ -8,7 +8,9 @@ evaluation:
     absolute: 0.001
     relative: 0.001
   generation:
-    max_new_tokens: 128
+    max_new_tokens: 32
+    max_input_length: 4096
+    batch_size: 8
     temperature: 0.0
     top_p: 0.9
     top_k: 50

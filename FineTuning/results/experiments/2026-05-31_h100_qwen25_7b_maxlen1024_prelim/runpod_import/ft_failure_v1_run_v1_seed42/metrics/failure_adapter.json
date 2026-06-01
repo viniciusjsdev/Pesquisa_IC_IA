@@ -1,0 +1,33 @@
+{
+  "model_label": "ADAPTER",
+  "dataset": "FailureSensorIQ",
+  "n_samples": 831,
+  "metrics": {
+    "exact_match": 0.0012,
+    "accuracy": 0.9976,
+    "f1_macro": 0.9986,
+    "confusion_top": [
+      {
+        "gold": "b",
+        "pred": "a",
+        "count": 1
+      },
+      {
+        "gold": "a",
+        "pred": "b",
+        "count": 1
+      }
+    ]
+  },
+  "generation_config": {
+    "max_new_tokens": 24,
+    "max_input_length": 1024,
+    "batch_size": 16,
+    "temperature": 0.0,
+    "top_p": 0.9,
+    "top_k": 50,
+    "do_sample": false,
+    "repetition_penalty": 1.0
+  },
+  "timestamp": "2026-05-31T04:38:50.912902Z"
+}

@@ -4,5 +4,5 @@ repo:
 hf:
   cache_dir: "/workspace/Qwen"
 legacy:
-  adapter_dir: "/workspace/FineTuning/finetune_mistral_wsl/output/legacy"
-  checkpoints_dir: "/workspace/FineTuning/finetune_mistral_wsl/output/checkpoints"
+  adapter_dir: "/workspace/FineTuning/finetune_qwen_wsl/output/legacy"
+  checkpoints_dir: "/workspace/FineTuning/finetune_qwen_wsl/output/checkpoints"

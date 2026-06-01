@@ -10,10 +10,10 @@ model:
   base_model: Qwen/Qwen2.5-7B-Instruct
   cache_dir: "{hf_cache_dir}"
   max_memory:
-    gpu0: 10GB
+    gpu0: 75GB
     cpu: 30GB
 tokenization:
-  max_length: 1024
+  max_length: 4096
   truncation: true
   padding: false
 qlora:
@@ -30,9 +30,9 @@ lora:
   task_type: CAUSAL_LM
 training:
   num_train_epochs: 3
-  per_device_train_batch_size: 1
-  per_device_eval_batch_size: 1
-  gradient_accumulation_steps: 32
+  per_device_train_batch_size: 4
+  per_device_eval_batch_size: 8
+  gradient_accumulation_steps: 8
   learning_rate: 0.0002
   weight_decay: 0.01
   warmup_ratio: 0.05
@@ -45,12 +45,12 @@ training:
   metric_for_best_model: eval_loss
   greater_is_better: false
   fp16: true
-  gradient_checkpointing: true
+  gradient_checkpointing: false
   dataloader_pin_memory: false
   dataloader_num_workers: 0
   remove_unused_columns: false
   seed: 42
 output:
-  root_runs_dir: runs
+  root_runs_dir: results/experiments/h100_qwen25_7b_maxlen4096
   save_checkpoints: true
   save_predictions_sample: false

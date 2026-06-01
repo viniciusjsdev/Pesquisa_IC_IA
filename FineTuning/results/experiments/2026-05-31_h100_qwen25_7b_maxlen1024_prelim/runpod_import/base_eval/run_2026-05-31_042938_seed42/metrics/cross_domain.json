@@ -1,0 +1,183 @@
+{
+  "model_label": "BASE",
+  "dataset": "cross_domain_summary",
+  "n_samples": 1448,
+  "metrics": {
+    "FinQA": {
+      "exact_match": 0.0,
+      "numeric_accuracy": 0.0149,
+      "numeric_total": 603,
+      "mae_numeric_parseable": 7836367.345821,
+      "mre_numeric_parseable": 1388.411938,
+      "by_operation": {
+        "add": {
+          "n": 75,
+          "exact_match": 0.0,
+          "numeric_match": 0.0133
+        },
+        "divide": {
+          "n": 220,
+          "exact_match": 0.0,
+          "numeric_match": 0.0227
+        },
+        "greater": {
+          "n": 11,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        },
+        "multiply": {
+          "n": 41,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        },
+        "subtract": {
+          "n": 248,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        },
+        "table_average": {
+          "n": 7,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        },
+        "table_max": {
+          "n": 8,
+          "exact_match": 0.0,
+          "numeric_match": 0.125
+        },
+        "table_min": {
+          "n": 4,
+          "exact_match": 0.0,
+          "numeric_match": 0.5
+        },
+        "table_sum": {
+          "n": 3,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        }
+      },
+      "error_types": {
+        "numeric_parse_fail": 128,
+        "non_numeric_mismatch": 14
+      }
+    },
+    "FailureSensorIQ": {
+      "exact_match": 0.0,
+      "accuracy": 0.0012,
+      "f1_macro": 0.0,
+      "confusion_top": [
+        {
+          "gold": "a",
+          "pred": "the failure events that are irrelevant for an aero gas turbine if there is an abnormal reading from the sensor air flow are",
+          "count": 5
+        },
+        {
+          "gold": "b",
+          "pred": "the relevant failure events for a power transformer, given an abnormal reading from the sensor (amps, volts, or load),",
+          "count": 4
+        },
+        {
+          "gold": "a",
+          "pred": "when dealing with de-energized tap-changer condition or fault in a power transformer, the most relevant sensors for",
+          "count": 3
+        },
+        {
+          "gold": "a",
+          "pred": "the sensors that are not effective in indicating the presence of fuel filter blockage in an industrial gas turbine are: a)",
+          "count": 3
+        },
+        {
+          "gold": "a",
+          "pred": "the irrelevant failure events for reciprocating internal combustion engine if the sensor exhaust temperature exhibits an abnormal reading are: a)",
+          "count": 3
+        },
+        {
+          "gold": "a",
+          "pred": "the failure events that are not applicable when the sensor power turbine temperature in aero gas turbine displays an abnormal reading are:",
+          "count": 3
+        },
+        {
+          "gold": "b",
+          "pred": "the failure events that are irrelevant for a power transformer if there is an abnormal reading from the sensor dielectric frequency response (",
+          "count": 3
+        },
+        {
+          "gold": "b",
+          "pred": "the sensors that are not effective in indicating the presence of bearing wear in an industrial gas turbine are: b) compressor",
+          "count": 2
+        },
+        {
+          "gold": "a",
+          "pred": "the sensors that do not indicate the presence of connection/bushing faults in an asset power transformer are: a) leak react",
+          "count": 2
+        },
+        {
+          "gold": "a",
+          "pred": "the failure events that should be excluded for an aero gas turbine when an abnormal reading is detected by the sensor gas generator",
+          "count": 2
+        },
+        {
+          "gold": "a",
+          "pred": "the failure events that should be excluded for a reciprocating internal combustion engine when an abnormal reading is detected by the sensor",
+          "count": 2
+        },
+        {
+          "gold": "a",
+          "pred": "the failure events that are not pertinent to an abnormal reading of the sensor power factor/tanδ for a power transformer are",
+          "count": 2
+        },
+        {
+          "gold": "b",
+          "pred": "the sensors that are not effective in indicating the presence of air inlet blockage in an industrial gas turbine are: a)",
+          "count": 2
+        },
+        {
+          "gold": "a",
+          "pred": "for aero gas turbine, if power turbine dirty happens, the sensors that should be prioritized for monitoring this specific failure",
+          "count": 2
+        },
+        {
+          "gold": "b",
+          "pred": "the non-relevant failure events when the sensor exhaust temperature has an abnormal reading for an aero gas turbine are: -",
+          "count": 2
+        },
+        {
+          "gold": "c",
+          "pred": "if you want to build an anomaly detection model for a fuel injector fault in a reciprocating internal combustion engine, the",
+          "count": 2
+        },
+        {
+          "gold": "d",
+          "pred": "the sensor that is not relevant to the occurrence of an air inlet blockage failure event in a reciprocating internal combustion",
+          "count": 2
+        },
+        {
+          "gold": "c",
+          "pred": "the most applicable failure modes for abnormal vibration readings in an aero gas turbine are: c) unbalance: unbalance",
+          "count": 2
+        },
+        {
+          "gold": "b",
+          "pred": "the most relevant failure modes for an aero gas turbine when pressure or pressure ratio exhibits abnormal readings are: a) air",
+          "count": 2
+        },
+        {
+          "gold": "b",
+          "pred": "the failure event of oil circulation system problem in a power transformer is primarily related to the condition of the oil and the system",
+          "count": 2
+        }
+      ]
+    }
+  },
+  "generation_config": {
+    "max_new_tokens": 24,
+    "max_input_length": 1024,
+    "batch_size": 16,
+    "temperature": 0.0,
+    "top_p": 0.9,
+    "top_k": 50,
+    "do_sample": false,
+    "repetition_penalty": 1.0
+  },
+  "timestamp": "2026-05-31T04:31:53.627196Z"
+}

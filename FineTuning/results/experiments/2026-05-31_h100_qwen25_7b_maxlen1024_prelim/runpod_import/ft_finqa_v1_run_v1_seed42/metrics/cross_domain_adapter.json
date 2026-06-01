@@ -1,0 +1,183 @@
+{
+  "model_label": "ADAPTER",
+  "dataset": "cross_domain_summary",
+  "n_samples": 1448,
+  "metrics": {
+    "FinQA": {
+      "exact_match": 0.0,
+      "numeric_accuracy": 0.1045,
+      "numeric_total": 603,
+      "mae_numeric_parseable": 6.748107850468299e+20,
+      "mre_numeric_parseable": 4.75680151711673e+18,
+      "by_operation": {
+        "add": {
+          "n": 75,
+          "exact_match": 0.0,
+          "numeric_match": 0.1467
+        },
+        "divide": {
+          "n": 220,
+          "exact_match": 0.0,
+          "numeric_match": 0.1
+        },
+        "greater": {
+          "n": 11,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        },
+        "multiply": {
+          "n": 41,
+          "exact_match": 0.0,
+          "numeric_match": 0.0244
+        },
+        "subtract": {
+          "n": 248,
+          "exact_match": 0.0,
+          "numeric_match": 0.1008
+        },
+        "table_average": {
+          "n": 7,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        },
+        "table_max": {
+          "n": 8,
+          "exact_match": 0.0,
+          "numeric_match": 0.25
+        },
+        "table_min": {
+          "n": 4,
+          "exact_match": 0.0,
+          "numeric_match": 0.5
+        },
+        "table_sum": {
+          "n": 3,
+          "exact_match": 0.0,
+          "numeric_match": 0.0
+        }
+      },
+      "error_types": {
+        "non_numeric_mismatch": 14,
+        "numeric_parse_fail": 68
+      }
+    },
+    "FailureSensorIQ": {
+      "exact_match": 0.0,
+      "accuracy": 0.2936,
+      "f1_macro": 0.0249,
+      "confusion_top": [
+        {
+          "gold": "a",
+          "pred": "d",
+          "count": 84
+        },
+        {
+          "gold": "b",
+          "pred": "c",
+          "count": 72
+        },
+        {
+          "gold": "b",
+          "pred": "a",
+          "count": 64
+        },
+        {
+          "gold": "b",
+          "pred": "d",
+          "count": 63
+        },
+        {
+          "gold": "a",
+          "pred": "c",
+          "count": 59
+        },
+        {
+          "gold": "c",
+          "pred": "a",
+          "count": 34
+        },
+        {
+          "gold": "d",
+          "pred": "c",
+          "count": 30
+        },
+        {
+          "gold": "c",
+          "pred": "d",
+          "count": 22
+        },
+        {
+          "gold": "d",
+          "pred": "a",
+          "count": 19
+        },
+        {
+          "gold": "a",
+          "pred": "b",
+          "count": 18
+        },
+        {
+          "gold": "e",
+          "pred": "c",
+          "count": 11
+        },
+        {
+          "gold": "c",
+          "pred": "b",
+          "count": 10
+        },
+        {
+          "gold": "d",
+          "pred": "b",
+          "count": 9
+        },
+        {
+          "gold": "e",
+          "pred": "a",
+          "count": 9
+        },
+        {
+          "gold": "e",
+          "pred": "d",
+          "count": 8
+        },
+        {
+          "gold": "b",
+          "pred": "100% ( 100 % ) . tabela: failure mode | failure event | failure rate",
+          "count": 3
+        },
+        {
+          "gold": "a",
+          "pred": "100% ( 100 % ) . tabela: failure mode | failure event | failure rate",
+          "count": 3
+        },
+        {
+          "gold": "a",
+          "pred": "100% ( 100 % ) . tabela: failure mode | failure event | percentage of",
+          "count": 2
+        },
+        {
+          "gold": "b",
+          "pred": "100% ( 100 % ) . tabela: failure event | failure rate ( per",
+          "count": 2
+        },
+        {
+          "gold": "b",
+          "pred": "2014 no . 1000000000000000",
+          "count": 2
+        }
+      ]
+    }
+  },
+  "generation_config": {
+    "max_new_tokens": 24,
+    "max_input_length": 1024,
+    "batch_size": 16,
+    "temperature": 0.0,
+    "top_p": 0.9,
+    "top_k": 50,
+    "do_sample": false,
+    "repetition_penalty": 1.0
+  },
+  "timestamp": "2026-05-31T04:35:19.594037Z"
+}

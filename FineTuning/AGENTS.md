@@ -4,7 +4,7 @@
 Antes de qualquer acao, leia `CONTEXT_SUMMARY.md` para contexto unificado e ordem de leitura.
 
 ## 1) Escopo e objetivo
-Este repositorio implementa fine-tuning multi-dominio do `mistralai/Mistral-7B-Instruct-v0.3` com protocolo experimental v1.
+Este repositorio implementa fine-tuning multi-dominio do `Qwen/Qwen2.5-7B-Instruct` com protocolo experimental v1.
 Modelos-alvo:
 - `ft_hibrido_v1`
 - `ft_finqa_v1`
@@ -19,7 +19,7 @@ Objetivo operacional de IA neste repo:
 1. `docs/protocol_v1.md`
 2. `configs/train/*.yaml` e `configs/eval/*.yaml`
 3. `data/manifests/*.json`
-4. `runs/<experiment>/<run>/meta/run_manifest.json`
+4. `results/experiments/<protocol>/<experiment>/<run>/meta/run_manifest.json`
 5. `docs/architecture.md` e `docs/experiments/matriz_avaliacao.md`
 
 Se houver conflito entre scripts e docs, a IA deve alinhar para o protocolo v1 e registrar ajuste.
@@ -28,16 +28,16 @@ Se houver conflito entre scripts e docs, a IA deve alinhar para o protocolo v1 e
 - `configs/`: configuracao de treino e avaliacao
 - `data/processed/*_v1/`: datasets congelados por experimento
 - `data/manifests/*.json`: rastreabilidade e hashes
-- `runs/<experiment>/<run>/`: artefatos por execucao
-- `finetune_mistral_wsl/common/`: utilitarios compartilhados
+- `results/experiments/<protocol>/<experiment>/<run>/`: artefatos por execucao
+- `finetune_qwen_wsl/common/`: utilitarios compartilhados
 - `docs/`: protocolo, arquitetura e documentacao de modelos
 
 ## 4) O que e legado
 - `data_ft/`: origem historica dos dados preparados
-- `finetune_mistral_wsl/output/`: artefatos do fluxo antigo
-- `runs/ft_hibrido_legacy/`: catalogacao do modelo legado
+- `finetune_qwen_wsl/output/`: artefatos do fluxo antigo
+- `results/legacy/`: catalogacao do modelo legado
 
-Regra: legado e somente referencia historica. Novos treinos e avaliacoes devem usar `data/processed`, `configs/*` e `runs/*`.
+Regra: legado e somente referencia historica. Novos treinos e avaliacoes devem usar `data/processed`, `configs/*` e `results/experiments/*`.
 
 ## 5) Contratos de dados
 Formato esperado de amostra JSONL:
@@ -53,12 +53,12 @@ Campos importantes em `meta`:
 Regras:
 - nao editar manualmente `data/processed/*_v1/*.jsonl`
 - para regenerar datasets versionados, usar:
-  - `python finetune_mistral_wsl/prepare_experiment_datasets.py`
+  - `python finetune_qwen_wsl/prepare_experiment_datasets.py`
 - preservar splits `train/val/test`
 - preservar `meta.dataset` para filtros de dominio
 
 ## 6) Contratos de treino
-Script oficial: `finetune_mistral_wsl/2_treinar_wsl.py`
+Script oficial: `finetune_qwen_wsl/2_treinar_wsl.py`
 
 Atalhos suportados:
 - `--modelo hibrido`
@@ -70,14 +70,14 @@ Regras:
 - executar `--dry-run` antes de treino real
 - usar apenas configs de `configs/train/`
 - nao alterar hiperparametros no codigo; alterar YAML
-- salvar tudo em `runs/<experiment>/<run>/...`
+- salvar tudo em `results/experiments/<protocol>/<experiment>/<run>/...`
 
 Exemplos:
-- `python finetune_mistral_wsl/2_treinar_wsl.py --modelo finqa --dry-run`
-- `python finetune_mistral_wsl/2_treinar_wsl.py --modelo finqa`
+- `python finetune_qwen_wsl/2_treinar_wsl.py --modelo finqa --dry-run`
+- `python finetune_qwen_wsl/2_treinar_wsl.py --modelo finqa`
 
 ## 7) Contratos de avaliacao
-Script oficial de benchmark: `finetune_mistral_wsl/5_avaliar_batch_wsl.py`
+Script oficial de benchmark: `finetune_qwen_wsl/5_avaliar_batch_wsl.py`
 
 Modos:
 - `--base-only`
@@ -87,7 +87,7 @@ Modos:
 Regras:
 - avaliacao oficial deve usar `configs/eval/*.yaml`
 - manter protocolo deterministico de inferencia para comparabilidade
-- salvar em `runs/<experiment>/<run>/metrics` e `predictions`
+- salvar em `results/experiments/<protocol>/<experiment>/<run>/metrics` e `predictions`
 - `3_testar_wsl.py` e `4_inferencia_wsl.py` sao apoio/demo, nao benchmark oficial
 
 ## 8) Invariantes de comparabilidade cientifica
@@ -125,7 +125,7 @@ Ao criar/alterar experimento, atualizar:
 - `docs/protocol_v1.md` (se mudar protocolo)
 
 ## 12) Anti-padroes proibidos
-- treinar usando `finetune_mistral_wsl/output/` como destino novo
+- treinar usando `finetune_qwen_wsl/output/` como destino novo
 - comparar modelos com configs de inferencia diferentes sem declarar
 - alterar split depois de iniciar bateria de comparacao
 - misturar artefatos de runs diferentes no mesmo diretorio

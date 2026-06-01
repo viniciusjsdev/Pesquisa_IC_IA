@@ -1,11 +1,21 @@
 
 # Multi-fine-tuning local/runtime artifacts
 configs/paths.local.yaml
-finetune_mistral_wsl/output/
-finetune_mistral_wsl/venv/
+finetune_qwen_wsl/output/
+finetune_qwen_wsl/venv/
 runs/**/logs/
 runs/**/predictions/
 runs/**/checkpoints/
 runs/**/adapter/
+results/**/logs/
+results/**/predictions/
+results/**/checkpoints/
+results/**/adapter/
+results/**/*.safetensors
+results/**/*.bin
+results/**/*.pt
+results/**/*.pth
+runpod_results_*/
+artigo_assets/unpacked_meto/
 __pycache__/
 *.pyc

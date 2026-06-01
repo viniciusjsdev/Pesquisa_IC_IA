@@ -2,7 +2,7 @@
   "dataset_id": "failure_v1",
   "source": "data_ft filtrado por meta.dataset=FailureSensorIQ",
   "created_at": "2026-02-25T02:18:13.358767+00:00",
-  "created_by_script": "finetune_mistral_wsl/prepare_experiment_datasets.py",
+  "created_by_script": "finetune_qwen_wsl/prepare_experiment_datasets.py",
   "upstream_inputs": [
     "data_ft/train.jsonl",
     "data_ft/val.jsonl",

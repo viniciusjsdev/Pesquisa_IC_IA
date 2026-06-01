@@ -4,12 +4,12 @@
 Padronizar treinamento, avaliação e documentação para comparação entre `Base`, `FT-Híbrido`, `FT-FinQA` e `FT-Failure`.
 
 ## Configs canônicas
-- Base model: `mistralai/Mistral-7B-Instruct-v0.3`
+- Base model: `Qwen/Qwen2.5-7B-Instruct`
 - QLoRA NF4 4-bit
 - LoRA: `r=8`, `alpha=16`, `dropout=0.1`
 - Target modules: `q_proj`, `k_proj`, `v_proj`, `o_proj`, `gate_proj`, `up_proj`, `down_proj`
-- `max_length=1024`
-- `batch_size=1`, `gradient_accumulation_steps=32`
+- `max_length=4096`
+- `batch_size`/`gradient_accumulation_steps` conforme `configs/train/*.yaml`
 - `seed=42`
 - `warmup_ratio=0.05`
 - `evaluation_strategy=epoch`, `save_strategy=epoch`
@@ -34,9 +34,9 @@ Padronizar treinamento, avaliação e documentação para comparação entre `Ba
 - Confusões mais frequentes (top pares)
 
 ## Outputs padronizados
-- `runs/<experiment>/<run>/meta/run_manifest.json`
-- `runs/<experiment>/<run>/metrics/*.json`
-- `runs/<experiment>/<run>/predictions/*.jsonl`
+- `results/experiments/<protocol>/<experiment>/<run>/meta/run_manifest.json`
+- `results/experiments/<protocol>/<experiment>/<run>/metrics/*.json`
+- `results/experiments/<protocol>/<experiment>/<run>/predictions/*.jsonl`
 
 ## Legado
-O modelo híbrido atual deve ser catalogado em `runs/ft_hibrido_legacy/` com inconsistências de configuração documentadas.
+Modelos e resultados legados devem ser catalogados em `results/legacy/` com inconsistências de configuração documentadas.

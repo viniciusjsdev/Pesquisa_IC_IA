@@ -1,0 +1,83 @@
+{
+  "model_label": "ADAPTER",
+  "dataset": "FailureSensorIQ",
+  "n_samples": 831,
+  "metrics": {
+    "exact_match": 0.0012,
+    "accuracy": 0.9615,
+    "f1_macro": 0.9558,
+    "confusion_top": [
+      {
+        "gold": "b",
+        "pred": "a",
+        "count": 5
+      },
+      {
+        "gold": "a",
+        "pred": "d",
+        "count": 4
+      },
+      {
+        "gold": "a",
+        "pred": "b",
+        "count": 4
+      },
+      {
+        "gold": "c",
+        "pred": "a",
+        "count": 3
+      },
+      {
+        "gold": "c",
+        "pred": "b",
+        "count": 3
+      },
+      {
+        "gold": "d",
+        "pred": "c",
+        "count": 3
+      },
+      {
+        "gold": "c",
+        "pred": "d",
+        "count": 2
+      },
+      {
+        "gold": "a",
+        "pred": "c",
+        "count": 2
+      },
+      {
+        "gold": "e",
+        "pred": "d",
+        "count": 2
+      },
+      {
+        "gold": "b",
+        "pred": "c",
+        "count": 2
+      },
+      {
+        "gold": "a",
+        "pred": "e",
+        "count": 1
+      },
+      {
+        "gold": "d",
+        "pred": "a",
+        "count": 1
+      }
+    ]
+  },
+  "generation_config": {
+    "max_new_tokens": 24,
+    "max_input_length": 1024,
+    "batch_size": 16,
+    "temperature": 0.0,
+    "top_p": 0.9,
+    "top_k": 50,
+    "do_sample": false,
+    "repetition_penalty": 1.0
+  },
+  "timestamp": "2026-05-31T04:42:15.904854Z"
+}
