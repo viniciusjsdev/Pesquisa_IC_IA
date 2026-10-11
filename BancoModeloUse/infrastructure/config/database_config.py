@@ -1,22 +1,15 @@
 # config/database_config.py
 """
-Configurações do banco de dados
-Modifique apenas este arquivo para diferentes máquinas/ambientes
+Configurações dos bancos de origem industrial e financeiro.
 """
 
-# Importa configurações específicas da máquina
-try:
-    from .machine_config import MACHINE_DB_CONFIG
-    DEFAULT_DB_CONFIG = MACHINE_DB_CONFIG
-except ImportError:
-    # Configuração padrão se machine_config.py não existir
-    DEFAULT_DB_CONFIG = {
-        "host": "localhost",
-        "port": "5432",
-        "database": "db_datamind_dw",
-        "user": "postgres",
-        "password": "host"
-    }
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+from sqlalchemy.engine import URL
+
+# Explicit process variables take precedence over this ignored local file.
+load_dotenv(Path(__file__).resolve().parents[2] / '.env.local', override=False)
 
 # Configurações adicionais do banco
 DB_SETTINGS = {
@@ -28,7 +21,7 @@ DB_SETTINGS = {
 }
 
 # =============================================================================
-# CONFIGURAÇÕES DOS 3 BANCOS DE DADOS
+# CONFIGURAÇÕES DOS BANCOS DE ORIGEM
 # =============================================================================
 
 # Banco Financeiro (ERP/Contábil)
@@ -51,23 +44,13 @@ INDUSTRIAL_DB_CONFIG = {
     "schema": "industrial"
 }
 
-# Data Warehouse (Consolidado)
-DW_DB_CONFIG = {
-    "host": "localhost",
-    "port": 5432, 
-    "database": "db_datamind_dw",
-    "user": "postgres",
-    "password": "host",
-    "schema": "dw"
-}
-
-# Configurações de migração
-MIGRATION_SETTINGS = {
-    "auto_create_database": True,
-    "auto_create_tables": True,
-    "auto_update_tables": True,
-    "backup_before_migration": False
-}
+for _prefix, _config in [('FINANCEIRO', FINANCEIRO_DB_CONFIG),
+                          ('INDUSTRIAL', INDUSTRIAL_DB_CONFIG)]:
+    for _key, _suffix in [('host', 'HOST'), ('port', 'PORT'), ('database', 'NAME'),
+                           ('user', 'USER'), ('password', 'PASSWORD')]:
+        _value = os.getenv(f'{_prefix}_DB_{_suffix}')
+        if _value is not None:
+            _config[_key] = int(_value) if _key == 'port' else _value
 
 # =============================================================================
 # FUNÇÕES AUXILIARES
@@ -84,8 +67,9 @@ def get_database_url(config: dict) -> str:
         URL de conexão PostgreSQL
     """
     # Garante que port seja string
-    port = str(config['port'])
-    return f"postgresql://{config['user']}:{config['password']}@{config['host']}:{port}/{config['database']}"
+    return URL.create('postgresql+psycopg2', username=config['user'],
+                      password=config['password'], host=config['host'],
+                      port=int(config['port']), database=config['database']).render_as_string(hide_password=False)
 
 def get_all_database_configs() -> dict:
     """
@@ -96,8 +80,7 @@ def get_all_database_configs() -> dict:
     """
     return {
         "financeiro": FINANCEIRO_DB_CONFIG,
-        "industrial": INDUSTRIAL_DB_CONFIG, 
-        "dw": DW_DB_CONFIG
+        "industrial": INDUSTRIAL_DB_CONFIG
     }
 
 def get_database_ports() -> dict:
@@ -109,8 +92,7 @@ def get_database_ports() -> dict:
     """
     return {
         "financeiro": FINANCEIRO_DB_CONFIG["port"],
-        "industrial": INDUSTRIAL_DB_CONFIG["port"],
-        "dw": DW_DB_CONFIG["port"]
+        "industrial": INDUSTRIAL_DB_CONFIG["port"]
     }
 
 def validate_database_configs() -> bool:

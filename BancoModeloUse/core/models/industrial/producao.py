@@ -76,6 +76,7 @@ class ConsumoMaterial(Base):
     material_id = Column(Integer, ForeignKey("materiais.material_id"))
     lote_material_id = Column(Integer, ForeignKey("lotes_materiais.lote_id"))
     quantidade_consumida = Column(DECIMAL)
+    data_registro = Column(DateTime)
 
     registro = relationship("RegistroOperacao")
     material = relationship("Material")
