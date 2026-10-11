@@ -3,12 +3,23 @@
 ## Objetivo
 Padronizar treinamento, avaliação e documentação para comparação entre `Base`, `FT-Híbrido`, `FT-FinQA` e `FT-Failure`.
 
+## Perfis do artigo
+
+O [artigo](https://docs.google.com/document/d/1LExZ17IkPXIKYGCHLEJ3mEZSsCU2It1X/edit), Tabela 1, descreve duas baterias. Os YAMLs `configs/train/ft_*_v1_bateria_a.yaml` selecionam a Bateria A; os três `configs/train/ft_*_v1.yaml` selecionam a Bateria B e são o padrão de `--modelo`. Em `2_treinar_wsl.py`, use `--modelo finqa|failure|hibrido --bateria A|B` (padrão B). Para inferência, use `configs/eval/base_bateria_a.yaml` na A e `configs/eval/base.yaml` na B. Os demais YAMLs de avaliação têm limite de entrada 4096 e correspondem à B. O script RunPod existente continua selecionando B por padrão.
+
+| Perfil | Treino e inferência | Microbatch × acumulação | Taxa FinQA | Taxa Failure/Híbrido |
+| --- | ---: | ---: | ---: | ---: |
+| A | 1024 | 4 × 8 | `2e-4` | `2e-4` |
+| B (padrão) | 4096 | 2 × 16 | `2e-4` | `5e-5` |
+
+Os valores acima coincidem com os seis `resolved_config_snapshot` dos manifests locais. Os perfis A usam diretório de saída novo em `results/experiments/h100_qwen25_7b_maxlen1024`, pois o caminho `runs` dos manifests importados era específico da execução remota histórica. Os pesos já treinados permanecem inalterados; a seleção do perfil só afeta novas execuções.
+
 ## Configs canônicas
 - Base model: `Qwen/Qwen2.5-7B-Instruct`
 - QLoRA NF4 4-bit
 - LoRA: `r=8`, `alpha=16`, `dropout=0.1`
 - Target modules: `q_proj`, `k_proj`, `v_proj`, `o_proj`, `gate_proj`, `up_proj`, `down_proj`
-- `max_length=4096`
+- `max_length=1024` (A) ou `4096` (B)
 - `batch_size`/`gradient_accumulation_steps` conforme `configs/train/*.yaml`
 - `seed=42`
 - `warmup_ratio=0.05`
@@ -16,9 +27,9 @@ Padronizar treinamento, avaliação e documentação para comparação entre `Ba
 - `num_train_epochs=3`
 
 ## Comparabilidade
-- Mesmas configs centrais para os 3 fine-tunings.
+- Comparar modelos dentro da mesma bateria e declarar a taxa de aprendizado por modelo; na Bateria B, FinQA usa `2e-4` e Failure/Híbrido usam `5e-5`.
 - Reportar explicitamente `global_steps`, `steps_por_epoca` e `tokens_aproximados_processados`.
-- Resultados legados (pré-v1) devem ser marcados como `legacy_pre_protocol_v1`.
+- Comparações do artigo usam apenas os manifests das Baterias A e B em `results/experiments/`.
 
 ## Métricas
 ### FinQA
@@ -28,15 +39,19 @@ Padronizar treinamento, avaliação e documentação para comparação entre `Ba
 - Breakdown por operação (`meta.program`)
 
 ### FailureSensorIQ
-- Accuracy
-- F1 macro
+- Accuracy por correspondência exata do conjunto de alternativas corretas (subset accuracy)
+- Precisão, recall e F1 macro e micro multirrótulo sobre as alternativas A-E
+- Jaccard médio por amostra
 - Exact Match (normalizado)
-- Confusões mais frequentes (top pares)
+- Falhas de parsing e confusões mais frequentes entre conjuntos de alternativas
+
+As respostas do FailureSensorIQ podem conter mais de uma alternativa correta. A
+avaliação não deve reduzir o gabarito ou a predição à primeira letra encontrada.
 
 ## Outputs padronizados
 - `results/experiments/<protocol>/<experiment>/<run>/meta/run_manifest.json`
 - `results/experiments/<protocol>/<experiment>/<run>/metrics/*.json`
 - `results/experiments/<protocol>/<experiment>/<run>/predictions/*.jsonl`
 
-## Legado
-Modelos e resultados legados devem ser catalogados em `results/legacy/` com inconsistências de configuração documentadas.
+## Proveniência
+`data_ft/` é a fonte local dos splits versionados; `data/processed/` e `data/manifests/` são os dados congelados das duas baterias. Runs anteriores às Baterias A e B não integram o pacote ativo do artigo.

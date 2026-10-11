@@ -3,6 +3,3 @@ repo:
   root_wsl: "/mnt/e/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/FineTuning"
 hf:
   cache_dir: "/mnt/e/Qwen"
-legacy:
-  adapter_dir: "/mnt/e/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/FineTuning/finetune_qwen_wsl/output/legacy"
-  checkpoints_dir: "/mnt/e/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/FineTuning/finetune_qwen_wsl/output/checkpoints"

@@ -127,7 +127,7 @@ def menu_interativo() -> str:
 def main() -> int:
     args = parse_args()
     paths_cfg = load_paths_config(args.paths_config)
-    adapter_path = args.adapter_path or nested_get(paths_cfg, 'legacy.adapter_dir', None)
+    adapter_path = args.adapter_path
     cache_dir = args.cache_dir or nested_get(paths_cfg, 'hf.cache_dir', None)
     mode = args.mode or menu_interativo()
 
@@ -141,12 +141,12 @@ def main() -> int:
         tester.executar_suite(usar_lora=False, rotulo='BASE')
     elif mode == 'lora':
         if not adapter_path:
-            raise SystemExit('Adapter path ausente. Use --adapter-path ou configure configs/paths.local.yaml')
+            raise SystemExit('Adapter path ausente. Use --adapter-path com um dos seis adapters do artigo')
         tester.executar_suite(usar_lora=True, rotulo='LORA')
     elif mode in {'compare', 'full'}:
         tester.executar_suite(usar_lora=False, rotulo='BASE')
         if not adapter_path:
-            raise SystemExit('Adapter path ausente. Use --adapter-path ou configure configs/paths.local.yaml')
+            raise SystemExit('Adapter path ausente. Use --adapter-path com um dos seis adapters do artigo')
         tester.executar_suite(usar_lora=True, rotulo='LORA')
     return 0
 

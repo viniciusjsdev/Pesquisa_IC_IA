@@ -4,9 +4,9 @@
 Evoluir o projeto para suportar múltiplos fine-tunings (`FT-Híbrido`, `FT-FinQA`, `FT-Failure`) com configuração centralizada, artefatos isolados por run e documentação rastreável.
 
 ## Fluxo
-1. EDA/Análise (notebooks existentes)
-2. Preparação e padronização (notebooks existentes)
-3. Snapshot de datasets por experimento (`data/processed/*`)
+1. Fonte preparada e splits preservados (`data_ft/`)
+2. Preparação versionada (`finetune_qwen_wsl/prepare_experiment_datasets.py`)
+3. Snapshot de datasets por experimento (`data/processed/*_v1/`)
 4. Treinamento parametrizado (`finetune_qwen_wsl/2_treinar_wsl.py`)
 5. Avaliação em lote (`finetune_qwen_wsl/5_avaliar_batch_wsl.py`)
 6. Demo qualitativo (`finetune_qwen_wsl/3_testar_wsl.py`) e inferência (`4_inferencia_wsl.py`)

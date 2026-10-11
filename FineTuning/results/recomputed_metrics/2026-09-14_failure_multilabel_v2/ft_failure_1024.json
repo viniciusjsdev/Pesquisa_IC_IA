@@ -1,0 +1,97 @@
+{
+  "model_label": "FT-Failure 1024",
+  "dataset": "FailureSensorIQ",
+  "n_samples": 831,
+  "metrics": {
+    "precision_macro": 0.9842,
+    "recall_macro": 0.9943,
+    "f1_macro": 0.9892,
+    "precision_micro": 0.9839,
+    "recall_micro": 0.9943,
+    "f1_micro": 0.9891,
+    "jaccard_samples": 0.9822,
+    "exact_match": 0.0012,
+    "accuracy": 0.9663,
+    "subset_accuracy": 0.9663,
+    "legacy_first_label_accuracy": 0.9976,
+    "parse_failures": 0,
+    "average_gold_labels": 1.7028,
+    "average_predicted_labels": 1.7208,
+    "confusion_top": [
+      {
+        "gold": "c",
+        "pred": "c+e",
+        "count": 7
+      },
+      {
+        "gold": "b",
+        "pred": "b+e",
+        "count": 5
+      },
+      {
+        "gold": "a",
+        "pred": "a+e",
+        "count": 3
+      },
+      {
+        "gold": "c+d",
+        "pred": "c",
+        "count": 2
+      },
+      {
+        "gold": "c",
+        "pred": "c+d",
+        "count": 2
+      },
+      {
+        "gold": "b+e",
+        "pred": "a+e",
+        "count": 1
+      },
+      {
+        "gold": "a+d",
+        "pred": "a",
+        "count": 1
+      },
+      {
+        "gold": "b",
+        "pred": "b+c",
+        "count": 1
+      },
+      {
+        "gold": "a",
+        "pred": "b",
+        "count": 1
+      },
+      {
+        "gold": "e",
+        "pred": "b+e",
+        "count": 1
+      },
+      {
+        "gold": "b+c",
+        "pred": "b",
+        "count": 1
+      },
+      {
+        "gold": "b+e",
+        "pred": "b",
+        "count": 1
+      },
+      {
+        "gold": "d+e",
+        "pred": "d",
+        "count": 1
+      },
+      {
+        "gold": "a",
+        "pred": "a+b+d",
+        "count": 1
+      }
+    ],
+    "metric_definition": "multilabel_exact_set_accuracy_and_labelwise_f1"
+  },
+  "source_predictions": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\FineTuning\\results\\experiments\\2026-05-31_h100_qwen25_7b_maxlen1024_prelim\\runpod_import\\ft_failure_v1_run_v1_seed42\\predictions\\adapter_predictions.jsonl",
+  "source_predictions_sha256": "14e7e30b1eecf09387818f98dd6aa0115b296785111af75e8dd85e97936f4f6c",
+  "recomputed_at": "2026-09-14T19:18:02.020492+00:00"
+}

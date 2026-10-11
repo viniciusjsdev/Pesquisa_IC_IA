@@ -1,0 +1,127 @@
+{
+  "model_label": "Base 4096",
+  "dataset": "FailureSensorIQ",
+  "n_samples": 831,
+  "metrics": {
+    "precision_macro": 0.5603,
+    "recall_macro": 0.3301,
+    "f1_macro": 0.4076,
+    "precision_micro": 0.5576,
+    "recall_micro": 0.335,
+    "f1_micro": 0.4185,
+    "jaccard_samples": 0.3494,
+    "exact_match": 0.0,
+    "accuracy": 0.1829,
+    "subset_accuracy": 0.1829,
+    "legacy_first_label_accuracy": 0.0012,
+    "parse_failures": 81,
+    "average_gold_labels": 1.7028,
+    "average_predicted_labels": 1.0229,
+    "confusion_top": [
+      {
+        "gold": "a+d",
+        "pred": "a",
+        "count": 27
+      },
+      {
+        "gold": "a+e",
+        "pred": "a",
+        "count": 24
+      },
+      {
+        "gold": "a+c",
+        "pred": "a",
+        "count": 24
+      },
+      {
+        "gold": "a+b",
+        "pred": "a",
+        "count": 19
+      },
+      {
+        "gold": "b+e",
+        "pred": "b",
+        "count": 18
+      },
+      {
+        "gold": "b+c",
+        "pred": "a",
+        "count": 15
+      },
+      {
+        "gold": "b+d",
+        "pred": "<none>",
+        "count": 14
+      },
+      {
+        "gold": "a+d",
+        "pred": "d",
+        "count": 13
+      },
+      {
+        "gold": "d+e",
+        "pred": "d",
+        "count": 13
+      },
+      {
+        "gold": "d+e",
+        "pred": "a",
+        "count": 12
+      },
+      {
+        "gold": "b+d",
+        "pred": "a",
+        "count": 12
+      },
+      {
+        "gold": "a",
+        "pred": "b",
+        "count": 12
+      },
+      {
+        "gold": "b+d",
+        "pred": "b",
+        "count": 12
+      },
+      {
+        "gold": "a+e",
+        "pred": "<none>",
+        "count": 11
+      },
+      {
+        "gold": "b+c",
+        "pred": "b",
+        "count": 11
+      },
+      {
+        "gold": "a+d",
+        "pred": "b",
+        "count": 11
+      },
+      {
+        "gold": "d+e",
+        "pred": "e",
+        "count": 11
+      },
+      {
+        "gold": "b",
+        "pred": "a",
+        "count": 11
+      },
+      {
+        "gold": "c+d",
+        "pred": "b",
+        "count": 11
+      },
+      {
+        "gold": "b",
+        "pred": "c",
+        "count": 11
+      }
+    ],
+    "metric_definition": "multilabel_exact_set_accuracy_and_labelwise_f1"
+  },
+  "source_predictions": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\FineTuning\\results\\experiments\\2026-06-01_h100_qwen25_7b_maxlen4096_run_20260601_002803_seed42\\base_eval\\run_20260601_002803_seed42\\predictions\\base_predictions.jsonl",
+  "source_predictions_sha256": "f439737576ab2df46e168336abbbb96c0a918ae95e8c2a64ff0eb79cd86eda3a",
+  "recomputed_at": "2026-09-14T19:18:02.662500+00:00"
+}

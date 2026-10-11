@@ -1,0 +1,127 @@
+{
+  "model_label": "FT-FinQA 1024",
+  "dataset": "FailureSensorIQ",
+  "n_samples": 831,
+  "metrics": {
+    "precision_macro": 0.4356,
+    "recall_macro": 0.3663,
+    "f1_macro": 0.3838,
+    "precision_micro": 0.4262,
+    "recall_micro": 0.3611,
+    "f1_micro": 0.391,
+    "jaccard_samples": 0.2938,
+    "exact_match": 0.0,
+    "accuracy": 0.1288,
+    "subset_accuracy": 0.1288,
+    "legacy_first_label_accuracy": 0.2936,
+    "parse_failures": 67,
+    "average_gold_labels": 1.7028,
+    "average_predicted_labels": 1.4428,
+    "confusion_top": [
+      {
+        "gold": "b",
+        "pred": "a",
+        "count": 31
+      },
+      {
+        "gold": "a+d",
+        "pred": "d",
+        "count": 25
+      },
+      {
+        "gold": "d+e",
+        "pred": "d",
+        "count": 25
+      },
+      {
+        "gold": "c+d",
+        "pred": "c",
+        "count": 21
+      },
+      {
+        "gold": "b+c",
+        "pred": "c",
+        "count": 20
+      },
+      {
+        "gold": "a+e",
+        "pred": "d",
+        "count": 18
+      },
+      {
+        "gold": "b+c",
+        "pred": "d",
+        "count": 17
+      },
+      {
+        "gold": "b+d",
+        "pred": "c",
+        "count": 17
+      },
+      {
+        "gold": "a+d",
+        "pred": "c",
+        "count": 16
+      },
+      {
+        "gold": "b+d",
+        "pred": "d",
+        "count": 15
+      },
+      {
+        "gold": "d",
+        "pred": "c",
+        "count": 15
+      },
+      {
+        "gold": "b+e",
+        "pred": "d",
+        "count": 14
+      },
+      {
+        "gold": "b",
+        "pred": "c",
+        "count": 14
+      },
+      {
+        "gold": "b+e",
+        "pred": "c",
+        "count": 14
+      },
+      {
+        "gold": "d+e",
+        "pred": "c",
+        "count": 13
+      },
+      {
+        "gold": "c+e",
+        "pred": "c",
+        "count": 13
+      },
+      {
+        "gold": "a+b",
+        "pred": "d",
+        "count": 12
+      },
+      {
+        "gold": "a",
+        "pred": "d",
+        "count": 12
+      },
+      {
+        "gold": "a+c",
+        "pred": "c",
+        "count": 12
+      },
+      {
+        "gold": "e",
+        "pred": "c",
+        "count": 11
+      }
+    ],
+    "metric_definition": "multilabel_exact_set_accuracy_and_labelwise_f1"
+  },
+  "source_predictions": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\FineTuning\\results\\experiments\\2026-05-31_h100_qwen25_7b_maxlen1024_prelim\\runpod_import\\ft_finqa_v1_run_v1_seed42\\predictions\\adapter_predictions.jsonl",
+  "source_predictions_sha256": "aab382cbcaa2afe2914de2c31aafc2091c668095224d3f9091cff8bce87a186a",
+  "recomputed_at": "2026-09-14T19:18:01.711249+00:00"
+}

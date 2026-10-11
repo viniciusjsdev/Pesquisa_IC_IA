@@ -108,7 +108,9 @@ def main() -> int:
     args = parse_args()
     paths_cfg = load_paths_config(args.paths_config)
     cache_dir = args.cache_dir or nested_get(paths_cfg, 'hf.cache_dir', None)
-    adapter_path = args.adapter_path or nested_get(paths_cfg, 'legacy.adapter_dir', None)
+    adapter_path = args.adapter_path
+    if not args.no_adapter and not adapter_path:
+        raise SystemExit('Adapter path ausente. Use --adapter-path com um dos seis adapters do artigo ou --no-adapter')
     infer = InferenciaWSL(args.model_path, adapter_path, cache_dir, usar_adapter=not args.no_adapter)
     print(f"[INFO] base_model={args.model_path}")
     print(f"[INFO] cache_dir={cache_dir}")

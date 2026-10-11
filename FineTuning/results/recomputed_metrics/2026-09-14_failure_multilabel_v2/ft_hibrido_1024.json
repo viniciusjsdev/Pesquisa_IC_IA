@@ -1,0 +1,127 @@
+{
+  "model_label": "FT-Hibrido 1024",
+  "dataset": "FailureSensorIQ",
+  "n_samples": 831,
+  "metrics": {
+    "precision_macro": 0.8889,
+    "recall_macro": 0.9722,
+    "f1_macro": 0.9277,
+    "precision_micro": 0.8866,
+    "recall_micro": 0.9724,
+    "f1_micro": 0.9275,
+    "jaccard_samples": 0.8899,
+    "exact_match": 0.0012,
+    "accuracy": 0.8039,
+    "subset_accuracy": 0.8039,
+    "legacy_first_label_accuracy": 0.9615,
+    "parse_failures": 0,
+    "average_gold_labels": 1.7028,
+    "average_predicted_labels": 1.8676,
+    "confusion_top": [
+      {
+        "gold": "d",
+        "pred": "d+e",
+        "count": 22
+      },
+      {
+        "gold": "c",
+        "pred": "c+e",
+        "count": 14
+      },
+      {
+        "gold": "b",
+        "pred": "b+c",
+        "count": 13
+      },
+      {
+        "gold": "b",
+        "pred": "b+e",
+        "count": 12
+      },
+      {
+        "gold": "a",
+        "pred": "a+e",
+        "count": 11
+      },
+      {
+        "gold": "a",
+        "pred": "a+b",
+        "count": 10
+      },
+      {
+        "gold": "c",
+        "pred": "c+d",
+        "count": 9
+      },
+      {
+        "gold": "a",
+        "pred": "a+d",
+        "count": 7
+      },
+      {
+        "gold": "e",
+        "pred": "d+e",
+        "count": 3
+      },
+      {
+        "gold": "b",
+        "pred": "a+b+c",
+        "count": 3
+      },
+      {
+        "gold": "e",
+        "pred": "a+e",
+        "count": 2
+      },
+      {
+        "gold": "c",
+        "pred": "a+c",
+        "count": 2
+      },
+      {
+        "gold": "c+d",
+        "pred": "c",
+        "count": 2
+      },
+      {
+        "gold": "b",
+        "pred": "a+b",
+        "count": 2
+      },
+      {
+        "gold": "a",
+        "pred": "d",
+        "count": 2
+      },
+      {
+        "gold": "c",
+        "pred": "a+b+c+e",
+        "count": 1
+      },
+      {
+        "gold": "c+e",
+        "pred": "d+e",
+        "count": 1
+      },
+      {
+        "gold": "a",
+        "pred": "c+d",
+        "count": 1
+      },
+      {
+        "gold": "b+e",
+        "pred": "b+d",
+        "count": 1
+      },
+      {
+        "gold": "b",
+        "pred": "a+b+c+d",
+        "count": 1
+      }
+    ],
+    "metric_definition": "multilabel_exact_set_accuracy_and_labelwise_f1"
+  },
+  "source_predictions": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\FineTuning\\results\\experiments\\2026-05-31_h100_qwen25_7b_maxlen1024_prelim\\runpod_import\\ft_hibrido_v1_run_v1_seed42\\predictions\\adapter_predictions.jsonl",
+  "source_predictions_sha256": "1a6ee760cc59a0478462f7c003956226c7a3f832fe67cfbdaf46c0b85e757956",
+  "recomputed_at": "2026-09-14T19:18:02.312901+00:00"
+}

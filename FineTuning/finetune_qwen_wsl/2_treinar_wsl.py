@@ -89,6 +89,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Treinamento LoRA/QLoRA parametrizado (multi-fine-tuning)')
     parser.add_argument('--modelo', dest='model_preset', choices=['hibrido', 'finqa', 'failure'], default=None,
                         help='Atalho para selecionar config can?nica e experiment_id')
+    parser.add_argument('--bateria', choices=['A', 'B'], default='B',
+                        help='Perfil do artigo: A=1024 tokens; B=4096 tokens (padrão)')
     parser.add_argument('--train-config', default=None)
     parser.add_argument('--paths-config', default='configs/paths.local.yaml')
     parser.add_argument('--experiment-id', choices=['ft_hibrido_v1', 'ft_finqa_v1', 'ft_failure_v1'], default=None)
@@ -102,10 +104,17 @@ def parse_args() -> argparse.Namespace:
 def apply_model_preset(args: argparse.Namespace) -> argparse.Namespace:
     preset_key = getattr(args, 'model_preset', None)
     if not preset_key:
+        if getattr(args, 'bateria', 'B') == 'A':
+            raise ValueError('Use --bateria A com --modelo, sem --train-config.')
         return args
     preset = MODEL_SHORTCUTS[preset_key]
     if not args.train_config:
-        args.train_config = preset['train_config']
+        config_path = preset['train_config']
+        if args.bateria == 'A':
+            config_path = config_path.replace('.yaml', '_bateria_a.yaml')
+        args.train_config = config_path
+    elif args.bateria == 'A':
+        raise ValueError('Use --bateria A com --modelo, sem --train-config simultâneo.')
     if not args.experiment_id:
         args.experiment_id = preset['experiment_id']
     return args
@@ -412,7 +421,7 @@ def main() -> int:
     print(f"Dataset manifest: {resolved_paths['dataset_manifest']}")
     print(f"Runs dir: {runtime['run_dir']}")
     print(f"Est. steps/epoch: {estimates['steps_per_epoch']} | Est. total steps: {estimates['estimated_total_steps']}")
-    print('[INFO] output legado em finetune_qwen_wsl/output permanece preservado; novos runs seguem output.root_runs_dir.')
+    print('[INFO] novos runs seguem output.root_runs_dir da configuração selecionada.')
 
     if args.dry_run:
         manifest['status'] = 'dry_run_ok'

@@ -1,7 +1,7 @@
 import math
 import re
 from collections import Counter, defaultdict
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set
 
 _NUM_RE = re.compile(r'[-+]?\d+(?:[\.,]\d+)?')
 
@@ -34,6 +34,85 @@ def choice_label(text: str) -> str:
     if m:
         return m.group(1)
     return t
+
+def _failure_answer_segment(text: str) -> str:
+    """Return only the answer portion, excluding generated explanations/options."""
+    segment = normalize_text(text)
+    for marker in ('###', 'explanation:', 'explicacao:', 'explicação:', 'justificativa:'):
+        segment = segment.split(marker, 1)[0]
+    return segment.strip()
+
+def _failure_options_from_prompt(prompt: str) -> Dict[str, str]:
+    """Extract the A-E option texts from the canonical FailureSensorIQ prompt."""
+    text = normalize_text(prompt)
+    marker = 'opções:' if 'opções:' in text else 'opcoes:'
+    if marker not in text:
+        return {}
+    options_text = text.split(marker, 1)[1].split('### response:', 1)[0]
+    matches = list(re.finditer(r'(?<![a-z0-9])([a-e])\s*\)\s*', options_text))
+    options: Dict[str, str] = {}
+    for index, match in enumerate(matches):
+        start = match.end()
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(options_text)
+        option_text = options_text[start:end].strip(' .;,:-')
+        if option_text:
+            options[match.group(1)] = option_text
+    return options
+
+def choice_labels(text: str, prompt: str = '') -> Set[str]:
+    """Extract a set of FailureSensorIQ labels without collapsing multi-label answers."""
+    segment = _failure_answer_segment(text)
+    labels = set(re.findall(r'(?<![a-z0-9])([a-e])\s*[\)\].:\-]', segment))
+    labels.update(re.findall(r'\*\*([a-e])(?:\*\*|\s*$)', segment))
+
+    # Handle concise forms such as "A e B", "A and B" or "options A, B".
+    for match in re.finditer(r'(?<![a-z0-9])([a-e])\s*(?:,|/|&|\be\b|\band\b)\s*([a-e])(?![a-z0-9])', segment):
+        labels.update(match.groups())
+    for match in re.finditer(r'\b(?:option|options|alternativa|alternativas|opcao|opcoes|opção|opções)\s+([a-e])\b', segment):
+        labels.add(match.group(1))
+    leading = re.match(r'^\s*([a-e])(?:\s|$)', segment)
+    if leading:
+        labels.add(leading.group(1))
+
+    # Some base-model answers return only the option text instead of its letter.
+    if not labels and prompt:
+        for label, option_text in _failure_options_from_prompt(prompt).items():
+            if option_text and re.search(rf'(?<![a-z0-9]){re.escape(option_text)}(?![a-z0-9])', segment):
+                labels.add(label)
+    return labels
+
+def _multilabel_scores(golds: List[Set[str]], preds: List[Set[str]]) -> Dict[str, float]:
+    labels = list('abcde')
+    per_label = []
+    tp_total = fp_total = fn_total = 0
+    for label in labels:
+        tp = sum(label in g and label in p for g, p in zip(golds, preds))
+        fp = sum(label not in g and label in p for g, p in zip(golds, preds))
+        fn = sum(label in g and label not in p for g, p in zip(golds, preds))
+        precision = tp / (tp + fp) if tp + fp else 0.0
+        recall = tp / (tp + fn) if tp + fn else 0.0
+        f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
+        per_label.append((precision, recall, f1))
+        tp_total += tp
+        fp_total += fp
+        fn_total += fn
+
+    precision_micro = tp_total / (tp_total + fp_total) if tp_total + fp_total else 0.0
+    recall_micro = tp_total / (tp_total + fn_total) if tp_total + fn_total else 0.0
+    f1_micro = (
+        2 * precision_micro * recall_micro / (precision_micro + recall_micro)
+        if precision_micro + recall_micro else 0.0
+    )
+    jaccard = [len(g & p) / len(g | p) if g | p else 1.0 for g, p in zip(golds, preds)]
+    return {
+        'precision_macro': round(sum(x[0] for x in per_label) / len(labels), 4),
+        'recall_macro': round(sum(x[1] for x in per_label) / len(labels), 4),
+        'f1_macro': round(sum(x[2] for x in per_label) / len(labels), 4),
+        'precision_micro': round(precision_micro, 4),
+        'recall_micro': round(recall_micro, 4),
+        'f1_micro': round(f1_micro, 4),
+        'jaccard_samples': round(sum(jaccard) / len(jaccard), 4) if jaccard else 0.0,
+    }
 
 def macro_f1_from_labels(golds: List[str], preds: List[str]) -> float:
     labels = sorted(set(golds) | set(preds))
@@ -112,14 +191,28 @@ def evaluate_finqa(rows: List[Dict[str, Any]], preds: List[str], abs_tol: float,
 def evaluate_failure(rows: List[Dict[str, Any]], preds: List[str]) -> Dict[str, Any]:
     gold_norm = [normalize_text(r.get('resposta', '')) for r in rows]
     pred_norm = [normalize_text(p) for p in preds]
-    gold_labels = [choice_label(g) for g in gold_norm]
-    pred_labels = [choice_label(p) for p in pred_norm]
+    gold_labels = [choice_labels(g) for g in gold_norm]
+    pred_labels = [choice_labels(p, str(r.get('prompt', ''))) for r, p in zip(rows, pred_norm)]
     n = len(rows)
     exact = sum(int(g == p) for g, p in zip(gold_norm, pred_norm))
-    acc = sum(int(g == p) for g, p in zip(gold_labels, pred_labels))
-    return {
+    subset_accuracy = sum(int(g == p) for g, p in zip(gold_labels, pred_labels))
+    legacy_gold = [choice_label(g) for g in gold_norm]
+    legacy_pred = [choice_label(p) for p in pred_norm]
+    metrics = _multilabel_scores(gold_labels, pred_labels)
+    metrics.update({
         'exact_match': round(exact / n, 4) if n else 0.0,
-        'accuracy': round(acc / n, 4) if n else 0.0,
-        'f1_macro': round(macro_f1_from_labels(gold_labels, pred_labels), 4),
-        'confusion_top': confusion_pairs(gold_labels, pred_labels),
-    }
+        'accuracy': round(subset_accuracy / n, 4) if n else 0.0,
+        'subset_accuracy': round(subset_accuracy / n, 4) if n else 0.0,
+        'legacy_first_label_accuracy': round(
+            sum(int(g == p) for g, p in zip(legacy_gold, legacy_pred)) / n, 4
+        ) if n else 0.0,
+        'parse_failures': sum(not labels for labels in pred_labels),
+        'average_gold_labels': round(sum(len(labels) for labels in gold_labels) / n, 4) if n else 0.0,
+        'average_predicted_labels': round(sum(len(labels) for labels in pred_labels) / n, 4) if n else 0.0,
+        'confusion_top': confusion_pairs(
+            ['+'.join(sorted(labels)) or '<none>' for labels in gold_labels],
+            ['+'.join(sorted(labels)) or '<none>' for labels in pred_labels],
+        ),
+        'metric_definition': 'multilabel_exact_set_accuracy_and_labelwise_f1',
+    })
+    return metrics

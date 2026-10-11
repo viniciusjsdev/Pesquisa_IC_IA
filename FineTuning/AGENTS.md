@@ -32,12 +32,10 @@ Se houver conflito entre scripts e docs, a IA deve alinhar para o protocolo v1 e
 - `finetune_qwen_wsl/common/`: utilitarios compartilhados
 - `docs/`: protocolo, arquitetura e documentacao de modelos
 
-## 4) O que e legado
-- `data_ft/`: origem historica dos dados preparados
-- `finetune_qwen_wsl/output/`: artefatos do fluxo antigo
-- `results/legacy/`: catalogacao do modelo legado
-
-Regra: legado e somente referencia historica. Novos treinos e avaliacoes devem usar `data/processed`, `configs/*` e `results/experiments/*`.
+## 4) Fonte dos splits e material historico
+- `data_ft/` contem os tres splits que alimentam `prepare_experiment_datasets.py`; deve ser preservado para regenerar os conjuntos congelados.
+- `finetune_qwen_wsl/output/` nao e destino de novas execucoes.
+- Runs anteriores as Baterias A e B foram retiradas do checkout ativo. Novos treinos e avaliacoes devem usar `data/processed`, `configs/*` e `results/experiments/*`.
 
 ## 5) Contratos de dados
 Formato esperado de amostra JSONL:
@@ -109,7 +107,7 @@ A IA deve:
 - atualizar status da run (`dry_run_ok`, `completed`, `failed`)
 - registrar erro em manifest em caso de falha
 - nao sobrescrever run existente sem intencao explicita
-- nao apagar artefatos legados
+- preservar manifests, metricas e predicoes brutas das duas baterias do artigo
 
 ## 10) Regras de alteracao de codigo
 - evitar hardcode de caminhos absolutos
