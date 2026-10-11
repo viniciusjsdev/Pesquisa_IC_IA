@@ -1,50 +1,40 @@
 # Referência histórica: observatório financeiro-industrial
 
-Este BI pertence à aplicação anterior. Código, consultas e testes foram preservados para consulta durante o desenho do novo DW. Os comandos e caminhos abaixo são históricos; não fazem parte do fluxo ativo de importação ou avaliação e não foram revalidados nesta estrutura.
+Este BI pertence à aplicação anterior. Código, consultas e testes foram preservados para consulta durante o desenho do novo DW. As descrições abaixo são históricas e não constituem instruções executáveis neste checkout. O código está em `BancoModeloUse/references/bi/`; os caminhos antigos `BancoModeloUse/bi/` e `BancoModeloUse/exports/` não existem aqui. O BI não integra o fluxo ativo de importação ou avaliação e não foi revalidado nesta estrutura.
 
 ## Guia anterior, preservado para consulta
 
 ## Versão independente para compartilhar
 
-O arquivo `BancoModeloUse/exports/BI_Pesquisa_Offline.html` contém os dados
-agregados, estilos, gráficos e filtros em um único HTML. Enviar somente esse
-arquivo; o destinatário pode salvá-lo e abri-lo em um navegador moderno,
-sem Python, PostgreSQL ou internet. Pré-visualizadores de anexos podem não
-executar JavaScript; nesse caso, baixar e abrir no navegador.
+O arquivo antigo `BancoModeloUse/exports/BI_Pesquisa_Offline.html` reunia os dados
+agregados, estilos, gráficos e filtros em um único HTML. Ele não está presente
+neste checkout; não há uma exportação atual pronta para envio. Na versão
+anterior, o destinatário podia abrir esse HTML em um navegador moderno, sem
+Python, PostgreSQL ou internet.
 
-A versão independente mantém filtros, seções e exportação CSV. Exibe a data
-da consulta original e não atualiza os dados automaticamente. Não incorpora
-senhas ou configurações de conexão. Uma política de conteúdo bloqueia conexões
+A versão independente mantinha filtros, seções e exportação CSV. Exibia a data
+da consulta original e não atualizava os dados automaticamente. Não incorporava
+senhas ou configurações de conexão. Uma política de conteúdo bloqueava conexões
 de rede no arquivo exportado.
 
-Para gerar novamente a partir do PostgreSQL local ativo:
-
-```powershell
-BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/bi/export_offline.py
-```
-
-O comando atualiza o HTML em `exports`. É possível escolher outro destino com
-`--output caminho/arquivo.html`.
+O gerador antigo está preservado em `BancoModeloUse/references/bi/export_offline.py`,
+mas não foi revalidado após a mudança de estrutura. Revise suas dependências,
+consultas e destino antes de tentar produzir outra exportação; o comando antigo
+em `BancoModeloUse/bi/export_offline.py` não funciona neste checkout.
 
 ## Versão conectada
 
-BI local em HTML/CSS/JavaScript, com gráficos SVG, sem serviços externos,
-CDNs ou dependências adicionais além de `requirements-local.txt`.
-O servidor Python consulta o PostgreSQL em transações somente leitura.
+O BI anterior era local, em HTML/CSS/JavaScript, com gráficos SVG, sem serviços
+externos ou CDNs. O servidor Python consultava o PostgreSQL em transações
+somente leitura.
 
 ## Abrir
 
-Na raiz do repositório:
-
-```powershell
-BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/scripts/local_postgres.py start
-BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/bi/server.py
-```
-
-Acessar <http://127.0.0.1:8501>. O servidor escuta somente em `127.0.0.1`.
-Usar `--port 8502` se a porta padrão estiver ocupada. Encerrar com `Ctrl+C`
-quando executado no terminal. O HTML deve ser aberto pelo servidor, não como
-`file://`, pois consulta `/api/data`.
+O servidor antigo está preservado em `BancoModeloUse/references/bi/server.py`,
+sem validação de execução na estrutura atual. O comando antigo em
+`BancoModeloUse/bi/server.py` não funciona neste checkout. Na instalação
+anterior, o acesso era por <http://127.0.0.1:8501>, com escuta em `127.0.0.1`;
+o HTML consultava `/api/data` pelo servidor.
 
 Na instalação inicial, o servidor foi iniciado em segundo plano, com logs e PID
 em `BancoModeloUse/.local/bi.*`. Não é um serviço de início automático do Windows.
@@ -91,17 +81,15 @@ Cada banco é lido em uma transação consistente separada.
 
 ## Verificação
 
-Com o servidor e o PostgreSQL ativos:
+Os testes antigos estão preservados em `BancoModeloUse/references/bi/test_bi.py`
+e `BancoModeloUse/references/bi/test_aggregates.cjs`. Não foram executados nem
+adaptados nesta estrutura; os antigos comandos em `BancoModeloUse/bi/` não
+funcionam neste checkout.
 
-```powershell
-BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/bi/test_bi.py
-node BancoModeloUse/bi/test_aggregates.cjs
-```
-
-Os testes comparam valores da API a consultas independentes, conferem inventário,
+Os testes comparavam valores da API a consultas independentes, conferiam inventário,
 ausência de períodos fabricados e modo somente leitura. Os testes JavaScript
-verificam filtros, médias ponderadas, razões, lacunas e divisão por zero.
-`node` é necessário apenas para os testes JavaScript, não para usar o BI.
+verificavam filtros, médias ponderadas, razões, lacunas e divisão por zero.
+`node` era necessário apenas para os testes JavaScript, não para usar o BI.
 
 Também foi verificado no Chrome: renderização, navegação, filtro mensal e estado
 financeiro sem dados de custos em 2024–2025.

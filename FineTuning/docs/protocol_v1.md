@@ -48,6 +48,8 @@ Os valores acima coincidem com os seis `resolved_config_snapshot` dos manifests 
 As respostas do FailureSensorIQ podem conter mais de uma alternativa correta. A
 avaliação não deve reduzir o gabarito ou a predição à primeira letra encontrada.
 
+As listas `evaluation.metrics` dos YAMLs de avaliação descrevem as métricas principais; `5_avaliar_batch_wsl.py` não as usa como filtro. O avaliador calcula o payload completo definido em `common/metrics.py`, incluindo `accuracy` como alias de `subset_accuracy` e diagnósticos como `legacy_first_label_accuracy`, `confusion_top` e médias de rótulos. Confira a definição e o JSON da run antes de comparar resultados antigos com recálculos posteriores.
+
 ## Outputs padronizados
 - `results/experiments/<protocol>/<experiment>/<run>/meta/run_manifest.json`
 - `results/experiments/<protocol>/<experiment>/<run>/metrics/*.json`
