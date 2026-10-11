@@ -14,6 +14,7 @@ Leia `AGENTS.md` e siga a prioridade que ele define: `docs/protocol_v1.md`; `con
 - `results/experiments/`: runs importadas ou executadas, com manifests, adapters, métricas e predições; consulte [results/README.md](results/README.md).
 - [Catálogo de modelos e adapters](docs/modelos_disponiveis.md): caminhos locais, arquivos de peso, hashes, diferenças entre as baterias 1024/4096 e confronto com o artigo.
 - [Escopo de envio do artigo](docs/escopo_envio_artigo.md): conjunto ativo, pesos via Git LFS e material retirado da árvore ativa.
+- [Artigo no Google Docs](https://docs.google.com/document/d/1LExZ17IkPXIKYGCHLEJ3mEZSsCU2It1X/edit): única versão editorial canônica; `artigo_canonico/` guarda DOCX e PDF exportados em 11/10/2026.
 - `data_ft/`: fonte preservada dos splits versionados; `finetune_qwen_wsl/output/` não é destino de novas runs.
 - `../runpod/`: scripts remotos que dependem do layout atual.
 

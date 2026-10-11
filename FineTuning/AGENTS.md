@@ -16,6 +16,8 @@ Objetivo operacional de IA neste repo:
 - evitar regressao para paths hardcoded e saidas misturadas
 
 ## 2) Fontes de verdade (ordem de prioridade)
+Para o **texto, autoria e versão editorial do artigo**, a única fonte canônica é o [documento no Google Docs](https://docs.google.com/document/d/1LExZ17IkPXIKYGCHLEJ3mEZSsCU2It1X/edit). `artigo_canonico/` guarda exportações datadas, não uma segunda versão autoritativa. A ordem abaixo rege o protocolo técnico, os dados e as execuções; não substitui o documento editorial.
+
 1. `docs/protocol_v1.md`
 2. `configs/train/*.yaml` e `configs/eval/*.yaml`
 3. `data/manifests/*.json`
