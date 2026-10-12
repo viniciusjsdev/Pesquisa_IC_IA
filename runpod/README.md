@@ -2,6 +2,10 @@
 
 Esta pasta contém os scripts de execução remota. Antes de uma nova execução, conferir ambiente, custo, dependências e estado do pod; a presença destes scripts não é prova de prontidão remota.
 
+## Serving de modelos planejado
+
+A [arquitetura de inferência compartilhada](../docs/arquitetura_inferencia_compartilhada.md) prevê um futuro `runpod/serving/` para servir o Qwen base e os adapters selecionados por API vLLM. Esse diretório, o servidor e sua configuração ainda não existem. A troca entre adapters da mesma base será feita pelo identificador `model` de cada requisição, sem reiniciar o Pod; capacidade e compatibilidade precisam de teste remoto. O [catálogo de modelos](../FineTuning/docs/modelos_disponiveis.md) e os manifests das runs identificam os artefatos científicos. Os scripts abaixo continuam destinados a treino e avaliação.
+
 ## Layout esperado pelos scripts
 
 `runpod_setup.sh` clona este repositório em `/workspace/FineTuning` apenas se a pasta ainda não existir; se existir, reutiliza o checkout sem atualizar o commit. Confira o commit antes de executar. O projeto de treino fica em `/workspace/FineTuning/FineTuning`, e o diretório de execução é `/workspace/FineTuning/FineTuning/finetune_qwen_wsl`. Os scripts usam `FineTuning/configs/paths.cloud.yaml`, cache em `/workspace/Qwen` e saídas em `/workspace/FineTuning/FineTuning/results/experiments/<EXPERIMENT_TAG>/`.

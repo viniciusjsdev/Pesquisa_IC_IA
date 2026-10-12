@@ -6,7 +6,7 @@ Status: decisoes iniciais para planejamento; nao descreve uma implementacao pron
 
 Comparar o modelo base, os modelos ajustados para financeiro, industrial e hibrido, e eventualmente modelos externos, usando perguntas sobre as bases simuladas. O mesmo harness deve executar casos financeiros, industriais e integrados, registrar evidencias e separar erros de recuperacao, calculo e resposta.
 
-O harness consome todos os modelos por uma interface de API padronizada, tanto os modelos locais hospedados quanto servicos externos. Hospedagem, protocolo concreto e adaptadores de cada provedor ainda serao definidos. Os CSVs originais permanecem como fonte preservada; os bancos relacionais de cada dominio sao a fonte de consulta tipada. O esquema DW antigo foi retirado do codigo ativo. O banco local `db_datamind_dw` preexistente permanece intocado e nao representa um DW validado; o novo desenho e a carga ainda dependem de estudo.
+O harness consumira os modelos por uma interface de API padronizada, tanto os modelos hospedados quanto eventuais servicos externos. A topologia da primeira inferencia compartilhada foi [definida separadamente](../../docs/arquitetura_inferencia_compartilhada.md): backend e bancos no notebook, modelos servidos por vLLM na RunPod e front via ngrok. O contrato HTTP da aplicacao, os adaptadores de provedores externos e o harness formal ainda nao foram implementados. Os CSVs originais permanecem como fonte preservada; os bancos relacionais de cada dominio sao a fonte de consulta tipada. O esquema DW antigo foi retirado do codigo ativo. O banco local `db_datamind_dw` preexistente permanece intocado e nao representa um DW validado; o novo desenho e a carga ainda dependem de estudo.
 
 ## Fluxo previsto
 
@@ -15,15 +15,19 @@ flowchart TD
     Q[Pergunta e caso de teste] --> O[Orquestrador: classifica escopo e seleciona consultas permitidas]
     O --> F[Servico financeiro: SQL de leitura e calculos]
     O --> I[Servico industrial: SQL de leitura e calculos]
-    F --> D[Camada analitica / DW: fatos rastreaveis, indicadores e agregados]
-    I --> D
-    D --> E[Pacote de evidencias: valores, periodo, origem, qualidade e limites]
+    F --> E[Pacote de evidencias: valores, periodo, origem, qualidade e limites]
+    I --> E
+    F -. futuro .-> D[Camada analitica / DW a definir]
+    I -. futuro .-> D
+    D -. futuro .-> E
     E --> M[Modelo em teste: resposta fundamentada]
     M --> H[Harness: compara etapas com o gold set]
     E --> H
 ```
 
 O desenho nao exige um agente LLM para cada dominio. Os servicos financeiro e industrial podem ser modulos deterministas de consulta. O modelo avaliado e o responsavel por formular a resposta. A avaliacao fica fora do caminho de resposta ao usuario, para que o gabarito nao vaze para o modelo em teste.
+
+O front compartilhado permite alterar prompts e selecionar modelos para exploracao, registrando um snapshot por execucao. Esses testes interativos nao recebem automaticamente o status de avaliacao cientifica. O harness formal usara casos, gold set e protocolo versionados, sem enviar o gabarito ao modelo.
 
 ## Responsabilidades
 
@@ -32,7 +36,7 @@ O desenho nao exige um agente LLM para cada dominio. Os servicos financeiro e in
 | Orquestrador | Classificar a pergunta como financeira, industrial ou integrada; escolher consultas e janela temporal dentre opcoes permitidas; registrar a rota. |
 | Servico financeiro | Consultar registros e indicadores financeiros, calcular valores necessarios e devolver origem e filtros usados. |
 | Servico industrial | Consultar producao, operacoes, maquinas, paradas e outros registros pertinentes; calcular valores necessarios e devolver origem e filtros usados. |
-| Camada analitica / DW | Oferecer fatos detalhados rastreaveis e visoes agregadas; preservar granularidade, proveniencia e sinalizacao de qualidade. Seu desenho exato ainda depende de estudo. |
+| Camada analitica / DW futura | Oferecer fatos detalhados rastreaveis e visoes agregadas; preservar granularidade, proveniencia e sinalizacao de qualidade. Nao e dependencia da primeira API; seu desenho exato ainda depende de estudo. |
 | Montador de contexto | Entregar ao modelo apenas evidencias pertinentes a pergunta, com valores, unidades, periodos e ressalvas. |
 | Modelo em teste | Interpretar as evidencias e responder com os dados que sustentam a conclusao. |
 | Harness | Executar casos e modelos sob protocolo comparavel; guardar consulta, evidencias, resposta e metricas por etapa. |

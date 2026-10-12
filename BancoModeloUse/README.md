@@ -5,6 +5,11 @@ financeiros e o importador verificável para PostgreSQL. O desenho da nova
 avaliação está em [arquitetura_avaliacao_modelos.md](docs/arquitetura_avaliacao_modelos.md).
 O harness e o novo DW ainda não foram implementados.
 
+A [inferência compartilhada proposta](../docs/arquitetura_inferencia_compartilhada.md)
+consultará estes dois bancos locais em modo de leitura. Seu front, backend e banco
+de histórico próprio ainda não existem; o importador desta pasta não é o servidor
+da aplicação.
+
 O RAG/agentes, o esquema DW anterior, os repositórios da aplicação anterior e
 os scripts antigos de criação/carga/limpeza não integram este checkout ativo.
 As versões rastreadas são recuperáveis pelo Git. O BI anterior também foi
