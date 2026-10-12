@@ -93,6 +93,8 @@ def parse_args() -> argparse.Namespace:
                         help='Perfil do artigo: A=1024 tokens; B=4096 tokens (padrão)')
     parser.add_argument('--train-config', default=None)
     parser.add_argument('--paths-config', default='configs/paths.local.yaml')
+    parser.add_argument('--runs-root', default=None,
+                        help='Sobrescreve output.root_runs_dir para esta execução e registra o valor no manifest')
     parser.add_argument('--experiment-id', choices=['ft_hibrido_v1', 'ft_finqa_v1', 'ft_failure_v1'], default=None)
     parser.add_argument('--run-name', default=None)
     parser.add_argument('--resume-from-checkpoint', default=None)
@@ -142,6 +144,9 @@ def resolve_runtime_config(args: argparse.Namespace) -> Tuple[Dict[str, Any], Di
     train_cfg_path = resolve_path(train_config_arg, root)
     cfg = load_train_config_with_base(train_cfg_path)
     validate_required_keys(cfg)
+
+    if args.runs_root:
+        cfg['output']['root_runs_dir'] = args.runs_root
 
     if args.experiment_id:
         cfg['experiment']['id'] = args.experiment_id

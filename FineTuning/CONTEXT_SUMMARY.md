@@ -4,7 +4,7 @@ Este diretório compara `Qwen/Qwen2.5-7B-Instruct` (base) com `ft_finqa_v1`, `ft
 
 ## Ordem de leitura e fontes de verdade
 
-Leia `AGENTS.md` e siga a prioridade que ele define: `docs/protocol_v1.md`; `configs/train/*.yaml` e `configs/eval/*.yaml`; `data/manifests/*.json`; `results/experiments/<protocol>/<experiment>/<run>/meta/run_manifest.json`; depois `docs/architecture.md` e `docs/experiments/matriz_avaliacao.md`. Este resumo é um mapa, não substitui essas fontes. Para uma métrica, confira também o JSON da run e a versão de cálculo usada.
+Leia `AGENTS.md` e siga a prioridade que ele define: `docs/protocol_v1.md`; `configs/train/*.yaml` e `configs/eval/*.yaml`; `data/manifests/*.json`; `results/experiments/<protocol>/<experiment>/<run>/meta/run_manifest.json` para treinos; depois `docs/architecture.md` e `docs/experiments/matriz_avaliacao.md`. Este resumo é um mapa, não substitui essas fontes. Novas avaliações gravam `meta/evaluation_manifest.json`; as avaliações históricas importadas não o têm. Para uma métrica, confira o JSON da avaliação, sua config, a run treinada quando aplicável e a versão de cálculo usada.
 
 ## Estrutura
 
@@ -15,7 +15,7 @@ Leia `AGENTS.md` e siga a prioridade que ele define: `docs/protocol_v1.md`; `con
 - [Catálogo de modelos e adapters](docs/modelos_disponiveis.md): caminhos locais, arquivos de peso, hashes, diferenças entre as baterias 1024/4096 e confronto com o artigo.
 - [Escopo de envio do artigo](docs/escopo_envio_artigo.md): conjunto ativo, pesos via Git LFS e material retirado da árvore ativa.
 - [Artigo no Google Docs](https://docs.google.com/document/d/1LExZ17IkPXIKYGCHLEJ3mEZSsCU2It1X/edit): única versão editorial canônica; `artigo_canonico/` guarda DOCX e PDF exportados em 11/10/2026.
-- `data_ft/`: fonte preservada dos splits versionados; `finetune_qwen_wsl/output/` não é destino de novas runs.
+- `data_ft/`: fonte preservada dos splits versionados.
 - `../runpod/`: scripts remotos que dependem do layout atual.
 
 ## Estado observado neste checkout

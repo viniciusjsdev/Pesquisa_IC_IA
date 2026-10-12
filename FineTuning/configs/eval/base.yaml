@@ -17,7 +17,5 @@ evaluation:
     top_k: 50
     do_sample: false
     repetition_penalty: 1.0
-  save_predictions: true
-  save_error_analysis_sample: 20
 paths:
   test_data_path: data/processed/hybrid_v1/test.jsonl

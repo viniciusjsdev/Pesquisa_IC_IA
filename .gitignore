@@ -3,10 +3,8 @@ BancoModeloUse/.venv/
 BancoModeloUse/.local/
 BancoModeloUse/.env.local
 BancoModeloUse/reports/local_database_validation.json
-BancoModeloUse/references/bi/generated/
 __pycache__/
 wandb/
-Datasets/finetune_mistral_wsl/output/
 .playwright-mcp/
 FineTuning/results/experiments/**/*.pt
 FineTuning/results/experiments/**/*.safetensors

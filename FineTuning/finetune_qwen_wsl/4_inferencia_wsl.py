@@ -64,7 +64,7 @@ class InferenciaWSL:
 
     def modo_interativo(self, max_new_tokens: int, temperature: float):
         print('\n' + '=' * 70)
-        print('MODO INTERATIVO - MISTRAL (BASE/LoRA)')
+        print('MODO INTERATIVO - QWEN (BASE/LoRA)')
         print('=' * 70)
         print("Comandos: /financeiro, /industrial, /integrado, /sair")
         while True:

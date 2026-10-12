@@ -1,7 +1,7 @@
 # Arquitetura do Projeto (Multi-Fine-Tuning v1)
 
 ## Objetivo
-Evoluir o projeto para suportar múltiplos fine-tunings (`FT-Híbrido`, `FT-FinQA`, `FT-Failure`) com configuração centralizada, artefatos isolados por run e documentação rastreável.
+O fluxo atual organiza os três fine-tunings (`FT-Híbrido`, `FT-FinQA`, `FT-Failure`) com configuração em YAML, artefatos separados por run e documentação rastreável.
 
 ## Fluxo
 1. Fonte preparada e splits preservados (`data_ft/`)

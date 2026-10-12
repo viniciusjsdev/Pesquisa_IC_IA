@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List
 
 from common.config_utils import (
-    build_run_dirs,
     default_run_name,
     ensure_dir,
+    file_hashes,
+    get_git_commit,
     load_config,
     load_jsonl,
     load_paths_config,
@@ -116,7 +118,17 @@ def build_prediction_records(rows, preds, abs_tol: float, rel_tol: float):
             rec['error_type'] = 'mismatch'
     return records
 
-def evaluate_and_save(rows, preds, eval_cfg, metrics_dir: Path, predictions_dir: Path, label: str, write_legacy_files: bool = False):
+def ensure_fresh_evaluation_output(run_dir: Path) -> None:
+    existing = [run_dir / 'meta' / 'evaluation_manifest.json']
+    existing.extend((run_dir / 'metrics').glob('*.json'))
+    existing.extend((run_dir / 'predictions').glob('*.jsonl'))
+    occupied = [path for path in existing if path.exists()]
+    if occupied:
+        raise FileExistsError(
+            f'Avaliação já possui artefatos em {run_dir}; use uma run nova. Primeiro arquivo: {occupied[0]}'
+        )
+
+def evaluate_and_save(rows, preds, eval_cfg, metrics_dir: Path, predictions_dir: Path, label: str):
     abs_tol = float(nested_get(eval_cfg, 'evaluation.numeric_tolerance.absolute', 1e-3))
     rel_tol = float(nested_get(eval_cfg, 'evaluation.numeric_tolerance.relative', 1e-3))
     records = build_prediction_records(rows, preds, abs_tol=abs_tol, rel_tol=rel_tol)
@@ -148,8 +160,6 @@ def evaluate_and_save(rows, preds, eval_cfg, metrics_dir: Path, predictions_dir:
             'timestamp': timestamp,
         }
         save_json(metrics_dir / f'finqa_{suffix}.json', finqa_payload)
-        if write_legacy_files:
-            save_json(metrics_dir / 'finqa.json', finqa_payload)
         summary['metrics']['FinQA'] = finqa_metrics
     if rows_failure:
         failure_metrics = evaluate_failure(rows_failure, preds_failure)
@@ -162,8 +172,6 @@ def evaluate_and_save(rows, preds, eval_cfg, metrics_dir: Path, predictions_dir:
             'timestamp': timestamp,
         }
         save_json(metrics_dir / f'failure_{suffix}.json', failure_payload)
-        if write_legacy_files:
-            save_json(metrics_dir / 'failure.json', failure_payload)
         summary['metrics']['FailureSensorIQ'] = failure_metrics
 
     cross_domain_payload = {
@@ -175,12 +183,8 @@ def evaluate_and_save(rows, preds, eval_cfg, metrics_dir: Path, predictions_dir:
         'timestamp': timestamp,
     }
     save_json(metrics_dir / f'cross_domain_{suffix}.json', cross_domain_payload)
-    if write_legacy_files:
-        save_json(metrics_dir / 'cross_domain.json', cross_domain_payload)
 
     save_json(metrics_dir / f'summary_{suffix}.json', summary)
-    if write_legacy_files:
-        save_json(metrics_dir / 'summary.json', summary)
     save_jsonl(predictions_dir / f'{label.lower()}_predictions.jsonl', records)
 
 def main() -> int:
@@ -194,13 +198,15 @@ def main() -> int:
 
     if args.run_dir:
         run_dir = Path(args.run_dir)
-        metrics_dir = ensure_dir(run_dir / 'metrics')
-        predictions_dir = ensure_dir(run_dir / 'predictions')
     else:
-        tmp = build_run_dirs(repo_root() / 'results' / 'experiments' / 'manual_evaluations', args.experiment_id, default_run_name(args.seed))
-        run_dir = tmp['run_dir']
-        metrics_dir = tmp['metrics_dir']
-        predictions_dir = tmp['predictions_dir']
+        run_dir = repo_root() / 'results' / 'experiments' / 'manual_evaluations' / args.experiment_id / default_run_name(args.seed)
+
+    ensure_fresh_evaluation_output(run_dir)
+    metrics_dir = run_dir / 'metrics'
+    predictions_dir = run_dir / 'predictions'
+    if not args.dry_run:
+        ensure_dir(metrics_dir)
+        ensure_dir(predictions_dir)
 
     # Resolve o modelo base: prioriza o registrado no run treinado (garante que o
     # adapter seja carregado sobre a mesma base usada no treino); senão, usa --base-model.
@@ -232,7 +238,8 @@ def main() -> int:
     if args.dry_run:
         return 0
 
-    single_model_mode = bool(args.base_only) ^ bool(args.adapter_only)
+    if (args.adapter_only or mode_compare) and not adapter_path:
+        raise SystemExit('Adapter path é obrigatório para avaliação do modelo fine-tunado (--adapter-path ou --run-dir).')
 
     if args.base_only or mode_compare:
         preds = run_model_predictions(rows, base_model, cache_dir, eval_cfg, adapter_path=None)
@@ -243,12 +250,9 @@ def main() -> int:
             metrics_dir,
             predictions_dir,
             'BASE',
-            write_legacy_files=(single_model_mode and bool(args.base_only)),
         )
 
     if args.adapter_only or mode_compare:
-        if not adapter_path:
-            raise SystemExit('Adapter path é obrigatório para avaliação do modelo fine-tunado (--adapter-path ou --run-dir).')
         preds = run_model_predictions(rows, base_model, cache_dir, eval_cfg, adapter_path=adapter_path)
         evaluate_and_save(
             rows,
@@ -257,8 +261,29 @@ def main() -> int:
             metrics_dir,
             predictions_dir,
             'ADAPTER',
-            write_legacy_files=(single_model_mode and bool(args.adapter_only)),
         )
+
+    adapter_weights = Path(adapter_path) / 'adapter_model.safetensors' if adapter_path else None
+    save_json(run_dir / 'meta' / 'evaluation_manifest.json', {
+        'status': 'completed',
+        'completed_at': datetime.now(timezone.utc).isoformat(),
+        'git_commit': get_git_commit(repo_root()),
+        'evaluator_sha256': file_hashes(Path(__file__))['sha256'],
+        'metrics_code_sha256': file_hashes(repo_root() / 'finetune_qwen_wsl' / 'common' / 'metrics.py')['sha256'],
+        'eval_config_path': str(resolve_path(args.eval_config, repo_root())),
+        'resolved_eval_config': eval_cfg,
+        'paths_config_path': str(resolve_path(args.paths_config, repo_root())),
+        'hf_cache_dir': cache_dir,
+        'test_data_path': str(test_data_path),
+        'test_data_sha256': file_hashes(test_data_path)['sha256'],
+        'rows_selected': len(rows),
+        'domains': domain_filter,
+        'max_samples': args.max_samples,
+        'mode': 'compare' if mode_compare else ('base' if args.base_only else 'adapter'),
+        'base_model': base_model,
+        'adapter_path': adapter_path,
+        'adapter_sha256': file_hashes(adapter_weights)['sha256'] if adapter_weights and adapter_weights.exists() else None,
+    })
 
     print('[OK] Avaliação concluída.')
     return 0

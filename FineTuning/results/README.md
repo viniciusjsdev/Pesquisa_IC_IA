@@ -14,3 +14,5 @@ Os manifests locais dos três modelos em cada rodada registram `completed`. Os d
 O nome datado do diretório importado não é necessariamente o `output.root_runs_dir` registrado no manifest remoto. Para nova execução, os configs e scripts RunPod atuais usam `results/experiments/h100_qwen25_7b_maxlen4096/` por padrão, sob o checkout remoto. Consulte [runpod/README.md](../../runpod/README.md).
 
 `recomputed_metrics/2026-09-14_failure_multilabel_v2/` contém o recálculo multirrótulo usado pelo artigo, separado das métricas originais. Compare proveniência, script e versão antes de citar qualquer resultado. Não sobrescreva os JSONs originais para trocar a definição de métrica.
+
+Novas avaliações em lote gravam `meta/evaluation_manifest.json` com a configuração completa, identidade dos dados e adapter utilizado. Os arquivos de métricas novos têm sufixo `_base` ou `_adapter`, sem cópias duplicadas de nomes antigos. O avaliador recusa uma run com métricas ou predições existentes. As duas baterias importadas não têm esse manifest; seus JSONs originais permanecem como evidência histórica.

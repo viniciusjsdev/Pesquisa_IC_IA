@@ -47,7 +47,7 @@ def main() -> int:
         target_root=target_root,
         manifests_root=manifests_root,
         source='data_ft (snapshot lógico do dataset híbrido atual)',
-        notes='Dataset híbrido v1 derivado diretamente de data_ft legado.',
+        notes='Dataset híbrido v1 derivado diretamente dos splits preservados em data_ft.',
     )
     write_dataset_with_manifest(
         'finqa_v1',

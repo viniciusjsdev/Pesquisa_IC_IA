@@ -6,11 +6,10 @@ avaliação está em [arquitetura_avaliacao_modelos.md](docs/arquitetura_avaliac
 O harness e o novo DW ainda não foram implementados.
 
 O RAG/agentes, o esquema DW anterior, os repositórios da aplicação anterior e
-os scripts antigos de criação/carga/limpeza foram retirados do caminho ativo.
-As versões rastreadas são recuperáveis pelo Git. O BI antigo foi guardado apenas
-como [referência de consultas e testes](references/bi/README.md); não integra a
-nova aplicação. Seus artefatos gerados locais ficam em
-`references/bi/generated/` e são ignorados pelo Git.
+os scripts antigos de criação/carga/limpeza não integram este checkout ativo.
+As versões rastreadas são recuperáveis pelo Git. O BI anterior também foi
+retirado: sua referência de consultas e testes está preservada fora do repositório
+na máquina de origem, em `D:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA_legacy_archive_20261011\BancoModeloUse\references\bi`, com hashes no `inventory.json` do arquivo externo. Esse caminho não é portátil para outros clones.
 
 PostgreSQL exclusivo deste checkout em **127.0.0.1:5544**. Os executáveis
 instalados do PostgreSQL 15 são reutilizados, mas o cluster fica em

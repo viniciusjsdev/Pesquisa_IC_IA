@@ -24,7 +24,7 @@ Para o **texto, autoria e versão editorial do artigo**, a única fonte canônic
 4. `results/experiments/<protocol>/<experiment>/<run>/meta/run_manifest.json`
 5. `docs/architecture.md` e `docs/experiments/matriz_avaliacao.md`
 
-Se houver conflito entre scripts e docs, a IA deve alinhar para o protocolo v1 e registrar ajuste.
+Se houver conflito entre scripts, protocolo e artefatos, confira código, configs, manifests e resultados da run exata antes de decidir o ajuste. Registre a divergência e sua evidência; não altere dados congelados ou resultados brutos para forçar concordância documental.
 
 ## 3) Estrutura canonica (nao legado)
 - `configs/`: configuracao de treino e avaliacao
@@ -36,7 +36,6 @@ Se houver conflito entre scripts e docs, a IA deve alinhar para o protocolo v1 e
 
 ## 4) Fonte dos splits e material historico
 - `data_ft/` contem os tres splits que alimentam `prepare_experiment_datasets.py`; deve ser preservado para regenerar os conjuntos congelados.
-- `finetune_qwen_wsl/output/` nao e destino de novas execucoes.
 - Runs anteriores as Baterias A e B foram retiradas do checkout ativo. Novos treinos e avaliacoes devem usar `data/processed`, `configs/*` e `results/experiments/*`.
 
 ## 5) Contratos de dados
@@ -68,6 +67,7 @@ Atalhos suportados:
 Regras:
 - preferir `--modelo` (nao hardcode de config no script)
 - executar `--dry-run` antes de treino real
+- o `--dry-run` do treino grava uma run de preflight; use nome separado da run real. O `--dry-run` da avaliação apenas verifica entradas e não grava resultados.
 - usar apenas configs de `configs/train/`
 - nao alterar hiperparametros no codigo; alterar YAML
 - salvar tudo em `results/experiments/<protocol>/<experiment>/<run>/...`
@@ -100,23 +100,16 @@ Regras:
 - reportar steps/tokens no `run_manifest.json`
 
 ## 9) Reprodutibilidade e auditoria
-Cada run deve ter, no minimo:
-- `meta/run_manifest.json`
-- `metrics/*.json` (quando houver avaliacao)
-- `predictions/*.jsonl` (quando houver avaliacao)
+O treino atual grava `meta/run_manifest.json`. Novas avaliações em lote gravam `meta/evaluation_manifest.json`, `metrics/*.json` e `predictions/*.jsonl`; recusam um diretório que já tenha métricas ou predições. As avaliações históricas das Baterias A e B não têm esse manifest de avaliação. Para citá-las, confira o JSON, a config inferível dos artefatos e a proveniência da run treinada, quando houver adapter.
 
-A IA deve:
-- atualizar status da run (`dry_run_ok`, `completed`, `failed`)
-- registrar erro em manifest em caso de falha
-- nao sobrescrever run existente sem intencao explicita
-- preservar manifests, metricas e predicoes brutas das duas baterias do artigo
+Para runs de treino, atualize o status (`dry_run_ok`, `completed`, `failed`) e registre falhas no manifest. Não sobrescreva runs existentes sem intenção explícita. Preserve manifests, métricas e predições brutas das duas baterias do artigo.
 
 ## 10) Regras de alteracao de codigo
 - evitar hardcode de caminhos absolutos
 - usar `configs/paths.local.yaml` para ambiente local
 - manter compatibilidade com WSL (preferencial para treino)
 - mudancas de metrica devem ocorrer em `common/metrics.py` e ser refletidas em `docs/protocol_v1.md`
-- mudancas de schema de output devem atualizar templates em `docs/templates/`
+- mudanças de schema de output devem atualizar `docs/protocol_v1.md`, a documentação dos resultados e os consumidores/testes afetados
 
 ## 11) Regras de documentacao
 Ao criar/alterar experimento, atualizar:
@@ -124,18 +117,19 @@ Ao criar/alterar experimento, atualizar:
 - `docs/experiments/matriz_avaliacao.md` (se mudar desenho experimental)
 - `docs/protocol_v1.md` (se mudar protocolo)
 
+Ao mudar script, YAML, métrica ou estrutura de resultados, confira os comandos e caminhos documentados contra o código e atualize as páginas afetadas na mesma mudança. Identifique afirmações sobre runs existentes pela run, evidência e data/commit da conferência; diferencie status registrado, validação local e reprodução independente. Retire código, configuração e instruções obsoletos do checkout depois de conferir referências; preserve o histórico necessário em arquivo externo com inventário.
+
 ## 12) Anti-padroes proibidos
-- treinar usando `finetune_qwen_wsl/output/` como destino novo
 - comparar modelos com configs de inferencia diferentes sem declarar
 - alterar split depois de iniciar bateria de comparacao
 - misturar artefatos de runs diferentes no mesmo diretorio
 - editar manualmente manifests para "forcar" consistencia
 
 ## 13) Checklist rapido para IA antes de executar
-1. Confirmar `configs/paths.local.yaml` valido
+1. Confirmar `configs/paths.local.yaml` no ambiente local ou `configs/paths.cloud.yaml` no RunPod
 2. Confirmar dataset manifest do experimento
 3. Rodar `--dry-run`
 4. Rodar treino
 5. Rodar avaliacao em lote
-6. Verificar `run_manifest.json`, `metrics`, `predictions`
+6. Verificar `run_manifest.json` do treino e `evaluation_manifest.json`/`metrics`/`predictions` da nova avaliação; para as avaliações históricas, conferir os JSONs originais sem inventar um manifest
 7. Atualizar docs de modelo

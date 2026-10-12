@@ -47,6 +47,13 @@ run_train() {
   python 2_treinar_wsl.py \
     --modelo "$model" \
     --paths-config "$PATHS_CONFIG" \
+    --runs-root "$RUNS_ROOT_ABS" \
+    --run-name "${RUN_NAME}_preflight" \
+    --dry-run
+  python 2_treinar_wsl.py \
+    --modelo "$model" \
+    --paths-config "$PATHS_CONFIG" \
+    --runs-root "$RUNS_ROOT_ABS" \
     --run-name "$RUN_NAME"
   echo "TRAIN_DONE_${model}_$(date -Is)"
   nvidia-smi --query-gpu=timestamp,name,memory.used,memory.total,utilization.gpu --format=csv,noheader

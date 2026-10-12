@@ -1,5 +1,2 @@
-repo:
-  root_windows: "/workspace/FineTuning"
-  root_wsl: "/workspace/FineTuning"
 hf:
   cache_dir: "/workspace/Qwen"
