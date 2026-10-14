@@ -3,12 +3,20 @@
 Este diretório mantém os 75 CSVs originais, os modelos SQLAlchemy industriais e
 financeiros e o importador verificável para PostgreSQL. O desenho da nova
 avaliação está em [arquitetura_avaliacao_modelos.md](docs/arquitetura_avaliacao_modelos.md).
-O harness e o novo DW ainda não foram implementados.
+O [DW local v1](dw/README.md) foi implementado e carregado em banco novo e
+isolado para consultas analíticas rastreáveis. O harness formal ainda não foi
+implementado.
 
-A [inferência compartilhada proposta](../docs/arquitetura_inferencia_compartilhada.md)
-consultará estes dois bancos locais em modo de leitura. Seu front, backend e banco
-de histórico próprio ainda não existem; o importador desta pasta não é o servidor
-da aplicação.
+O [desenho da avaliação](docs/arquitetura_avaliacao_modelos.md) separa dois
+cenários: evidências iguais para comparar raciocínio e pesquisa com tools para
+medir também a busca. A [SPEC-007](../specs/active/SPEC-007/SPEC.md) documenta
+o primeiro passo implementável, um exportador local de pacotes fixos da DW.
+Essa exportação e a avaliação científica ainda não foram implementadas.
+
+A [primeira API de inferência compartilhada](../inference_api/README.md)
+consulta estes dois bancos locais com SQL fixo e transações somente leitura.
+O banco de histórico `db_inference_app` é criado separadamente por comando
+explícito; o importador desta pasta não é o servidor da aplicação.
 
 O RAG/agentes, o esquema DW anterior, os repositórios da aplicação anterior e
 os scripts antigos de criação/carga/limpeza não integram este checkout ativo.
@@ -24,6 +32,7 @@ instalados do PostgreSQL 15 são reutilizados, mas o cluster fica em
 | --- | --- |
 | `db_industrial` | Tabelas industriais e cópias brutas dos CSVs |
 | `db_financeiro` | Tabelas financeiras e cópias brutas dos CSVs |
+| `db_pesquisa_dw` | Camada analítica v1 da [SPEC-006](../specs/active/SPEC-006/SPEC.md), com carga separada e imutável por fingerprint |
 
 O banco local `db_datamind_dw` preexistente não é consultado, alterado ou
 recriado pelo importador atual. Ele pode permanecer até o novo DW reproduzir
@@ -135,9 +144,10 @@ Na carga verificada, `registros_operacao.hora_inicio` vai de `2015-01-01`
 até `2026-01-01 00:00:00`, apesar do rótulo 2021–2025 da última pasta.
 Esse limite foi preservado e deverá ser considerado no recorte do benchmark.
 
-Próximo passo: estudar perguntas e granularidade do novo DW; então definir o
-contrato de evidências e o harness que chamará todos os modelos por API.
-Inferência, benchmark e preenchimento do novo DW são etapas posteriores.
+As perguntas, o grão e a primeira carga do DW estão em [dw/README.md](dw/README.md).
+O DW ainda não alimenta `inference_api/`; o contrato de evidências para esse
+novo caminho e o harness formal são etapas posteriores. A API exploratória
+continua consultando os dois bancos de origem diretamente.
 
 ## Consulta inicial
 

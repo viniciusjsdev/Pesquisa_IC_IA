@@ -1,8 +1,10 @@
 venv/
 BancoModeloUse/.venv/
+inference_api/.venv/
 BancoModeloUse/.local/
 BancoModeloUse/.env.local
 BancoModeloUse/reports/local_database_validation.json
+BancoModeloUse/reports/dw_validation.json
 __pycache__/
 wandb/
 .playwright-mcp/

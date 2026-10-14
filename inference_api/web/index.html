@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inferência compartilhada · Pesquisa IC IA</title>
+<style>
+  body { font: 16px/1.45 system-ui, sans-serif; max-width: 1100px; margin: 2rem auto; padding: 0 1rem; color: #182233; background: #f5f7fa }
+  h1 { margin-bottom: .2rem } p { color: #48576a } section { background: white; padding: 1.2rem; margin: 1rem 0; border: 1px solid #d9e0e8; border-radius: 8px }
+  label { display: block; font-weight: 600; margin: .7rem 0 .2rem } input, select, textarea, button { font: inherit; box-sizing: border-box }
+  input, select, textarea { width: 100%; padding: .5rem; border: 1px solid #aab5c2; border-radius: 4px } textarea { min-height: 6rem }
+  button { padding: .55rem .85rem; margin: .8rem .5rem .2rem 0; border: 0; border-radius: 4px; color: white; background: #1455a0; cursor: pointer }
+  button:disabled { opacity: .5 } .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 1rem }
+  pre { white-space: pre-wrap; overflow-wrap: anywhere; background: #f1f4f7; padding: 1rem; border-radius: 5px; max-height: 32rem; overflow: auto }
+  .notice { padding: .8rem; border-left: 4px solid #ad6d00; background: #fff6df } .small { font-size: .88rem }
+</style>
+<h1>Inferência compartilhada</h1>
+<p>Experimentos exploratórios. Respostas e verificações aqui não constituem avaliação científica formal.</p>
+<section>
+  <h2>Acesso</h2>
+  <div class="grid"><div><label for="token">Token da aplicação</label><input id="token" type="password" autocomplete="off"></div>
+  <div><label for="author">Seu identificador</label><input id="author" maxlength="100" autocomplete="off"></div></div>
+  <button id="load">Carregar dados</button><span id="message" role="status"></span>
+</section>
+<section>
+  <h2>Prompt</h2>
+  <div class="grid"><div><label for="prompt-name">Nome</label><input id="prompt-name" value="pesquisa-geral"></div>
+  <div><label for="revision">Revisão atual</label><input id="revision" type="number" min="0" value="0"></div></div>
+  <label for="prompt">Instrução do sistema</label><textarea id="prompt">Responda em português usando apenas as evidências fornecidas. Declare limitações e não infira causalidade.</textarea>
+  <button id="save">Salvar nova revisão</button>
+  <label for="saved-prompts">Usar revisão salva</label><select id="saved-prompts"><option value="">Rascunho acima</option></select>
+</section>
+<section>
+  <h2>Executar</h2>
+  <div class="grid">
+    <div><label for="model">Modelo</label><select id="model"></select></div>
+    <div><label for="scope">Escopo declarado</label><select id="scope"><option value="financeiro">Financeiro</option><option value="industrial">Industrial</option><option value="integrado">Integrado por ano</option></select></div>
+    <div><label for="year">Ano</label><input id="year" type="number" min="2015" max="2026" value="2020"></div>
+    <div><label for="temperature">Temperatura</label><input id="temperature" type="number" min="0" max="2" step="0.1" value="0"></div>
+    <div><label for="max-tokens">Máximo de tokens</label><input id="max-tokens" type="number" min="1" max="1024" value="256"></div>
+  </div>
+  <label for="question">Pergunta</label><textarea id="question"></textarea>
+  <button id="run">Executar pergunta</button>
+  <p class="notice small">Somente aliases confirmados pela API do vLLM podem gerar respostas. Uma tentativa sem modelo disponível fica registrada como erro, com sua evidência e configuração.</p>
+  <h3>Resultado</h3><pre id="result">Nenhuma execução nesta página.</pre>
+</section>
+<section><h2>Histórico recente</h2><button id="refresh-runs">Atualizar histórico</button><select id="runs"><option value="">Escolha uma execução</option></select><pre id="run-detail"></pre>
+  <label for="feedback">Comentário sobre a execução selecionada</label><textarea id="feedback"></textarea><button id="save-feedback">Anexar feedback</button>
+</section>
+<script>
+  const $ = id => document.getElementById(id);
+  const status = message => { $('message').textContent = message; };
+  let promptCache = new Map();
+  async function api(path, options = {}) {
+    const response = await fetch(path, { ...options, headers: { 'Authorization': 'Bearer ' + $('token').value, 'Content-Type': 'application/json' } });
+    const body = await response.json();
+    if (!response.ok) throw new Error(body.error || `HTTP ${response.status}`);
+    return body;
+  }
+  async function load() {
+    try {
+      const [models, prompts] = await Promise.all([api('/api/models'), api('/api/prompts')]);
+      $('model').replaceChildren();
+      for (const [alias, item] of Object.entries(models)) {
+        const option = new Option(`${alias} · ${item.available ? 'disponível' : 'indisponível'}`, alias);
+        option.disabled = !item.available; $('model').add(option);
+      }
+      $('saved-prompts').replaceChildren(new Option('Rascunho acima', ''));
+      promptCache = new Map(prompts.map(item => [item.id, item]));
+      for (const item of prompts) $('saved-prompts').add(new Option(`${item.name} · revisão ${item.revision} · ${item.author}`, item.id));
+      status('Catálogo e revisões carregados.'); await loadRuns();
+    } catch (error) { status(error.message); }
+  }
+  async function loadRuns() {
+    const runs = await api('/api/runs'); $('runs').replaceChildren(new Option('Escolha uma execução', ''));
+    for (const run of runs) $('runs').add(new Option(`${run.created_at} · ${run.author} · ${run.snapshot.model.alias} · ${run.snapshot.status}`, run.id));
+  }
+  $('load').onclick = load;
+  $('saved-prompts').onchange = () => {
+    const item = promptCache.get($('saved-prompts').value);
+    if (item) {
+      $('prompt-name').value = item.name; $('revision').value = item.revision; $('prompt').value = item.system_prompt;
+      status('Revisão salva selecionada. A execução usará o texto imutável dessa revisão.');
+    } else status('Rascunho selecionado. A execução usará o texto acima.');
+  };
+  $('prompt').oninput = () => { $('saved-prompts').value = ''; };
+  $('save').onclick = async () => {
+    try {
+      const item = await api('/api/prompts', { method: 'POST', body: JSON.stringify({name: $('prompt-name').value, author: $('author').value, system_prompt: $('prompt').value, expected_revision: Number($('revision').value)}) });
+      $('revision').value = item.revision; status(`Revisão ${item.revision} salva.`); await load(); $('saved-prompts').value = item.id;
+    } catch (error) { status(error.message); }
+  };
+  $('run').onclick = async () => {
+    try {
+      status('Executando...');
+      const body = { author: $('author').value, question: $('question').value, model_alias: $('model').value, scope: $('scope').value, year: Number($('year').value), temperature: Number($('temperature').value), max_tokens: Number($('max-tokens').value) };
+      if ($('saved-prompts').value) body.prompt_revision_id = $('saved-prompts').value; else body.system_prompt = $('prompt').value;
+      const run = await api('/api/runs', {method: 'POST', body: JSON.stringify(body)});
+      $('result').textContent = JSON.stringify(run, null, 2); status(`Execução ${run.id} registrada.`); await loadRuns();
+    } catch (error) { status(error.message); }
+  };
+  $('refresh-runs').onclick = async () => { try { await loadRuns(); status('Histórico atualizado.'); } catch (error) { status(error.message); } };
+  $('runs').onchange = async () => { try { $('run-detail').textContent = $('runs').value ? JSON.stringify(await api('/api/runs/' + $('runs').value), null, 2) : ''; } catch (error) { status(error.message); } };
+  $('save-feedback').onclick = async () => {
+    try {
+      if (!$('runs').value) throw new Error('Selecione uma execução.');
+      await api('/api/runs/' + $('runs').value + '/feedback', {method: 'POST', body: JSON.stringify({author: $('author').value, text: $('feedback').value})});
+      $('feedback').value = ''; status('Feedback anexado sem alterar o snapshot.');
+    } catch (error) { status(error.message); }
+  };
+</script>
+</html>

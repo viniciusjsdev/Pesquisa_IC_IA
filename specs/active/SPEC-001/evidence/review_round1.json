@@ -1,0 +1,105 @@
+{
+  "spec_id": "SPEC-001",
+  "contract_version": 1,
+  "status": "changes_requested",
+  "thread_id": null,
+  "runtime": {
+    "classification": "critical_review",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high"
+  },
+  "review_input": [
+    "AGENTS.md and root README.md",
+    "specs/active/SPEC-001/SPEC.md and SPEC.execution.json",
+    "specs/active/SPEC-001/evidence/completion.json and lifecycle.json",
+    ".codex/schemas/project-spec-review.schema.json and project-spec-completion.schema.json",
+    "inference_api/README.md and docs/arquitetura_inferencia_compartilhada.md",
+    "BancoModeloUse/README.md and BancoModeloUse/docs/arquitetura_avaliacao_modelos.md",
+    "inference_api/src/inference_api contracts, orchestration, evidence, model, response, verifier, service, storage, configuration and HTTP code",
+    "inference_api/tests/test_contract.py and inference_api/web/index.html",
+    "Fresh local unit tests, JSON schema checks, git diff check, protected-path inspection, source CSV reconciliation and an isolated invalid-model-response probe"
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": [
+        "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v: 9 tests passed on 2026-10-14",
+        "The suite covers declared routes, rejected parameters, read-only parameterized queries, evidence assembly, outbound payload shape, missing evidence, model error, empty response, verification error, citation checks and per-run aliases"
+      ],
+      "notes": [
+        "The passing suite does not exercise malformed JSON or a structurally invalid chat response through models.infer and snapshot persistence; that omission is part of the blocking finding."
+      ]
+    },
+    {
+      "category": "json_contracts",
+      "result": "changed_as_approved",
+      "evidence": [
+        "SPEC.execution.json and completion.json passed PowerShell Test-Json against their declared schemas",
+        "Version 2 dataclasses cover QuestionRequest, RoutePlan, EvidenceItem, EvidenceBundle, ModelOutput, CheckResult and RunSnapshot"
+      ],
+      "notes": [
+        "Legacy schema_version 1 snapshots remain readable as stored JSON and are not rewritten."
+      ]
+    },
+    {
+      "category": "persistence",
+      "result": "regressed",
+      "evidence": [
+        "An isolated probe with a returned JSON body lacking choices produced status=response_error, model_output=null and preserved only the evidence bundle",
+        "inference_api/src/inference_api/models.py raises ModelResponseError after parsing the returned body, while service.py records no returned body in the snapshot"
+      ],
+      "notes": [
+        "The append-only run row and separate feedback table satisfy the normal-path storage design, but an invalid response actually returned by the model server is discarded instead of being preserved as failure evidence."
+      ]
+    },
+    {
+      "category": "schemas",
+      "result": "changed_as_approved",
+      "evidence": [
+        "The completion evidence conforms to .codex/schemas/project-spec-completion.schema.json",
+        "This review conforms to .codex/schemas/project-spec-review.schema.json"
+      ],
+      "notes": []
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": [
+        "No working-tree changes were reported under FineTuning, BancoModeloUse/dados_simulados or runpod",
+        "BancoModeloUse/.env.local, BancoModeloUse/.local and Python caches are ignored by .gitignore"
+      ],
+      "notes": [
+        "The review performed no RunPod, ngrok, database write, import, commit or push."
+      ]
+    },
+    {
+      "category": "decisions",
+      "result": "preserved",
+      "evidence": [
+        "The runtime has no gold-set input or harness dependency",
+        "Integrated evidence carries an explicit association-without-causality limitation and the verifier leaves numerical truth and causality as not_checked",
+        "Documentation keeps remote serving, individual identity and scientific evaluation pending"
+      ],
+      "notes": [
+        "answered_unverified is an exploratory state and cannot be treated as scientific validation."
+      ]
+    }
+  ],
+  "findings": [
+    "[P1] Preserve invalid model-server responses in the immutable snapshot. models.infer parses the server body and raises ModelResponseError when choices/message/content is absent; service.execute_run then records response_error with model_output=null, so the body and information actually returned by the server are lost. Malformed JSON is also caught by the generic model_error path rather than the distinct response_error path. This violates the SPEC scope plus REQ-005 and REQ-006, which require an empty or invalid response to be preserved as a failure with stage-specific state.",
+    "[P2] Reconcile AC-004 evidence after fixing the response path. test_response_and_verification_failures_have_distinct_states proves preservation of an empty string and a valid raw response when verification raises, but it does not drive malformed JSON or an invalid chat-completion shape through models.infer. Add a lossless invalid-response test at the client/service boundary and update completion.json so AC-004 does not claim full response-failure coverage before that case passes."
+  ],
+  "evidence": [
+    "Fresh validation on 2026-10-14: all 9 inference_api unit tests passed and git diff --check exited 0.",
+    "VAL-004 is now materially better grounded than the earlier deferred description: the test inspects the exact /v1/chat/completions top-level keys and message contents, verifies the serialized saved evidence bundle is the response-agent input, and rejects a browser-supplied sql field before opening a source connection.",
+    "The outbound model payload contains model, messages, temperature, max_tokens and stream. Backend credentials and database connection objects are absent. The evidence JSON intentionally includes the backend-owned fixed parameterized query template for provenance; it is not browser-selected SQL.",
+    "The only source SQL is the QUERIES backend allowlist. Source connections are constrained to 127.0.0.1:5544 and the expected database names, use readonly transactions, set a 5-second statement timeout and execute positional year parameters.",
+    "The runtime code contains no gold set. The verifier explicitly records numerical_truth=not_checked and causality=not_checked; integrated evidence warns that temporal coincidence supports association only.",
+    "A read-only scan of preserved source CSVs independently reproduced the completion counts for 2020: 13 venda rows and 35136 registro_operacao rows. It also yielded 460993.44 for the fixed sales formula and 3506484 for the fixed industrial quantity formula.",
+    "BancoModeloUse/reports/local_database_validation.json is an older 2026-10-11 import-validation artifact reporting bidirectional source/database verification and total typed rows. The completion receipt's direct existing-load database readback was not freshly repeated during this review.",
+    "Model provenance remains deliberately incomplete: base_revision, adapter_run and adapter_hash are null, no remote vLLM response was validated, and the documents state that the local catalog is not proof of served weights. Therefore this implementation is not evidence of reproducible scientific inference.",
+    "The isolated invalid-response probe returned {status: response_error, model_output: null, evidence_preserved: true}, confirming the blocking persistence defect without contacting a remote model or database."
+  ],
+  "usage": null
+}

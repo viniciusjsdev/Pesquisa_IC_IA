@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+  <title id="title">Fluxo da pesquisa: dados, DW, API, modelos e front</title>
+  <desc id="desc">Os CSVs são importados para os bancos industrial e financeiro. Eles alimentam a DW local e são consultados diretamente pela API. O front conversa com a API, que guarda o histórico em banco próprio e futuramente chamará os modelos no vLLM da RunPod. A DW ainda não está integrada à API.</desc>
+  <defs>
+    <marker id="arrow-blue" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M1 1 L10 5.5 L1 10 Z" fill="#2463ad"/></marker>
+    <marker id="arrow-amber" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M1 1 L10 5.5 L1 10 Z" fill="#ba7213"/></marker>
+    <style>
+      text{font-family:'Segoe UI',Arial,sans-serif;fill:#13263d}
+      .title{font-size:38px;font-weight:750}
+      .subtitle{font-size:20px;fill:#4a6078}
+      .zone{font-size:21px;font-weight:700;letter-spacing:.5px}
+      .head{font-size:23px;font-weight:700}
+      .body{font-size:17px;fill:#41576e}
+      .small{font-size:15px;fill:#526b84}
+      .edge{font-size:16px;font-weight:650;fill:#245b99}
+      .future-text{font-size:16px;font-weight:650;fill:#a56817}
+      .solid{fill:none;stroke:#2463ad;stroke-width:4;stroke-linejoin:round;marker-end:url(#arrow-blue)}
+      .future{fill:none;stroke:#ba7213;stroke-width:4;stroke-dasharray:11 8;stroke-linejoin:round;marker-end:url(#arrow-amber)}
+      .db{fill:#e7f1ff;stroke:#3f7ac2;stroke-width:3}
+      .app{fill:#e8f7ee;stroke:#35a66a;stroke-width:3}
+      .planned{fill:#fff3df;stroke:#d18e2c;stroke-width:3;stroke-dasharray:9 6}
+    </style>
+  </defs>
+
+  <rect width="1600" height="960" fill="#ffffff"/>
+  <text x="70" y="65" class="title">Fluxo da pesquisa: dados, DW e inferência</text>
+  <text x="70" y="101" class="subtitle">Estado local e integrações previstas · 14/10/2026</text>
+
+  <rect x="45" y="135" width="1510" height="265" rx="22" fill="#f6fbf8" stroke="#c7e4d4" stroke-width="2"/>
+  <text x="70" y="171" class="zone">INTERAÇÃO E INFERÊNCIA</text>
+  <rect x="580" y="180" width="650" height="180" rx="20" fill="#fbfdfc" stroke="#a8d7b9" stroke-width="2"/>
+  <text x="600" y="210" class="small">Notebook local</text>
+
+  <rect x="70" y="230" width="200" height="94" rx="16" class="app"/>
+  <text x="170" y="268" text-anchor="middle" class="head">Pesquisadores</text>
+  <text x="170" y="295" text-anchor="middle" class="body">no navegador</text>
+
+  <rect x="330" y="230" width="180" height="94" rx="16" class="planned"/>
+  <text x="420" y="268" text-anchor="middle" class="head">ngrok</text>
+  <text x="420" y="295" text-anchor="middle" class="body">HTTPS · previsto</text>
+
+  <rect x="610" y="230" width="210" height="94" rx="16" class="app"/>
+  <text x="715" y="267" text-anchor="middle" class="head">Front</text>
+  <text x="715" y="295" text-anchor="middle" class="body">prompts e respostas</text>
+
+  <rect x="885" y="220" width="305" height="114" rx="16" fill="#dff1ff" stroke="#3f7ac2" stroke-width="3"/>
+  <text x="1037" y="259" text-anchor="middle" class="head">API local · inference_api</text>
+  <text x="1037" y="288" text-anchor="middle" class="body">consultas, evidências e histórico</text>
+  <text x="1037" y="313" text-anchor="middle" class="small">PostgreSQL só via backend</text>
+
+  <rect x="1290" y="210" width="230" height="135" rx="17" class="planned"/>
+  <text x="1405" y="246" text-anchor="middle" class="head">RunPod · vLLM</text>
+  <text x="1405" y="275" text-anchor="middle" class="body">Qwen2.5-7B-Instruct</text>
+  <text x="1405" y="302" text-anchor="middle" class="body">+ 6 adapters LoRA</text>
+  <text x="1405" y="328" text-anchor="middle" class="small">serving pendente</text>
+
+  <path class="future" d="M270 277 H330"/>
+  <path class="future" d="M510 277 H610"/>
+  <path class="solid" d="M820 277 H885"/>
+  <path class="future" d="M1190 251 H1290"/>
+  <path class="future" d="M1290 310 H1220 V310 H1190"/>
+  <text x="1240" y="238" class="future-text">API do modelo</text>
+  <text x="1240" y="334" class="future-text">resposta</text>
+
+  <rect x="45" y="425" width="1510" height="430" rx="22" fill="#f8fbff" stroke="#cbdff3" stroke-width="2"/>
+  <text x="70" y="464" class="zone">PREPARAÇÃO E BANCOS DE DADOS</text>
+  <rect x="345" y="485" width="1180" height="340" rx="20" fill="#f2f8ff" stroke="#b7d3f1" stroke-width="2"/>
+  <text x="370" y="515" class="small">PostgreSQL local · 127.0.0.1:5544 · acesso restrito ao notebook</text>
+
+  <rect x="70" y="500" width="220" height="70" rx="14" fill="#edf4fc" stroke="#6391c6" stroke-width="3"/>
+  <text x="180" y="530" text-anchor="middle" class="head">75 CSVs</text>
+  <text x="180" y="555" text-anchor="middle" class="body">dados simulados</text>
+  <rect x="70" y="640" width="220" height="86" rx="14" fill="#edf4fc" stroke="#6391c6" stroke-width="3"/>
+  <text x="180" y="675" text-anchor="middle" class="head">Importador</text>
+  <text x="180" y="702" text-anchor="middle" class="body">e validação</text>
+  <path class="solid" d="M180 570 V640"/>
+
+  <rect x="385" y="555" width="270" height="92" rx="15" class="db"/>
+  <text x="520" y="595" text-anchor="middle" class="head">db_industrial</text>
+  <text x="520" y="624" text-anchor="middle" class="body">fonte tipada</text>
+  <rect x="385" y="705" width="270" height="92" rx="15" class="db"/>
+  <text x="520" y="745" text-anchor="middle" class="head">db_financeiro</text>
+  <text x="520" y="774" text-anchor="middle" class="body">fonte tipada</text>
+
+  <path class="solid" d="M290 681 H335 V601 H385"/>
+  <path class="solid" d="M290 690 H335 V751 H385"/>
+
+  <rect x="775" y="705" width="275" height="92" rx="15" class="db"/>
+  <text x="912" y="746" text-anchor="middle" class="head">db_pesquisa_dw</text>
+  <text x="912" y="774" text-anchor="middle" class="body">DW local v1 · carregada</text>
+  <path class="solid" d="M655 632 H730 V730 H775"/>
+  <path class="solid" d="M655 770 H775"/>
+  <text x="678" y="813" class="small">carga reconciliada · fatos, dimensões e linhagem</text>
+
+  <rect x="1200" y="705" width="280" height="92" rx="15" class="db"/>
+  <text x="1340" y="746" text-anchor="middle" class="head">db_inference_app</text>
+  <text x="1340" y="774" text-anchor="middle" class="body">prompts, runs e feedback</text>
+
+  <path class="solid" d="M655 580 H690 V525 H940 V334"/>
+  <path class="solid" d="M655 720 H675 V505 H985 V334"/>
+  <text x="700" y="487" class="edge">SQL fixo · somente leitura</text>
+  <path class="future" d="M912 705 V590 H1060 V334"/>
+  <text x="925" y="578" class="future-text">integração futura da DW</text>
+  <path class="solid" d="M1140 334 V615 H1340 V705"/>
+  <text x="1160" y="606" class="edge">histórico</text>
+
+  <rect x="45" y="878" width="1510" height="58" rx="14" fill="#f9fbfd" stroke="#dce5ee" stroke-width="2"/>
+  <path class="solid" d="M80 907 H155"/>
+  <text x="180" y="914" class="body">implementado localmente</text>
+  <path class="future" d="M485 907 H560"/>
+  <text x="585" y="914" class="body">previsto ou ainda não integrado</text>
+  <text x="1070" y="914" class="small">Sem acesso direto do navegador ao banco ou à RunPod</text>
+</svg>

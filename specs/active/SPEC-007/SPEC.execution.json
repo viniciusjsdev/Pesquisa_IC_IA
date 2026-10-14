@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../.codex/schemas/project-spec-execution.schema.json",
+  "schema_version": "2.0",
+  "spec_id": "SPEC-007",
+  "contract_version": 1,
+  "status": "ready",
+  "automatic_handoff": false,
+  "execution": {
+    "classification": "normal_implementation",
+    "role": "developer",
+    "model": "gpt-5.6-terra",
+    "reasoning": "medium",
+    "routing_rationale": "O contrato limita a implementacao a pacotes locais deterministicos sobre cinco consultas existentes, sem LLM, SQL livre ou mudanca dos bancos.",
+    "runtime_override": null,
+    "working_directory": ".",
+    "sandbox_mode": "workspace-write",
+    "approval_mode": "auto_review",
+    "thread": {"mode": "new", "purpose": "implementation", "thread_id": null},
+    "handoff_prompt": "Implemente a SPEC-007 a partir dos arquivos duraveis, respeitando AGENTS.md, as fontes e a separacao entre pacotes candidatos e benchmark. Preserve o checkout compartilhado e retorne needs_design se surgir decisao cientifica ausente."
+  },
+  "skills": [],
+  "references": [
+    {"path": "AGENTS.md", "purpose": "Protecoes e estado do checkout", "required": true},
+    {"path": "README.md", "purpose": "Mapa das frentes", "required": true},
+    {"path": "BancoModeloUse/README.md", "purpose": "Fontes locais e mapeamento de periodo", "required": true},
+    {"path": "BancoModeloUse/dw/README.md", "purpose": "Consultas, carga e limites da DW v1", "required": true},
+    {"path": "BancoModeloUse/dw/cli.py", "purpose": "Implementacao de verify e cinco consultas fixas", "required": true},
+    {"path": "BancoModeloUse/docs/arquitetura_avaliacao_modelos.md", "purpose": "Dois cenarios e fronteira cientifica", "required": true},
+    {"path": "inference_api/README.md", "purpose": "Distinguir bundle exploratorio da exportacao local", "required": true},
+    {"path": "specs/active/SPEC-001/SPEC.md", "purpose": "Limite das tools atuais e do agente de resposta", "required": true},
+    {"path": "specs/active/SPEC-006/SPEC.md", "purpose": "Grao, linhagem e regras do DW", "required": true}
+  ],
+  "validation": [
+    {"id": "VAL-001", "kind": "check", "command": "git diff --check", "required": true},
+    {"id": "VAL-002", "kind": "test", "command": "BancoModeloUse/.venv/Scripts/python.exe -m unittest discover -s model_evaluation/tests -v", "required": true},
+    {"id": "VAL-003", "kind": "integration", "command": "BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py verify", "required": true},
+    {"id": "VAL-004", "kind": "manual", "command": "Exporte um caso integrado local e compare os itens, valores e ressalvas com as consultas fixas product e financial da DW para o mesmo ano.", "required": true},
+    {"id": "VAL-005", "kind": "manual", "command": "Inspecione que bancos, CSVs, dados protegidos e gold set nao foram alterados nem incluidos no pacote.", "required": true}
+  ],
+  "review": {
+    "required": true,
+    "independence": "independent",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high",
+    "rationale": "Pacotes de evidencia de dois dominios serao entradas futuras de comparacao cientifica; determinismo, linhagem e ausencia de gabarito requerem revisao independente.",
+    "schema_path": ".codex/schemas/project-spec-review.schema.json",
+    "output_path": "specs/active/SPEC-007/evidence/review.json",
+    "handoff_prompt": "Revise SPEC-007 independentemente usando contrato, manifest, diff, testes e evidencias. Confira determinismo, rastreabilidade, ausencia de gold set, seguranca da leitura e limites cientificos."
+  },
+  "escalation": {"policy_version": "1.0", "allowed": ["terra_high", "needs_design", "sol_high"]},
+  "completion": {
+    "schema_path": ".codex/schemas/project-spec-completion.schema.json",
+    "output_path": "specs/active/SPEC-007/evidence/completion.json"
+  },
+  "baseline": {
+    "required": false,
+    "path": null,
+    "snapshot_path": null,
+    "rationale": "Nova frente de exportacao local sem migracao, promocao ou alteracao de fontes, DW ou contratos HTTP existentes."
+  },
+  "lifecycle": {"output_path": "specs/active/SPEC-007/evidence/lifecycle.json"}
+}

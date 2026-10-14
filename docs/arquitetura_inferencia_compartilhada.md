@@ -1,12 +1,14 @@
 # Arquitetura da inferência compartilhada
 
-**Estado em 12/10/2026:** direcionamento de arquitetura acordado para a próxima implementação. O serviço de inferência, o front, o serving com vLLM, o túnel ngrok e o banco da aplicação ainda não existem neste checkout. Este documento não comprova implantação ou teste remoto. Checkout consultado: `ba79b36`.
+**Estado em 14/10/2026:** arquitetura acordada, primeira API/front locais e cadeia determinística da SPEC-001 implementados em [`inference_api/`](../inference_api/README.md), com revisão independente aprovada para essa frente local. O esquema de `db_inference_app` foi criado e testado no cluster local isolado. O [DW local v1](../BancoModeloUse/dw/README.md) foi criado em outro banco, mas não está ligado à API. O serving com vLLM, o túnel ngrok e a validação compartilhada ainda não foram implementados. Este documento não comprova implantação ou teste remoto. A decisão original foi registrada no checkout `ba79b36`; as alterações atuais sobre `ad6edcb` ainda não foram commitadas.
 
 ## Objetivo e limites
 
 Disponibilizar por uma sessão científica curta e compartilhada uma interface para editar prompts, escolher a LLM de inferência, ler respostas, inspecionar evidências e registrar verificações. A primeira implantação deve ser simples e de baixo custo: banco, backend e interface no notebook; GPU apenas na RunPod. O período de uso previsto é inferior a 24 horas, sem requisito de disponibilidade contínua.
 
-O [protocolo de fine-tuning](../FineTuning/docs/protocol_v1.md), os [dados de origem](../BancoModeloUse/README.md), os [adapters e seus manifests](../FineTuning/docs/modelos_disponiveis.md) e os resultados já registrados permanecem preservados. O novo DW e o harness formal por API continuam planejados; não são pré-requisitos implícitos para o primeiro serviço de inferência.
+O [protocolo de fine-tuning](../FineTuning/docs/protocol_v1.md), os [dados de origem](../BancoModeloUse/README.md), os [adapters e seus manifests](../FineTuning/docs/modelos_disponiveis.md) e os resultados já registrados permanecem preservados. O DW local v1 já foi implementado; sua integração ao backend e o harness formal por API continuam planejados e não são pré-requisitos implícitos para o primeiro serviço de inferência.
+
+Para a comparação científica futura, a [arquitetura de avaliação](../BancoModeloUse/docs/arquitetura_avaliacao_modelos.md) distingue evidências fixas, iguais entre modelos, de pesquisa com tools. A [SPEC-007](../specs/active/SPEC-007/SPEC.md) prepara apenas a exportação local e reproduzível de evidências fixas a partir da DW. A API exploratória atual continua selecionando suas duas consultas por escopo declarado; escolha de tools pela LLM e pontuação formal ainda exigem contratos e implementação próprios.
 
 ## Topologia escolhida
 
@@ -20,6 +22,10 @@ flowchart LR
     V --> Q[Qwen base e adapters LoRA selecionados]
 ```
 
+O [mapa visual completo](assets/fluxo_arquitetura_pesquisa.png) também mostra
+o DW local e distingue as ligações implementadas das previstas. O
+[SVG editável](assets/fluxo_arquitetura_pesquisa.svg) preserva a fonte do desenho.
+
 - O ngrok expõe **somente a aplicação HTTP** por uma URL HTTPS. O PostgreSQL permanece no loopback do notebook. A RunPod não precisa iniciar conexão com o notebook; o backend local faz chamadas de saída para a API do modelo. [Referência: túnel HTTP do ngrok](https://ngrok.com/use-cases/share-localhost).
 - O front é servido pela mesma aplicação e pela mesma URL do ngrok. Ele chama apenas o backend local, sem receber credenciais da RunPod ou do PostgreSQL.
 - O backend orquestra consultas permitidas e de leitura, monta um pacote de evidências e chama a LLM. A LLM não recebe acesso direto ao banco nem SQL arbitrário do navegador.
@@ -29,30 +35,25 @@ flowchart LR
 
 | Frente | Responsabilidade e estado atual |
 | --- | --- |
-| [`BancoModeloUse/`](../BancoModeloUse/README.md) | Já contém os CSVs preservados, modelos SQLAlchemy, importador e dois bancos locais `db_industrial` e `db_financeiro`. Continua responsável pelas fontes e pela carga verificável; a nova aplicação os consultará em modo de leitura. |
+| [`BancoModeloUse/`](../BancoModeloUse/README.md) | Contém os CSVs preservados, modelos SQLAlchemy, importador e dois bancos locais `db_industrial` e `db_financeiro`. O [DW v1](../BancoModeloUse/dw/README.md) está em `db_pesquisa_dw`, separado das fontes e da aplicação. A API atual continua lendo diretamente os bancos de origem. |
 | [`FineTuning/`](../FineTuning/AGENTS.md) | Continua sendo a fonte de verdade dos experimentos, configurações, adapters, manifests e resultados. Seus scripts de treino não serão executados para atender requisições do front. |
 | [`runpod/`](../runpod/README.md) | Hoje contém scripts de preparação, treino e avaliação. A implementação futura de serving ficará em `runpod/serving/`, separada desses scripts, sem movê-los isoladamente. |
-| `inference_api/` | Nova frente local ainda inexistente. Concentrará entrada HTTP, front, autenticação, orquestração, consultas, cliente de modelos, contratos e persistência das experiências. |
-| [Arquitetura da avaliação](../BancoModeloUse/docs/arquitetura_avaliacao_modelos.md) | Define perguntas, evidências, gold set e verificações científicas. O harness formal e o DW são trabalho futuro, com contratos próprios. |
+| [`inference_api/`](../inference_api/README.md) | Frente local implementada: HTTP, front simples, token de acesso, três escopos declarados sobre duas consultas fixas, bundle versionado, verificador exploratório, catálogo de aliases, cliente HTTP vLLM e histórico de prompts/execuções. Identidade individual, controles de uso e verificação científica seguem pendentes. |
+| [Arquitetura da avaliação](../BancoModeloUse/docs/arquitetura_avaliacao_modelos.md) | Define perguntas, evidências, gold set e verificações científicas. O DW local v1 existe sob SPEC-006; integração e harness formal seguem pendentes. |
 
-Estrutura pretendida **quando o código for criado**:
+Estrutura atual e extensão prevista:
 
 ```text
 inference_api/
   README.md
-  web/                  # front compartilhado, servido pela aplicação local
+  web/                  # interface local inicial, servida pela API
   src/
-    api/                # HTTP, autenticação e contratos externos
-    orchestration/      # rota da pergunta e montagem do contexto
-    data/               # consultas permitidas, leitura e proveniência
-    llm/                # catálogo e cliente de endpoints de inferência
-    experiments/        # versões, execuções, feedback e verificações
-  tests/
+    inference_api/      # HTTP, evidências, cliente vLLM, serviço e persistência
 runpod/
-  serving/              # inicialização e configuração do vLLM
+  serving/              # previsto: inicialização e configuração do vLLM
 ```
 
-Os nomes internos, framework HTTP e esquema de tabelas serão fechados no contrato de implementação. Não criar diretórios vazios nem reaproveitar o antigo RAG/agentes retirado do checkout. O importador atual aceita apenas o cluster isolado em `127.0.0.1:5544`; a nova aplicação não deve transformar esse importador em serviço remoto nem depender silenciosamente dos valores padrão `localhost:5432` de [`database_config.py`](../BancoModeloUse/infrastructure/config/database_config.py). A conexão da aplicação deve ser explícita e falhar se estiver ausente.
+O contrato HTTP e o esquema inicial estão descritos no [README da API](../inference_api/README.md). Não criar diretórios vazios nem reaproveitar o antigo RAG/agentes retirado do checkout. O importador atual aceita apenas o cluster isolado em `127.0.0.1:5544`; a aplicação nova exige essa configuração explícita e não usa os valores padrão `localhost:5432` de [`database_config.py`](../BancoModeloUse/infrastructure/config/database_config.py). A conexão falha se a configuração estiver ausente.
 
 ## Modelos na RunPod e troca pelo front
 
@@ -64,22 +65,22 @@ A primeira implementação deve registrar os adapters autorizados na inicializa�
 
 ## Front e histórico compartilhado
 
-O front permite editar as mensagens/prompts usados na experiência, selecionar um modelo disponível, ajustar os parâmetros de inferência que forem implementados, executar perguntas e comparar respostas. Critérios exploratórios de verificação também podem ser editados, desde que a versão usada fique registrada em cada execução. A interface mostra as consultas e evidências efetivamente usadas, cálculos/verificações disponíveis, limites e falhas. Não deve apresentar uma resposta como cientificamente validada apenas porque o modelo respondeu ou porque uma checagem parcial passou.
+O front inicial permite editar o prompt, selecionar um alias disponível, ajustar temperatura e limite de tokens, executar perguntas e inspecionar o histórico. A comparação lado a lado e a edição de critérios exploratórios de verificação ainda faltam; quando implementadas, a versão dos critérios usada deverá ficar registrada em cada execução. A interface mostra as consultas e evidências efetivamente usadas, limites e falhas. Não deve apresentar uma resposta como cientificamente validada apenas porque o modelo respondeu ou porque uma checagem parcial passou.
 
 Cada salvamento de prompt cria uma **nova revisão**; cada execução guarda um snapshot imutável, mesmo quando partiu de um rascunho ainda não salvo. No mínimo, o registro deve identificar autor, data, versão do prompt e seu texto exato, modelo/endpoint/adapter e versões, parâmetros, pergunta, rota, consultas, evidências com origem e período, resposta, verificações, feedback humano e estado de erro. A escolha do modelo pertence à execução de cada usuário, não a uma configuração global que outro usuário possa sobrescrever. A interface pode mostrar diferenças entre revisões e respostas lado a lado.
 
-O armazenamento editável da aplicação será separado dos dados científicos em um banco local próprio, chamado provisoriamente `db_inference_app`, no mesmo cluster PostgreSQL. Esse banco guarda revisões, execuções e feedback; os bancos de origem industrial e financeiro permanecem sob acesso de leitura para o serviço. A criação, migração e retenção do banco da aplicação ainda não foram implementadas. Dados congelados, adapters, manifests e resultados brutos existentes não são editados pelo front.
+O armazenamento editável da aplicação usa um banco local próprio, `db_inference_app`, no mesmo cluster PostgreSQL. O comando `init-db` cria o esquema inicial de revisões, execuções e feedback; o início da API não altera o esquema. Os bancos de origem industrial e financeiro são consultados em transações somente leitura, por SQL fixo. A política de migração e retenção ainda não foi implementada. Dados congelados, adapters, manifests e resultados brutos existentes não são editados pelo front.
 
 Experimentos livres no front e avaliação formal têm estados distintos. Uma comparação científica exigirá um caso e protocolo versionados, mesmo recorte de dados e contexto, parâmetros declarados e verificações apropriadas. O gold set e os critérios oficiais de avaliação ficam fora do contexto entregue à LLM. A [arquitetura de avaliação](../BancoModeloUse/docs/arquitetura_avaliacao_modelos.md) continua sendo a fonte dessa separação.
 
-## Contratos a fechar antes do código
+## Contratos: primeira fatia e pendências
 
-1. **Entrada e saída HTTP:** campos de pergunta, revisão ou rascunho do prompt, alias do modelo, parâmetros e resposta com `run_id`, evidências, verificações e falhas. Não aceitar SQL livre vindo do navegador.
-2. **Pacote de evidências:** registros, fonte, filtros, período, unidades, cálculo e limites em formato versionado. Consultas e agregações entre domínios precisam respeitar as relações comprovadas nos dados; coincidência temporal não prova causalidade.
-3. **Catálogo de modelos:** alias, endpoint, base/revisão, adapter/run/hash, janela suportada, estado de disponibilidade e parâmetros aceitos. Segredos ficam apenas no backend, fora do Git.
-4. **Persistência e concorrência:** revisões de prompt, execuções imutáveis, autoria, feedback e política de edição simultânea. Definir migrações e retenção para `db_inference_app`.
-5. **Acesso compartilhado:** método de autenticação e autorização, proteção do endpoint da RunPod, limites de uso e tratamento de timeout/indisponibilidade. A chave nativa do vLLM não protege todos os seus endpoints; não depender somente dela ao expor o serviço. [Referência: segurança do vLLM](https://docs.vllm.ai/en/stable/serving/online_serving/openai_compatible_server/).
-6. **Capacidade e operação:** GPU/VRAM, quantização, quantidade de adapters simultâneos, concorrência, streaming se necessário, comandos verificados de iniciar/parar e teste de ponta a ponta. A escolha concreta do Pod e seu custo não ficam fixados neste documento.
+1. **Entrada e saída HTTP:** implementadas para pergunta, revisão ou rascunho, alias, parâmetros e snapshot com evidência, resposta, estado e erro. A API não aceita SQL livre. Veja o [contrato executável](../inference_api/README.md).
+2. **Pacote de evidências:** contrato exploratório `schema_version: 2` para escopos declarados financeiro, industrial e integrado. A rota integrada reúne duas agregações anuais de fontes distintas, com aviso de associação sem causalidade. O verificador confere estrutura e citações; validação científica continua fora da API. Snapshots da primeira fatia (`schema_version: 1`) permanecem legíveis.
+3. **Catálogo de modelos:** sete aliases candidatos e consulta de disponibilidade em `/v1/models` implementados. Endpoint, revisão da base, hash do adapter, run e janela efetivamente servidos ainda precisam ser fixados e conferidos no Pod. Segredos ficam apenas no backend, fora do Git.
+4. **Persistência e concorrência:** esquema inicial de revisões de prompt, snapshots de execução e feedback implementado, com conflito por revisão esperada. Identidade de autor é declarada; migrações e retenção ainda faltam.
+5. **Acesso compartilhado:** token simples protege a API local, mas não autentica cada pesquisador individualmente. Antes de abrir ngrok, implementar autenticação/autorização por usuário, limites de uso e proteção verificada do endpoint da RunPod. A chave nativa do vLLM não protege todos os seus endpoints; não depender somente dela ao expor o serviço. [Referência: segurança do vLLM](https://docs.vllm.ai/en/stable/serving/online_serving/openai_compatible_server/).
+6. **Capacidade e operação:** GPU/VRAM, quantização, quantidade de adapters simultâneos, concorrência, streaming se necessário, comandos verificados de iniciar/parar e teste de ponta a ponta continuam pendentes. A escolha concreta do Pod e seu custo não ficam fixados neste documento.
 
 ## Evidência e manutenção
 

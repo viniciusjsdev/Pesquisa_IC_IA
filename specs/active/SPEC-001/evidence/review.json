@@ -1,0 +1,105 @@
+{
+  "spec_id": "SPEC-001",
+  "contract_version": 1,
+  "status": "approved",
+  "thread_id": null,
+  "runtime": {
+    "classification": "critical_review",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high"
+  },
+  "review_input": [
+    "specs/active/SPEC-001/evidence/review_round1.json",
+    "specs/active/SPEC-001/SPEC.md and SPEC.execution.json",
+    "specs/active/SPEC-001/evidence/completion.json and lifecycle.json",
+    ".codex/schemas/project-spec-review.schema.json and project-spec-completion.schema.json",
+    "inference_api/src/inference_api/models.py and service.py",
+    "inference_api/tests/test_contract.py and inference_api/README.md",
+    "Fresh local unit tests, JSON schema checks, git diff check, protected-path inspection and independent invalid-response probes"
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": [
+        "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v: 10 tests passed on 2026-10-14",
+        "test_invalid_server_response_is_preserved_as_response_error exercises malformed JSON and a JSON response with missing choices through models.infer and service.execute_run",
+        "Existing route, read-only SQL, evidence, payload, failure, verifier, citation and concurrency tests still pass"
+      ],
+      "notes": [
+        "The follow-up adds the round-one missing client-to-snapshot coverage without weakening the earlier boundary tests."
+      ]
+    },
+    {
+      "category": "json_contracts",
+      "result": "changed_as_approved",
+      "evidence": [
+        "SPEC.execution.json and completion.json pass PowerShell Test-Json against their declared schemas",
+        "The invalid-response ModelOutput remains serializable after a JSON round trip and retains its evidence bundle, response stage and exact Base64 body"
+      ],
+      "notes": [
+        "The response contract uses raw_text=null for a response that has no valid textual answer and keeps the returned server material under model_output.serving."
+      ]
+    },
+    {
+      "category": "persistence",
+      "result": "changed_as_approved",
+      "evidence": [
+        "models.infer reads the completion body as bytes, stores raw_response_bytes_b64 and raises ModelResponseError with a serving record for malformed JSON or an invalid chat shape",
+        "service.execute_run converts ModelResponseError into a ModelOutput and response_error before calling append-only storage.create_run",
+        "An independent probe preserved non-UTF-8 bytes and a JSON response with non-text content exactly across snapshot JSON serialization"
+      ],
+      "notes": [
+        "Round-one finding P1 is resolved: invalid response bytes, parsed or replacement-decoded representation, endpoint, evidence and stage now reach the immutable snapshot."
+      ]
+    },
+    {
+      "category": "schemas",
+      "result": "changed_as_approved",
+      "evidence": [
+        "The updated completion evidence conforms to .codex/schemas/project-spec-completion.schema.json",
+        "This follow-up review conforms to .codex/schemas/project-spec-review.schema.json"
+      ],
+      "notes": []
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": [
+        "No working-tree changes were reported under FineTuning, BancoModeloUse/dados_simulados or runpod",
+        "The first review remains preserved as review_round1.json with SHA-256 E68FAE5D503BCEE1D80F7E7720F6F5801DF373DBD4E2E56772A612314FABEC02"
+      ],
+      "notes": [
+        "The follow-up performed no RunPod, ngrok, database write, import, commit or push."
+      ]
+    },
+    {
+      "category": "decisions",
+      "result": "preserved",
+      "evidence": [
+        "VAL-004 still proves the outbound request contains only the selected model, prompt, question, serialized evidence bundle and declared generation parameters, with no backend credential or database handle",
+        "Browser-supplied sql remains rejected before a source connection and the bundle contains only backend-owned fixed SQL for provenance",
+        "Gold set remains outside the runtime; numerical truth and causality remain not_checked and remote serving remains unvalidated"
+      ],
+      "notes": [
+        "The fix changes failure evidence only and does not expand the scientific claims or remote execution scope."
+      ]
+    }
+  ],
+  "findings": [
+    "Round-one P1 is resolved. Malformed JSON, non-UTF-8 bytes and structurally invalid chat responses are classified as response_error and preserve the exact returned bytes in model_output.serving.raw_response_bytes_b64.",
+    "Round-one P2 is resolved. The new contract test crosses models.infer and service.execute_run for malformed JSON and missing choices, while the fresh 10-test suite preserves AC-004 and the earlier VAL-004 boundary checks."
+  ],
+  "evidence": [
+    "Fresh follow-up validation on 2026-10-14: all 10 inference_api unit tests passed and git diff --check exited 0.",
+    "For malformed JSON, models.py catches JSONDecodeError or UnicodeDecodeError, records a replacement-decoded text view plus lossless Base64 bytes and raises ModelResponseError.",
+    "For parsed JSON with absent choices, missing message/content or non-text content, models.py records the parsed response plus lossless Base64 bytes and raises the same response-specific error.",
+    "service.py catches ModelResponseError, creates ModelOutput(schema_version=2, raw_text=null, cited_evidence_ids=[], serving=preserved_record), updates observed model metadata and records status=response_error with error.stage=response.",
+    "The independent probe used bytes ff 00 followed by not-json and a JSON body whose content was numeric. Both snapshots retained byte-for-byte equality after JSON serialization, response_error, response stage, evidence bundle and raw_text=null.",
+    "AC-004 is sustained by the no-model-call cases, model failure, empty response, preserved invalid response, preserved verification failure and invalid citation tests.",
+    "VAL-004 remains sustained by exact outbound payload inspection, equality between the saved bundle and response-agent input, rejection of a browser sql field before source access and manual runtime-path inspection.",
+    "The changed_files inventory in completion.json is deduplicated: inference_api/src/inference_api/models.py appears exactly once, every listed path has count one and the completion artifact still conforms to its schema.",
+    "The implementation still does not prove a remote vLLM run, served weight hashes, shared browser operation or scientific accuracy; those limits remain explicit and do not block this local SPEC contract."
+  ],
+  "usage": null
+}

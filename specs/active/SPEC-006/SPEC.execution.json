@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../.codex/schemas/project-spec-execution.schema.json",
+  "schema_version": "2.0",
+  "spec_id": "SPEC-006",
+  "contract_version": 1,
+  "status": "ready",
+  "automatic_handoff": false,
+  "execution": {
+    "classification": "normal_implementation",
+    "role": "developer",
+    "model": "gpt-5.6-terra",
+    "reasoning": "medium",
+    "routing_rationale": "Grau, linhagem, regras conservadoras e criterios de aceite foram resolvidos com fontes locais; implementacao local delimitada.",
+    "runtime_override": null,
+    "working_directory": ".",
+    "sandbox_mode": "workspace-write",
+    "approval_mode": "auto_review",
+    "thread": {
+      "mode": "resume",
+      "purpose": "implementation",
+      "thread_id": "01a1380d-106b-72f3-b9fc-b7be4fa5ecd7"
+    },
+    "handoff_prompt": "Execute SPEC-006 nesta thread a partir do contrato duravel. Leia AGENTS.md e referencias, valide as fontes antes de escrever no novo destino local, preserve dados protegidos e retorne needs_design se uma decisao consequente faltar."
+  },
+  "skills": [],
+  "references": [
+    {"path": "AGENTS.md", "purpose": "Limites do checkout e da frente", "required": true},
+    {"path": "BancoModeloUse/README.md", "purpose": "Importacao, bancos e dados protegidos", "required": true},
+    {"path": "BancoModeloUse/scripts/bootstrap_local.py", "purpose": "Preflight e regra de IDs", "required": true},
+    {"path": "BancoModeloUse/docs/arquitetura_avaliacao_modelos.md", "purpose": "Limites cientificos do DW", "required": true},
+    {"path": "docs/arquitetura_inferencia_compartilhada.md", "purpose": "Fronteira da API e harness", "required": true},
+    {"path": "inference_api/README.md", "purpose": "Consultas atuais e escopo exploratorio", "required": true}
+  ],
+  "validation": [
+    {"id": "VAL-001", "kind": "check", "command": "git diff --check", "required": true},
+    {"id": "VAL-002", "kind": "test", "command": "BancoModeloUse/.venv/Scripts/python.exe -m unittest discover -s BancoModeloUse/dw/tests -v", "required": true},
+    {"id": "VAL-003", "kind": "integration", "command": "BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py verify", "required": true},
+    {"id": "VAL-004", "kind": "manual", "command": "Compare as consultas fixas e IDs do DW com leituras raw/public dos bancos fonte.", "required": true}
+  ],
+  "review": {
+    "required": true,
+    "independence": "independent",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high",
+    "rationale": "Nova carga e interpretacao cientifica de dados inconsistentes exigem revisao independente.",
+    "schema_path": ".codex/schemas/project-spec-review.schema.json",
+    "output_path": "specs/active/SPEC-006/evidence/review.json",
+    "handoff_prompt": "Revise SPEC-006 independentemente usando contrato, manifest, diff, testes e evidencia. Inspecione seguranca da carga, reconciliacao, linhagem, flags e limites de causalidade."
+  },
+  "escalation": {"policy_version": "1.0", "allowed": ["terra_high", "needs_design", "sol_high"]},
+  "completion": {
+    "schema_path": ".codex/schemas/project-spec-completion.schema.json",
+    "output_path": "specs/active/SPEC-006/evidence/completion.json"
+  },
+  "baseline": {
+    "required": false,
+    "path": null,
+    "snapshot_path": null,
+    "rationale": "Banco novo e isolado, sem mover, promover ou alterar objetos e dados existentes. O preflight e a SPEC registram inventario e protecoes."
+  },
+  "lifecycle": {"output_path": "specs/active/SPEC-006/evidence/lifecycle.json"}
+}

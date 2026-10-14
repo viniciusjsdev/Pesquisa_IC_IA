@@ -1,0 +1,51 @@
+{
+  "spec_id": "SPEC-001",
+  "contract_version": 1,
+  "status": "completed",
+  "thread_id": "01a137c7-b16e-7d10-a8cb-a2514d80e0b0",
+  "runtime": {
+    "classification": "normal_implementation",
+    "model": "session-selected",
+    "reasoning": "session-selected"
+  },
+  "changed_files": [
+    {"path": "inference_api/src/inference_api/contracts.py", "change": "added"},
+    {"path": "inference_api/src/inference_api/orchestrator.py", "change": "added"},
+    {"path": "inference_api/src/inference_api/evidence.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/response_agent.py", "change": "added"},
+    {"path": "inference_api/src/inference_api/models.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/verifier.py", "change": "added"},
+    {"path": "inference_api/src/inference_api/service.py", "change": "modified"},
+    {"path": "inference_api/tests/test_contract.py", "change": "modified"},
+    {"path": "inference_api/web/index.html", "change": "modified"},
+    {"path": "inference_api/README.md", "change": "modified"},
+    {"path": "docs/arquitetura_inferencia_compartilhada.md", "change": "modified"},
+    {"path": "BancoModeloUse/docs/arquitetura_avaliacao_modelos.md", "change": "modified"},
+    {"path": "README.md", "change": "modified"},
+    {"path": "specs/active/SPEC-001/evidence/completion.json", "change": "added"},
+    {"path": "specs/active/SPEC-001/evidence/lifecycle.json", "change": "added"}
+  ],
+  "artifacts": [
+    "inference_api/src/inference_api/contracts.py",
+    "inference_api/README.md",
+    "specs/active/SPEC-001/evidence/lifecycle.json"
+  ],
+  "acceptance_evidence": [
+    {"id": "AC-001", "result": "passed", "evidence": ["inference_api/tests/test_contract.py::test_routes_and_legacy_contract", "inference_api/tests/test_contract.py::test_unknown_tool_year_and_parameter_fail_before_query"], "notes": ["Three declared scopes, legacy route compatibility, exact tool allowlist and invalid input rejection tested locally."]},
+    {"id": "AC-002", "result": "passed", "evidence": ["inference_api/tests/test_contract.py::test_integrated_bundle_and_llm_payload", "Read-only existing-load integration: 2020 db_financeiro.public.vendas=13; db_industrial.public.registros_operacao=35136"], "notes": ["Both items retain distinct provenance and the integrated bundle warns against causal attribution."]},
+    {"id": "AC-003", "result": "passed", "evidence": ["inference_api/tests/test_contract.py::test_http_model_request_contains_only_prompt_question_and_bundle", "inference_api/tests/test_contract.py::test_integrated_bundle_and_llm_payload"], "notes": ["Inspected local spy payload. No database handle, password, browser-selected SQL or gold set is added by the backend."]},
+    {"id": "AC-004", "result": "passed", "evidence": ["inference_api/tests/test_contract.py::test_missing_evidence_and_query_error_do_not_call_model", "inference_api/tests/test_contract.py::test_model_error_and_invalid_citation_preserve_output", "inference_api/tests/test_contract.py::test_response_and_verification_failures_have_distinct_states", "inference_api/tests/test_contract.py::test_invalid_server_response_is_preserved_as_response_error"], "notes": ["No model call on missing source records or query error; model error retains bundle and null model output. Empty, malformed-JSON and invalid-shape server responses have distinct response_error state and preserve returned bytes; verification failure preserves the raw response."]},
+    {"id": "AC-005", "result": "passed", "evidence": ["inference_api/tests/test_contract.py::test_concurrent_aliases_are_isolated", "inference_api/tests/test_contract.py::test_model_error_and_invalid_citation_preserve_output"], "notes": ["Concurrent aliases stay per run; unknown cited IDs fail a check without changing raw text."]},
+    {"id": "AC-006", "result": "passed", "evidence": ["inference_api/tests/test_contract.py::test_integrated_bundle_and_llm_payload", "inference_api/web/index.html"], "notes": ["Numerical truth and causality are not_checked; UI calls the workflow exploratory."]}
+  ],
+  "validation_evidence": [
+    {"validation_id": "VAL-001", "canonical_command": "git diff --check", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["git diff --check completed with no whitespace errors"], "notes": ["The checkout contains preexisting uncommitted and untracked project files; no commit was made."]},
+    {"validation_id": "VAL-002", "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Ran 10 tests; OK on 2026-10-14", "test_invalid_server_response_is_preserved_as_response_error exercised malformed JSON and missing choices through models.infer and service.execute_run"], "notes": ["Local mocks and payload inspection; not a remote vLLM benchmark."]},
+    {"validation_id": "VAL-003", "canonical_command": "Inspect integrated evidence provenance and absence of gold set in LLM payloads.", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Existing-load read-only query returned two 2020 items from distinct databases", "Local model request spy inspected prompt, question and serialized evidence bundle"], "notes": ["The local PostgreSQL cluster was started for readback and stopped afterwards; no import ran."]},
+    {"validation_id": "VAL-004", "canonical_command": "Inspect test model payloads for absence of gold set, secrets, database connections and browser supplied SQL.", "verification": "reported", "result": "passed", "exit_code": null, "evidence": ["inference_api/tests/test_contract.py::test_http_model_request_contains_only_prompt_question_and_bundle inspected the serialized /v1/chat/completions request body and its exact top-level keys", "inference_api/tests/test_contract.py::test_integrated_bundle_and_llm_payload confirmed the response agent receives the serialized evidence bundle saved in the snapshot", "inference_api/tests/test_contract.py::test_unknown_tool_year_and_parameter_fail_before_query rejected a browser-supplied sql field before a source database connection", "Manual inspection of inference_api/src/inference_api/models.py, response_agent.py, service.py, contracts.py and evidence.py on 2026-10-14 found no gold set, credential or connection object in the backend-built model request"], "notes": ["The bundle includes a backend-owned fixed SQL template for provenance, never browser-selected SQL or a database handle.", "This is a local payload inspection; RunPod, ngrok, remote model response and shared browser verification were not run."]}
+  ],
+  "deviations": ["The manifest-selected runtime model and reasoning were not exposed by this session; recorded as session-selected instead of claiming gpt-5.6-terra/medium.", "VAL-004 was reconciled on 2026-10-14 after the original completion receipt used a deferred remote-check description instead of the required local payload inspection."],
+  "unresolved_items": ["Independent Sol/high review required by SPEC-001 remains pending.", "Remote serving and shared-session validation belong to later SPECs."],
+  "needs_design": null,
+  "usage": null
+}

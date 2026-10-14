@@ -1,0 +1,120 @@
+{
+  "$schema": "../../../.codex/schemas/project-spec-execution.schema.json",
+  "schema_version": "2.0",
+  "spec_id": "SPEC-005",
+  "contract_version": 1,
+  "status": "ready",
+  "automatic_handoff": false,
+  "execution": {
+    "classification": "normal_implementation",
+    "role": "developer",
+    "model": "gpt-5.6-terra",
+    "reasoning": "medium",
+    "routing_rationale": "Arquitetura e criterios de aceite resolvidos; implementacao delimitada para thread propria.",
+    "runtime_override": null,
+    "working_directory": ".",
+    "sandbox_mode": "workspace-write",
+    "approval_mode": "auto_review",
+    "thread": {
+      "mode": "resume",
+      "purpose": "implementation",
+      "thread_id": "01a137c7-986e-7872-9e81-845c330cd34a"
+    },
+    "handoff_prompt": "Execute SPEC-005 from its durable contract. Read AGENTS.md and declared references, respect dependency order and do not perform remote or paid actions. Return needs_design for missing consequential decisions."
+  },
+  "skills": [],
+  "references": [
+    {
+      "path": "specs/active/SPEC-001/SPEC.md",
+      "purpose": "Fonte duravel obrigatoria para o contrato desta frente.",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-002/SPEC.md",
+      "purpose": "Fonte duravel obrigatoria para o contrato desta frente.",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-003/SPEC.md",
+      "purpose": "Fonte duravel obrigatoria para o contrato desta frente.",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-004/SPEC.md",
+      "purpose": "Fonte duravel obrigatoria para o contrato desta frente.",
+      "required": true
+    },
+    {
+      "path": "docs/arquitetura_inferencia_compartilhada.md",
+      "purpose": "Fonte duravel obrigatoria para o contrato desta frente.",
+      "required": true
+    },
+    {
+      "path": "inference_api/README.md",
+      "purpose": "Fonte duravel obrigatoria para o contrato desta frente.",
+      "required": true
+    },
+    {
+      "path": "BancoModeloUse/README.md",
+      "purpose": "Fonte duravel obrigatoria para o contrato desta frente.",
+      "required": true
+    }
+  ],
+  "validation": [
+    {
+      "id": "VAL-001",
+      "kind": "check",
+      "command": "git diff --check",
+      "required": true
+    },
+    {
+      "id": "VAL-002",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v",
+      "required": true
+    },
+    {
+      "id": "VAL-003",
+      "kind": "manual",
+      "command": "Run the local or mocked preflight and confirm that default execution makes no external calls.",
+      "required": true
+    },
+    {
+      "id": "VAL-004",
+      "kind": "manual",
+      "command": "Review runbook commands and report each gate as confirmed, blocked or uncertain.",
+      "required": true
+    }
+  ],
+  "review": {
+    "required": true,
+    "independence": "independent",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high",
+    "rationale": "Gates de infraestrutura e encerramento de recursos cobrados exigem revisao independente.",
+    "schema_path": ".codex/schemas/project-spec-review.schema.json",
+    "output_path": "specs/active/SPEC-005/evidence/review.json",
+    "handoff_prompt": "Review SPEC-005 independently from the Spec, manifest, diff, tests and completion evidence. Check protected data, scientific boundaries and missing validation before approval."
+  },
+  "escalation": {
+    "policy_version": "1.0",
+    "allowed": [
+      "terra_high",
+      "needs_design",
+      "sol_high"
+    ]
+  },
+  "completion": {
+    "schema_path": ".codex/schemas/project-spec-completion.schema.json",
+    "output_path": "specs/active/SPEC-005/evidence/completion.json"
+  },
+  "baseline": {
+    "required": false,
+    "path": null,
+    "snapshot_path": null,
+    "rationale": "Change extends the current inference front without moving protected datasets, experiment artifacts or repository modules."
+  },
+  "lifecycle": {
+    "output_path": "specs/active/SPEC-005/evidence/lifecycle.json"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "spec_id": "SPEC-001",
+  "contract_version": 1,
+  "implementation": "completed_locally",
+  "review": "approved_independent_review",
+  "integration": "read_only_existing_load_verified",
+  "remote_validation": "not_run",
+  "base_commit": "ad6edcb",
+  "recorded_on": "2026-10-14",
+  "evidence": "specs/active/SPEC-001/evidence/completion.json",
+  "review_evidence": "specs/active/SPEC-001/evidence/review.json",
+  "closed_on": "2026-10-14"
+}

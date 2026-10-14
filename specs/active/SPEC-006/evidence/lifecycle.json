@@ -1,0 +1,12 @@
+{
+  "spec_id": "SPEC-006",
+  "contract_version": 1,
+  "implementation": "completed_locally",
+  "review": "pending_independent_review",
+  "integration": "new_local_dw_load_verified",
+  "remote_validation": "not_run",
+  "base_commit": "ad6edcb",
+  "recorded_on": "2026-10-13",
+  "source_fingerprint": "64493abfdfd0b87535778eafd9d5938fad6039a99d9307f85e4cfc6eec0e89f2",
+  "evidence": "specs/active/SPEC-006/evidence/completion.json"
+}
