@@ -41,10 +41,6 @@ def app_db_params() -> dict:
     return params
 
 
-def api_token() -> str:
-    return _required("INFERENCE_API_TOKEN")
-
-
 def vllm_url() -> str:
     value = os.getenv("INFERENCE_VLLM_URL", "").strip().rstrip("/")
     if value:

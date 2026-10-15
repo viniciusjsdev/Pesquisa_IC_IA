@@ -1,5 +1,8 @@
 """Append-only experiment records in a separate local PostgreSQL database."""
 import json
+import os
+from pathlib import Path
+import subprocess
 from uuid import uuid4
 
 import psycopg2
@@ -32,6 +35,8 @@ CREATE TABLE IF NOT EXISTS feedback (
 );
 """
 
+MIGRATION = Path(__file__).resolve().parents[2] / "migrations" / "001_identity_up.sql"
+
 
 def initialize() -> None:
     """Explicit one-time setup; never runs implicitly on service startup."""
@@ -48,6 +53,30 @@ def initialize() -> None:
     with psycopg2.connect(**app_db_params()) as connection:
         with connection.cursor() as cursor:
             cursor.execute(SCHEMA)
+
+
+def migrate_identity(backup_path: Path, pg_dump: str = "pg_dump") -> None:
+    """Explicit backup and one-way application; down SQL is kept for manual rollback."""
+    backup_path = backup_path.resolve()
+    if backup_path.exists():
+        raise ValueError("Backup path already exists")
+    backup_path.parent.mkdir(parents=True, exist_ok=True)
+    params = app_db_params()
+    env = dict(os.environ, PGPASSWORD=params["password"])
+    result = subprocess.run(
+        [pg_dump, "--format=custom", "--file", str(backup_path),
+         "--host", params["host"], "--port", str(params["port"]),
+         "--username", params["user"], "--dbname", params["dbname"]],
+        env=env, capture_output=True, text=True, check=False,
+    )
+    if result.returncode or not backup_path.is_file() or backup_path.stat().st_size == 0:
+        raise RuntimeError("Logical backup failed; identity migration was not applied")
+    with psycopg2.connect(**params) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT to_regclass('public.inference_schema_migrations')")
+            if cursor.fetchone()[0] is not None:
+                raise ValueError("Identity migration already applied")
+            cursor.execute(MIGRATION.read_text(encoding="utf-8"))
 
 
 def create_prompt(name: str, author: str, system_prompt: str,

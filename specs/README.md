@@ -5,8 +5,8 @@ Cada SPEC é uma unidade de implementação. O estado das frentes deve ser lido 
 limites. As SPECs 001–006 têm threads dedicadas registradas nos manifests;
 retomadas devem usar seus IDs. A SPEC-007 foi preparada como contrato futuro,
 com `thread_id: null`; nenhuma nova thread ou execução foi iniciada. A primeira
-API e os contratos foram incluídos em `622fc0f`; as mudanças atuais da
-SPEC-002 estão sem commit e compartilham o mesmo checkout.
+API e os contratos foram incluídos em `622fc0f`; a SPEC-002 foi registrada
+em `513114d`. As mudanças atuais da SPEC-003 compartilham o checkout.
 
 | Ordem | SPEC | Frente | Dependência de execução |
 | --- | --- | --- | --- |
@@ -23,8 +23,17 @@ A SPEC-001 foi implementada localmente e aprovada em revisão independente em
 Terraform e um [runbook de custos e aplicação futura](../runpod/serving/README.md).
 Sua [revisão independente](active/SPEC-002/evidence/review.json) aprovou o
 contrato local em 15/10/2026 sem Pod: geração e validação remota ficam para outra sessão,
-e `terraform apply` depende de confirmação explícita. Nenhuma delas cobre
-ngrok ou avaliação científica. A revisão independente da SPEC-006 permanece
+e `terraform apply` depende de confirmação explícita. Em 15/10/2026 o usuário
+definiu para a SPEC-003 somente Nicoli e Vinicius: ambos podem ficar logados,
+mas apenas uma inferência global ocorre por vez, sem limite diário. O painel
+mostra teto manual de US$ 10 e saldo RunPod confirmado por leitura quando
+disponível. A implementação local e os testes da SPEC-003 constam da
+[evidência de 15/10/2026](active/SPEC-003/evidence/local-2026-10-15.md);
+a [revisão independente](active/SPEC-003/evidence/review.json) aprovou o
+escopo local. O usuário escolheu autenticação somente na aplicação, sem OAuth
+ou Basic Auth no ngrok. Antes da exposição futura, as senhas escolhidas no
+chat devem ser trocadas em terminal local. A aprovação não cobre ngrok ou
+avaliação científica. A revisão independente da SPEC-006 permanece
 separada.
 
 As threads são separadas para manter o contexto de cada frente. Todas usam o

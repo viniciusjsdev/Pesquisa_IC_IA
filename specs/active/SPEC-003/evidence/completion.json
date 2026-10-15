@@ -1,0 +1,107 @@
+{
+  "spec_id": "SPEC-003",
+  "contract_version": 2,
+  "status": "completed",
+  "thread_id": "01a137c7-911c-7453-a8b0-28ef45d218e8",
+  "runtime": {
+    "classification": "normal_implementation",
+    "model": "session-selected",
+    "reasoning": "session-selected"
+  },
+  "changed_files": [
+    {"path": ".gitignore", "change": "modified"},
+    {"path": "AGENTS.md", "change": "modified"},
+    {"path": "README.md", "change": "modified"},
+    {"path": "docs/arquitetura_inferencia_compartilhada.md", "change": "modified"},
+    {"path": "inference_api/README.md", "change": "modified"},
+    {"path": "inference_api/run.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/config.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/server.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/service.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/storage.py", "change": "modified"},
+    {"path": "inference_api/tests/test_contract.py", "change": "modified"},
+    {"path": "inference_api/web/index.html", "change": "modified"},
+    {"path": "specs/README.md", "change": "modified"},
+    {"path": "specs/active/SPEC-003/SPEC.execution.json", "change": "modified"},
+    {"path": "specs/active/SPEC-003/SPEC.md", "change": "modified"},
+    {"path": "inference_api/migrations/001_identity_down.sql", "change": "added"},
+    {"path": "inference_api/migrations/001_identity_up.sql", "change": "added"},
+    {"path": "inference_api/src/inference_api/auth.py", "change": "added"},
+    {"path": "inference_api/src/inference_api/budget.py", "change": "added"},
+    {"path": "inference_api/src/inference_api/limits.py", "change": "added"},
+    {"path": "inference_api/tests/test_identity.py", "change": "added"},
+    {"path": "inference_api/verify_local_users.py", "change": "added"},
+    {"path": "specs/active/SPEC-003/evidence/local-2026-10-15.md", "change": "added"},
+    {"path": "specs/active/SPEC-003/evidence/completion.json", "change": "added"},
+    {"path": "specs/active/SPEC-003/evidence/lifecycle.json", "change": "added"},
+    {"path": "specs/active/SPEC-003/evidence/review.json", "change": "added"}
+  ],
+  "artifacts": [
+    "inference_api/migrations/001_identity_up.sql",
+    "inference_api/migrations/001_identity_down.sql",
+    "specs/active/SPEC-003/evidence/local-2026-10-15.md"
+  ],
+  "acceptance_evidence": [
+    {
+      "id": "AC-001", "result": "passed",
+      "evidence": ["test_identity.py::test_two_sessions_author_and_revocation", "test_identity.py::test_second_run_rejected_while_first_holds_global_lock"],
+      "notes": ["The server derives prompt and run author from the authenticated principal, overriding forged JSON author; feedback uses the same principal path."]
+    },
+    {
+      "id": "AC-002", "result": "passed",
+      "evidence": ["Local HTTP returned 401 for /api/me, /api/prompts, /api/runs and /api/budget without a session", "test_identity.py::test_two_sessions_author_and_revocation"],
+      "notes": ["Revoked bearer returned 401. There are no separate roles requiring 403; unauthorized access is denied before source or model work."]
+    },
+    {
+      "id": "AC-003", "result": "passed",
+      "evidence": ["User-confirmed interactive loopback smoke PASS for both existing accounts and logout", "test_identity.py::test_second_run_rejected_while_first_holds_global_lock"],
+      "notes": ["Distinct users hold concurrent sessions; PostgreSQL advisory lock returns 429 for a second run before execute_run. The interactive smoke ran before the final login gate adjustment; the 28-test integration suite ran after it."]
+    },
+    {
+      "id": "AC-004", "result": "passed",
+      "evidence": ["test_identity.py::test_two_sessions_author_and_revocation checks DB digests, snapshot and captured HTTP logs", "Generic credential-pattern scan of 23 changed files on 2026-10-15", "Git ignore check for backup, local review and environment files"],
+      "notes": ["Two generic pattern candidates were inspected as prompt/placeholder code, with no embedded credential. Real bearer values were not printed. The audit covers current changed files and test artifacts, not all possible future logging paths."]
+    },
+    {
+      "id": "AC-005", "result": "passed",
+      "evidence": ["inference_api/README.md: Alvo futuro do ngrok", "server.py binds 127.0.0.1:8765", "config.py restricts PostgreSQL to 127.0.0.1:5544", "No ngrok process observed during local verification"],
+      "notes": ["No tunnel was started. The documented command targets only HTTP port 8765."]
+    },
+    {
+      "id": "AC-006", "result": "passed",
+      "evidence": ["test_identity.py::BudgetTests", "budget.py and web/index.html"],
+      "notes": ["US$10 is identified as a manual informational ceiling; RunPod balance is null without a read key and the UI labels source, status and check time. A real RunPod account read was not performed."]
+    }
+  ],
+  "validation_evidence": [
+    {
+      "validation_id": "VAL-001", "canonical_command": "git diff --check", "verification": "reported", "result": "passed", "exit_code": 0,
+      "evidence": ["Passed on 2026-10-15; only LF/CRLF checkout warnings"], "notes": []
+    },
+    {
+      "validation_id": "VAL-002", "canonical_command": "$env:INFERENCE_IDENTITY_DB_TEST = '1'; inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v", "verification": "reported", "result": "passed", "exit_code": 0,
+      "evidence": ["Canonical PowerShell command rerun on 2026-10-15: Ran 28 tests in 16.383s, OK, exit code 0, zero skipped", "Full ignored log: inference_api/.local/spec003-final-tests.log, SHA-256 3AE7D070B6622FE11A181521A4EBCDF05F5AD0A670EB90E8AC88A6A3E4D43C6B", "Includes isolated migration up/down, HTTP authentication, rate/concurrency and global run lock"], "notes": ["Disposable test databases were removed; no paid or remote inference was run. A read-only reviewer could not run the Python environment in its sandbox; the result is a reported normal-checkout run, not a reviewer rerun."]
+    },
+    {
+      "validation_id": "VAL-003", "canonical_command": "Inspect test logs and snapshots for absence of tokens and verify no ngrok tunnel was opened.", "verification": "reported", "result": "passed", "exit_code": 0,
+      "evidence": ["Test assertion for absence of bearer in HTTP logs, snapshots and persisted digests", "Generic credential-pattern scan of 23 changed files", "git check-ignore confirmed local backup and environment files ignored", "Get-Process ngrok found no process"], "notes": ["Static scan candidates were manually reviewed; no actual password or bearer was copied into the evidence."]
+    },
+    {
+      "validation_id": "VAL-004", "canonical_command": "Run local HTTP checks for 401, 403, verified author and absence of an ngrok tunnel.", "verification": "reported", "result": "passed", "exit_code": 0,
+      "evidence": ["Loopback HTTP: four API routes returned 401 without session", "User confirmed interactive two-user login/logout PASS", "HTTP integration tests check forged author, revoked session and second-run 429"], "notes": ["This API has no role-based forbidden state, so 403 was not observed; 401 covers missing and revoked credentials. No ngrok tunnel was opened."]
+    }
+  ],
+  "deviations": [
+    "The user clarified that JWT meant keeping the existing opaque, revocable bearer; no signed JWT was introduced.",
+    "The user rejected extra edge authentication for future ngrok use; the local application remains the identity boundary.",
+    "The project runtime router dry run was unavailable because .codex/references/runtime-policy.json is absent; validation is reported directly and independent read-only review is requested separately.",
+    "The active implementation session did not expose its actual model or reasoning to the project receipt; session-selected records this unverified runtime rather than asserting the manifest preference gpt-5.6-terra/medium."
+  ],
+  "unresolved_items": [
+    "The two chosen passwords appeared in chat and must be rotated locally to new 12-128 character passwords before any exposure.",
+    "No RunPod balance read occurred because no read key is configured; no Pod, remote inference, ngrok or Terraform apply occurred.",
+    "The independent review approved the local implementation; its approval does not include future ngrok exposure or remote inference."
+  ],
+  "needs_design": null,
+  "usage": null
+}

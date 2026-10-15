@@ -11,6 +11,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from inference_api import evidence, models, orchestrator, service
+from inference_api.auth import Principal
 from inference_api.contracts import EvidenceItem, SCHEMA_VERSION
 
 
@@ -25,6 +26,11 @@ def item(tool, year=2020, count=13):
 
 BASE = {"author": "pesquisador", "question": "Qual o valor?", "system_prompt": "Cite [evidence:ID] e limites.",
         "model_alias": "qwen-base", "scope": "financeiro", "year": 2020}
+TEST_PRINCIPAL = Principal("00000000-0000-0000-0000-000000000001", "pesquisador")
+
+
+def execute(payload):
+    return service.execute_run(payload, TEST_PRINCIPAL)
 
 
 class ContractTests(unittest.TestCase):
@@ -47,7 +53,7 @@ class ContractTests(unittest.TestCase):
                            {"year": 2027}, {"scope": ["integrado"]},
                            {"sql": "SELECT * FROM public.vendas"}):
                 with self.subTest(change=change):
-                    result = service.execute_run({**BASE, **change})
+                    result = execute({**BASE, **change})
                     self.assertEqual(result["status"], "route_error")
             connect.assert_not_called()
 
@@ -88,9 +94,11 @@ class ContractTests(unittest.TestCase):
                                           "industrial_operacoes_ano": lambda y: item("industrial_operacoes_ano", y)}), \
              patch("inference_api.response_agent.models.infer", side_effect=infer), \
              patch("inference_api.service.storage.create_run", side_effect=lambda a, s: s):
-            result = service.execute_run({**BASE, "scope": "integrado"})
+            result = execute({**BASE, "scope": "integrado"})
         bundle = result["evidence_bundle"]
         self.assertEqual(result["status"], "answered_unverified")
+        self.assertEqual(result["identity"]["principal_id"], TEST_PRINCIPAL.id)
+        self.assertTrue(result["identity"]["author_verified"])
         self.assertEqual(captured["bundle"], bundle)
         self.assertEqual({x["source_database"] for x in bundle["items"]},
                          {"db_financeiro", "db_industrial"})
@@ -107,7 +115,7 @@ class ContractTests(unittest.TestCase):
         with patch.dict(evidence.AGENTS, {"financeiro_vendas_ano": lambda y: item("financeiro_vendas_ano", y, 0)}), \
              patch("inference_api.response_agent.models.infer") as infer, \
              patch("inference_api.service.storage.create_run", side_effect=lambda a, s: s):
-            result = service.execute_run(BASE)
+            result = execute(BASE)
             self.assertEqual(result["status"], "insufficient_evidence")
             self.assertIsNone(result["model_output"])
             infer.assert_not_called()
@@ -115,7 +123,7 @@ class ContractTests(unittest.TestCase):
         with patch.dict(evidence.AGENTS, {"financeiro_vendas_ano": fail}), \
              patch("inference_api.response_agent.models.infer") as infer, \
              patch("inference_api.service.storage.create_run", side_effect=lambda a, s: s):
-            result = service.execute_run(BASE)
+            result = execute(BASE)
             self.assertEqual(result["status"], "query_error")
             self.assertEqual(result["error"]["stage"], "query")
             infer.assert_not_called()
@@ -124,13 +132,13 @@ class ContractTests(unittest.TestCase):
         with patch.dict(evidence.AGENTS, {"financeiro_vendas_ano": lambda y: item("financeiro_vendas_ano", y)}), \
              patch("inference_api.service.storage.create_run", side_effect=lambda a, s: s):
             with patch("inference_api.response_agent.models.infer", side_effect=RuntimeError("offline")):
-                result = service.execute_run(BASE)
+                result = execute(BASE)
                 self.assertEqual(result["status"], "model_error")
                 self.assertIsNotNone(result["evidence_bundle"])
                 self.assertIsNone(result["model_output"])
             with patch("inference_api.response_agent.models.infer",
                        return_value=("texto [evidence:inventado:2020]", {"served_model": "qwen-base"})):
-                result = service.execute_run(BASE)
+                result = execute(BASE)
                 self.assertEqual(result["status"], "answered_unverified")
                 self.assertEqual(result["model_output"]["raw_text"], "texto [evidence:inventado:2020]")
                 self.assertEqual(next(x for x in result["checks"] if x["check"] == "cited_evidence_ids")["result"], "failed")
@@ -169,12 +177,12 @@ class ContractTests(unittest.TestCase):
         with patch.dict(evidence.AGENTS, {"financeiro_vendas_ano": lambda y: item("financeiro_vendas_ano", y)}), \
              patch("inference_api.service.storage.create_run", side_effect=lambda a, s: s):
             with patch("inference_api.response_agent.models.infer", return_value=("", {"served_model": "qwen-base"})):
-                result = service.execute_run(BASE)
+                result = execute(BASE)
                 self.assertEqual(result["status"], "response_error")
                 self.assertEqual(result["model_output"]["raw_text"], "")
             with patch("inference_api.response_agent.models.infer", return_value=("texto", {"served_model": "qwen-base"})), \
                  patch("inference_api.service.verifier.check", side_effect=RuntimeError("check failed")):
-                result = service.execute_run(BASE)
+                result = execute(BASE)
                 self.assertEqual(result["status"], "verification_error")
                 self.assertEqual(result["model_output"]["raw_text"], "texto")
 
@@ -200,7 +208,7 @@ class ContractTests(unittest.TestCase):
                      patch("inference_api.models.vllm_url", return_value="https://model.example"), \
                      patch("inference_api.models.urlopen", side_effect=open_request), \
                      patch("inference_api.service.storage.create_run", side_effect=lambda a, s: s):
-                    result = service.execute_run(BASE)
+                    result = execute(BASE)
                 self.assertEqual(result["status"], "response_error")
                 self.assertEqual(result["error"]["stage"], "response")
                 self.assertIsNotNone(result["evidence_bundle"])
@@ -216,7 +224,7 @@ class ContractTests(unittest.TestCase):
              patch("inference_api.response_agent.models.infer", side_effect=infer), \
              patch("inference_api.service.storage.create_run", side_effect=lambda a, s: s):
             with ThreadPoolExecutor(max_workers=2) as pool:
-                runs = list(pool.map(service.execute_run,
+                runs = list(pool.map(execute,
                                      ({**BASE, "model_alias": alias} for alias in
                                       ("ft-finqa-a", "ft-failure-b"))))
         self.assertEqual([x["model"]["alias"] for x in runs], ["ft-finqa-a", "ft-failure-b"])

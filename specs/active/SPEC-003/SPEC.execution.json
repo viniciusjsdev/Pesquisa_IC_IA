@@ -2,8 +2,8 @@
   "$schema": "../../../.codex/schemas/project-spec-execution.schema.json",
   "schema_version": "2.0",
   "spec_id": "SPEC-003",
-  "contract_version": 1,
-  "status": "ready",
+  "contract_version": 2,
+  "status": "done",
   "automatic_handoff": false,
   "execution": {
     "classification": "normal_implementation",
@@ -60,7 +60,7 @@
     {
       "id": "VAL-002",
       "kind": "test",
-      "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v",
+      "command": "$env:INFERENCE_IDENTITY_DB_TEST = '1'; inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v",
       "required": true
     },
     {

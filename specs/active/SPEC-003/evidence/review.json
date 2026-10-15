@@ -1,0 +1,62 @@
+{
+  "spec_id": "SPEC-003",
+  "contract_version": 2,
+  "status": "approved",
+  "thread_id": "01a14120-ae78-7640-8ba2-8eeb8a77acce",
+  "runtime": {
+    "classification": "critical_review",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high"
+  },
+  "review_input": [
+    "specs/active/SPEC-003/SPEC.md and SPEC.execution.json",
+    "specs/active/SPEC-003/evidence/completion.json and local-2026-10-15.md",
+    "Current working-tree diff and all new auth, budget, limits, migration and test files",
+    "inference_api/README.md and docs/arquitetura_inferencia_compartilhada.md",
+    "inference_api/.local/spec003-final-tests.log, SHA-256 3AE7D070B6622FE11A181521A4EBCDF05F5AD0A670EB90E8AC88A6A3E4D43C6B"
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests", "result": "changed_as_approved",
+      "evidence": ["Normal-checkout canonical PowerShell run: 28 tests executed, zero skipped, OK, exit code 0", "Independent read-only reviewer checked the ignored log and recomputed its SHA-256"],
+      "notes": ["The reviewer did not rerun Python in its read-only sandbox; the test execution remains reported normal-checkout evidence."]
+    },
+    {
+      "category": "cli", "result": "changed_as_approved",
+      "evidence": ["Local loopback smoke of both registered users passed and both sessions were revoked", "git diff --check passed", "No ngrok process observed"],
+      "notes": ["No Pod, Terraform apply, tunnel or remote generation was run."]
+    },
+    {
+      "category": "json_contracts", "result": "changed_as_approved",
+      "evidence": ["SPEC.execution.json and completion.json validated against project schemas", "The canonical VAL-002 command now sets INFERENCE_IDENTITY_DB_TEST in PowerShell before the full suite"],
+      "notes": []
+    },
+    {
+      "category": "persistence", "result": "changed_as_approved",
+      "evidence": ["Migration 001 applied after logical backup; reverse SQL passed isolated roundtrip test", "Real application DB has only Nicoli and Vinicius active, no sessions, runs, prompts or feedback after smoke"],
+      "notes": ["Historical authored records remain declared; new authorship is server-verified."]
+    },
+    {
+      "category": "protected_paths", "result": "preserved",
+      "evidence": ["Independent reviewer found no changed protected scientific path", "Backup is Git-ignored and its documented hash and pg_restore list were checked"],
+      "notes": []
+    },
+    {
+      "category": "decisions", "result": "preserved",
+      "evidence": ["Two allowed researchers, revocable opaque bearer, one PostgreSQL-backed inference slot and no daily quota", "RunPod US$10 ceiling is informational; balance stays unconfirmed without a read key"],
+      "notes": ["Password rotation before future exposure remains a separate operational gate. The actual implementation model/reasoning was not exposed and is recorded as a deviation."]
+    }
+  ],
+  "findings": [
+    "First independent review requested bounded login work, a minimum length for future passwords and explicit RunPod read-failure state; all were changed and covered by local tests.",
+    "Second independent review requested a canonical command that runs DB tests, current architecture wording and formal runtime uncertainty; all three were reconciled and rechecked in read-only mode.",
+    "No blocking finding remains for the local SPEC-003 scope."
+  ],
+  "evidence": [
+    "Independent full read-only review session 01a14119-02cf-7831-8389-d00e449d8171 inspected authentication, authorization, global lock, budget, migration, protected paths, diff and completion evidence.",
+    "Independent read-only recheck session 01a14120-ae78-7640-8ba2-8eeb8a77acce approved after matching the 28-test log hash, counting zero skips and checking corrected contract, architecture and runtime deviation.",
+    "The reviewer could not execute the Python environment in its read-only sandbox; this approval relies on reported normal-checkout test execution and verified log integrity, with that limitation explicit.",
+    "RunPod balance, Pod serving, ngrok exposure and scientific evaluation were not reviewed as completed work."
+  ],
+  "usage": null
+}

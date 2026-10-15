@@ -17,9 +17,17 @@
 <p>Experimentos exploratórios. Respostas e verificações aqui não constituem avaliação científica formal.</p>
 <section>
   <h2>Acesso</h2>
-  <div class="grid"><div><label for="token">Token da aplicação</label><input id="token" type="password" autocomplete="off"></div>
-  <div><label for="author">Seu identificador</label><input id="author" maxlength="100" autocomplete="off"></div></div>
+  <div class="grid"><div><label for="username">Login</label><select id="username"><option>Nicoli</option><option>Vinicius</option></select></div>
+  <div><label for="password">Senha</label><input id="password" type="password" autocomplete="current-password"></div></div>
+  <button id="login">Entrar</button><button id="logout">Sair</button>
+  <span id="identity" role="status">Não autenticado.</span>
   <button id="load">Carregar dados</button><span id="message" role="status"></span>
+</section>
+<section>
+  <h2>Budget RunPod</h2>
+  <p id="budget" role="status">Teto manual da sessão: US$ 10,00. Saldo real da RunPod: ainda não consultado.</p>
+  <button id="refresh-budget">Atualizar saldo</button>
+  <p class="small">O teto manual é informativo e não substitui a cobrança ou os limites da conta RunPod.</p>
 </section>
 <section>
   <h2>Prompt</h2>
@@ -49,13 +57,55 @@
 <script>
   const $ = id => document.getElementById(id);
   const status = message => { $('message').textContent = message; };
+  let sessionToken = '';
   let promptCache = new Map();
   async function api(path, options = {}) {
-    const response = await fetch(path, { ...options, headers: { 'Authorization': 'Bearer ' + $('token').value, 'Content-Type': 'application/json' } });
+    const response = await fetch(path, { ...options, headers: {
+      ...(sessionToken ? { 'Authorization': 'Bearer ' + sessionToken } : {}),
+      'Content-Type': 'application/json' } });
     const body = await response.json();
+    if (response.status === 401 && path !== '/api/login') {
+      sessionToken = ''; $('identity').textContent = 'Sessão encerrada. Entre novamente.';
+    }
     if (!response.ok) throw new Error(body.error || `HTTP ${response.status}`);
     return body;
   }
+  async function refreshBudget() {
+    if (!sessionToken) return;
+    try {
+      const info = await api('/api/budget');
+      const money = value => new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'USD'}).format(value);
+      const balance = info.runpod_status === 'confirmed_read'
+        ? money(info.runpod_balance_usd) : 'indisponível';
+      const hourly = info.runpod_status === 'confirmed_read' && info.runpod_spend_per_hour_usd !== null
+        ? `${money(info.runpod_spend_per_hour_usd)}/hora` : 'não confirmado';
+      const state = info.runpod_status === 'confirmed_read' ? 'leitura confirmada'
+        : info.runpod_status === 'not_configured' ? 'chave de leitura não configurada'
+        : 'falha na leitura';
+      const checked = info.checked_at ? new Date(info.checked_at).toLocaleString('pt-BR')
+        : 'não consultado';
+      $('budget').textContent = `Teto manual da sessão: ${money(info.session_ceiling_usd)}. Saldo real da RunPod: ${balance}. Gasto atual por hora: ${hourly}. Fonte: ${info.runpod_source}. Estado: ${state}. Consulta à RunPod: ${checked}.`;
+    } catch (error) {
+      $('budget').textContent = 'Teto manual da sessão: US$ 10,00. Saldo real da RunPod: indisponível. Estado: falha ao consultar o backend.';
+    }
+  }
+  $('login').onclick = async () => {
+    try {
+      const result = await api('/api/login', {method: 'POST', body: JSON.stringify({
+        username: $('username').value, password: $('password').value})});
+      sessionToken = result.token; $('password').value = '';
+      $('identity').textContent = `Conectado como ${result.username}.`;
+      await refreshBudget(); await load();
+    } catch (error) {
+      $('password').value = ''; status('Login não autorizado.');
+    }
+  };
+  $('logout').onclick = async () => {
+    try { if (sessionToken) await api('/api/logout', {method: 'POST'}); }
+    finally { sessionToken = ''; $('identity').textContent = 'Não autenticado.'; }
+  };
+  $('refresh-budget').onclick = refreshBudget;
+  setInterval(refreshBudget, 60000);
   async function load() {
     try {
       const [models, prompts] = await Promise.all([api('/api/models'), api('/api/prompts')]);
@@ -85,14 +135,15 @@
   $('prompt').oninput = () => { $('saved-prompts').value = ''; };
   $('save').onclick = async () => {
     try {
-      const item = await api('/api/prompts', { method: 'POST', body: JSON.stringify({name: $('prompt-name').value, author: $('author').value, system_prompt: $('prompt').value, expected_revision: Number($('revision').value)}) });
+      const item = await api('/api/prompts', { method: 'POST', body: JSON.stringify({name: $('prompt-name').value, system_prompt: $('prompt').value, expected_revision: Number($('revision').value)}) });
       $('revision').value = item.revision; status(`Revisão ${item.revision} salva.`); await load(); $('saved-prompts').value = item.id;
     } catch (error) { status(error.message); }
   };
   $('run').onclick = async () => {
     try {
       status('Executando...');
-      const body = { author: $('author').value, question: $('question').value, model_alias: $('model').value, scope: $('scope').value, year: Number($('year').value), temperature: Number($('temperature').value), max_tokens: Number($('max-tokens').value) };
+      await refreshBudget();
+      const body = { question: $('question').value, model_alias: $('model').value, scope: $('scope').value, year: Number($('year').value), temperature: Number($('temperature').value), max_tokens: Number($('max-tokens').value) };
       if ($('saved-prompts').value) body.prompt_revision_id = $('saved-prompts').value; else body.system_prompt = $('prompt').value;
       const run = await api('/api/runs', {method: 'POST', body: JSON.stringify(body)});
       $('result').textContent = JSON.stringify(run, null, 2); status(`Execução ${run.id} registrada.`); await loadRuns();
@@ -103,7 +154,7 @@
   $('save-feedback').onclick = async () => {
     try {
       if (!$('runs').value) throw new Error('Selecione uma execução.');
-      await api('/api/runs/' + $('runs').value + '/feedback', {method: 'POST', body: JSON.stringify({author: $('author').value, text: $('feedback').value})});
+      await api('/api/runs/' + $('runs').value + '/feedback', {method: 'POST', body: JSON.stringify({text: $('feedback').value})});
       $('feedback').value = ''; status('Feedback anexado sem alterar o snapshot.');
     } catch (error) { status(error.message); }
   };

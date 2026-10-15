@@ -1,6 +1,7 @@
 venv/
 BancoModeloUse/.venv/
 inference_api/.venv/
+inference_api/.local/
 runpod/serving/.local/
 runpod/serving/terraform/.terraform/
 runpod/serving/terraform/.local/

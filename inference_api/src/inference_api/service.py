@@ -3,6 +3,7 @@ from dataclasses import asdict
 
 from . import config, evidence, models, orchestrator, response_agent, storage, verifier
 from .contracts import ModelOutput, QuestionRequest, RunSnapshot, SCHEMA_VERSION
+from .auth import Principal
 
 
 def _options(payload: dict) -> tuple[float, int]:
@@ -31,10 +32,8 @@ def _prompt(payload: dict) -> dict:
     return {"schema_version": 1, "revision_id": None, "revision": None, "system_prompt": draft}
 
 
-def execute_run(payload: dict) -> dict:
-    author, question, alias = (payload.get(key) for key in ("author", "question", "model_alias"))
-    if not isinstance(author, str) or not author.strip() or len(author) > 100:
-        raise ValueError("Author is required")
+def execute_run(payload: dict, principal: Principal) -> dict:
+    question, alias = (payload.get(key) for key in ("question", "model_alias"))
     if not isinstance(question, str) or not question.strip() or len(question) > 4000:
         raise ValueError("Question is required and limited to 4000 characters")
     if not isinstance(alias, str) or alias not in models.MODELS:
@@ -106,4 +105,6 @@ def execute_run(payload: dict) -> dict:
                             error = {"stage": "verification", "type": type(exc).__name__}
     snapshot = RunSnapshot(SCHEMA_VERSION, request, prompt, model, route, bundle,
                            output, checks, status, error)
-    return storage.create_run(author, snapshot.to_dict())
+    recorded = snapshot.to_dict()
+    recorded["identity"] = {"principal_id": principal.id, "author_verified": True}
+    return storage.create_run(principal.username, recorded)
