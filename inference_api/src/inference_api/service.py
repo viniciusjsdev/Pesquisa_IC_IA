@@ -44,6 +44,8 @@ def execute_run(payload: dict) -> dict:
     model = {"alias": alias, "base": models.BASE,
              "battery": models.MODELS[alias]["battery"], "endpoint": config.vllm_url() or None,
              "base_revision": None, "adapter_run": None, "adapter_hash": None,
+             "provenance_status": "unverified", "generation_confirmed": False,
+             "session_id": None,
              "parameters": {"temperature": temperature, "max_tokens": max_tokens}}
     input_year = payload.get("year")
     request = QuestionRequest(question, str(payload.get("scope", payload.get("evidence_route"))),
@@ -79,7 +81,8 @@ def execute_run(payload: dict) -> dict:
                 except models.ModelResponseError as exc:
                     output = ModelOutput(SCHEMA_VERSION, None, (), exc.serving)
                     model.update({key: exc.serving.get(key) for key in
-                                  ("endpoint", "base_revision", "adapter_run", "adapter_hash")})
+                                  ("endpoint", "base_revision", "adapter_run", "adapter_hash",
+                                   "provenance_status", "generation_confirmed", "session_id")})
                     model["served_model"] = exc.serving.get("served_model")
                     status = "response_error"
                     error = {"stage": "response", "type": type(exc).__name__}
@@ -88,7 +91,8 @@ def execute_run(payload: dict) -> dict:
                     error = {"stage": "model", "type": type(exc).__name__}
                 else:
                     model.update({key: output.serving.get(key) for key in
-                                  ("endpoint", "base_revision", "adapter_run", "adapter_hash")})
+                                  ("endpoint", "base_revision", "adapter_run", "adapter_hash",
+                                   "provenance_status", "generation_confirmed", "session_id")})
                     model["served_model"] = output.serving.get("served_model")
                     if not isinstance(output.raw_text, str) or not output.raw_text.strip():
                         status = "response_error"

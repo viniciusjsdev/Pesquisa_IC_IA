@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "base_model": "Qwen/Qwen2.5-7B-Instruct",
+  "base_alias": "qwen-base",
+  "base_revision": null,
+  "adapters": [
+    {
+      "alias": "ft-finqa-a",
+      "battery": "A",
+      "adapter_dir": "FineTuning/results/experiments/2026-05-31_h100_qwen25_7b_maxlen1024_prelim/runpod_import/ft_finqa_v1_run_v1_seed42/adapter",
+      "run_manifest": "FineTuning/results/experiments/2026-05-31_h100_qwen25_7b_maxlen1024_prelim/runpod_import/ft_finqa_v1_run_v1_seed42/meta/run_manifest.json",
+      "run": "run_v1_seed42",
+      "weight_sha256": "6d94dc0e5f6df1e119c9a1e23c1f39262b9dec2153c8dce151c0e7219b74ce5c",
+      "config_sha256": "1fc046f2aa4bd222c7a15709adf0a6fb42bd95aa129a0647655e86531171a2f1"
+    },
+    {
+      "alias": "ft-failure-a",
+      "battery": "A",
+      "adapter_dir": "FineTuning/results/experiments/2026-05-31_h100_qwen25_7b_maxlen1024_prelim/runpod_import/ft_failure_v1_run_v1_seed42/adapter",
+      "run_manifest": "FineTuning/results/experiments/2026-05-31_h100_qwen25_7b_maxlen1024_prelim/runpod_import/ft_failure_v1_run_v1_seed42/meta/run_manifest.json",
+      "run": "run_v1_seed42",
+      "weight_sha256": "19629c837269113c383a043079cbd9410fa6117d951020c9529c05eeb112f9a1",
+      "config_sha256": "ee0a5f9589c1a7a5db7fdf0e7b00290a89dfef49841c311117f0586500d2d0bd"
+    },
+    {
+      "alias": "ft-hibrido-a",
+      "battery": "A",
+      "adapter_dir": "FineTuning/results/experiments/2026-05-31_h100_qwen25_7b_maxlen1024_prelim/runpod_import/ft_hibrido_v1_run_v1_seed42/adapter",
+      "run_manifest": "FineTuning/results/experiments/2026-05-31_h100_qwen25_7b_maxlen1024_prelim/runpod_import/ft_hibrido_v1_run_v1_seed42/meta/run_manifest.json",
+      "run": "run_v1_seed42",
+      "weight_sha256": "bada36090f4ea5e5375d49c403262b1af878e864b154503d6d1dab4c6111fce0",
+      "config_sha256": "0a2be5ebf10c53265e2659176cb7a96716b13c5234ad7b975499d0655e84d0b8"
+    },
+    {
+      "alias": "ft-finqa-b",
+      "battery": "B",
+      "adapter_dir": "FineTuning/results/experiments/2026-06-01_h100_qwen25_7b_maxlen4096_run_20260601_002803_seed42/ft_finqa_v1/run_20260601_002803_seed42/adapter",
+      "run_manifest": "FineTuning/results/experiments/2026-06-01_h100_qwen25_7b_maxlen4096_run_20260601_002803_seed42/ft_finqa_v1/run_20260601_002803_seed42/meta/run_manifest.json",
+      "run": "run_20260601_002803_seed42",
+      "weight_sha256": "34397e6c6df395dcc1e8889d63a69451b02bb20306d27f0b2f13dd200d2d8f80",
+      "config_sha256": "780d0c72a060aa4151c2f5289967bbe4d274c3109d8faa4e521f40e382dfe1af"
+    },
+    {
+      "alias": "ft-failure-b",
+      "battery": "B",
+      "adapter_dir": "FineTuning/results/experiments/2026-06-01_h100_qwen25_7b_maxlen4096_run_20260601_002803_seed42/ft_failure_v1/run_20260601_002803_seed42/adapter",
+      "run_manifest": "FineTuning/results/experiments/2026-06-01_h100_qwen25_7b_maxlen4096_run_20260601_002803_seed42/ft_failure_v1/run_20260601_002803_seed42/meta/run_manifest.json",
+      "run": "run_20260601_002803_seed42",
+      "weight_sha256": "037e8459a10076abba0a73d6ccfe23f88ca069b514920f1c1bf655eb62861e2a",
+      "config_sha256": "fb866c989479b48eedb86b9d5454358a961b4dd40bcf8a4c778cee4a76653a02"
+    },
+    {
+      "alias": "ft-hibrido-b",
+      "battery": "B",
+      "adapter_dir": "FineTuning/results/experiments/2026-06-01_h100_qwen25_7b_maxlen4096_run_20260601_002803_seed42/ft_hibrido_v1/run_20260601_002803_seed42/adapter",
+      "run_manifest": "FineTuning/results/experiments/2026-06-01_h100_qwen25_7b_maxlen4096_run_20260601_002803_seed42/ft_hibrido_v1/run_20260601_002803_seed42/meta/run_manifest.json",
+      "run": "run_20260601_002803_seed42",
+      "weight_sha256": "1f4be66064376173f1d62064db74d475c44ab6efb37bf94f0aef6f0b95ec6bd5",
+      "config_sha256": "e714e25d77ed33fd5ee6b0d89ee16c0b327ce9efdb2b466a617478d6d4865139"
+    }
+  ]
+}

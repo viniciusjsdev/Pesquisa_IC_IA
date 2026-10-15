@@ -1,0 +1,82 @@
+{
+  "spec_id": "SPEC-002",
+  "contract_version": 2,
+  "status": "approved",
+  "thread_id": null,
+  "runtime": {
+    "classification": "critical_review",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high"
+  },
+  "review_input": [
+    "specs/active/SPEC-002/SPEC.md and SPEC.execution.json",
+    "specs/active/SPEC-002/evidence/completion.json and lifecycle.json",
+    "runpod/serving/manifest.json, serving.py, gateway.py, verify_remote.py and terraform/",
+    "inference_api/src/inference_api/models.py and serving_catalog.py",
+    "inference_api/tests/test_serving.py and test_contract.py",
+    "runpod/serving/README.md, inference_api/README.md and affected project documentation",
+    "Working-tree diff, local test output, preflight hashes, Terraform validation and protected-path inspection"
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": [
+        "18/18 local unittest cases passed on 2026-10-15",
+        "A loopback redirect test confirms the bearer token is not sent to another origin",
+        "A loopback gateway POST test checks body/path, upstream Authorization removal and session identity headers"
+      ],
+      "notes": ["No test invoked RunPod or loaded vLLM remotely."]
+    },
+    {
+      "category": "cli",
+      "result": "changed_as_approved",
+      "evidence": [
+        "serving.py validate confirmed six adapters and seven aliases with manifest digest 201ffce772a2275f87bebcd384862a30b3ed3e941aa557d5cce7c42d012a58d1",
+        "Terraform 1.13.4 fmt -check and validate passed with decentralized-infrastructure/runpod 1.0.1",
+        "git diff --check passed"
+      ],
+      "notes": ["No terraform plan, apply, destroy or provider create call was made."]
+    },
+    {
+      "category": "json_contracts",
+      "result": "changed_as_approved",
+      "evidence": [
+        "SPEC.execution.json and completion.json passed their project JSON schemas",
+        "The reviewed serving manifest matches the seven API aliases"
+      ],
+      "notes": []
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": [
+        "No working-tree changes under FineTuning/ or BancoModeloUse/",
+        "Six LFS adapter weights, paths, hashes, runs, PEFT base and rank 8 matched the scientific catalog and local artifacts"
+      ],
+      "notes": ["The exact historical training base revision remains unknown."]
+    },
+    {
+      "category": "decisions",
+      "result": "preserved",
+      "evidence": [
+        "vLLM binds to loopback and static LoRA modules are derived from the validated manifest",
+        "Only the authenticated gateway port 8000 is declared in Terraform",
+        "Runbook separates dynamic GPU price, storage estimates, future approval and remote verification"
+      ],
+      "notes": ["Approval covers local preparation only; it does not attest Pod creation, HTTPS, generation or actual GPU cost."]
+    }
+  ],
+  "findings": [
+    "A bearer-token redirect risk in the local HTTP client was identified during review and resolved by refusing redirects; the loopback regression test verifies that the redirected target receives no request.",
+    "The gateway POST security boundary now has a loopback integration test covering request forwarding, bearer removal upstream and session response headers.",
+    "No P0-P3 findings remain in the reviewed local scope."
+  ],
+  "evidence": [
+    "The independent reviewer repeated the 18-test suite, serving preflight, git diff check, Terraform fmt/validate and JSON schema checks on 2026-10-15.",
+    "The reviewer inspected the working-tree diff, scientific artifact paths and hashes, gateway allowlist, provenance behavior and cost/application runbook.",
+    "The router dry run was blocked by missing .codex/references/runtime-policy.json; this review used a separate read-only reviewer and did not start a router thread.",
+    "Remote provider creation, weight transfer/load, RunPod HTTPS, seven real generations, teardown and billing remain unverified and are outside the completed local contract."
+  ],
+  "usage": null
+}

@@ -1,8 +1,8 @@
 ---
 id: SPEC-002
 title: Serving vLLM reproduzivel para Qwen e adapters
-status: ready
-contract_version: 1
+status: done
+contract_version: 2
 ---
 
 # SPEC-002: Serving vLLM reproduzivel para Qwen e adapters
@@ -11,6 +11,9 @@ contract_version: 1
 
 Preparar em `runpod/serving/` uma forma verificável de iniciar a base Qwen e os
 adapters escolhidos como modelos distintos na API vLLM, sem executar um Pod.
+A conclusão desta SPEC significa **preparação local revisada e documentada**;
+implantação e validação remota pertencem a uma sessão futura e não são
+condição para encerrar o contrato local.
 
 ## Context
 
@@ -34,10 +37,17 @@ há serving remoto, revisão fixada da base nem confirmação de `/v1/models`.
   snapshot a revisão da base, run e hash do adapter efetivamente selecionado.
 - Documentar dependências, transferência mínima de artefatos, configuração de
   porta protegida, início, inspeção, parada e remoção após a sessão curta.
+- Preparar Terraform declarativo para um Pod com somente o gateway protegido
+  exposto, com GPU, máquina, imagem e discos como entradas explícitas. O
+  `terraform apply` exige confirmação explícita do usuário.
+- Documentar a estimativa de custo de computação e armazenamento, o ponto em
+  que a cobrança começa, a revisão do plano e a sequência operacional da
+  próxima sessão, sem fixar uma oferta de GPU que ainda não foi escolhida.
 
 ## Non-scope
 
-- Criar/iniciar Pod, baixar pesos, transferir arquivos, gastar créditos,
+- Executar `terraform apply` ou `destroy`, criar/iniciar Pod, baixar pesos,
+  transferir arquivos, gastar créditos,
   habilitar carregamento dinâmico de LoRA, treinar ou avaliar modelos.
 - Alterar manifests/resultados científicos ou mover `runpod/*.sh` existentes.
 - Escolher definitivamente GPU, preço ou provedor alternativo sem teste real.
@@ -94,6 +104,14 @@ há serving remoto, revisão fixada da base nem confirmação de `/v1/models`.
   aplicação mostra modelos indisponíveis.
 - AC-005: O runbook distingue validação estática, futura geração remota e custo
   de Pod; não afirma inferência real com base apenas na validação estática.
+- AC-006: Os arquivos Terraform passam `fmt` e `validate` quando o CLI
+  estiver disponível; `plan` e `apply` não são evidência de serving funcional.
+  O exemplo não contém chave, máquina, imagem ou custo fixados como decisão.
+- AC-007: O runbook permite estimar o custo com a tarifa atual da GPU e dos
+  discos, identifica o custo residual após parar a Pod e mostra os comandos
+  de `plan` e `apply` como passos de uma sessão futura. Nenhuma execução desses
+  comandos é necessária para encerrar esta SPEC local; `apply` continua sob
+  confirmação explícita do usuário.
 
 ## Affected areas
 
@@ -121,11 +139,15 @@ há serving remoto, revisão fixada da base nem confirmação de `/v1/models`.
 - VAL-003: Conferência read-only dos seis caminhos e hashes do catálogo.
 - VAL-004: Verificação remota manual somente quando a sessão paga for
   explicitamente autorizada; registrar resultado sem promovê-lo a benchmark.
+- VAL-005: `terraform fmt -check` e `terraform validate`, se o CLI estiver
+  disponível; registrar indisponibilidade do ambiente sem afirmar que passou.
 
 ## Review requirements
 
 Revisão independente Sol/high da superfície remota, proveniência, proteção do
-endpoint e preservação dos artefatos científicos.
+endpoint, documentação de custo e preservação dos artefatos científicos. A
+revisão avalia o código e os testes locais; não deve registrar implantação,
+geração real ou preço contratado como comprovados.
 
 ## Execution and runtime
 

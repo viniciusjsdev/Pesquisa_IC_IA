@@ -1,6 +1,7 @@
 """Explicit local configuration; no fallback to the system PostgreSQL service."""
 import os
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from dotenv import load_dotenv
 
@@ -46,6 +47,9 @@ def api_token() -> str:
 
 def vllm_url() -> str:
     value = os.getenv("INFERENCE_VLLM_URL", "").strip().rstrip("/")
-    if value and not value.startswith("https://"):
-        raise ValueError("INFERENCE_VLLM_URL must use HTTPS")
+    if value:
+        parsed = urlsplit(value)
+        if (parsed.scheme != "https" or not parsed.hostname or parsed.username or
+                parsed.password or parsed.query or parsed.fragment or parsed.path not in ("", "/")):
+            raise ValueError("INFERENCE_VLLM_URL must be an HTTPS origin without credentials")
     return value

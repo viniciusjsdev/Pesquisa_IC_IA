@@ -2,8 +2,8 @@
   "$schema": "../../../.codex/schemas/project-spec-execution.schema.json",
   "schema_version": "2.0",
   "spec_id": "SPEC-002",
-  "contract_version": 1,
-  "status": "ready",
+  "contract_version": 2,
+  "status": "done",
   "automatic_handoff": false,
   "execution": {
     "classification": "normal_implementation",
@@ -73,6 +73,12 @@
       "id": "VAL-004",
       "kind": "manual",
       "command": "Record remote verification separately when authorized and do not claim it ran from static checks.",
+      "required": false
+    },
+    {
+      "id": "VAL-005",
+      "kind": "check",
+      "command": "terraform -chdir=runpod/serving/terraform fmt -check && terraform -chdir=runpod/serving/terraform validate",
       "required": false
     }
   ],

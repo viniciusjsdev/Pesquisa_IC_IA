@@ -1,8 +1,9 @@
 # Inferência compartilhada: primeira implementação local
 
-**Estado em 14/10/2026 (checkout `ad6edcb` mais mudanças locais sem commit):**
+**Estado em 15/10/2026 (base `622fc0f` mais mudanças locais sem commit):**
 cadeia exploratória determinística da SPEC-001 implementada localmente e aprovada
-em revisão independente. Ainda não há serving na RunPod,
+em revisão independente. A SPEC-002 também foi aprovada para seu escopo local:
+código de serving e procedimento de custo e aplicação futura, ainda sem Pod,
 túnel ngrok, verificação de identidade individual ou benchmark científico. A
 arquitetura acordada e seus limites estão em
 [`../docs/arquitetura_inferencia_compartilhada.md`](../docs/arquitetura_inferencia_compartilhada.md).
@@ -16,9 +17,11 @@ fixos fora da API e não muda esse comportamento.
 
 ## Contrato implementado
 
-- `GET /api/models`: sete aliases candidatos (base e seis adapters), marcados
-  disponíveis somente quando aparecem em `GET /v1/models` do vLLM configurado.
-  O catálogo local é uma lista de candidatos, não prova de pesos carregados.
+- `GET /api/models`: sete aliases candidatos (base e seis adapters), derivados
+  de [`runpod/serving/manifest.json`](../runpod/serving/manifest.json).
+  `available` exige o alias em `GET /v1/models` do endpoint configurado.
+  `generation_confirmed` exige adicionalmente recibo `passed` da mesma URL
+  e sessão. Um candidato não prova pesos carregados nem geração.
 - `GET/POST /api/prompts`: revisão imutável de nome, autor e texto do sistema.
   `POST` exige `expected_revision` para recusar salvamentos simultâneos sobre
   a mesma versão. O front permite usar uma revisão ou um rascunho.
@@ -66,9 +69,13 @@ os bytes originais em Base64. Snapshots anteriores com `schema_version: 1` conti
 legíveis sem migração ou reescrita. As verificações formais, o gold set, a
 comparação estruturada, a integração do [DW local v1](../BancoModeloUse/dw/README.md)
 e consultas científicas adicionais permanecem
-fora desta primeira fatia. A revisão/hash da base e os hashes dos adapters
-permanecem ausentes nos snapshots até a configuração e conferência do Pod;
-portanto ainda não há reprodução científica de inferência.
+fora desta primeira fatia. O snapshot só preenche revisão exata da base,
+run e SHA-256 do adapter quando a resposta vem com os headers de sessão do
+gateway que coincidem com o manifesto local. Sem eles, esses campos ficam
+`null` e `provenance_status: unverified`. Mesmo com headers, o estado
+`session_manifest_checked` descreve o preflight daquela sessão; somente um
+recibo remoto `passed` da mesma sessão marca `generation_confirmed`.
+Ainda não há recibo real ou reprodução científica de inferência.
 
 ## Mapa do código
 
@@ -79,10 +86,10 @@ portanto ainda não há reprodução científica de inferência.
 | `src/inference_api/service.py` | Coordena uma execução e grava seu snapshot final. |
 | `src/inference_api/orchestrator.py` | Valida a entrada e planeja as consultas permitidas conforme o escopo declarado. |
 | `src/inference_api/evidence.py` | Executa as consultas fixas de leitura e monta o bundle com origem e ressalvas. |
-| `src/inference_api/response_agent.py` e `models.py` | Montam a entrada do modelo, consultam o catálogo vLLM e tratam a resposta HTTP. O serving remoto ainda não foi implantado. |
+| `src/inference_api/response_agent.py`, `models.py` e `serving_catalog.py` | Montam a entrada do modelo, consultam vLLM e vinculam a proveniência da sessão ao manifesto. O serving remoto ainda não foi implantado. |
 | `src/inference_api/verifier.py` | Confere estrutura e IDs das evidências citadas; não valida verdade numérica ou causalidade. |
 | `src/inference_api/contracts.py`, `config.py` e `storage.py` | Contratos versionados, configuração local e persistência de prompts, execuções e feedback. |
-| `tests/test_contract.py` | Testes locais dos contratos da SPEC-001. |
+| `tests/test_contract.py` e `test_serving.py` | Testes locais dos contratos da SPEC-001 e do preflight/gateway da SPEC-002. |
 
 O contrato e a revisão independente dessa implementação ficam em
 [`specs/active/SPEC-001/`](../specs/active/SPEC-001/SPEC.md).
@@ -110,9 +117,17 @@ do início do servidor. As credenciais locais são lidas do
 
 Abra `http://127.0.0.1:8765` e digite o token e um identificador de autor.
 Sem Pod, o catálogo mostra os modelos indisponíveis. A API pode receber
-`INFERENCE_VLLM_URL` HTTPS e, se aplicável, `INFERENCE_VLLM_TOKEN` somente no
-ambiente do backend. A URL é a origem do servidor, sem o sufixo `/v1`. O alias do modelo na API remota deve coincidir com o
-catálogo; os comandos de serving ainda não estão implementados.
+`INFERENCE_VLLM_URL` HTTPS e `INFERENCE_VLLM_TOKEN` somente no
+ambiente do backend. A URL é a origem do gateway protegido, sem `/v1`,
+credenciais ou parâmetros. O cliente recusa redirecionamentos para não
+reenviar o bearer token a outra origem. Após uma verificação remota
+autorizada, pode receber
+`INFERENCE_SERVING_VERIFICATION` com caminho local para o recibo da sessão.
+Veja o [runbook de serving](../runpod/serving/README.md). Nenhuma dessas
+variáveis deve ser enviada ao navegador.
+O runbook também separa a conclusão local da SPEC-002 da sessão paga: a
+revisão do `terraform plan`, a estimativa de GPU e discos e a confirmação
+explícita do `apply` ocorrerão antes de uma implantação futura.
 
 Testes locais sem infraestrutura remota:
 
@@ -132,12 +147,16 @@ foram retirados em seguida. O HTTP retornou página 200, catálogo com sete
 aliases indisponíveis, 401 sem token e 400 para alias inválido. Três testes de
 contrato passaram no ambiente próprio. O cluster foi parado ao fim. Isso é
 validação local de leitura e fluxo, não nova carga das fontes nem teste de
-inferência remota.
+inferência remota. Em 14/10/2026, o preflight da SPEC-002 conferiu os seis
+pesos/configs e 18 testes locais passaram, incluindo redirecionamento e POST
+real pelo gateway em loopback; o comando vLLM foi somente gerado,
+sem Pod ou endpoint remoto.
 
 ## Segurança e operação pendentes
 
 Não abra o túnel ngrok ainda. Antes do uso compartilhado, implementar e testar
 identidade individual, controle de acesso e limites de uso; conferir a proteção
-da API remota e os aliases/versões/hashes dos pesos. O servidor HTTP atual é uma
+da API remota e os aliases/versões/hashes dos pesos em uma sessão autorizada.
+O servidor HTTP atual é uma
 ferramenta local de desenvolvimento, sem política de retenção ou migração além
 do esquema inicial. Não usar as respostas como métricas do artigo.

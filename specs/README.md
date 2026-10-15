@@ -4,9 +4,9 @@ Cada SPEC é uma unidade de implementação. O estado das frentes deve ser lido 
 `SPEC.md` e `SPEC.execution.json`; este índice mostra somente a ordem e os
 limites. As SPECs 001–006 têm threads dedicadas registradas nos manifests;
 retomadas devem usar seus IDs. A SPEC-007 foi preparada como contrato futuro,
-com `thread_id: null`; nenhuma nova thread ou execução foi iniciada. As mudanças
-locais em `inference_api/` anteriores a estas SPECs ainda estão sem commit e são
-a base de trabalho compartilhada.
+com `thread_id: null`; nenhuma nova thread ou execução foi iniciada. A primeira
+API e os contratos foram incluídos em `622fc0f`; as mudanças atuais da
+SPEC-002 estão sem commit e compartilham o mesmo checkout.
 
 | Ordem | SPEC | Frente | Dependência de execução |
 | --- | --- | --- | --- |
@@ -19,8 +19,13 @@ a base de trabalho compartilhada.
 | 7 | [SPEC-007](active/SPEC-007/SPEC.md) | Exportar pacotes fixos de evidência do DW, sem LLM ou gabarito | Implementação local futura; revisão da SPEC-006 antes de uso como caso científico oficial |
 
 A SPEC-001 foi implementada localmente e aprovada em revisão independente em
-14/10/2026. Sua conclusão não cobre serving remoto, ngrok ou avaliação
-científica. A revisão independente da SPEC-006 permanece separada.
+14/10/2026. A SPEC-002 tem implementação local de manifesto, scripts e
+Terraform e um [runbook de custos e aplicação futura](../runpod/serving/README.md).
+Sua [revisão independente](active/SPEC-002/evidence/review.json) aprovou o
+contrato local em 15/10/2026 sem Pod: geração e validação remota ficam para outra sessão,
+e `terraform apply` depende de confirmação explícita. Nenhuma delas cobre
+ngrok ou avaliação científica. A revisão independente da SPEC-006 permanece
+separada.
 
 As threads são separadas para manter o contexto de cada frente. Todas usam o
 mesmo checkout local; só uma deve escrever nele por vez. A thread seguinte

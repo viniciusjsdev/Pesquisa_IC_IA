@@ -2,9 +2,21 @@
 
 Esta pasta contém os scripts de execução remota. Antes de uma nova execução, conferir ambiente, custo, dependências e estado do pod; a presença destes scripts não é prova de prontidão remota.
 
-## Serving de modelos planejado
+## Serving de modelos preparado localmente
 
-A [arquitetura de inferência compartilhada](../docs/arquitetura_inferencia_compartilhada.md) prevê um futuro `runpod/serving/` para servir o Qwen base e os adapters selecionados por API vLLM. Esse diretório, o servidor e sua configuração ainda não existem. A troca entre adapters da mesma base será feita pelo identificador `model` de cada requisição, sem reiniciar o Pod; capacidade e compatibilidade precisam de teste remoto. O [catálogo de modelos](../FineTuning/docs/modelos_disponiveis.md) e os manifests das runs identificam os artefatos científicos. Os scripts abaixo continuam destinados a treino e avaliação.
+A [SPEC-002](../specs/active/SPEC-002/SPEC.md) preparou em
+[`serving/`](serving/README.md) o manifesto dos sete aliases, validação de
+hashes, comando vLLM estático, gateway de duas rotas, verificador explícito e
+Terraform declarativo. Os testes locais não iniciaram Pod nem comprovaram
+compatibilidade ou capacidade remota. A troca entre adapters da mesma base
+usa o campo `model` por requisição, sem reiniciar o Pod. O
+[catálogo de modelos](../FineTuning/docs/modelos_disponiveis.md) e os manifests
+das runs identificam os artefatos científicos; a revisão da base do treino
+histórico segue desconhecida. Os scripts abaixo continuam destinados a treino
+e avaliação. O [runbook de serving](serving/README.md) documenta a estimativa
+de cobrança de GPU e discos, a revisão de `terraform plan` e a confirmação
+explícita necessária para um `apply` em outra interação. A conclusão local da
+SPEC-002 não indica Pod implantada.
 
 ## Layout esperado pelos scripts
 

@@ -1,0 +1,8 @@
+pod_name             = "pesquisa-ic-ia-serving"
+gpu_type_ids         = ["REPLACE_WITH_CURRENT_GPU_TYPE_ID"]
+data_center_ids      = ["REPLACE_WITH_CURRENT_DATA_CENTER_ID"]
+image_name           = "REPLACE_WITH_REVIEWED_IMAGE_DIGEST"
+gpu_count            = 1
+cloud_type           = "SECURE"
+volume_in_gb         = 100
+container_disk_in_gb = 40

@@ -1,0 +1,149 @@
+{
+  "spec_id": "SPEC-002",
+  "contract_version": 2,
+  "status": "completed",
+  "thread_id": "01a137c7-8d9b-76b0-852b-2b93f6bf91c0",
+  "runtime": {
+    "classification": "normal_implementation",
+    "model": "session-selected",
+    "reasoning": "session-selected"
+  },
+  "changed_files": [
+    {"path": "runpod/serving/manifest.json", "change": "added"},
+    {"path": "runpod/serving/serving.py", "change": "added"},
+    {"path": "runpod/serving/gateway.py", "change": "added"},
+    {"path": "runpod/serving/verify_remote.py", "change": "added"},
+    {"path": "runpod/serving/README.md", "change": "added"},
+    {"path": "runpod/serving/terraform/main.tf", "change": "added"},
+    {"path": "runpod/serving/terraform/variables.tf", "change": "added"},
+    {"path": "runpod/serving/terraform/session.auto.tfvars.example", "change": "added"},
+    {"path": "runpod/serving/terraform/.terraform.lock.hcl", "change": "added"},
+    {"path": "inference_api/src/inference_api/serving_catalog.py", "change": "added"},
+    {"path": "inference_api/tests/test_serving.py", "change": "added"},
+    {"path": "inference_api/src/inference_api/models.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/service.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/config.py", "change": "modified"},
+    {"path": "inference_api/README.md", "change": "modified"},
+    {"path": "runpod/README.md", "change": "modified"},
+    {"path": "docs/arquitetura_inferencia_compartilhada.md", "change": "modified"},
+    {"path": "README.md", "change": "modified"},
+    {"path": "AGENTS.md", "change": "modified"},
+    {"path": "specs/README.md", "change": "modified"},
+    {"path": "specs/active/SPEC-002/SPEC.md", "change": "modified"},
+    {"path": "specs/active/SPEC-002/SPEC.execution.json", "change": "modified"},
+    {"path": ".gitignore", "change": "modified"},
+    {"path": "specs/active/SPEC-002/evidence/completion.json", "change": "added"},
+    {"path": "specs/active/SPEC-002/evidence/lifecycle.json", "change": "added"}
+  ],
+  "artifacts": [
+    "runpod/serving/manifest.json",
+    "runpod/serving/README.md",
+    "runpod/serving/terraform/main.tf",
+    "runpod/serving/terraform/.terraform.lock.hcl"
+  ],
+  "acceptance_evidence": [
+    {
+      "id": "AC-001",
+      "result": "passed",
+      "evidence": ["runpod/serving/manifest.json", "runpod/serving/serving.py validate returned six adapters and seven aliases"],
+      "notes": ["The six paths, weight hashes and config hashes match FineTuning/docs/modelos_disponiveis.md and the local files. The base revision used in historical training remains unknown."]
+    },
+    {
+      "id": "AC-002",
+      "result": "passed",
+      "evidence": ["inference_api/tests/test_serving.py::test_preflight_rejects_tampered_hash_missing_path_and_secret"],
+      "notes": ["The preflight fails on catalog mismatch, hash mismatch, missing adapter path, an extra secret field, and non-exact base revision."]
+    },
+    {
+      "id": "AC-003",
+      "result": "passed",
+      "evidence": ["inference_api/tests/test_serving.py::test_real_catalog_hashes_and_static_command", "inference_api/tests/test_serving.py::test_api_snapshot_provenance_requires_matching_gateway_headers"],
+      "notes": ["The generated argv registers six static LoRAs, serves the base as qwen-base and uses the same seven aliases as the API catalog. Remote vLLM model listing remains unobserved."]
+    },
+    {
+      "id": "AC-004",
+      "result": "passed",
+      "evidence": ["inference_api/tests/test_serving.py::test_api_snapshot_provenance_requires_matching_gateway_headers"],
+      "notes": ["Without INFERENCE_VLLM_URL the catalog returns all models unavailable. No test creates a Pod."]
+    },
+    {
+      "id": "AC-005",
+      "result": "passed",
+      "evidence": ["runpod/serving/README.md"],
+      "notes": ["The runbook separates static checks, a future authorized generation check, Terraform plan/apply, Pod cost and removal."]
+    },
+    {
+      "id": "AC-006",
+      "result": "passed",
+      "evidence": ["Terraform 1.13.4 fmt -check and validate succeeded with decentralized-infrastructure/runpod 1.0.1", "runpod/serving/terraform/.terraform.lock.hcl"],
+      "notes": ["terraform init -backend=false used no RunPod credential. No plan, apply or provider create call ran."]
+    },
+    {
+      "id": "AC-007",
+      "result": "passed",
+      "evidence": ["runpod/serving/README.md: Custos a revisar antes da próxima sessão", "runpod/serving/README.md: Próxima interação: plano, aprovação e aplicação", "RunPod Pods pricing documentation consulted on 2026-10-15"],
+      "notes": ["The runbook separates dynamic GPU pricing from published storage rates, gives a worked storage estimate for example disk sizes, and places terraform apply after explicit user confirmation. No cost has been incurred or quoted for an actual GPU selection."]
+    }
+  ],
+  "validation_evidence": [
+    {
+      "validation_id": "VAL-001",
+      "canonical_command": "git diff --check",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": ["No whitespace errors on 2026-10-15"],
+      "notes": ["Git emitted LF to CRLF checkout warnings, not diff errors."]
+    },
+    {
+      "validation_id": "VAL-002",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": ["18 tests passed on 2026-10-15", "Loopback redirect test confirms bearer token is not sent to a redirected origin", "Loopback POST gateway test checks body/path, upstream Authorization removal, and session response headers"],
+      "notes": ["Tests use local mocks and loopback gateway, never RunPod."]
+    },
+    {
+      "validation_id": "VAL-003",
+      "canonical_command": "Verify six adapter paths and SHA-256 values against the catalog without launching a Pod.",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": ["serving.py validate checked six adapter weights and config files against catalog hashes on 2026-10-15"],
+      "notes": ["This is local inventory and file hashing, not model loading."]
+    },
+    {
+      "validation_id": "VAL-004",
+      "canonical_command": "Record remote verification separately when authorized and do not claim it ran from static checks.",
+      "verification": "reported",
+      "result": "not-run",
+      "exit_code": null,
+      "evidence": [],
+      "notes": ["No Pod, external endpoint, transfer or generation was used."]
+    },
+    {
+      "validation_id": "VAL-005",
+      "canonical_command": "terraform -chdir=runpod/serving/terraform fmt -check && terraform -chdir=runpod/serving/terraform validate",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": ["Terraform CLI 1.13.4 from a checksum-checked temporary archive; fmt -check and validate repeated on 2026-10-15 with provider 1.0.1"],
+      "notes": ["The first official runpod/runpod 1.0.9 attempt failed on its own endpoint_workers schema. The selected community provider validates locally but has no tested create receipt."]
+    }
+  ],
+  "deviations": [
+    "The user added local Terraform preparation to contract_version 2 while retaining explicit approval for apply.",
+    "On 2026-10-15 the user clarified that SPEC-002 completes with local review and costed apply instructions; Pod creation and remote validation are deferred to a later interaction.",
+    "The automated review router lacked the project-pinned runtime policy; an independent read-only reviewer approved the local scope on 2026-10-15 and its evidence is stored in review.json.",
+    "Official runpod/runpod 1.0.9 failed schema loading, so the validated configuration uses decentralized-infrastructure/runpod 1.0.1.",
+    "The model and reasoning selected by this chat runtime were not exposed; recorded as session-selected instead of asserting the manifest preference."
+  ],
+  "unresolved_items": [
+    "No real Pod creation, vLLM load, HTTPS gateway test, alias generation or teardown was performed; these are intentionally deferred and do not block local SPEC completion after review.",
+    "The exact historical training base revision was not recorded; a future serving revision cannot be equated to it without separate evidence.",
+    "GPU fit, provider create behavior, current capacity and actual cost require an authorized session."
+  ],
+  "needs_design": null,
+  "usage": null
+}
