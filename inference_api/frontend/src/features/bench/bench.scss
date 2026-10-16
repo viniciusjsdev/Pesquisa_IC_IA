@@ -1,0 +1,21 @@
+.bench-main { min-width: 0; }
+.bench { display: grid; gap: 18px; max-width: 1360px; }
+.bench-panel, .run-card { min-width: 0; background: white; border: 1px solid #dfe7e5; border-radius: 10px; padding: 20px; }
+.bench-panel h2 { margin: 0 0 16px; font-size: 17px; }.bench-panel h3, .run-card h3 { overflow-wrap: anywhere; }
+.bench-grid, .comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px; }
+.bench-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.bench-panel label:not(.check) { display: block; color: #4c6470; font-weight: 650; margin: 12px 0 5px; font-size: 12px; }
+.bench-panel input:not([type='checkbox']), .bench-panel textarea, .bench-panel select { width: 100%; max-width: 100%; border: 1px solid #cfdcda; background: white; border-radius: 6px; padding: 8px; color: #203b45; }
+.bench-panel textarea { resize: vertical; min-height: 68px; }.bench-panel select[multiple] { min-height: 95px; }
+.bench-panel .check { display: flex; align-items: center; gap: 8px; margin: 8px 0; }
+.bench-panel button { background: #087f75; border: 1px solid #087f75; border-radius: 6px; color: white; padding: 9px 14px; margin-top: 12px; font-weight: 650; }
+.bench-panel button:disabled { opacity: .55; cursor: wait; }
+.bench-notice { background: #eaf4ef; border-left: 3px solid #087f75; padding: 11px 14px; border-radius: 6px; line-height: 1.5; }
+.bench-error { background: #fcebe8; border-left: 3px solid #bc584a; padding: 10px; }
+.run-card { padding: 15px; overflow: hidden; }.run-card section { margin-top: 14px; border-top: 1px solid #dfe7e5; padding-top: 11px; }
+.run-card h4, .run-card h5 { margin: 0 0 8px; }.run-card h5 { overflow-wrap: anywhere; }
+.bench-field { display: grid; gap: 3px; margin: 8px 0; overflow-wrap: anywhere; }.bench-field strong { font-size: 11px; color: #617580; }.bench-field span { white-space: pre-wrap; }
+.run-card pre { overflow: auto; background: #f4f7f6; padding: 10px; border-radius: 5px; font-size: 11px; }
+.comparison { margin: 0; }
+@media (max-width: 900px) { .bench-grid, .comparison { grid-template-columns: 1fr; } .bench-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .bench-fields { grid-template-columns: 1fr; } .bench-panel { padding: 15px; } }

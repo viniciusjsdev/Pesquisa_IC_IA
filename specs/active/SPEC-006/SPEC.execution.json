@@ -3,7 +3,7 @@
   "schema_version": "2.0",
   "spec_id": "SPEC-006",
   "contract_version": 1,
-  "status": "ready",
+  "status": "done",
   "automatic_handoff": false,
   "execution": {
     "classification": "normal_implementation",
@@ -34,6 +34,7 @@
   "validation": [
     {"id": "VAL-001", "kind": "check", "command": "git diff --check", "required": true},
     {"id": "VAL-002", "kind": "test", "command": "BancoModeloUse/.venv/Scripts/python.exe -m unittest discover -s BancoModeloUse/dw/tests -v", "required": true},
+    {"id": "VAL-005", "kind": "integration", "command": "BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/tests/run_existing_load.py", "required": true},
     {"id": "VAL-003", "kind": "integration", "command": "BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py verify", "required": true},
     {"id": "VAL-004", "kind": "manual", "command": "Compare as consultas fixas e IDs do DW com leituras raw/public dos bancos fonte.", "required": true}
   ],

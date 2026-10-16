@@ -3,7 +3,7 @@
   "schema_version": "2.0",
   "spec_id": "SPEC-007",
   "contract_version": 1,
-  "status": "ready",
+  "status": "done",
   "automatic_handoff": false,
   "execution": {
     "classification": "normal_implementation",
@@ -15,7 +15,7 @@
     "working_directory": ".",
     "sandbox_mode": "workspace-write",
     "approval_mode": "auto_review",
-    "thread": {"mode": "new", "purpose": "implementation", "thread_id": null},
+    "thread": {"mode": "resume", "purpose": "implementation", "thread_id": "01a1380d-106b-72f3-b9fc-b7be4fa5ecd7"},
     "handoff_prompt": "Implemente a SPEC-007 a partir dos arquivos duraveis, respeitando AGENTS.md, as fontes e a separacao entre pacotes candidatos e benchmark. Preserve o checkout compartilhado e retorne needs_design se surgir decisao cientifica ausente."
   },
   "skills": [],

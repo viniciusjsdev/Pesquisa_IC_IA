@@ -1,0 +1,83 @@
+{
+  "$schema": "../../../.codex/schemas/project-spec-execution.schema.json",
+  "schema_version": "2.0",
+  "spec_id": "SPEC-008",
+  "contract_version": 2,
+  "status": "done",
+  "automatic_handoff": false,
+  "execution": {
+    "classification": "normal_implementation",
+    "role": "developer",
+    "model": "gpt-5.6-terra",
+    "reasoning": "medium",
+    "routing_rationale": "A arquitetura React/Python, Compose local com cópia lógica isolada, paridade do BI e limites da bancada estão resolvidos; a implementação é extensa mas delimitada.",
+    "runtime_override": null,
+    "working_directory": ".",
+    "sandbox_mode": "workspace-write",
+    "approval_mode": "auto_review",
+    "thread": {"mode": "resume", "purpose": "implementation", "thread_id": "01a14344-232a-7400-a889-41efb5df7d8f"},
+    "handoff_prompt": "Execute SPEC-008 a partir de seus arquivos duráveis, da fixture BI e do baseline. Leia AGENTS.md, referências e skills declarados. Preserve o checkout compartilhado, as quatro abas BI e o cluster Windows. Entregue Compose com app e banco isolado, validando somente dados descartáveis; não restaure bancos reais sem acionamento específico. Não acione RunPod ou ngrok. Se faltar decisão consequencial, retorne needs_design."
+  },
+  "skills": [
+    {"name": "karya-frontend-builder", "source": "installed", "path": null, "required": true},
+    {"name": "karya-infra-orchestrator", "source": "installed", "path": null, "required": true}
+  ],
+  "references": [
+    {"path": "AGENTS.md", "purpose": "Proteções e orientação do checkout", "required": true},
+    {"path": "README.md", "purpose": "Mapa das frentes e estados locais", "required": true},
+    {"path": "inference_api/README.md", "purpose": "Contrato atual de login, bancada e APIs", "required": true},
+    {"path": "docs/arquitetura_inferencia_compartilhada.md", "purpose": "Topologia Python e fronteira exploratória", "required": true},
+    {"path": "inference_api/web/index.html", "purpose": "Front atual a migrar e remover após paridade", "required": true},
+    {"path": "inference_api/src/inference_api/server.py", "purpose": "Servidor da mesma origem e autorização HTTP", "required": true},
+    {"path": "inference_api/src/inference_api/config.py", "purpose": "Allowlist de bancos e distinção entre modo host e Docker", "required": true},
+    {"path": "inference_api/run.py", "purpose": "Entrada atual do servidor e comandos de banco", "required": true},
+    {"path": "inference_api/requirements.txt", "purpose": "Dependências Python da imagem", "required": true},
+    {"path": "inference_api/tests/browser_spec004.cjs", "purpose": "Teste consumidor do front antigo a migrar", "required": true},
+    {"path": "BancoModeloUse/scripts/local_postgres.py", "purpose": "Isolamento do cluster Windows que não deve ser alterado", "required": true},
+    {"path": "runpod/serving/manifest.json", "purpose": "Catálogo de aliases necessário na imagem da aplicação", "required": true},
+    {"path": "specs/active/SPEC-003/SPEC.md", "purpose": "Identidade e concorrência", "required": true},
+    {"path": "specs/active/SPEC-004/SPEC.md", "purpose": "Bancada exploratória existente", "required": true},
+    {"path": "BancoModeloUse/dw/README.md", "purpose": "Estado do DW local e limites", "required": true},
+    {"path": "BancoModeloUse/docs/arquitetura_avaliacao_modelos.md", "purpose": "Separação da avaliação científica formal", "required": true},
+    {"path": "specs/active/SPEC-008/references/BI_Pesquisa_Offline.reference.html", "purpose": "Fixture visual e funcional congelada fornecida pelo usuário, não runtime", "required": true},
+    {"path": "specs/active/SPEC-008/baseline.json", "purpose": "Inventário estrutural anterior à migração", "required": true}
+  ],
+  "validation": [
+    {"id": "VAL-001", "kind": "check", "command": "git diff --check", "required": true},
+    {"id": "VAL-002", "kind": "test", "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v", "required": true},
+    {"id": "VAL-003", "kind": "test", "command": "npm --prefix inference_api/frontend run typecheck", "required": true},
+    {"id": "VAL-004", "kind": "lint", "command": "npm --prefix inference_api/frontend run lint", "required": true},
+    {"id": "VAL-005", "kind": "test", "command": "npm --prefix inference_api/frontend run test", "required": true},
+    {"id": "VAL-006", "kind": "build", "command": "npm --prefix inference_api/frontend run build", "required": true},
+    {"id": "VAL-007", "kind": "integration", "command": "Verificar localmente login, snapshot 401/200, logout e ausência de JSON BI em arquivos públicos.", "required": true},
+    {"id": "VAL-008", "kind": "browser", "command": "Executar Playwright local com API simulada para login, BI, filtros, CSV, bancada, falhas e logout em desktop e 360 px.", "required": true},
+    {"id": "VAL-009", "kind": "evidence", "command": "Comparar hashes, agregações e CSV entre fixture BI e front novo e registrar divergências intencionais.", "required": true},
+    {"id": "VAL-010", "kind": "manual", "command": "Inspecionar consumidores e remoção do front antigo, documentação e limites científicos.", "required": true},
+    {"id": "VAL-011", "kind": "check", "command": "docker compose --env-file inference_api/.local/docker-test.env -f inference_api/compose.yaml config --quiet", "required": true},
+    {"id": "VAL-012", "kind": "build", "command": "docker compose --env-file inference_api/.local/docker-test.env -f inference_api/compose.yaml build", "required": true},
+    {"id": "VAL-013", "kind": "integration", "command": "Subir Compose isolado com dados descartáveis e porta alternativa para smoke HTTP e browser e verificar volume após down sem remoção de volumes.", "required": true},
+    {"id": "VAL-014", "kind": "integration", "command": "Testar cópia lógica entre bancos descartáveis, recusa de destino não vazio, hashes, readback e integridade do cluster Windows.", "required": true}
+  ],
+  "review": {
+    "required": true,
+    "independence": "independent",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high",
+    "rationale": "Migração de front com autenticação e snapshot BI, somada a Compose, segredos, cópia lógica de três bancos e isolamento do cluster Windows, exige revisão independente crítica.",
+    "schema_path": ".codex/schemas/project-spec-review.schema.json",
+    "output_path": "specs/active/SPEC-008/evidence/review.json",
+    "handoff_prompt": "Revise SPEC-008 independentemente a partir do contrato, fixture, baseline, diff, testes e completion. Verifique sessão, BI não público, paridade, bancada, remoção do front legado, limites científicos, Compose, portas, segredos, volume e cópia lógica não destrutiva."
+  },
+  "escalation": {"policy_version": "1.0", "allowed": ["terra_high", "needs_design", "sol_high"]},
+  "completion": {
+    "schema_path": ".codex/schemas/project-spec-completion.schema.json",
+    "output_path": "specs/active/SPEC-008/evidence/completion.json"
+  },
+  "baseline": {
+    "required": true,
+    "path": "specs/active/SPEC-008/baseline.json",
+    "snapshot_path": "specs/active/SPEC-008/references/BI_Pesquisa_Offline.reference.html",
+    "rationale": "Migração estrutural do HTML único para React e introdução de Compose com banco isolado; inventariar comportamento, testes e fontes antes de substituir a rota ativa."
+  },
+  "lifecycle": {"output_path": "specs/active/SPEC-008/evidence/lifecycle.json"}
+}

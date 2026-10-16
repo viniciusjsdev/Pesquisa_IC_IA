@@ -3,10 +3,18 @@
 Cada SPEC é uma unidade de implementação. O estado das frentes deve ser lido em
 `SPEC.md` e `SPEC.execution.json`; este índice mostra somente a ordem e os
 limites. As SPECs 001–006 têm threads dedicadas registradas nos manifests;
-retomadas devem usar seus IDs. A SPEC-007 foi preparada como contrato futuro,
-com `thread_id: null`; nenhuma nova thread ou execução foi iniciada. A primeira
-API e os contratos foram incluídos em `622fc0f`; a SPEC-002 foi registrada
-em `513114d`. As mudanças atuais da SPEC-004 compartilham o checkout.
+retomadas devem usar seus IDs. A SPEC-007 foi implementada localmente em
+16/10/2026 e tem thread efetiva registrada no manifest. As
+[revisões independentes da SPEC-006](active/SPEC-006/evidence/review.json) e da
+[SPEC-007](active/SPEC-007/evidence/review.json) aprovaram o escopo local nessa data.
+A SPEC-008 foi revisada em 16/10/2026 (contrato v2) para incluir execução
+local via Docker Compose com banco isolado. A implementação local na thread
+registrada no manifest foi [aprovada na quinta rodada de revisão independente](active/SPEC-008/evidence/review.json)
+em 16/10/2026. O front ativo agora é React, com snapshot BI protegido pela
+sessão. Os bancos reais não foram copiados.
+A primeira API e os contratos foram incluídos em `622fc0f`; a SPEC-002 foi
+registrada em `513114d`. As implementações e revisões locais das SPECs 006–008
+em 16/10/2026 têm evidências próprias nos respectivos diretórios.
 
 | Ordem | SPEC | Frente | Dependência de execução |
 | --- | --- | --- | --- |
@@ -15,8 +23,9 @@ em `513114d`. As mudanças atuais da SPEC-004 compartilham o checkout.
 | 3 | [SPEC-003](active/SPEC-003/SPEC.md) | Identidade individual, autorização e limites de uso | API atual; revisar interação com SPEC-001 |
 | 4 | [SPEC-004](active/SPEC-004/SPEC.md) | Bancada web de prompts, verificações e comparação | SPEC-001 e SPEC-003 |
 | 5 | [SPEC-005](active/SPEC-005/SPEC.md) | Validação integrada e procedimento da sessão curta | SPEC-001 a SPEC-004 |
-| 6 | [SPEC-006](active/SPEC-006/SPEC.md) | DW local rastreável para análise industrial e financeira | Frente separada; não altera a API das SPECs 001 a 005 |
-| 7 | [SPEC-007](active/SPEC-007/SPEC.md) | Exportar pacotes fixos de evidência do DW, sem LLM ou gabarito | Implementação local futura; revisão da SPEC-006 antes de uso como caso científico oficial |
+| 6 | [SPEC-006](active/SPEC-006/SPEC.md) | DW local rastreável para análise industrial e financeira | `done` no escopo local; não altera a API das SPECs 001 a 005 |
+| 7 | [SPEC-007](active/SPEC-007/SPEC.md) | Exportar pacotes fixos de evidência do DW, sem LLM ou gabarito | `done` no escopo local; gold set e caso científico oficial seguem pendentes |
+| 8 | [SPEC-008](active/SPEC-008/SPEC.md) | Observatório unificado com Bancada de testes após login, modo host e Docker local | `done` no escopo local, revisão independente aprovada; cluster Windows preservado |
 
 A SPEC-001 foi implementada localmente e aprovada em revisão independente em
 14/10/2026. A SPEC-002 tem implementação local de manifesto, scripts e
@@ -33,8 +42,8 @@ a [revisão independente](active/SPEC-003/evidence/review.json) aprovou o
 escopo local. O usuário escolheu autenticação somente na aplicação, sem OAuth
 ou Basic Auth no ngrok. Antes da exposição futura, as senhas escolhidas no
 chat devem ser trocadas em terminal local. A aprovação não cobre ngrok ou
-avaliação científica. A revisão independente da SPEC-006 permanece
-separada.
+avaliação científica. A revisão independente da SPEC-006 foi concluída
+separadamente em 16/10/2026 para a carga local.
 
 Em 15/10/2026, a SPEC-004 foi implementada localmente sobre `1e8cb76` com
 revisões declarativas de critérios e comparação visual. A migração 002 passou
@@ -58,7 +67,7 @@ independente é exigida onde o manifest indicar. Nenhuma SPEC autoriza iniciar
 Pod, abrir ngrok, gastar créditos, publicar ou alterar dados científicos. A
 SPEC-006 autorizou uma carga local em `db_pesquisa_dw` após verificar as fontes;
 ela não modifica os dois bancos de origem nem o banco da aplicação. A SPEC-007
-não autoriza nova carga: sua futura exportação será somente leitura. O cenário
+não autoriza nova carga: sua exportação local usa somente leitura. O cenário
 de escolha de tools pela LLM e a pontuação científica formal ainda precisam de
 contratos próprios, conforme a arquitetura de avaliação.
 

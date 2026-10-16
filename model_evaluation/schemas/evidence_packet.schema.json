@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.pesquisa-ic-ia/model_evaluation/evidence_packet/v1",
+  "title": "Pacote candidato de evidências DW v1",
+  "$defs": {
+    "positive_id": {"type": "integer", "minimum": 1},
+    "count": {"type": "integer", "minimum": 0},
+    "reported_integer": {"type": ["integer", "null"]},
+    "decimal_text": {"anyOf": [{"type": "string", "pattern": "^-?[0-9]+(\\.[0-9]+)?$"}, {"type": "null"}]},
+    "source_number": {"type": ["number", "null"]},
+    "source_day": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "entity_filters": {
+      "type": "object", "required": ["query", "year", "id"], "additionalProperties": false,
+      "properties": {
+        "query": {"enum": ["machine", "product", "quality", "material"]},
+        "year": {"type": "integer", "minimum": 2015, "maximum": 2026},
+        "id": {"$ref": "#/$defs/positive_id"}
+      }
+    },
+    "financial_filters": {
+      "type": "object", "required": ["query", "year"], "additionalProperties": false,
+      "properties": {"query": {"const": "financial"},
+                     "year": {"type": "integer", "minimum": 2015, "maximum": 2026}}
+    },
+    "aggregate_coverage": {
+      "type": "object", "required": ["rows", "state"], "additionalProperties": false,
+      "properties": {"rows": {"type": "integer", "minimum": 0, "maximum": 200},
+                     "state": {"enum": ["observed", "no_observation"]}}
+    },
+    "financial_coverage": {
+      "type": "object", "required": ["rows", "state", "observed_months", "first_day", "last_day"],
+      "additionalProperties": false,
+      "properties": {
+        "rows": {"type": "integer", "minimum": 0, "maximum": 200},
+        "state": {"enum": ["observed", "no_observation"]},
+        "observed_months": {"type": "integer", "minimum": 0, "maximum": 12},
+        "first_day": {"anyOf": [{"$ref": "#/$defs/source_day"}, {"type": "null"}]},
+        "last_day": {"anyOf": [{"$ref": "#/$defs/source_day"}, {"type": "null"}]}
+      }
+    },
+    "machine_row": {
+      "type": "object", "required": ["machine_id", "operation_rows", "reported_operation_quantity", "downtime_rows", "downtime_minutes"],
+      "additionalProperties": false,
+      "properties": {"machine_id": {"$ref": "#/$defs/positive_id"}, "operation_rows": {"$ref": "#/$defs/count"},
+                     "reported_operation_quantity": {"$ref": "#/$defs/reported_integer"},
+                     "downtime_rows": {"$ref": "#/$defs/count"}, "downtime_minutes": {"$ref": "#/$defs/decimal_text"}}
+    },
+    "product_row": {
+      "type": "object", "required": ["product_id", "operation_rows", "reported_operation_quantity", "sale_rows", "observed_sales_value"],
+      "additionalProperties": false,
+      "properties": {"product_id": {"$ref": "#/$defs/positive_id"}, "operation_rows": {"$ref": "#/$defs/count"},
+                     "reported_operation_quantity": {"$ref": "#/$defs/reported_integer"},
+                     "sale_rows": {"$ref": "#/$defs/count"}, "observed_sales_value": {"$ref": "#/$defs/decimal_text"}}
+    },
+    "financial_row": {
+      "type": "object", "required": ["observation_id", "observed_day", "reported_revenue", "reported_net_profit"],
+      "additionalProperties": false,
+      "properties": {"observation_id": {"$ref": "#/$defs/positive_id"}, "observed_day": {"$ref": "#/$defs/source_day"},
+                     "reported_revenue": {"$ref": "#/$defs/source_number"}, "reported_net_profit": {"$ref": "#/$defs/source_number"}}
+    },
+    "quality_row": {
+      "type": "object", "required": ["product_id", "inspection_rows", "approved_reported", "rejected_reported", "exceeds_lot_rows"],
+      "additionalProperties": false,
+      "properties": {"product_id": {"$ref": "#/$defs/positive_id"}, "inspection_rows": {"$ref": "#/$defs/count"},
+                     "approved_reported": {"$ref": "#/$defs/reported_integer"},
+                     "rejected_reported": {"$ref": "#/$defs/reported_integer"},
+                     "exceeds_lot_rows": {"$ref": "#/$defs/count"}}
+    },
+    "material_row": {
+      "type": "object", "required": ["material_id", "consumption_rows", "quantity_consumed", "price_observation_rows", "min_observed_unit_price", "max_observed_unit_price"],
+      "additionalProperties": false,
+      "properties": {"material_id": {"$ref": "#/$defs/positive_id"}, "consumption_rows": {"$ref": "#/$defs/count"},
+                     "quantity_consumed": {"$ref": "#/$defs/decimal_text"},
+                     "price_observation_rows": {"$ref": "#/$defs/count"},
+                     "min_observed_unit_price": {"$ref": "#/$defs/decimal_text"},
+                     "max_observed_unit_price": {"$ref": "#/$defs/decimal_text"}}
+    }
+  },
+  "type": "object",
+  "required": ["body", "sha256"],
+  "additionalProperties": false,
+  "properties": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "body": {
+      "type": "object",
+      "required": ["schema_version", "schema_path", "case_id", "question", "domain",
+                   "source_snapshot", "query_contract_version", "query_code_sha256",
+                   "quality_summary", "limits", "evidence_items"],
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {"const": 1},
+        "schema_path": {"const": "model_evaluation/schemas/evidence_packet.schema.json"},
+        "case_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"},
+        "question": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "domain": {"enum": ["financeiro", "industrial", "integrado"]},
+        "source_snapshot": {
+          "type": "object", "additionalProperties": false,
+          "required": ["database", "schema_version", "source_fingerprint", "source_files"],
+          "properties": {
+            "database": {"const": "db_pesquisa_dw"},
+            "schema_version": {"const": 1},
+            "source_fingerprint": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            "source_files": {"type": "integer", "minimum": 1}
+          }
+        },
+        "query_contract_version": {"const": 1},
+        "query_code_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "quality_summary": {
+          "type": "object", "additionalProperties": false,
+          "required": ["scope", "flags"],
+          "properties": {
+            "scope": {"const": "global_dw_load"},
+            "flags": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}}
+          }
+        },
+        "limits": {
+          "type": "object", "additionalProperties": false,
+          "required": ["queries", "rows", "bytes"],
+          "properties": {"queries": {"const": 5}, "rows": {"const": 200}, "bytes": {"const": 524288}}
+        },
+        "evidence_items": {
+          "type": "array", "minItems": 1, "maxItems": 5,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["filters", "query", "year", "grain", "sources", "formula", "units", "coverage", "rows", "interpretation"],
+            "properties": {
+              "filters": {"type": "object"},
+              "query": {"enum": ["machine", "product", "financial", "quality", "material"]},
+              "year": {"type": "integer", "minimum": 2015, "maximum": 2026},
+              "grain": {"type": "string", "minLength": 1},
+              "sources": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+              "formula": {"type": "object", "additionalProperties": {"type": "string"}},
+              "units": {"type": "object", "additionalProperties": {"type": "string"}},
+              "coverage": {"type": "object"},
+              "rows": {"type": "array", "maxItems": 200},
+              "interpretation": {"type": "string", "minLength": 1}
+            },
+            "allOf": [
+              {"oneOf": [
+                {"properties": {"query": {"const": "machine"},
+                                "filters": {"allOf": [{"$ref": "#/$defs/entity_filters"}, {"properties": {"query": {"const": "machine"}}}]},
+                                "coverage": {"$ref": "#/$defs/aggregate_coverage"},
+                                "rows": {"items": {"$ref": "#/$defs/machine_row"}}}},
+                {"properties": {"query": {"const": "product"},
+                                "filters": {"allOf": [{"$ref": "#/$defs/entity_filters"}, {"properties": {"query": {"const": "product"}}}]},
+                                "coverage": {"$ref": "#/$defs/aggregate_coverage"},
+                                "rows": {"items": {"$ref": "#/$defs/product_row"}}}},
+                {"properties": {"query": {"const": "financial"},
+                                "filters": {"$ref": "#/$defs/financial_filters"},
+                                "coverage": {"$ref": "#/$defs/financial_coverage"},
+                                "rows": {"items": {"$ref": "#/$defs/financial_row"}}}},
+                {"properties": {"query": {"const": "quality"},
+                                "filters": {"allOf": [{"$ref": "#/$defs/entity_filters"}, {"properties": {"query": {"const": "quality"}}}]},
+                                "coverage": {"$ref": "#/$defs/aggregate_coverage"},
+                                "rows": {"items": {"$ref": "#/$defs/quality_row"}}}},
+                {"properties": {"query": {"const": "material"},
+                                "filters": {"allOf": [{"$ref": "#/$defs/entity_filters"}, {"properties": {"query": {"const": "material"}}}]},
+                                "coverage": {"$ref": "#/$defs/aggregate_coverage"},
+                                "rows": {"items": {"$ref": "#/$defs/material_row"}}}}
+              ]},
+              {"if": {"properties": {"coverage": {"properties": {"state": {"const": "no_observation"}}, "required": ["state"]}}},
+               "then": {"properties": {"coverage": {"properties": {"rows": {"const": 0}}}, "rows": {"maxItems": 0}}}},
+              {"if": {"properties": {"coverage": {"properties": {"state": {"const": "observed"}}, "required": ["state"]}}},
+               "then": {"properties": {"coverage": {"properties": {"rows": {"minimum": 1}}}, "rows": {"minItems": 1}}}}
+            ]
+          }
+        }
+      }
+    }
+  }
+}

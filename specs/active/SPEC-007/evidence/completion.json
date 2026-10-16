@@ -1,0 +1,70 @@
+{
+  "spec_id": "SPEC-007",
+  "contract_version": 1,
+  "status": "completed",
+  "thread_id": "01a1380d-106b-72f3-b9fc-b7be4fa5ecd7",
+  "runtime": {
+    "classification": "normal_implementation",
+    "model": "session-selected",
+    "reasoning": "session-selected"
+  },
+  "changed_files": [
+    {"path": ".gitignore", "change": "modified"},
+    {"path": "AGENTS.md", "change": "modified"},
+    {"path": "README.md", "change": "modified"},
+    {"path": "BancoModeloUse/README.md", "change": "modified"},
+    {"path": "BancoModeloUse/dw/README.md", "change": "modified"},
+    {"path": "BancoModeloUse/docs/arquitetura_avaliacao_modelos.md", "change": "modified"},
+    {"path": "docs/arquitetura_inferencia_compartilhada.md", "change": "modified"},
+    {"path": "inference_api/README.md", "change": "modified"},
+    {"path": "model_evaluation/__init__.py", "change": "added"},
+    {"path": "model_evaluation/export.py", "change": "added"},
+    {"path": "model_evaluation/README.md", "change": "added"},
+    {"path": "model_evaluation/examples/cases_2020.json", "change": "added"},
+    {"path": "model_evaluation/requirements-test.txt", "change": "added"},
+    {"path": "model_evaluation/schemas/cases_manifest.schema.json", "change": "added"},
+    {"path": "model_evaluation/schemas/evidence_packet.schema.json", "change": "added"},
+    {"path": "model_evaluation/tests/test_export.py", "change": "added"},
+    {"path": "specs/README.md", "change": "modified"},
+    {"path": "specs/active/SPEC-007/SPEC.md", "change": "modified"},
+    {"path": "specs/active/SPEC-007/SPEC.execution.json", "change": "modified"},
+    {"path": "specs/active/SPEC-007/evidence/local-2026-10-16.md", "change": "added"},
+    {"path": "specs/active/SPEC-007/evidence/review-round-1.json", "change": "added"},
+    {"path": "specs/active/SPEC-007/evidence/review.json", "change": "added"},
+    {"path": "specs/active/SPEC-007/evidence/lifecycle.json", "change": "added"},
+    {"path": "specs/active/SPEC-007/evidence/completion.json", "change": "added"}
+  ],
+  "artifacts": [
+    "model_evaluation/export.py",
+    "model_evaluation/schemas/cases_manifest.schema.json",
+    "model_evaluation/schemas/evidence_packet.schema.json",
+    "model_evaluation/README.md",
+    "model_evaluation/.local/packets/integrado-produto-2020-01.json",
+    "specs/active/SPEC-007/evidence/local-2026-10-16.md"
+  ],
+  "acceptance_evidence": [
+    {"id": "AC-001", "result": "passed", "evidence": ["Fixture tests generated valid packets for industrial, financial and integrated domains", "Real integrated packet includes question, fingerprint, versions, two evidence items and verifiable hashes"], "notes": ["The generated packet is a candidate local artifact, not a scientific case."]},
+    {"id": "AC-002", "result": "passed", "evidence": ["Repeat real export returned reused with identical body SHA-256", "Fixture tests verify question, query-code and source-fingerprint changes produce different bytes and an existing file is preserved"], "notes": []},
+    {"id": "AC-003", "result": "passed", "evidence": ["Fixture tests reject unknown query/filter, invalid year, missing ID, duplicate case and invalid Unicode before DB access", "Row and byte limits fail before publication; an existing partial file blocks a batch"], "notes": []},
+    {"id": "AC-004", "result": "passed", "evidence": ["Real financial 2020 item retains no_observation and zero observed months", "Real packet retains per-query interpretation separately from global_dw_load quality flags"], "notes": []},
+    {"id": "AC-005", "result": "passed", "evidence": ["JSON Schema fixture validation passed for all five query shapes without PostgreSQL", "Adversarial tests now reject extra filters, contradictory coverage, gold-like row fields, invalid Unicode, changed filters and checksum", "Read-only existing-load verify passed and packet items matched direct fixed DW queries", "Generated JSON passed schema, canonical bytes, checksum and forbidden-key inspection"], "notes": ["No new source or DW load was run."]},
+    {"id": "AC-006", "result": "passed", "evidence": ["model_evaluation/README.md and affected architecture/readme/index documents updated, including API references", "Eleven affected Markdown documents checked for local links with no missing destinations", "Generated packets are Git-ignored and documentation labels them candidate local evidence"], "notes": ["SPEC-007 independent review approved on 2026-10-16; scientific case approval remains separate."]}
+  ],
+  "validation_evidence": [
+    {"validation_id": "VAL-001", "canonical_command": "git diff --check", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["No whitespace errors"], "notes": ["Git emitted LF/CRLF conversion warnings."]},
+    {"validation_id": "VAL-002", "canonical_command": "BancoModeloUse/.venv/Scripts/python.exe -m unittest discover -s model_evaluation/tests -v", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["10 tests passed after first independent review corrections"], "notes": ["jsonschema installed via model_evaluation/requirements-test.txt in local venv."]},
+    {"validation_id": "VAL-003", "canonical_command": "BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py verify", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Existing load: schema v1, 75 CSVs, fingerprint 64493abfdfd0b87535778eafd9d5938fad6039a99d9307f85e4cfc6eec0e89f2", "Fact counts and source totals reconciled"], "notes": ["Read-only database verification; CLI rewrote only its ignored local report."]},
+    {"validation_id": "VAL-004", "canonical_command": "Export example and compare product/2020/id 1000001 and financial/2020 with fixed DW queries", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Packet items exactly matched both current dw.cli.query outputs", "Product: 6168 operation rows, 611785 reported quantity, 1 sale, observed sales value 53161.6", "Financial: no_observation, zero rows and zero observed months"], "notes": []},
+    {"validation_id": "VAL-005", "canonical_command": "Inspect changed paths and generated payload for protected data, gold set and DB writes", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Git inventory shows only SPEC-007 code/docs/tests/evidence", "Generated packet contains no gold, expected answer, rubric, password or connection keys", "Export calls only read-only verify and fixed queries"], "notes": ["No binary before/after hash was taken of PostgreSQL data files; normal server start/stop can change internal files."]}
+  ],
+  "deviations": [
+    "The user requested implementation in the current chat, so the work ran here rather than in the originally planned new thread. The manifest records the effective thread.",
+    "The planned model/reasoning in the manifest were not applied as runtime controls to this current chat; the actual runtime is recorded as session-selected.",
+    "The first independent Sol/high review requested two corrections. Its original report is preserved as review-round-1.json; the same reviewer approved the corrections in review.json. The required runtime-policy file was absent, so the review used a direct read-only Codex CLI session instead of the runtime router."
+  ],
+  "unresolved_items": [
+    "Gold set, model-evaluation harness and tool-selection scenario B require separate contracts and implementation."
+  ],
+  "needs_design": null,
+  "usage": null
+}

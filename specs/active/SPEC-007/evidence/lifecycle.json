@@ -1,0 +1,15 @@
+{
+  "spec_id": "SPEC-007",
+  "contract_version": 1,
+  "implementation": "completed_locally",
+  "review": "approved_independent_review",
+  "integration": "existing_local_dw_load_read_only_verified",
+  "scientific_evaluation": "not_run",
+  "base_commit": "772ea0d",
+  "recorded_on": "2026-10-16",
+  "source_fingerprint": "64493abfdfd0b87535778eafd9d5938fad6039a99d9307f85e4cfc6eec0e89f2",
+  "evidence": "specs/active/SPEC-007/evidence/completion.json",
+  "local_evidence": "specs/active/SPEC-007/evidence/local-2026-10-16.md",
+  "review_evidence": "specs/active/SPEC-007/evidence/review.json",
+  "review_thread_id": "01a142eb-54c4-7b03-81e4-fb44b3abb2ee"
+}

@@ -1,0 +1,30 @@
+{
+  "spec_id": "SPEC-008",
+  "contract_version": 2,
+  "status": "approved",
+  "thread_id": null,
+  "runtime": {"classification": "critical_review", "model": "gpt-5.6-sol", "reasoning": "high"},
+  "review_input": [
+    "Quinta rodada independente somente leitura da subagente /root/spec008_review, confrontando F-001-R4 com o checkout atual em 16/10/2026.",
+    "SPEC-008 v2, fixture BI, baseline, diff, código React/Python, Docker/Compose, script de cópia, testes, completion, lifecycle e evidência local.",
+    "Pareceres das rodadas 1 a 4, schemas execution/completion/review, git diff --check e recibos dos bancos fixture."
+  ],
+  "baseline_assessment": [
+    {"category": "tests", "result": "changed_as_approved", "evidence": ["Testes locais registram 44 Python, 2 Vitest, paridade Playwright de cards/tabelas/gráficos/CSV e smoke Docker real.", "Ensaio large object em template1 recusou antes de banco/recibo; cópia limpa posterior confirmou três bancos."], "notes": ["A revisora inspecionou scripts, recibos e evidência; não reexecutou testes ou Docker em modo read-only."]},
+    {"category": "cli", "result": "changed_as_approved", "evidence": ["Preflight exige inventário e flags exatos de postgres/template0/template1, volume Compose identificado, dump plain completo de postgres e template1, roles/tablespaces esperados.", "createdb explicita --template=template1 depois da validação."], "notes": ["Capturar dump completo em memória pode tornar a recusa cara se o banco de preflight estiver grosseiramente preenchido; não abre bypass ou escrita no destino."]},
+    {"category": "json_contracts", "result": "preserved", "evidence": ["Snapshot BI permanece byte a byte igual ao JSON da fixture e protegido por bearer/no-store.", "Schemas de manifest, completion e review-round-4 validaram."], "notes": []},
+    {"category": "persistence", "result": "changed_as_approved", "evidence": ["Recibo copy-last-receipt.json confirma hashes e contagens dos três bancos fixture.", "Segunda cópia, falha parcial e objetos em postgres/template1 foram recusados em ensaios descartáveis."], "notes": ["Nenhuma cópia dos bancos reais foi executada."]},
+    {"category": "schemas", "result": "changed_as_approved", "evidence": ["SPEC/manifest/lifecycle distinguiam implementação concluída de revisão em curso durante as correções; os schemas declarados passaram."], "notes": []},
+    {"category": "protected_paths", "result": "preserved", "evidence": ["Dados congelados, splits, pesos, checkpoints, resultados brutos, artigos e runpod/ não foram modificados pela SPEC-008."], "notes": ["Mudanças simultâneas de SPEC-006/007/DW são de outras frentes do checkout compartilhado."]},
+    {"category": "decisions", "result": "changed_as_approved", "evidence": ["Cinco abas depois do login; orçamento pré-run com fonte/horários; serviços HTTP separados dos componentes visuais.", "BI offline conserva a referência e a Bancada não gera avaliação científica formal."], "notes": ["RunPod, ngrok e Terraform não foram acionados."]}
+  ],
+  "findings": [],
+  "evidence": [
+    "F-001-R4 resolvido: pg_dump plain completo de postgres/template1 inclui DDL, dados e large objects; enum e lo_create em template1 foram recusados em fixtures antes de qualquer banco/recibo.",
+    "copy-last-receipt.json confirmou os três bancos fixture e igualdade das contagens após a correção final.",
+    "F-002, F-003 e F-004 da primeira rodada permaneceram resolvidos.",
+    "git diff --check sem erros de whitespace; revisão sem efeitos em Docker, bancos, RunPod, ngrok ou Terraform.",
+    "Documentação PostgreSQL 15 consultada: https://www.postgresql.org/docs/15/app-pgdump.html e https://www.postgresql.org/docs/15/manage-ag-templatedbs.html."
+  ],
+  "usage": null
+}

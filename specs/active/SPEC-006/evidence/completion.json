@@ -12,6 +12,7 @@
     {"path": "BancoModeloUse/dw/migrations/001_init.sql", "change": "added"},
     {"path": "BancoModeloUse/dw/cli.py", "change": "added"},
     {"path": "BancoModeloUse/dw/tests/test_contract.py", "change": "added"},
+    {"path": "BancoModeloUse/dw/tests/run_existing_load.py", "change": "added"},
     {"path": "BancoModeloUse/dw/README.md", "change": "added"},
     {"path": "specs/active/SPEC-006/SPEC.md", "change": "added"},
     {"path": "specs/active/SPEC-006/SPEC.execution.json", "change": "added"},
@@ -24,30 +25,35 @@
     {"path": "inference_api/README.md", "change": "modified"},
     {"path": "specs/README.md", "change": "modified"},
     {"path": "specs/active/SPEC-006/evidence/completion.json", "change": "added"},
-    {"path": "specs/active/SPEC-006/evidence/lifecycle.json", "change": "added"}
+    {"path": "specs/active/SPEC-006/evidence/lifecycle.json", "change": "added"},
+    {"path": "specs/active/SPEC-006/evidence/review-round-1.json", "change": "added"},
+    {"path": "specs/active/SPEC-006/evidence/review-corrections-2026-10-16.md", "change": "added"},
+    {"path": "specs/active/SPEC-006/evidence/review.json", "change": "added"}
   ],
   "artifacts": [
     "BancoModeloUse/dw/README.md",
     "BancoModeloUse/dw/migrations/001_init.sql",
     "BancoModeloUse/reports/dw_validation.json",
-    "specs/active/SPEC-006/SPEC.md"
+    "specs/active/SPEC-006/SPEC.md",
+    "specs/active/SPEC-006/evidence/review-corrections-2026-10-16.md"
   ],
   "acceptance_evidence": [
     {"id": "AC-001", "result": "passed", "evidence": ["BancoModeloUse/dw/cli.py build returned created after full source.verify on 75 CSVs", "BancoModeloUse/dw/cli.py verify returned fingerprint 64493abfdfd0b87535778eafd9d5938fad6039a99d9307f85e4cfc6eec0e89f2"], "notes": ["New local db_pesquisa_dw was created; existing source loads were read-only verified, not re-imported."]},
     {"id": "AC-002", "result": "passed", "evidence": ["Second build returned already_current with identical fingerprint and fact counts", "BancoModeloUse/dw/tests/test_contract.py::test_fingerprint_changes_when_a_source_file_changes"], "notes": ["Divergent fingerprint is refused by code; no protected CSV or database was changed to exercise the destructive branch live."]},
-    {"id": "AC-003", "result": "passed", "evidence": ["DW v1 DDL foreign keys in 001_init.sql", "verify checked first/last mapped IDs against raw_pN and public for all seven facts", "trace fact_sale 1000001 returned matching raw and typed records"], "notes": ["IDs are period-partitioned and no cross-period name merge occurs."]},
+    {"id": "AC-003", "result": "passed", "evidence": ["DW v1 DDL foreign keys in 001_init.sql and read-only loaded-schema FK test", "verify now compares every loaded source projection row and column for all facts and four source dimensions", "contributors pages exact fact IDs for four aggregate kinds; trace returns DW/raw/public records", "fixture test detects changed value, changed effective day and missing fact row", "existing-load read-only tests cover grain, FK presence, contributor pagination and lineage"], "notes": ["No new miniature fixture database was built; integration checks used the existing isolated load in read-only transactions."]},
     {"id": "AC-004", "result": "passed", "evidence": ["query product --year 2020 --id 1000001: 6168 operation rows, reported quantity 611785, 1 sale, observed sales value 53161.6", "Direct read-only source queries returned industrial (6168,611785) and financeiro (1,53161.6)", "query machine --year 2020 --id 1000001 returned 8784 operations, 21 downtimes, 1899 minutes", "query financial --year 2020 returned no_observation"], "notes": ["Fixed query output includes grain, formula, units, sources, coverage and interpretation limits."]},
     {"id": "AC-005", "result": "passed", "evidence": ["verify returned 429565 operation, 1200 downtime, 120 sale, 72 financial observation, 4021 quality, 1800 consumption and 180 price rows", "Quality flags: 224336 operation rows linked to inverted orders, 9 operations outside source label, 2258 inspections above lot quantity, 2 inspections outside label, 72 financial Float rows", "BancoModeloUse/reports/dw_validation.json includes example IDs"], "notes": ["All seven fact counts match the corresponding source tables; no selected fact row was dropped."]},
     {"id": "AC-006", "result": "passed", "evidence": ["BancoModeloUse/dw/README.md", "BancoModeloUse/README.md", "docs/arquitetura_inferencia_compartilhada.md", "BancoModeloUse/docs/arquitetura_avaliacao_modelos.md"], "notes": ["Documents distinguish the new local load from existing-load readback and pending API/harness integration."]}
   ],
   "validation_evidence": [
     {"validation_id": "VAL-001", "canonical_command": "git diff --check", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["No whitespace errors; Git emitted only LF/CRLF notices"], "notes": []},
-    {"validation_id": "VAL-002", "canonical_command": "BancoModeloUse/.venv/Scripts/python.exe -m unittest discover -s BancoModeloUse/dw/tests -v", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Three tests passed"], "notes": []},
-    {"validation_id": "VAL-003", "canonical_command": "BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py verify", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["75 files, 540600 source rows, 7 reconciled fact tables", "operation_quantity=61592575; sale_quantity=107089; observed_sales_value=5414227.91", "first and last lineage samples for all seven facts exist in raw_pN and public"], "notes": ["Read-only database verification of existing source and new DW loads; writes only ignored local report."]},
+    {"validation_id": "VAL-002", "canonical_command": "BancoModeloUse/.venv/Scripts/python.exe -m unittest discover -s BancoModeloUse/dw/tests -v", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Five unit tests passed; five existing-load tests require DW_LOCAL_INTEGRATION=1"], "notes": []},
+    {"validation_id": "VAL-005", "canonical_command": "BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/tests/run_existing_load.py", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Ten tests passed against isolated existing load, read-only"], "notes": []},
+    {"validation_id": "VAL-003", "canonical_command": "BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py verify", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Current CLI verification passed after corrections", "75 files, 540600 source rows, 7 facts and 4 source dimensions compared on every loaded row and column", "3 source periods and 4019 dim_day dates checked", "operation_quantity=61592575; sale_quantity=107089; observed_sales_value=5414227.91"], "notes": ["Read-only database operation; CLI rewrote only its ignored local report."]},
     {"validation_id": "VAL-004", "canonical_command": "Compare as consultas fixas e IDs do DW com leituras raw/public dos bancos fonte.", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Product/2020 id 1000001 matches direct industrial and financial source reads", "trace fact_sale 1000001 shows raw venda_id=1 and public venda_id=1000001"], "notes": []}
   ],
-  "deviations": ["The manifest's fallback model/reasoning was not exposed by this session; actual runtime is recorded as session-selected."],
-  "unresolved_items": ["Independent review declared by SPEC-006 is pending.", "DW-to-API integration and formal model-evaluation harness remain separate future work."],
+  "deviations": ["The manifest's fallback model/reasoning was not exposed by this session; actual runtime is recorded as session-selected.", "The first independent review requested four corrections; its report is preserved as review-round-1.json. The runtime router lacked .codex/references/runtime-policy.json, so read-only Sol/high review ran via direct Codex CLI. The second review approved the corrections in review.json."],
+  "unresolved_items": ["DW-to-API integration and formal model-evaluation harness remain separate future work."],
   "needs_design": null,
   "usage": null
 }

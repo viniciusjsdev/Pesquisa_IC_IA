@@ -1,0 +1,19 @@
+@use '../features/bi/bi.scss';
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; min-height: 100%; }
+body { background: #f3f6f5; color: #203b45; font: 14px Inter, 'Segoe UI', Arial, sans-serif; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #55b9c0; outline-offset: 2px; }
+.observatory { min-height: 100vh; }
+.observatory .divider { margin: 0 8px; color: #a5b6bb; }
+.observatory .logout { background: transparent; border: 1px solid #7fa3a9; color: #e0ecee; padding: 6px 10px; margin: 9px 0; border-radius: 6px; }
+.login-screen { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: #102c38; }
+.login-card { width: min(100%, 420px); border-radius: 14px; padding: 36px; background: white; box-shadow: 0 20px 70px #071d2760; }
+.login-card .brandmark { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid #087f75; color: #087f75; border-radius: 10px; }
+.login-card h1 { margin: 8px 0; font-size: 32px; }.login-card p { color: #617580; line-height: 1.5; }
+.login-card form { display: grid; gap: 10px; margin-top: 24px; }.login-card label { font-weight: 650; }.login-card select, .login-card input { width: 100%; height: 42px; border: 1px solid #cfdcda; border-radius: 7px; padding: 8px 11px; }
+.login-card button { background: #087f75; color: white; border: 0; border-radius: 7px; padding: 12px; font-weight: 700; margin-top: 8px; }.login-card button:disabled { opacity: .6; }
+.login-error { color: #a32c25 !important; }
+@media (max-width: 760px) { .observatory .sidebar-bottom { display: block; margin-top: 10px; padding-top: 8px; } .observatory .sidebar-bottom .status-dot { display: none; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }

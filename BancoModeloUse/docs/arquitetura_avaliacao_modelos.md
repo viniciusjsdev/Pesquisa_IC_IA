@@ -1,6 +1,6 @@
 # Arquitetura proposta para consulta e avaliacao dos modelos
 
-Status em 14/10/2026, sobre `ad6edcb` e mudancas locais sem commit: arquitetura do harness ainda em planejamento. O [DW local v1](../dw/README.md) da SPEC-006 foi implementado e carregado separadamente, mas sua revisao independente permanece pendente. Ele nao alimenta a API exploratoria nem comprova avaliacao cientifica. A [SPEC-007](../../specs/active/SPEC-007/SPEC.md) define a futura exportacao de pacotes fixos; nao implementa o harness.
+Status em 16/10/2026, no checkout iniciado em `772ea0d`: arquitetura do harness ainda em planejamento. O [DW local v1](../dw/README.md) da SPEC-006 foi implementado, carregado e [aprovado em revisao independente local](../../specs/active/SPEC-006/evidence/review.json). Ele nao alimenta a API exploratoria nem comprova avaliacao cientifica. O [exportador local da SPEC-007](../../model_evaluation/README.md) prepara pacotes fixos candidatos e foi [aprovado em revisao independente local](../../specs/active/SPEC-007/evidence/review.json), sem implementar o harness ou a avaliacao de modelos.
 
 ## Objetivo e escopo
 
@@ -15,7 +15,7 @@ flowchart TD
     S[(db_industrial e db_financeiro)] --> O[API atual: escopo declarado e SQL fixo]
     S --> D[(db_pesquisa_dw: carga v1 existente)]
     O --> E[Bundle exploratorio versionado]
-    D -. SPEC-007: exportacao local .-> P[Pacote fixo por caso]
+    D -->|SPEC-007: exportacao local| P[Pacote fixo candidato por caso]
     D -. integracao futura .-> O
     E --> M[Modelo em teste]
     P -. harness futuro .-> M
@@ -34,9 +34,11 @@ O usuario quer avaliar os modelos em aplicacoes diferentes: uma com ferramentas 
 
 ![Papel da DW nos dois cenarios de avaliacao](../../docs/assets/dw_no_experimento_modelos.png)
 
-| Cenario | Entrada do modelo | O que se mede | Estado em 14/10/2026 |
+A figura foi produzida em 14/10/2026. O selo "planejado" do cenario A continua se referindo a comparacao completa entre modelos; desde 16/10/2026, apenas a exportacao local dos pacotes candidatos esta implementada. O harness e a pontuacao cientifica continuam pendentes.
+
+| Cenario | Entrada do modelo | O que se mede | Estado em 16/10/2026 |
 | --- | --- | --- | --- |
-| A. Evidencia fixa | Mesma pergunta e mesmo pacote imutavel de evidencias para cada modelo no caso | Calculo, interpretacao, sustentacao e comunicacao dos limites, dado o mesmo contexto | DW e consultas fixas existem; exportador de pacotes e harness ainda nao existem. |
+| A. Evidencia fixa | Mesma pergunta e mesmo pacote imutavel de evidencias para cada modelo no caso | Calculo, interpretacao, sustentacao e comunicacao dos limites, dado o mesmo contexto | DW, consultas fixas e exportador local de pacotes candidatos existem; harness e avaliacao de modelos ainda nao existem. |
 | B. Pesquisa com tools | Mesma pergunta e mesmo catalogo, contratos, limites e dados disponiveis; o modelo deve obter a evidencia | Escolha de ferramenta/rota, recuperacao, calculo e resposta, com falhas por etapa | A API atual executa duas tools por escopo **declarado pelo pesquisador**. Escolha autonoma de tool pelo modelo e harness ainda nao existem. |
 
 No cenario A, o backend/gerador consulta fontes permitidas ou a DW antes da chamada e congela o pacote. Cada modelo recebe exatamente os mesmos bytes de pergunta, evidencias e instrucoes comuns do caso; variacoes de prompt especificas de um experimento devem ser registradas como outra condicao, nunca misturadas na mesma comparacao. O pacote expõe valores, unidades, formulas, periodo, granularidade, cobertura, chaves de origem e ressalvas. Ele nao contem resposta esperada, rubrica ou gold set.
@@ -53,14 +55,14 @@ O recorte de perguntas deve incluir financeiro, industrial e integrado, alem de 
 
 A DW v1 fornece uma camada analitica rastreavel, consultas fixas e flags; ela pode preparar pacotes do cenario A e ser uma fonte futura para tools do cenario B. O modelo recebe resultados de consultas por contrato, sem credencial ou SQL livre. A API atual continua consultando `db_industrial` e `db_financeiro` diretamente. Trocar essa fonte por `db_pesquisa_dw` exige reconciliar cada consulta e versionar o contrato; resultados antigos nao serao reescritos.
 
-As cinco consultas atuais da DW informam tabelas, filtros, grao e formulas, mas um agregado nao enumera todos os IDs das linhas contribuintes. `trace` oferece linhagem de uma linha de fato identificada. O relatorio `verify` fornece flags globais da carga; uma flag global nao deve ser atribuida automaticamente a um item de um caso. O futuro pacote deve preservar essa distincao entre proveniencia da consulta, resumo global de qualidade e linhagem por registro.
+As cinco consultas atuais da DW informam tabelas, filtros, grao e formulas. Para agregados de maquina, produto, qualidade e material, `contributors` pagina os IDs dos fatos que compoem uma linha; `trace` devolve a linha DW e sua linhagem CSV/raw/public. O pacote da SPEC-007 ainda nao embute esses IDs, para manter seu limite de linhas e tamanho. O relatorio `verify` fornece flags globais da carga; uma flag global nao deve ser atribuida automaticamente a um item de um caso. O pacote preserva a distincao entre proveniencia da consulta e resumo global de qualidade.
 
 Os tres indices de importacao representam particoes, nao uma identidade historica consolidada. A venda se liga ao produto e o preco historico ao material/lote pelas chaves mapeadas; resultados financeiros nao se ligam diretamente a ordem, produto ou maquina. Perguntas que exigem uma continuidade de entidade entre particoes precisam de uma tabela de correspondencia com criterio e evidencia revisados. Ate la, comparar por nome ou por janela temporal e apenas exploratorio. A DW nao corrige anomalias das fontes nem constitui gabarito.
 
 ### Sequencia de implementacao e gates
 
-1. **Reconciliar as bases:** a revisao independente da SPEC-001 foi aprovada em 14/10/2026; concluir a da SPEC-006 e manter ambas distintas de aprovacao cientifica. A SPEC-007 podera ser implementada como preparacao local, mas seus pacotes nao viram casos oficiais antes da revisao da DW.
-2. **Preparar evidencia fixa:** a [SPEC-007](../../specs/active/SPEC-007/SPEC.md) define um exportador local somente leitura, formato versionado e hashes para pacotes do cenario A. Testes com fixtures devem cobrir reproducibilidade, falta de dado, flags e ausencia de gold no pacote. Nenhum modelo e chamado nessa etapa.
+1. **Reconciliar as bases:** as revisoes independentes das SPECs 001, 006 e 007 aprovaram seus respectivos escopos locais; nenhuma equivale a aprovacao cientifica. Os pacotes da SPEC-007 nao viram casos oficiais antes da selecao cientifica e da aprovacao do gold set.
+2. **Preparar evidencia fixa:** o [exportador da SPEC-007](../../model_evaluation/README.md) implementa leitura local, formato versionado e hashes para pacotes candidatos do cenario A. Testes com fixtures cobrem reproducibilidade, falta de dado, flags e ausencia de gold no pacote. Nenhum modelo e chamado nessa etapa; a revisao independente local foi aprovada em 16/10/2026.
 3. **Definir casos e gabaritos:** selecionar perguntas e recortes, escrever calculos e tolerancias verificaveis, rubricar interpretacoes aceitaveis e revisar por humano. O conteudo oficial, tamanho da bateria e regras de pontuacao ainda precisam de contrato cientifico proprio.
 4. **Implementar o harness:** consumir pacotes fixos no cenario A e definir a interface de tools do cenario B em SPECs posteriores. Reusar a API de modelos quando sua proveniencia estiver conferida; comparar primeiro com fixtures/mock, depois executar cada modelo sob o mesmo protocolo. Persistir passos e falhas por etapa.
 5. **Validar a execucao real:** verificar serving e hashes dos modelos, leituras somente leitura, snapshots, isolamento de gold set e repeticao de casos. RunPod/ngrok exigem acionamento explicito da sessao; a interface exploratoria nao gera metricas do artigo por si.
@@ -110,7 +112,7 @@ Um juiz baseado em LLM pode auxiliar a avaliar se a resposta atende a pergunta, 
 
 - Ampliar o DW somente com novas perguntas, regras de grao/agregacao e migracao explicitamente versionadas; a v1 implementa o recorte da SPEC-006.
 - Integrar consultas do DW ao backend apenas com contrato de evidencia e testes proprios, sem mudar implicitamente as duas consultas atuais.
-- Definir o esquema versionado do caso de teste, do pacote de evidencias e das saidas dos modelos.
+- Definir o caso formal e as saidas dos modelos; o [schema v1 do pacote candidato](../../model_evaluation/schemas/evidence_packet.schema.json) ja existe, mas nao substitui o protocolo de avaliacao.
 - Construir um pequeno gold set auditavel para cada categoria e casos de evidencia insuficiente.
 - Fixar protocolo de comparacao: mesmo recorte de dados, consultas, contexto, parametros e versao de cada modelo.
 - Validar recuperacao e calculos antes de atribuir diferencas de resposta ao fine-tuning.

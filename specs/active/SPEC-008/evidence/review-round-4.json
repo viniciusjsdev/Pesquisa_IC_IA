@@ -1,0 +1,30 @@
+{
+  "spec_id": "SPEC-008",
+  "contract_version": 2,
+  "status": "changes_requested",
+  "thread_id": null,
+  "runtime": {"classification": "critical_review", "model": "gpt-5.6-sol", "reasoning": "high"},
+  "review_input": [
+    "Quarta rodada read-only da subagente /root/spec008_review após correção de F-001-R3 em 16/10/2026.",
+    "copy_logical_databases.py, recibos e evidência do ensaio enum em template1 e cópia fixture limpa.",
+    "Schemas execution/completion/review-round-3, git diff --check e documentação PostgreSQL 15 de pg_dump/template databases; sem efeitos pela revisora."
+  ],
+  "baseline_assessment": [
+    {"category": "tests", "result": "changed_as_approved", "evidence": ["Recusa de enum em template1 e cópia fixture limpa registradas."], "notes": ["Não reproduzidas na revisão read-only."]},
+    {"category": "cli", "result": "regressed", "evidence": ["pg_dump --schema-only omitia large objects de template1; createdb clonava template1 e readback contava só tabelas."], "notes": ["Inventário de templates e DDL de template1 corrigiram o bypass anterior."]},
+    {"category": "json_contracts", "result": "preserved", "evidence": ["Schemas declarados validaram."], "notes": []},
+    {"category": "persistence", "result": "preserved", "evidence": ["Recibo final2 confirmou três bancos fixture; nenhum banco real foi copiado."], "notes": []},
+    {"category": "schemas", "result": "preserved", "evidence": ["SPEC, manifest e lifecycle permaneceram em review."], "notes": []},
+    {"category": "protected_paths", "result": "preserved", "evidence": ["Revisão não alterou arquivos, contêineres ou bancos."], "notes": []},
+    {"category": "decisions", "result": "preserved", "evidence": ["Fronteiras HTTP, orçamento pré-run e limites científicos permaneceram corrigidos."], "notes": []}
+  ],
+  "findings": [
+    "F-001-R4 Alta: large objects são dados e não entram em pg_dump --schema-only. lo_create em template1 passaria preflight, seria clonado nos três bancos e não apareceria em target_counts; exigir dump completo ou contagem explícita antes da cópia."
+  ],
+  "evidence": [
+    "Documentação PostgreSQL 15: https://www.postgresql.org/docs/15/app-pgdump.html e https://www.postgresql.org/docs/15/manage-ag-templatedbs.html.",
+    "F-001-R3 de template1 foi resolvido para DDL; falha residual envolve dados de large objects.",
+    "git diff --check sem erros; revisão somente leitura."
+  ],
+  "usage": null
+}

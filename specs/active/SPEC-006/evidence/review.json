@@ -1,0 +1,121 @@
+{
+  "spec_id": "SPEC-006",
+  "contract_version": 1,
+  "status": "approved",
+  "thread_id": "01a142eb-0554-7810-8ef7-78362d4a7bbb",
+  "runtime": {
+    "classification": "critical_review",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high"
+  },
+  "review_input": [
+    "Reavaliação independente e estritamente somente leitura dos quatro achados de review-round-1.json contra cli.py, test_contract.py, run_existing_load.py, SPEC.md, SPEC.execution.json, completion.json, lifecycle.json, dw/README.md, arquitetura_avaliacao_modelos.md e review-corrections-2026-10-16.md.",
+    "Inspeção semântica de reconciliação integral, contributors, paginação, trace, transações READ ONLY, consultas fixas, grãos, flags, limites científicos e impacto sobre a SPEC-007.",
+    "Execução somente em memória dos 10 testes da SPEC-006 contra a carga existente com Python 3.12.14 empacotado, bytecode desativado e dependências da venv do projeto.",
+    "Provas adicionais paginaram integralmente os contribuintes dos quatro tipos de agregado, confrontaram totais com query e seguiram os primeiros e últimos IDs por trace até DW/raw/public.",
+    "Validação estrutural final de SPEC.md e SPEC.execution.json, git diff --check, hashes dos artefatos e leitura dos pacotes antigo e novo da SPEC-007; nenhum arquivo ou banco foi alterado."
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": [
+        "test_contract.py passou de três para dez testes.",
+        "BancoModeloUse/dw/tests/run_existing_load.py ativa explicitamente as cinco verificações de integração da carga existente.",
+        "Os dez testes passaram em 17.558 segundos usando o Python empacotado."
+      ],
+      "notes": [
+        "A suíte agora cobre comparação integral adulterada, fingerprint divergente, grão, FKs, consultas, paginação, trace e ausência financeira.",
+        "O launcher BancoModeloUse/.venv/Scripts/python.exe não pôde acessar sua instalação-base WindowsApps neste sandbox; o mesmo código e dependências passaram com Python 3.12.14 empacotado."
+      ]
+    },
+    {
+      "category": "cli",
+      "result": "changed_as_approved",
+      "evidence": [
+        "cli.py:139-157 implementa comparação streaming de todas as colunas projetadas.",
+        "cli.py:620-657 implementa contributors com SQL fixo, limite 1-1000, ordenação por PK e cursor next_after por fato.",
+        "cli.py:660-707 retorna dw_record e linhagem CSV/raw/public em trace."
+      ],
+      "notes": [
+        "Os agregados continuam compactos; drill-through ocorre por contributors seguido de trace.",
+        "A prova exaustiva não encontrou duplicatas ou lacunas na paginação dos grupos avaliados."
+      ]
+    },
+    {
+      "category": "json_contracts",
+      "result": "changed_as_approved",
+      "evidence": [
+        "SPEC.md e SPEC.execution.json agora usam status implemented.",
+        "lifecycle.json registra implementação concluída e correções da revisão pendentes desta reavaliação.",
+        "O validador determinístico da Spec retornou valid=true para o par SPEC.md/SPEC.execution.json.",
+        "VAL-005 usa o runner dedicado run_existing_load.py e um ID aceito pelo contrato."
+      ],
+      "notes": [
+        "A promoção posterior para done deve ocorrer somente após persistir esta aprovação.",
+        "O repositório ainda não possui .codex/references/runtime-policy.json; portanto esta aprovação não afirma funcionamento do runtime router."
+      ]
+    },
+    {
+      "category": "persistence",
+      "result": "preserved",
+      "evidence": [
+        "cli.verify() executado pelos testes reconciliou a carga existente sem reconstruí-la.",
+        "A carga manteve fingerprint 64493abfdfd0b87535778eafd9d5938fad6039a99d9307f85e4cfc6eec0e89f2.",
+        "Foram reconciliados 75 arquivos, 540600 linhas de origem, sete fatos, quatro dimensões de origem, três partições e 4019 dias."
+      ],
+      "notes": [
+        "Nenhum build ou comando de publicação foi executado nesta revisão."
+      ]
+    },
+    {
+      "category": "schemas",
+      "result": "preserved",
+      "evidence": [
+        "A migração continua definindo PKs, unicidade por fonte/ID e FKs materiais.",
+        "O teste da carga existente confirmou grão único por source_file_id/original_id e pelo menos sete FKs nos fatos.",
+        "A reconciliação integral confirmou valores, datas, flags e vínculos derivados da carga atual."
+      ],
+      "notes": []
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": [
+        "verify, query, contributors e trace usam transações READ ONLY nas conexões de origem e destino consultadas.",
+        "O teste de fingerprint divergente falhou antes da reconciliação sem modificar o destino.",
+        "Não foram executados build, RunPod, ngrok, Terraform, API, commit ou edição de arquivos."
+      ],
+      "notes": [
+        "A revisão utilizou -B/PYTHONDONTWRITEBYTECODE para evitar bytecode local."
+      ]
+    },
+    {
+      "category": "decisions",
+      "result": "preserved",
+      "evidence": [
+        "As consultas continuam separando vendas observadas de receita contábil, operações reportadas de produção final e preço histórico de custo realizado.",
+        "A consulta financeira mantém linhas observadas e no_observation, sem anualização indevida.",
+        "README e arquitetura mantêm integração API, harness, gold set, escolha autônoma de tools e avaliação científica fora do escopo."
+      ],
+      "notes": [
+        "A aprovação é exclusivamente da implementação e validação local da SPEC-006."
+      ]
+    }
+  ],
+  "findings": [],
+  "evidence": [
+    "Achado 1 resolvido: contributors fornece IDs paginados para machine, product, quality e material; trace devolve dw_record e as linhas raw/public de cada ID.",
+    "Para product/2020/1000001, a paginação integral encontrou exatamente 6168 fact_operation e uma fact_sale, iguais a query; a venda contribuinte correta é 1000039.",
+    "Para machine/2020/1000001, foram encontrados exatamente 8784 fact_operation e 21 fact_downtime; para quality, 70 inspeções; para material, 20 consumos e cinco observações de preço.",
+    "Achado 2 resolvido: verify compara, em streaming e na mesma ordenação, todas as colunas produzidas pelas projeções de carga dos sete fatos e quatro dimensões, além de source_file, source_period e dim_day.",
+    "A carga existente passou à reconciliação integral com 429565 operações, 1200 paradas, 120 vendas, 72 observações financeiras, 4021 inspeções, 1800 consumos e 180 preços.",
+    "Achado 3 resolvido: dez testes passaram; a fixture adulterada rejeitou alteração de valor, data efetiva e remoção de linha, e a integração existente cobriu grão, FKs, consulta, paginação e linhagem.",
+    "Achado 4 resolvido: SPEC e manifest estão implemented, lifecycle registra changes_requested_corrections_local_pending_rereview e o par contratual passou no validador determinístico.",
+    "git diff --check concluiu com exit code 0, emitindo somente avisos LF/CRLF.",
+    "Impacto na SPEC-007 reconciliado: cli.py atual tem SHA-256 44a8184ecafbbb3df20cb4328a0fbca2e15b71599b6cbe0f482df2da40d570bd; o pacote anterior foi preservado e um pacote novo em diretório separado registra esse hash.",
+    "Os corpos dos pacotes antigo e novo da SPEC-007 são idênticos exceto por query_code_sha256; o checksum do envelope mudou como esperado. A SPEC-007 continua produzindo somente pacotes candidatos locais, não gold set.",
+    "A revisão não aprova avaliação científica, integração API, harness, RunPod, ngrok ou execução remota."
+  ],
+  "usage": null
+}

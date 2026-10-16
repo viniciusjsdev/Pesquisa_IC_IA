@@ -1,5 +1,16 @@
 # Inferência compartilhada: primeira implementação local
 
+**Implementação local da SPEC-008 em 16/10/2026, sobre `772ea0d` e alterações
+locais preservadas:** a rota `/` entrega o React compilado, com login primeiro,
+quatro abas do Observatório e Bancada na quinta aba. O snapshot sintético de
+06/09/2026 é servido somente por `GET /api/bi/snapshot` autenticado. A imagem
+Docker e a cópia lógica não destrutiva foram testadas somente com bancos
+descartáveis; os três bancos reais não foram copiados. A
+[revisão independente da SPEC-008](../specs/active/SPEC-008/evidence/review.json)
+aprovou o escopo local na quinta rodada em 16/10/2026; os pareceres anteriores e a
+[evidência local](../specs/active/SPEC-008/evidence/local-2026-10-16.md)
+delimitam o estado. RunPod, ngrok e avaliação científica não foram executados.
+
 **Estado em 15/10/2026 (base `1e8cb76` mais mudanças locais da SPEC-004 sem commit):**
 cadeia exploratória determinística da SPEC-001 implementada localmente e aprovada
 em revisão independente. A SPEC-002 também foi aprovada para seu escopo local:
@@ -17,8 +28,9 @@ As frentes seguintes têm contratos e ordem próprios em
 O [desenho da avaliação](../BancoModeloUse/docs/arquitetura_avaliacao_modelos.md)
 separa raciocínio sobre evidências fixas de pesquisa com tools escolhidas pelo
 modelo. A API atual escolhe suas duas consultas pelo escopo declarado pelo
-pesquisador; a [SPEC-007](../specs/active/SPEC-007/SPEC.md) prepara pacotes
-fixos fora da API e não muda esse comportamento.
+pesquisador; o [exportador da SPEC-007](../model_evaluation/README.md) foi
+implementado localmente em 16/10/2026, prepara pacotes fixos fora da API e não
+muda esse comportamento.
 
 **SPEC-005 em 16/10/2026:** `session_checks.py` acrescenta pré-voo local de
 leitura, teste HTTP opt-in do túnel e ensaio opt-in das três rotas com dois
@@ -122,7 +134,9 @@ Ainda não há recibo real ou reprodução científica de inferência.
 | Caminho | Responsabilidade atual |
 | --- | --- |
 | `run.py` e `src/inference_api/server.py` | Entrada por linha de comando, servidor HTTP, rotas e entrega do front. |
-| `web/index.html` | Bancada local responsiva para revisões de prompt/critério, modelos por run, detalhes do snapshot e comparação exploratória. |
+| `frontend/src/` e `frontend/dist/` | Código React/TypeScript e build estático da única interface ativa. `dist/` é gerado localmente e ignorado pelo Git. |
+| `private/bi_snapshot.json` | Retrato sintético extraído sem alteração lógica da referência da SPEC-008; nunca entregue por rota estática. |
+| `Dockerfile`, `compose.yaml`, `scripts/copy_logical_databases.py` | Imagem app, PostgreSQL isolado e cópia lógica explícita por recusa de destino não vazio. |
 | `src/inference_api/auth.py`, `limits.py` e `budget.py` | Login de dois pesquisadores, sessão revogável, vaga única de inferência e leitura separada do saldo RunPod. |
 | `src/inference_api/service.py` | Coordena uma execução e grava seu snapshot final. |
 | `src/inference_api/orchestrator.py` | Valida a entrada e planeja as consultas permitidas conforme o escopo declarado. |
@@ -130,7 +144,7 @@ Ainda não há recibo real ou reprodução científica de inferência.
 | `src/inference_api/response_agent.py`, `models.py` e `serving_catalog.py` | Montam a entrada do modelo, consultam vLLM e vinculam a proveniência da sessão ao manifesto. O serving remoto ainda não foi implantado. |
 | `src/inference_api/verifier.py` e `criteria.py` | Confere estrutura, IDs e critérios declarativos; não valida verdade numérica ou causalidade. |
 | `src/inference_api/contracts.py`, `config.py` e `storage.py` | Contratos versionados, configuração local e persistência de prompts, execuções e feedback. |
-| `tests/test_contract.py`, `test_serving.py`, `test_identity.py`, `test_criteria.py` e `browser_spec004.cjs` | Testes locais dos contratos, identidade, critérios e navegador simulado; os de banco usam banco temporário isolado. |
+| `tests/test_contract.py`, `test_serving.py`, `test_identity.py`, `test_criteria.py`, `test_bi_http.py` e `browser_spec008*.cjs` | Contratos Python, proteção do BI, paridade de navegador com referência e smoke Docker descartável. |
 | `session_checks.py` e `tests/test_session_checks.py` | Pré-voo somente leitura, ensaio HTTP e prova local/mock de que a execução padrão não chama rede externa. |
 
 O contrato e a revisão independente da SPEC-001 ficam em
@@ -145,6 +159,23 @@ o escopo local em 15/10/2026.
 Use o Python de um ambiente próprio com as dependências de
 [`requirements.txt`](requirements.txt). Na raiz do repositório, em PowerShell:
 
+O modo direto requer um build de `frontend/` com Node 24 e npm 11 antes de
+`serve`; o build local fica em `frontend/dist/`. Com o cluster Windows, o
+ambiente Python e esse build **já preparados**, basta iniciar a aplicação na
+raiz do repositório:
+
+```powershell
+$env:INFERENCE_RUNTIME_MODE = 'host'
+inference_api/.venv/Scripts/python.exe inference_api/run.py serve
+```
+
+O modo host lê os três bancos existentes em `127.0.0.1:5544`; não requer a
+cópia para o volume Docker. O servidor escuta somente `127.0.0.1:8765`.
+Os comandos seguintes são para **provisionar um ambiente novo**. Não repita
+`init-db`, migrações nem `configure-users` apenas para reiniciar: este último
+troca as senhas cadastradas e revoga sessões. O modo Docker abaixo faz o build
+do front na imagem, sem Node ou Python instalados no host.
+
 ```powershell
 BancoModeloUse/.venv/Scripts/python.exe -m venv inference_api/.venv
 inference_api/.venv/Scripts/python.exe -m pip install -r inference_api/requirements.txt
@@ -153,6 +184,8 @@ inference_api/.venv/Scripts/python.exe inference_api/run.py init-db
 inference_api/.venv/Scripts/python.exe inference_api/run.py migrate-db --pg-dump 'C:/Program Files/PostgreSQL/15/bin/pg_dump.exe'
 inference_api/.venv/Scripts/python.exe inference_api/run.py migrate-criteria --pg-dump 'C:/Program Files/PostgreSQL/15/bin/pg_dump.exe'
 inference_api/.venv/Scripts/python.exe inference_api/run.py configure-users
+npm --prefix inference_api/frontend ci
+npm --prefix inference_api/frontend run build
 inference_api/.venv/Scripts/python.exe inference_api/run.py serve
 ```
 
@@ -179,9 +212,10 @@ hash com sal e revoga sessões anteriores. Não passe senha em argumento, variá
 versionada ou chat. `revoke --username Nicoli|Vinicius` suspende o acesso sem
 apagar snapshots. Essas ações não recriam nem importam bases de origem. As
 credenciais do cluster são lidas do
-`BancoModeloUse/.env.local` ignorado pelo Git; todas as conexões exigem host
-`127.0.0.1`, porta `5544` e nomes de bancos conhecidos. Não há fallback para
-`localhost:5432`.
+`BancoModeloUse/.env.local` ignorado pelo Git; no modo direto todas as conexões
+exigem host `127.0.0.1`, porta `5544` e nomes de bancos conhecidos. No modo
+Docker exigem exclusivamente `db:5432` e os mesmos nomes. Não há fallback para
+outro host ou banco.
 
 Abra `http://127.0.0.1:8765` e use um dos dois logins já cadastrados.
 As duas sessões podem coexistir; se uma inferência estiver em curso, a outra
@@ -210,6 +244,67 @@ O runbook também separa a conclusão local da SPEC-002 da sessão paga: a
 revisão do `terraform plan`, a estimativa de GPU e discos e a confirmação
 explícita do `apply` ocorrerão antes de uma implantação futura.
 
+## Execução Docker local da SPEC-008
+
+`compose.yaml` constrói um contêiner de aplicação (React compilado e Python) e
+um PostgreSQL 15 em volume nomeado. Somente o HTTP da aplicação é publicado em
+`127.0.0.1`, na porta `8875` por padrão; `INFERENCE_HTTP_PORT` permite outra
+porta. O banco fica em `db:5432` apenas na rede do Compose. O comando `up`
+inicializa o serviço PostgreSQL vazio, mas **não importa dados, não migra
+esquema e não cria pesquisadores**. A tela de login abre; autenticação acusa
+indisponibilidade até existir uma cópia preparada de `db_inference_app`.
+
+Na raiz do repositório, com Docker Desktop e o arquivo privado
+`BancoModeloUse/.env.local` já existente:
+
+```powershell
+docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml config --quiet
+docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml build
+docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml up -d
+docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml ps
+```
+
+O Docker usa a senha local `FINANCEIRO_DB_PASSWORD` como senha do **novo** role
+`pesquisa_local` no volume isolado. A imagem recebe somente código, manifesto
+de aliases e snapshot BI privado; `.env.local`, CSVs, pesos, resultados e dumps
+ficam fora do contexto de build. O modo host continua usando o cluster Windows
+em `127.0.0.1:5544`, sem alterar `listen_addresses`, `pg_hba.conf` ou seus
+arquivos físicos.
+
+**Cópia real é uma ação separada, ainda não executada nesta SPEC.** Depois de
+verificar que o volume Docker é o esperado e está sem bancos e objetos de
+usuário, e de escolher conscientemente o
+projeto `inference_api`, o operador pode executar a cópia lógica abaixo. O
+script exige PostgreSQL 15 no host, lê os três bancos do cluster Windows sem
+escrever neles, grava dumps temporários, calcula SHA-256 e contagens, transmite
+cada dump por stdin a `docker compose exec -T db pg_restore` e confirma
+readback. Ele confere labels e mount do volume, o inventário exato de bancos
+e templates, dumps plain completos de `postgres` e `template1` sem DDL ou
+dados de usuário, roles e tablespaces esperados, e recusa destino
+já usado; falha parcial deixa recibo e bloqueia
+nova execução até reconciliação manual. Também recusa substituir um recibo
+anterior, mesmo se o destino tiver sido recriado. A cópia inclui `db_industrial`,
+`db_financeiro` e `db_inference_app`; o DW v1 permanece separado.
+
+```powershell
+inference_api/.venv/Scripts/python.exe inference_api/scripts/copy_logical_databases.py --execute --source-env BancoModeloUse/.env.local --compose-env BancoModeloUse/.env.local --project inference_api --receipt inference_api/.local/copy-real-receipt.json
+```
+
+Após a cópia e a verificação da sessão, abrir `http://127.0.0.1:8875`. Para
+encerrar a aplicação sem perder o banco:
+
+```powershell
+docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml down
+```
+
+Em 16/10/2026, um **projeto Docker descartável** em portas `8878`–`8880`
+validou build, login e BI protegido, sete aliases indisponíveis sem RunPod,
+paridade no navegador, persistência do volume após `down`, cópia lógica de três
+bancos fixture, recusa da segunda execução e falha parcial injetada. Os
+recibos e capturas de tela locais ficam em `inference_api/.local/` (ignorados pelo Git),
+e o resumo verificável está na evidência da SPEC-008. Esse smoke não prova
+cópia dos bancos reais nem geração remota.
+
 ## Alvo futuro do ngrok
 
 O usuário escolheu usar apenas a autenticação da aplicação: bearer opaco
@@ -232,7 +327,7 @@ Testes locais sem infraestrutura remota:
 $env:INFERENCE_IDENTITY_DB_TEST = '1'
 inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v
 $env:NODE_PATH = 'C:/Users/vinic/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules'
-node inference_api/tests/browser_spec004.cjs
+node inference_api/tests/browser_spec008.cjs
 ```
 
 O pré-voo da SPEC-005 pode ser chamado sem Pod ou túnel:

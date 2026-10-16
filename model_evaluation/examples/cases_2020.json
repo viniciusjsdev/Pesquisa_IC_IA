@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "case_id": "integrado-produto-2020-01",
+      "question": "Como se comparam operacoes e vendas deste produto em 2020, e ha observacoes de resultado financeiro no ano?",
+      "domain": "integrado",
+      "queries": [
+        {"query": "product", "year": 2020, "id": 1000001},
+        {"query": "financial", "year": 2020}
+      ]
+    }
+  ]
+}

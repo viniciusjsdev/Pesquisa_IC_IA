@@ -27,8 +27,10 @@ def db_params(domain: str) -> dict:
         "password": _required(prefix + "PASSWORD"),
         "connect_timeout": 5,
     }
-    if params["host"] != "127.0.0.1" or params["port"] != 5544:
-        raise ValueError("Inference only accepts the isolated local PostgreSQL at 127.0.0.1:5544")
+    mode = os.getenv("INFERENCE_RUNTIME_MODE", "host")
+    allowed = ("db", 5432) if mode == "docker" else ("127.0.0.1", 5544)
+    if mode not in {"host", "docker"} or (params["host"], params["port"]) != allowed:
+        raise ValueError(f"Inference only accepts the isolated PostgreSQL for {mode} mode")
     expected = {"INDUSTRIAL": "db_industrial", "FINANCEIRO": "db_financeiro"}[domain]
     if params["dbname"] != expected:
         raise ValueError(f"Unexpected {domain} database")

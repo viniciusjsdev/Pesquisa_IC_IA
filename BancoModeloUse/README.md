@@ -9,9 +9,9 @@ implementado.
 
 O [desenho da avaliação](docs/arquitetura_avaliacao_modelos.md) separa dois
 cenários: evidências iguais para comparar raciocínio e pesquisa com tools para
-medir também a busca. A [SPEC-007](../specs/active/SPEC-007/SPEC.md) documenta
-o primeiro passo implementável, um exportador local de pacotes fixos da DW.
-Essa exportação e a avaliação científica ainda não foram implementadas.
+medir também a busca. O [exportador local da SPEC-007](../model_evaluation/README.md)
+prepara pacotes fixos candidatos a partir da DW. A avaliação científica e o
+harness por API ainda não foram implementados.
 
 A [primeira API de inferência compartilhada](../inference_api/README.md)
 consulta estes dois bancos locais com SQL fixo e transações somente leitura.

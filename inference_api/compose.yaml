@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: pesquisa_local
+      POSTGRES_PASSWORD: ${FINANCEIRO_DB_PASSWORD:?FINANCEIRO_DB_PASSWORD is required}
+      POSTGRES_DB: postgres
+    volumes:
+      - research_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pesquisa_local -d postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    restart: unless-stopped
+
+  app:
+    build:
+      context: ..
+      dockerfile: inference_api/Dockerfile
+    environment:
+      INFERENCE_RUNTIME_MODE: docker
+      INDUSTRIAL_DB_HOST: db
+      INDUSTRIAL_DB_PORT: "5432"
+      INDUSTRIAL_DB_NAME: db_industrial
+      INDUSTRIAL_DB_USER: pesquisa_local
+      INDUSTRIAL_DB_PASSWORD: ${FINANCEIRO_DB_PASSWORD:?FINANCEIRO_DB_PASSWORD is required}
+      FINANCEIRO_DB_HOST: db
+      FINANCEIRO_DB_PORT: "5432"
+      FINANCEIRO_DB_NAME: db_financeiro
+      FINANCEIRO_DB_USER: pesquisa_local
+      FINANCEIRO_DB_PASSWORD: ${FINANCEIRO_DB_PASSWORD:?FINANCEIRO_DB_PASSWORD is required}
+      INFERENCE_VLLM_URL: ${INFERENCE_VLLM_URL:-}
+      INFERENCE_VLLM_TOKEN: ${INFERENCE_VLLM_TOKEN:-}
+      RUNPOD_BALANCE_READ_KEY: ${RUNPOD_BALANCE_READ_KEY:-}
+    ports:
+      - "127.0.0.1:${INFERENCE_HTTP_PORT:-8875}:8765"
+    depends_on:
+      db:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp
+    restart: unless-stopped
+
+volumes:
+  research_pgdata:

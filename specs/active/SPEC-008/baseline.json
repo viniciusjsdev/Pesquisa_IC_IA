@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "spec_id": "SPEC-008",
+  "contract_version": 2,
+  "captured_at": "2026-10-16",
+  "tests": {
+    "count": 6,
+    "paths": [
+      "inference_api/tests/browser_spec004.cjs",
+      "inference_api/tests/test_contract.py",
+      "inference_api/tests/test_criteria.py",
+      "inference_api/tests/test_identity.py",
+      "inference_api/tests/test_serving.py",
+      "inference_api/tests/test_session_checks.py"
+    ],
+    "commands": [
+      "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v",
+      "node inference_api/tests/browser_spec004.cjs"
+    ],
+    "notes": [
+      "Seis arquivos de teste observados; count mede arquivos, não casos de teste.",
+      "browser_spec004.cjs lê diretamente web/index.html e deve migrar com o front.",
+      "O HTML BI externo foi fixado como fixture de regressão na SPEC-008; não é rota da aplicação.",
+      "O cluster Windows escuta somente em 127.0.0.1:5544; não há Compose ativo nesta frente."
+    ]
+  },
+  "cli": [
+    {"command": "inference_api/.venv/Scripts/python.exe inference_api/run.py serve", "flags": []}
+  ],
+  "json_contracts": [
+    {"path": "runpod/serving/manifest.json", "fields": ["schema_version", "base_alias", "adapters"]}
+  ],
+  "persistence": [
+    {"path": "inference_api/src/inference_api/storage.py", "public_methods": ["create_prompt", "list_prompts", "create_criteria", "list_criteria", "create_run", "get_run", "list_runs", "add_feedback"]},
+    {"path": "inference_api/src/inference_api/auth.py", "public_methods": ["login", "authenticate", "logout"]}
+  ],
+  "schemas": [],
+  "protected_paths": [
+    {"path": "FineTuning/data", "kind": "directory"},
+    {"path": "FineTuning/results", "kind": "directory"},
+    {"path": "BancoModeloUse/dw", "kind": "directory"},
+    {"path": "model_evaluation", "kind": "directory"}
+  ],
+  "decisions": [
+    {"path": "specs/active/SPEC-003/SPEC.md", "status": "done: identidade individual e uma vaga global", "effective_before_spec": true},
+    {"path": "specs/active/SPEC-004/SPEC.md", "status": "done: bancada exploratória local", "effective_before_spec": true},
+    {"path": "BancoModeloUse/dw/README.md", "status": "DW local v1 existe e permanece separado deste BI offline", "effective_before_spec": true}
+  ]
+}

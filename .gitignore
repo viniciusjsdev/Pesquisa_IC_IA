@@ -2,6 +2,8 @@ venv/
 BancoModeloUse/.venv/
 inference_api/.venv/
 inference_api/.local/
+inference_api/frontend/dist/
+inference_api/frontend/node_modules/
 runpod/serving/.local/
 runpod/serving/terraform/.terraform/
 runpod/serving/terraform/.local/
@@ -10,6 +12,7 @@ runpod/serving/terraform/*.tfstate.*
 runpod/serving/terraform/*.tfvars
 runpod/serving/terraform/*.tfplan
 BancoModeloUse/.local/
+model_evaluation/.local/
 BancoModeloUse/.env.local
 BancoModeloUse/reports/local_database_validation.json
 BancoModeloUse/reports/dw_validation.json

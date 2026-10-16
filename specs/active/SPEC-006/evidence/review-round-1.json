@@ -1,0 +1,123 @@
+{
+  "spec_id": "SPEC-006",
+  "contract_version": 1,
+  "status": "changes_requested",
+  "thread_id": "01a142eb-0554-7810-8ef7-78362d4a7bbb",
+  "runtime": {
+    "classification": "critical_review",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high"
+  },
+  "review_input": [
+    "Revisão independente e somente leitura de AGENTS.md, SPEC.md, SPEC.execution.json, completion.json, lifecycle.json, BancoModeloUse/dw/cli.py, migrations/001_init.sql, tests/test_contract.py, bootstrap_local.py, BancoModeloUse/dw/README.md, BancoModeloUse/README.md e arquitetura_avaliacao_modelos.md.",
+    "Execução dos testes com Python 3.12.14 empacotado, bytecode desativado e dependências existentes da venv; execução direta de cli.verify() para evitar a escrita do relatório pelo comando CLI.",
+    "Leituras PostgreSQL locais em transações READ ONLY no cluster 127.0.0.1:5544; nenhum build, RunPod, ngrok, Terraform, alteração de arquivo ou escrita em banco foi executado.",
+    "Checkout em HEAD 772ea0d465d5b8faec4b4229e75b0a5486d219b1; implementação da SPEC-006 rastreada ao commit 622fc0fb9316feac4ee55b6976effc882d4dbc22. A árvore contém mudanças posteriores da SPEC-007 e documentação, preservadas sem edição."
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "regressed",
+      "evidence": [
+        "Os três testes de BancoModeloUse/dw/tests/test_contract.py passaram.",
+        "A suíte cobre somente key_parts, outside_label e alteração do fingerprint."
+      ],
+      "notes": [
+        "AC-003 exige fixtures para grão, FKs, data efetiva e drill-through; essa cobertura não existe.",
+        "O comando canônico com BancoModeloUse/.venv/Scripts/python.exe não executa porque a venv aponta para um Python 3.12.10 removido. A execução equivalente passou com o Python empacotado 3.12.14."
+      ]
+    },
+    {
+      "category": "cli",
+      "result": "regressed",
+      "evidence": [
+        "cli.py:426-548 implementa cinco consultas fixas e parametrizadas.",
+        "cli.py:551-587 implementa trace somente quando o chamador já conhece um ID de fato.",
+        "arquitetura_avaliacao_modelos.md:58 reconhece que agregados não enumeram os IDs contribuintes."
+      ],
+      "notes": [
+        "Consultas agregadas de máquina, produto, qualidade e material não fornecem chave de fato para drill-through.",
+        "trace não retorna a linha do fato DW nem os vínculos derivados nela, como ordem e produto de uma inspeção."
+      ]
+    },
+    {
+      "category": "json_contracts",
+      "result": "regressed",
+      "evidence": [
+        "SPEC.md mantém status ready.",
+        "SPEC.execution.json:6 mantém status ready e linhas 19-21 roteiam resume da thread de implementation.",
+        "completion.json:4 declara completed e lifecycle.json:4-5 declara completed_locally/pending_independent_review."
+      ],
+      "notes": [
+        "O estado durável está contraditório e não representa corretamente a passagem da implementação para revisão."
+      ]
+    },
+    {
+      "category": "persistence",
+      "result": "changed_as_approved",
+      "evidence": [
+        "Leitura local confirmou db_pesquisa_dw no cluster isolado, schema_version 1 e fingerprint 64493abfdfd0b87535778eafd9d5938fad6039a99d9307f85e4cfc6eec0e89f2.",
+        "A migração cria schema próprio, manifest, dimensões e sete fatos.",
+        "build cria somente o destino constante db_pesquisa_dw e envolve migração/carga em transação; uma carga com fingerprint igual segue already_current."
+      ],
+      "notes": [
+        "A criação do banco em si não é transacional e pode deixar banco vazio após falha, comportamento documentado e aceito pela SPEC.",
+        "Nenhuma persistência foi modificada nesta revisão."
+      ]
+    },
+    {
+      "category": "schemas",
+      "result": "changed_as_approved",
+      "evidence": [
+        "001_init.sql define PK por ID tipado, source_file_id, period_index, original_id e unicidade source_file_id/original_id para todos os fatos.",
+        "FKs materiais ligam fatos às dimensões e consumo a operação, material e lote.",
+        "A carga preserva uma linha por ID das sete tabelas selecionadas; as contagens atuais reconciliaram."
+      ],
+      "notes": [
+        "order_id e production_lot_id são vínculos derivados e preservados, mas não possuem dimensões/FKs próprias no DW; sua correção depende da consulta de carga e de validação externa insuficientemente testada."
+      ]
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": [
+        "bootstrap_local.py:176, cli.py:281,324,361,395,491,560,573 configuram transações READ ONLY nos bancos consultados.",
+        "A leitura independente confirmou data_directory em BancoModeloUse/.local/postgres e porta 5544.",
+        "Não houve build ou chamada que alterasse db_industrial, db_financeiro, db_datamind_dw ou arquivos protegidos."
+      ],
+      "notes": [
+        "A evidência comprova o comportamento do código e desta revisão; não é auditoria histórica de todos os acessos anteriores ao cluster."
+      ]
+    },
+    {
+      "category": "decisions",
+      "result": "preserved",
+      "evidence": [
+        "As consultas mantêm vendas observadas separadas de receita contábil, quantidades operacionais separadas de produção final e preço histórico separado de custo realizado.",
+        "A consulta financeira retorna linhas observadas e cobertura, sem soma anual.",
+        "A documentação mantém avaliação científica, integração API, harness, RunPod e ngrok fora do escopo."
+      ],
+      "notes": [
+        "Aprovação científica e integração por API continuam expressamente não comprovadas."
+      ]
+    }
+  ],
+  "findings": [
+    "Material — REQ-006 e AC-003 não estão satisfeitos para drill-through. As consultas machine, product, quality e material retornam apenas IDs dimensionais e agregados; não retornam IDs dos fatos contribuintes. trace exige que o consumidor já conheça um ID de fato e retorna raw/public, mas não a linha do fato DW nem vínculos derivados. A própria arquitetura registra essa limitação. É necessário fornecer drill-through determinístico a partir do resultado agregado ou reconciliar formalmente o requisito e os critérios de aceite.",
+    "Material — verify não demonstra reconciliação suficiente da carga DW. Em cli.py:332-419 ele verifica contagens, metadados básicos de linhagem, apenas primeiro/último ID por fato, três agregados e contagens de flags. Não compara com as fontes os demais valores, datas e vínculos dos sete fatos ou atributos das dimensões. Assim, corrupção de receita/lucro financeiro, duração de parada, quantidades de qualidade/consumo, preços ou chaves derivadas pode passar pelo mesmo verify usado por already_current. Implementar comparação bidirecional, hashes determinísticos ou verificações equivalentes por coluna e vínculo.",
+    "Material — a evidência de testes não atende AC-003. test_contract.py possui apenas três testes unitários e não contém fixtures de migração/carga para grão, FKs, datas efetivas, consultas fixas, linhagem, idempotência ou recusas de destino/fingerprint divergentes. Os testes atuais passarem não sustenta aprovação dessas propriedades.",
+    "Contrato durável — SPEC.md e SPEC.execution.json continuam ready e apontam para a thread de implementation, enquanto completion.json e lifecycle.json afirmam implementação local concluída e revisão pendente. Reconciliar status e finalidade da thread antes da nova revisão para que o manifest não possa rotear novamente a implementação ou representar estado incompatível."
+  ],
+  "evidence": [
+    "cli.verify() executado diretamente em leitura confirmou 75 arquivos e 540600 linhas de origem: 539140 industriais e 1460 financeiras.",
+    "Contagens atuais confirmadas: 429565 operações, 1200 paradas, 120 vendas, 72 observações financeiras, 4021 inspeções, 1800 consumos e 180 observações de preço.",
+    "Agregados confirmados pelo verificador atual: operation_quantity=61592575, sale_quantity=107089 e observed_sales_value=5414227.91.",
+    "Flags atuais confirmadas: 224336 operações ligadas a ordens invertidas, 9 operações fora do rótulo, 2258 inspeções acima do lote, 2 inspeções fora do rótulo e 72 observações financeiras originadas de Float.",
+    "Consultas locais reproduziram product/2020/1000001 com 6168 operações, quantidade 611785, uma venda e valor 53161.6; machine/2020/1000001 com 8784 operações, 21 paradas e 1899 minutos; financial/2020 retornou no_observation.",
+    "trace fact_sale 1000001 alcançou o CSV, raw_p1.vendas e public.vendas com SHA-256 registrado, mas esse ID não é identificado pelo resultado agregado product/2020/1000001, demonstrando a lacuna de navegação.",
+    "Os três testes existentes passaram em 0.001s com Python empacotado 3.12.14. O executável canônico da venv falhou antes da execução porque referencia um Python removido.",
+    "git diff --check terminou com exit code 0 e apenas avisos LF/CRLF; nenhum arquivo foi editado nesta revisão.",
+    "A carga isolada existente e os limites científicos estão sustentados para o estado local observado, mas as lacunas de verificação, testes, drill-through e lifecycle impedem aprovação da SPEC-006."
+  ],
+  "usage": null
+}

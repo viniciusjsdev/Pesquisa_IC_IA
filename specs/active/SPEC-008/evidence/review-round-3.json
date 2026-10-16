@@ -1,0 +1,30 @@
+{
+  "spec_id": "SPEC-008",
+  "contract_version": 2,
+  "status": "changes_requested",
+  "thread_id": null,
+  "runtime": {"classification": "critical_review", "model": "gpt-5.6-sol", "reasoning": "high"},
+  "review_input": [
+    "Terceira rodada read-only da subagente /root/spec008_review após correção de F-001-R2 em 16/10/2026.",
+    "copy_logical_databases.py, recibos e evidência dos ensaios enum em postgres e cópia fixture limpa.",
+    "Schemas execution/completion/review-round-2 e git diff --check; sem execução de Docker ou banco pela revisora."
+  ],
+  "baseline_assessment": [
+    {"category": "tests", "result": "changed_as_approved", "evidence": ["Recusa de enum em postgres e cópia fixture limpa foram registradas."], "notes": ["Não foram reproduzidas na revisão read-only."]},
+    {"category": "cli", "result": "regressed", "evidence": ["template1 não era verificado, mas createdb o clonava implicitamente; enum em template1 podia passar e propagar aos três bancos."], "notes": ["pg_dump fail-closed resolveu o bypass anterior em postgres."]},
+    {"category": "json_contracts", "result": "preserved", "evidence": ["Schemas declarados validaram."], "notes": []},
+    {"category": "persistence", "result": "preserved", "evidence": ["Recibo fresh confirmou hashes e contagens; nenhuma cópia real ocorreu."], "notes": []},
+    {"category": "schemas", "result": "preserved", "evidence": ["SPEC, manifest e lifecycle permaneceram coerentes com estado review."], "notes": []},
+    {"category": "protected_paths", "result": "preserved", "evidence": ["Revisão não alterou arquivos, contêineres ou bancos."], "notes": []},
+    {"category": "decisions", "result": "preserved", "evidence": ["Orçamento pré-run, fronteira HTTP e limites científicos permaneceram corrigidos."], "notes": []}
+  ],
+  "findings": [
+    "F-001-R3 Alta: template1 não participava do inventário e da verificação de esquema; createdb sem --template clonava template1. Um enum em template1 poderia ser propagado silenciosamente, contrariando REQ-012. Exigir preflight de template1 e ensaio de recusa antes de banco/recibo."
+  ],
+  "evidence": [
+    "F-001-R2 em postgres foi resolvido por pg_dump --schema-only, roles/tablespaces e ensaio enum.",
+    "template1 contendo tipo customizado não era coberto pelo código ou pelos recibos da terceira rodada.",
+    "git diff --check sem erros; revisão somente leitura."
+  ],
+  "usage": null
+}

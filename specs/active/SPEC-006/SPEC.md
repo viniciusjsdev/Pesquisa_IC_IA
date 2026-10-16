@@ -1,7 +1,7 @@
 ---
 id: SPEC-006
 title: DW local rastreavel para associacoes industriais e financeiras
-status: ready
+status: done
 contract_version: 1
 ---
 
@@ -96,6 +96,7 @@ Perguntas representativas, respondidas com recorte explicito e linhas rastreavei
 
 - VAL-001: `git diff --check`.
 - VAL-002: `BancoModeloUse/.venv/Scripts/python.exe -m unittest discover -s BancoModeloUse/dw/tests -v`.
+- VAL-005: com o cluster local já carregado, `BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/tests/run_existing_load.py` executa as provas de leitura integral, grão, FKs, consultas, paginação e rastreio.
 - VAL-003: `BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py verify` apos carga nova; registrar DB, fingerprints, contagens e flags sem expor credenciais.
 - VAL-004: Comparar saídas de consultas do DW com SQL de leitura nos dois bancos fonte e conferir IDs raw/public.
 
@@ -106,3 +107,5 @@ Revisao independente da migracao/carga e das afirmacoes cientificas antes de con
 ## Execution and runtime
 
 Executar conforme `SPEC.execution.json`. Esta thread ja foi criada para a frente DW e e a unica escritora durante esta etapa.
+
+Implementação local concluída no histórico `622fc0f` e corrigida em 16/10/2026 no checkout sobre `772ea0d` após a [primeira revisão independente](evidence/review-round-1.json). A correção acrescentou reconciliação de todas as linhas/colunas carregadas, navegação `contributors` → `trace`, testes com fixtures e integração somente leitura. A [segunda revisão independente](evidence/review.json) aprovou a implementação local sem achados restantes. `done` se refere a esta SPEC local; integração à API, harness, gold set e avaliação científica permanecem fora do escopo.

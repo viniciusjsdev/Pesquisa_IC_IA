@@ -1,7 +1,7 @@
 ---
 id: SPEC-007
 title: Pacotes fixos e rastreaveis de evidencia da DW
-status: ready
+status: done
 contract_version: 1
 ---
 
@@ -13,7 +13,7 @@ Preparar, sem chamar LLM, pacotes imutaveis de evidencias para que modelos difer
 
 ## Context
 
-Em 14/10/2026, sobre `ad6edcb` mais mudancas locais sem commit, a SPEC-006 implementou `db_pesquisa_dw` com cinco consultas fixas (`machine`, `product`, `financial`, `quality`, `material`), `verify` e linhagem ate CSV/raw/public. A carga local foi verificada, mas a revisao independente da SPEC-006 permanece pendente. A API exploratoria da SPEC-001 le diretamente os dois bancos de origem, escolhe as duas tools anuais por escopo declarado e guarda bundle `schema_version: 2`; ela nao consulta a DW nem mede escolha autonoma de tools. A SPEC-001 foi aprovada em revisao independente em 14/10/2026, o que nao equivale a um benchmark cientifico.
+Em 14/10/2026, sobre `ad6edcb` mais mudancas locais sem commit, a SPEC-006 implementou `db_pesquisa_dw` com cinco consultas fixas (`machine`, `product`, `financial`, `quality`, `material`), `verify` e linhagem ate CSV/raw/public. A carga local foi verificada naquela etapa; a [revisao independente da SPEC-006](../SPEC-006/evidence/review.json) foi aprovada em 16/10/2026 apos correcoes de reconciliacao e drill-through. A API exploratoria da SPEC-001 le diretamente os dois bancos de origem, escolhe as duas tools anuais por escopo declarado e guarda bundle `schema_version: 2`; ela nao consulta a DW nem mede escolha autonoma de tools. A SPEC-001 foi aprovada em revisao independente em 14/10/2026, o que nao equivale a um benchmark cientifico.
 
 Esta SPEC e o primeiro passo local do desenho de dois cenarios. O cenario B (modelo escolhe tools), a comparacao de respostas e o gold set pertencem a contratos posteriores. Pacotes exportados aqui sao candidatos a casos; nao sao casos cientificamente aprovados.
 
@@ -82,7 +82,7 @@ O segundo item do exemplo retorna ausencia de observacao para `resultados_financ
 
 - O executor nao deve iniciar Pod, ngrok, treino ou inferencia por implicacao desta SPEC. Nao abrir outra thread automaticamente; `automatic_handoff` e falso.
 - O checkout e compartilhado; apenas um escritor ativo por vez. Preservar mudancas locais preexistentes e resultados protegidos.
-- A implementacao pode ser validada localmente antes da revisao independente da SPEC-006, mas os pacotes nao podem ser rotulados como benchmark cientifico oficial antes dessa revisao e do gold set aprovado.
+- A implementacao foi validada localmente e as revisoes independentes das SPECs 006 e 007 foram aprovadas em 16/10/2026. Os pacotes nao podem ser rotulados como benchmark cientifico oficial antes da selecao de casos e do gold set aprovados.
 - A consulta `financial` nao possui filtro por ID; `machine`, `product`, `quality` e `material` devem exigir ID no manifesto para limitar o pacote a uma entidade. Nao alterar a semantica do CLI da DW por conveniencia do exportador.
 - As consultas agregadas da DW retornam tabelas fonte e filtros, nao a lista completa de IDs contribuintes. `trace` comprova a linhagem de um fato individual quando seu ID e conhecido. O exportador nao deve afirmar linhagem por linha de cada agregado.
 
@@ -97,7 +97,7 @@ O segundo item do exemplo retorna ausencia de observacao para `resultados_financ
 
 ## Affected areas
 
-- `model_evaluation/` novo (schema, CLI, testes e README), `.gitignore`, `README.md`, `BancoModeloUse/docs/arquitetura_avaliacao_modelos.md`, `BancoModeloUse/dw/README.md`, `specs/README.md` e esta SPEC. A API exploratoria e os bancos existentes sao apenas referencias de leitura.
+- `model_evaluation/` novo (schema, CLI, testes e README), `.gitignore`, `README.md`, `AGENTS.md`, `BancoModeloUse/README.md`, `BancoModeloUse/docs/arquitetura_avaliacao_modelos.md`, `BancoModeloUse/dw/README.md`, `inference_api/README.md`, `docs/arquitetura_inferencia_compartilhada.md`, `specs/README.md` e esta SPEC. A API exploratoria e os bancos existentes sao apenas referencias de leitura; somente a documentacao da API foi atualizada.
 
 ## References
 
@@ -106,7 +106,7 @@ O segundo item do exemplo retorna ausencia de observacao para `resultados_financ
 - `BancoModeloUse/dw/cli.py`: `verify` e `query`, contratos executaveis que o exportador deve reutilizar.
 - `BancoModeloUse/docs/arquitetura_avaliacao_modelos.md`: desenho dos dois cenarios, comparabilidade e limites cientificos.
 - `inference_api/README.md` e `specs/active/SPEC-001/SPEC.md`: bundle exploratorio atual e ausencia de escolha autonoma de tools.
-- `specs/active/SPEC-006/SPEC.md`: grao, linhagem, regras de dominio e revisao pendente do DW.
+- `specs/active/SPEC-006/SPEC.md`: grao, linhagem, regras de dominio e revisao local aprovada do DW.
 
 ## Skills
 
@@ -122,8 +122,8 @@ O segundo item do exemplo retorna ausencia de observacao para `resultados_financ
 
 ## Review requirements
 
-Revisao independente Sol/high do contrato publico de evidencias, determinismo, linhagem e separacao entre pacote, gold set e comparacao cientifica. A revisao da SPEC-006 continua independente e necessaria antes de promover pacotes a casos oficiais.
+Revisao independente Sol/high do contrato publico de evidencias, determinismo, linhagem e separacao entre pacote, gold set e comparacao cientifica. As revisoes das SPECs 006 e 007 foram aprovadas separadamente para seus escopos locais; a promocao de pacotes a casos oficiais ainda depende de contrato cientifico e gold set.
 
 ## Execution and runtime
 
-Executar conforme `SPEC.execution.json` em thread propria quando o checkout compartilhado estiver livre. Esta SPEC nao inicia execucao automaticamente e nao autoriza RunPod ou ngrok.
+Implementacao local realizada nesta conversa em 16/10/2026 sobre `772ea0d`, sem criar thread propria, por pedido do usuario para prosseguir. O exportador e os schemas estao em [`model_evaluation/`](../../../model_evaluation/README.md); a [evidencia local](evidence/local-2026-10-16.md) registra os testes e a leitura da carga existente. O manifest registra a thread efetiva. As [revisoes desta SPEC](evidence/review.json) e da [SPEC-006](../SPEC-006/evidence/review.json) aprovaram o escopo local; o harness, o gold set e RunPod/ngrok nao foram executados.

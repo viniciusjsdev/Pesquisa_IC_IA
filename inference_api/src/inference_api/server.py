@@ -1,5 +1,7 @@
 """Small localhost HTTP adapter around the versioned inference contract."""
 import json
+import mimetypes
+import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
@@ -7,10 +9,28 @@ from uuid import UUID
 
 from . import auth, budget, limits, models, service, storage
 
-WEB = Path(__file__).resolve().parents[2] / "web" / "index.html"
+ROOT = Path(__file__).resolve().parents[2]
+WEB = ROOT / "frontend" / "dist"
+BI_SNAPSHOT = ROOT / "private" / "bi_snapshot.json"
 
 
 class Handler(BaseHTTPRequestHandler):
+    def _static(self, path: str) -> None:
+        relative = "index.html" if path == "/" else path.lstrip("/")
+        target = (WEB / relative).resolve()
+        if not target.is_relative_to(WEB.resolve()) or not target.is_file():
+            self._send(404, {"error": "not_found"})
+            return
+        body = target.read_bytes()
+        self.send_response(200)
+        self.send_header("Content-Type", mimetypes.guess_type(target.name)[0] or "application/octet-stream")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-store" if target.name == "index.html" else "public, max-age=31536000, immutable")
+        self.send_header("Referrer-Policy", "no-referrer")
+        self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; object-src 'none'; form-action 'self'")
+        self.end_headers()
+        self.wfile.write(body)
+
     def _send(self, status: int, payload: dict | list) -> None:
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
@@ -31,16 +51,11 @@ class Handler(BaseHTTPRequestHandler):
 
     def _dispatch(self, method: str) -> None:
         path = urlparse(self.path).path
-        if method == "GET" and path == "/":
-            body = WEB.read_bytes()
-            self.send_response(200)
-            self.send_header("Content-Type", "text/html; charset=utf-8")
-            self.send_header("Content-Length", str(len(body)))
-            self.send_header("Cache-Control", "no-store")
-            self.send_header("Referrer-Policy", "no-referrer")
-            self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'")
-            self.end_headers()
-            self.wfile.write(body)
+        if method == "GET" and path == "/health":
+            self._send(200, {"status": "up"})
+            return
+        if method == "GET" and not path.startswith("/api/"):
+            self._static(path)
             return
         if not path.startswith("/api/"):
             self._send(404, {"error": "not_found"})
@@ -57,6 +72,8 @@ class Handler(BaseHTTPRequestHandler):
                 return
             if method == "GET" and path == "/api/me":
                 self._send(200, {"id": principal.id, "username": principal.username})
+            elif method == "GET" and path == "/api/bi/snapshot":
+                self._send(200, json.loads(BI_SNAPSHOT.read_text(encoding="utf-8")))
             elif method == "GET" and path == "/api/budget":
                 self._send(200, budget.status())
             elif method == "POST" and path == "/api/logout":
@@ -115,7 +132,12 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def serve() -> None:
-    storage.list_prompts()  # Fail startup if the application database is unavailable.
-    server = ThreadingHTTPServer(("127.0.0.1", 8765), Handler)
-    print("Inference API listening at http://127.0.0.1:8765")
+    mode = os.getenv("INFERENCE_RUNTIME_MODE", "host")
+    if mode not in {"host", "docker"}:
+        raise ValueError("INFERENCE_RUNTIME_MODE must be host or docker")
+    if mode == "host":
+        storage.list_prompts()  # Preserve fail-fast behavior for direct local execution.
+    host = "0.0.0.0" if mode == "docker" else "127.0.0.1"
+    server = ThreadingHTTPServer((host, 8765), Handler)
+    print(f"Inference API listening at http://{host}:8765")
     server.serve_forever()

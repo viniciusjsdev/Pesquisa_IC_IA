@@ -1,0 +1,106 @@
+{
+  "spec_id": "SPEC-007",
+  "contract_version": 1,
+  "status": "approved",
+  "thread_id": "01a142eb-54c4-7b03-81e4-fb44b3abb2ee",
+  "runtime": {
+    "classification": "critical_review",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high"
+  },
+  "review_input": [
+    "Rodada 2 da mesma revisão independente, confrontando F-001 e F-002 do parecer anterior com o checkout atual.",
+    "model_evaluation/export.py, schemas/evidence_packet.schema.json, tests/test_export.py, model_evaluation/README.md e evidence/local-2026-10-16.md.",
+    "Schema de revisão, review-round-1.json, estado Git, git diff --check e provas adversariais somente leitura com Python 3.12.14."
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": [
+        "tests/test_export.py agora contém 10 testes, incluindo adulteração do schema, os cinco formatos de consulta, verify_packet_bytes e Unicode inválido antes dos callbacks de banco.",
+        "As provas equivalentes executadas diretamente em memória confirmaram as correções de F-001 e F-002."
+      ],
+      "notes": [
+        "A suíte unittest completa não pôde ser reproduzida neste sandbox: os 10 testes pararam em setUp porque tempfile.TemporaryDirectory não encontrou diretório gravável.",
+        "Essa é uma limitação do ambiente read-only, não uma falha observada nos testes; o registro local informa 10 testes aprovados em ambiente gravável."
+      ]
+    },
+    {
+      "category": "cli",
+      "result": "changed_as_approved",
+      "evidence": [
+        "export.py:80-85 valida a codificação UTF-8 da pergunta durante validate_manifest.",
+        "Na prova adversarial com chr(0xD800), build_packets retornou ExportError e as listas de chamadas verify/query permaneceram vazias."
+      ],
+      "notes": [
+        "F-002 foi resolvido antes do primeiro acesso ao banco."
+      ]
+    },
+    {
+      "category": "json_contracts",
+      "result": "changed_as_approved",
+      "evidence": [
+        "O pacote existente continua válido no Draft 2020-12 sem erros.",
+        "A adulteração combinada do parecer anterior agora produz 3 erros de schema; divergência da consulta nos filtros, contagem de cobertura incompatível e campo gold_set em uma linha produzem um erro cada.",
+        "verify_packet_bytes rejeitou filtros com ano diferente mesmo após recálculo do checksum."
+      ],
+      "notes": [
+        "F-001 foi resolvido para os casos materiais demonstrados na primeira rodada."
+      ]
+    },
+    {
+      "category": "persistence",
+      "result": "preserved",
+      "evidence": [
+        "publish_packets chama verify_packet_bytes para cada payload antes de verificar ou criar o destino.",
+        "O pacote local existente passou em verify_packet_bytes com o case_id esperado e preservou financial.coverage.state como no_observation."
+      ],
+      "notes": [
+        "Nenhuma publicação ou escrita foi executada nesta revisão read-only."
+      ]
+    },
+    {
+      "category": "schemas",
+      "result": "changed_as_approved",
+      "evidence": [
+        "evidence_packet.schema.json define filtros fechados para entidades e financeiro, coberturas fechadas e formatos fechados de linha para as cinco consultas.",
+        "Branches oneOf vinculam query, filtros, cobertura e formato das linhas; condicionais exigem zero linhas para no_observation e pelo menos uma para observed.",
+        "verify_packet_bytes complementa o schema com checksum, canonicalidade, igualdade entre filtros e metadados e contagem exata de linhas."
+      ],
+      "notes": []
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": [
+        "O estado Git não mostra alterações em CSVs, splits, pesos, checkpoints, resultados brutos ou artigos.",
+        "Nenhum build, RunPod, ngrok, Terraform, commit ou edição foi executado."
+      ],
+      "notes": [
+        "Os arquivos da SPEC-007 continuam não rastreados no checkout compartilhado; por isso git diff não apresenta conteúdo para esses caminhos."
+      ]
+    },
+    {
+      "category": "decisions",
+      "result": "preserved",
+      "evidence": [
+        "README e evidência local continuam classificando os pacotes como candidatos locais.",
+        "Gold set, harness científico, cenário B e revisão da SPEC-006 permanecem dependências separadas."
+      ],
+      "notes": []
+    }
+  ],
+  "findings": [],
+  "evidence": [
+    "F-001 resolvido: a prova adversarial anteriormente aceita com zero erros agora retorna 3 erros de schema.",
+    "F-001 resolvido: alterações isoladas em filters.query, coverage.rows e campo extra gold_set são rejeitadas pelo schema.",
+    "F-001 resolvido: verify_packet_bytes rejeita divergência semântica entre filtros e item mesmo com checksum recalculado.",
+    "F-002 resolvido: pergunta com surrogate Unicode isolado falha com ExportError antes de verify_fn ou query_fn; chamadas observadas: nenhuma.",
+    "O pacote existente passou no schema atual e em verify_packet_bytes(expected_case_id='integrado-produto-2020-01').",
+    "git diff --check concluiu com exit code 0, emitindo apenas avisos LF/CRLF.",
+    "A suíte completa foi tentada com o Python empacotado e PYTHONPATH solicitado, mas todos os 10 casos foram interrompidos em TemporaryDirectory pela ausência deliberada de área gravável no sandbox; nenhum teste alcançou o corpo testado nessa execução.",
+    "Hashes atuais: export.py d3efbaf4e4ef8ea29a0a70e4e0f5e05d97d5ddb5462957a704d072a857100aff; evidence_packet.schema.json dcb40962de7336880d2504e52804519ab144b4fbe5977d135f01fd6f9a62b4d8; test_export.py a16a39c7cdc09143b8a8e79d6fee60c6f6333d80d5621a7a5a0943a9f9abb59f."
+  ],
+  "usage": null
+}

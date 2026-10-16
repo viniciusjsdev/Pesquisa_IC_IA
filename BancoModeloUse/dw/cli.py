@@ -6,6 +6,7 @@ import argparse
 from datetime import date, datetime
 from decimal import Decimal
 import hashlib
+from itertools import zip_longest
 import json
 from pathlib import Path
 import re
@@ -135,7 +136,28 @@ def load_rows(target_cur, origin, query: str, table: str, columns: tuple[str, ..
     return count
 
 
-def load_dimensions(cur, origins: dict, ids: dict) -> None:
+def compare_rows(target_cur, origin, query: str, table: str, columns: tuple[str, ...], transform,
+                 *, batch_size: int = 5000) -> int:
+    """Compare every loaded value with the same source projection used by build."""
+    target_query = sql.SQL('SELECT {} FROM dw.{} ORDER BY {}').format(
+        sql.SQL(',').join(map(sql.Identifier, columns)), sql.Identifier(table), sql.Identifier(columns[0]))
+    count = 0
+    with origin.cursor(name=f'compare_origin_{table}') as origin_cur, \
+            target_cur.connection.cursor(name=f'compare_dw_{table}') as dw_cur:
+        origin_cur.itersize = dw_cur.itersize = batch_size
+        origin_cur.execute(query)
+        dw_cur.execute(target_query)
+        for expected, actual in zip_longest((transform(row) for row in origin_cur), dw_cur):
+            source.require(expected is not None and actual is not None,
+                           f'{table} source/DW row count differs at position {count + 1}.')
+            comparable = lambda value: Decimal(str(value)) if isinstance(value, (float, Decimal)) else value
+            source.require(tuple(map(comparable, expected)) == tuple(map(comparable, actual)),
+                           f'{table} source/DW value differs at ID {expected[0]}.')
+            count += 1
+    return count
+
+
+def load_dimensions(cur, origins: dict, ids: dict, loader=load_rows) -> None:
     dimensions = [
         ('produtos', 'dim_product', ('product_id','period_index','source_file_id','original_id','name','unit'),
          'SELECT produto_id,nome_produto,unidade_medida FROM public.produtos ORDER BY produto_id'),
@@ -148,17 +170,17 @@ def load_dimensions(cur, origins: dict, ids: dict) -> None:
         def transform(row, table=source_table):
             period, original = key_parts(row[0])
             return (row[0], period, ids['industrial', period, table], original, row[1], row[2])
-        load_rows(cur, origins['industrial'], query, target_table, columns, transform)
+        loader(cur, origins['industrial'], query, target_table, columns, transform)
     columns = ('material_lot_id','period_index','source_file_id','original_id','material_id','received_on')
     def lot(row):
         period, original = key_parts(row[0])
         return (row[0], period, ids['industrial', period, 'lotes_materiais'], original, row[1], row[2])
-    load_rows(cur, origins['industrial'],
+    loader(cur, origins['industrial'],
               'SELECT lote_id,material_id,data_recebimento FROM public.lotes_materiais ORDER BY lote_id',
               'dim_material_lot', columns, lot)
 
 
-def load_facts(cur, origins: dict, ids: dict) -> dict[str, int]:
+def load_facts(cur, origins: dict, ids: dict, loader=load_rows) -> dict[str, int]:
     totals = {}
     def meta(domain, table, mapped_id):
         period, original = key_parts(mapped_id)
@@ -174,7 +196,7 @@ def load_facts(cur, origins: dict, ids: dict) -> dict[str, int]:
         return (r[0], file_id, period, original, start.date() if start else None, r[1], r[2], r[3],
                 start, end, r[6], r[7], r[8], bool(r[9]), bool(start and end and end < start),
                 outside_label('industrial', period, start))
-    totals[table] = load_rows(cur, origins['industrial'],
+    totals[table] = loader(cur, origins['industrial'],
         '''SELECT r.registro_id,r.ordem_producao_id,r.maquina_id,o.produto_id,r.hora_inicio,r.hora_fim,
                   r.quantidade_produzida_real,r.consumo_energia_kwh,r.tempo_setup_real_min,
                   (o.data_inicio_real > o.data_fim_real)
@@ -192,7 +214,7 @@ def load_facts(cur, origins: dict, ids: dict) -> dict[str, int]:
         duration = Decimal(str((end - start).total_seconds())) / 60 if start and end and not invalid else None
         return (r[0], file_id, period, original, start.date() if start else None, r[1], start, end,
                 duration, invalid, outside_label('industrial', period, start))
-    totals[table] = load_rows(cur, origins['industrial'],
+    totals[table] = loader(cur, origins['industrial'],
         'SELECT parada_id,maquina_id,hora_inicio_parada,hora_fim_parada FROM public.paradas_maquinas ORDER BY parada_id',
         'fact_downtime', columns, downtime)
 
@@ -204,7 +226,7 @@ def load_facts(cur, origins: dict, ids: dict) -> dict[str, int]:
         value = r[3] * r[2] if r[2] is not None and r[3] is not None else None
         return (r[0], file_id, period, original, r[1], r[4], r[2], r[3], value,
                 outside_label('financeiro', period, r[1]))
-    totals[table] = load_rows(cur, origins['financeiro'],
+    totals[table] = loader(cur, origins['financeiro'],
         'SELECT venda_id,data_venda,quantidade_vendida,preco_unitario_venda,produto_id FROM public.vendas ORDER BY venda_id',
         'fact_sale', columns, sale)
 
@@ -215,7 +237,7 @@ def load_facts(cur, origins: dict, ids: dict) -> dict[str, int]:
         file_id, period, original = meta('financeiro', table, r[0])
         return (r[0], file_id, period, original, r[1].date() if r[1] else None,
                 r[2], r[3], True, outside_label('financeiro', period, r[1]))
-    totals[table] = load_rows(cur, origins['financeiro'],
+    totals[table] = loader(cur, origins['financeiro'],
         'SELECT id,data_registro,receita_total,lucro_liquido FROM public.resultados_financeiros ORDER BY id',
         'fact_financial_observation', columns, financial)
 
@@ -229,7 +251,7 @@ def load_facts(cur, origins: dict, ids: dict) -> dict[str, int]:
         return (r[0], file_id, period, original, r[4].date() if r[4] else None, r[1], r[2],
                 r[3], r[5], r[6], r[7], bool(r[7] is not None and inspected > r[7]),
                 outside_label('industrial', period, r[4]))
-    totals[table] = load_rows(cur, origins['industrial'],
+    totals[table] = loader(cur, origins['industrial'],
         '''SELECT c.controle_id,c.lote_producao_id,l.ordem_producao_id,o.produto_id,c.data_inspecao,
                   c.unidades_aprovadas,c.unidades_rejeitadas,l.quantidade_total
            FROM public.controle_qualidade c JOIN public.lotes_producao l USING (lote_producao_id)
@@ -243,7 +265,7 @@ def load_facts(cur, origins: dict, ids: dict) -> dict[str, int]:
         file_id, period, original = meta('industrial', table, r[0])
         return (r[0], file_id, period, original, r[5].date() if r[5] else None,
                 r[1], r[2], r[3], r[4], outside_label('industrial', period, r[5]))
-    totals[table] = load_rows(cur, origins['industrial'],
+    totals[table] = loader(cur, origins['industrial'],
         'SELECT consumo_id,registro_id,material_id,lote_material_id,quantidade_consumida,data_registro FROM public.consumo_materiais ORDER BY consumo_id',
         'fact_material_consumption', columns, consumption)
 
@@ -254,7 +276,7 @@ def load_facts(cur, origins: dict, ids: dict) -> dict[str, int]:
         file_id, period, original = meta('financeiro', table, r[0])
         return (r[0], file_id, period, original, r[4], r[1], r[2], r[3],
                 outside_label('financeiro', period, r[4]))
-    totals[table] = load_rows(cur, origins['financeiro'],
+    totals[table] = loader(cur, origins['financeiro'],
         'SELECT custo_material_id,material_id,lote_material_id,custo_unitario,data_compra FROM public.materiais_custo_historico ORDER BY custo_material_id',
         'fact_material_price_observation', columns, price)
     return totals
@@ -318,15 +340,18 @@ def verify(*, items=None, source_report=None, target=None) -> dict:
         result = {'database': DATABASE, 'schema_version': VERSION, 'source_fingerprint': previous,
                   'source_files': len(items), 'source_rows': source_report['databases'],
                   'facts': {}, 'dimensions': {}, 'quality_flags': {}, 'quality_examples': {},
-                  'lineage_samples': {}, 'reconciliation': {}}
+                  'lineage_samples': {}, 'reconciliation': {}, 'content_reconciliation': {}}
         with target:
             with target.cursor() as cur:
                 cur.execute('SET TRANSACTION READ ONLY')
                 cur.execute('SELECT count(*) FROM dw.source_file')
                 source.require(cur.fetchone()[0] == len(items), 'Source manifest count mismatch.')
-                cur.execute('SELECT domain,period_index,table_name,sha256,row_count,source_path FROM dw.source_file')
-                stored_files = {(d,p,t): (sha.strip(), count, path) for d,p,t,sha,count,path in cur.fetchall()}
-                expected_files = {key: (item['sha256'], len(item['rows']), item['path'].relative_to(ROOT).as_posix())
+                cur.execute('SELECT source_file_id,domain,period_index,table_name,pk_column,raw_schema,sha256,row_count,source_path FROM dw.source_file')
+                stored_files = {(d,p,t): (file_id, pk, raw, sha.strip(), count, path)
+                                for file_id,d,p,t,pk,raw,sha,count,path in cur.fetchall()}
+                ids = file_ids(items)
+                expected_files = {key: (ids[key], item['pk'], f'raw_p{key[1]}', item['sha256'],
+                                        len(item['rows']), item['path'].relative_to(ROOT).as_posix())
                                   for key, item in items.items()}
                 source.require(stored_files == expected_files, 'DW source manifest differs from current CSV inventory.')
                 for table, (domain, fact) in FACTS.items():
@@ -378,6 +403,39 @@ def verify(*, items=None, source_report=None, target=None) -> dict:
                     expected = source_report['databases'][domain]['tables'][source_table]
                     source.require(count == expected, f'{table} count mismatch.')
                     result['dimensions'][table] = count
+                cur.execute('SELECT period_index,industrial_folder,financeiro_folder FROM dw.dim_source_period ORDER BY period_index')
+                source.require(cur.fetchall() == [(p, source.PERIODS['industrial'][p],
+                            source.PERIODS['financeiro'][p]) for p in range(3)],
+                            'dim_source_period content mismatch.')
+                dates = [date.fromisoformat(extreme[:10]) for item in source_report['files']
+                         for bounds in item['dates'].values() for extreme in bounds.values()]
+                source.require(bool(dates), 'Source date inventory is empty.')
+                cur.execute('''SELECT count(*), min(day), max(day),
+                            count(*) FILTER (WHERE year <> extract(year FROM day)::integer
+                              OR month <> extract(month FROM day)::integer
+                              OR day_of_month <> extract(day FROM day)::integer)
+                            FROM dw.dim_day''')
+                days_count, first_day, last_day, invalid_days = cur.fetchone()
+                source.require(first_day == min(dates) and last_day == max(dates)
+                    and days_count == (max(dates) - min(dates)).days + 1 and invalid_days == 0,
+                    'dim_day content mismatch.')
+                origins = {domain: source.connect(domain) for domain in ('industrial', 'financeiro')}
+                try:
+                    for origin in origins.values():
+                        with origin.cursor() as origin_cur:
+                            origin_cur.execute('SET TRANSACTION READ ONLY')
+                    load_dimensions(cur, origins, ids, loader=compare_rows)
+                    compared = load_facts(cur, origins, ids, loader=compare_rows)
+                    source.require(all(compared[table] == result['facts'][fact]
+                                       for table, (_, fact) in FACTS.items()),
+                                   'Full fact comparison count mismatch.')
+                    result['content_reconciliation'] = {'mode': 'full_source_projection_row_comparison',
+                        'dimensions': {name: result['dimensions'][name] for name in result['dimensions']},
+                        'facts': {fact: result['facts'][fact] for _, fact in FACTS.values()},
+                        'source_periods': 3, 'days': days_count}
+                finally:
+                    for origin in origins.values():
+                        origin.close()
                 checks = [
                     ('operation_quantity', 'SELECT sum(quantity_reported) FROM dw.fact_operation',
                      'industrial', 'SELECT sum(quantidade_produzida_real) FROM public.registros_operacao'),
@@ -548,6 +606,57 @@ def query(kind: str, year: int, identifier: int | None) -> dict:
             }[kind]}
 
 
+CONTRIBUTOR_FACTS = {
+    'machine': (('fact_operation', 'operation_id', 'machine_id', 'operation_day'),
+                ('fact_downtime', 'downtime_id', 'machine_id', 'start_day')),
+    'product': (('fact_operation', 'operation_id', 'product_id', 'operation_day'),
+                ('fact_sale', 'sale_id', 'product_id', 'sale_day')),
+    'quality': (('fact_quality_inspection', 'inspection_id', 'product_id', 'inspection_day'),),
+    'material': (('fact_material_consumption', 'consumption_id', 'material_id', 'registered_day'),
+                 ('fact_material_price_observation', 'price_observation_id', 'material_id', 'purchase_day')),
+}
+
+
+def contributors(kind: str, year: int, identifier: int, *, fact: str | None = None,
+                 after: int = 0, limit: int = 100) -> dict:
+    """Page through exact fact IDs contributing to one fixed aggregate row."""
+    source.require(kind in CONTRIBUTOR_FACTS, 'Unknown aggregate query.')
+    source.require(2015 <= year <= 2026 and isinstance(identifier, int) and identifier > 0,
+                   'Invalid aggregate year or dimension ID.')
+    source.require(isinstance(after, int) and after >= 0 and 1 <= limit <= 1000,
+                   'Invalid contributor pagination.')
+    specs = CONTRIBUTOR_FACTS[kind]
+    source.require(fact is None or fact in {item[0] for item in specs},
+                   'Fact does not contribute to this aggregate.')
+    source.require(fact is not None or after == 0, 'Select a fact when continuing pagination.')
+    start, end = date(year, 1, 1), date(year + 1, 1, 1)
+    selected = [item for item in specs if fact is None or item[0] == fact]
+    conn = source.connect('industrial', DATABASE)
+    try:
+        with conn, conn.cursor() as cur:
+            cur.execute('SET TRANSACTION READ ONLY')
+            pages = []
+            for table, pk, dimension, day in selected:
+                predicate = sql.SQL('{}=%s AND {} >= %s AND {} < %s').format(
+                    sql.Identifier(dimension), sql.Identifier(day), sql.Identifier(day))
+                cur.execute(sql.SQL('SELECT count(*) FROM dw.{} WHERE {}').format(
+                    sql.Identifier(table), predicate), (identifier, start, end))
+                total = cur.fetchone()[0]
+                cur.execute(sql.SQL('''SELECT {} FROM dw.{} WHERE {} AND {} > %s
+                        ORDER BY {} LIMIT %s''').format(sql.Identifier(pk), sql.Identifier(table),
+                        predicate, sql.Identifier(pk), sql.Identifier(pk)),
+                        (identifier, start, end, after, limit + 1))
+                ids = [row[0] for row in cur.fetchall()]
+                has_more = len(ids) > limit
+                ids = ids[:limit]
+                pages.append({'fact': table, 'total': total, 'ids': ids,
+                              'next_after': ids[-1] if has_more else None})
+    finally:
+        conn.close()
+    return {'query': kind, 'year': year, 'dimension_id': identifier,
+            'after': after, 'limit': limit, 'contributors': pages}
+
+
 def trace(fact: str, mapped_id: int) -> dict:
     allowed = {target: key for key, (_, target) in FACTS.items()}
     source.require(fact in allowed, 'Unknown fact table.')
@@ -558,25 +667,36 @@ def trace(fact: str, mapped_id: int) -> dict:
     try:
         with conn, conn.cursor() as cur:
             cur.execute('SET TRANSACTION READ ONLY')
-            cur.execute(sql.SQL('''SELECT f.original_id,f.period_index,s.domain,s.table_name,s.pk_column,
+            cur.execute(sql.SQL('''SELECT f.*,s.domain,s.table_name,s.pk_column,
                           s.raw_schema,s.source_path,s.sha256
                       FROM dw.{} f JOIN dw.source_file s USING (source_file_id) WHERE f.{}=%s''').format(
                           sql.Identifier(fact), sql.Identifier(pk)), (mapped_id,))
             row = cur.fetchone()
             source.require(row is not None, 'Fact ID not found.')
-            result = {'mapped_id': mapped_id, 'original_id': row[0], 'period_index': row[1],
-                    'source_database': f'db_{row[2]}', 'source_table': row[3], 'source_pk_column': row[4],
-                    'raw_schema': row[5], 'source_csv': row[6], 'source_sha256': row[7].strip()}
-            origin = source.connect(row[2])
+            record = {column.name: value.isoformat() if isinstance(value, (date, datetime))
+                      else str(value) if isinstance(value, Decimal) else value
+                      for column, value in zip(cur.description, row)}
+            domain = record.pop('domain')
+            source_table = record.pop('table_name')
+            pk_column = record.pop('pk_column')
+            raw_schema = record.pop('raw_schema')
+            source_path = record.pop('source_path')
+            source_sha256 = record.pop('sha256').strip()
+            result = {'mapped_id': mapped_id, 'original_id': record['original_id'],
+                    'period_index': record['period_index'], 'source_database': f'db_{domain}',
+                    'source_table': source_table, 'source_pk_column': pk_column,
+                    'raw_schema': raw_schema, 'source_csv': source_path,
+                    'source_sha256': source_sha256, 'dw_record': record}
+            origin = source.connect(domain)
             try:
                 with origin, origin.cursor() as origin_cur:
                     origin_cur.execute('SET TRANSACTION READ ONLY')
-                    for label, schema, key in [('raw_record', row[5], row[0]),
+                    for label, schema, key in [('raw_record', raw_schema, record['original_id']),
                                                ('typed_record', 'public', mapped_id)]:
-                        predicate = sql.SQL('{}::integer=%s').format(sql.Identifier(row[4])) if label == 'raw_record' else \
-                                    sql.SQL('{}=%s').format(sql.Identifier(row[4]))
+                        predicate = sql.SQL('{}::integer=%s').format(sql.Identifier(pk_column)) if label == 'raw_record' else \
+                                    sql.SQL('{}=%s').format(sql.Identifier(pk_column))
                         origin_cur.execute(sql.SQL('SELECT * FROM {}.{} WHERE {}').format(
-                            sql.Identifier(schema), sql.Identifier(row[3]), predicate), (key,))
+                            sql.Identifier(schema), sql.Identifier(source_table), predicate), (key,))
                         values = origin_cur.fetchone()
                         source.require(values is not None, f'{label} missing for mapped fact {mapped_id}.')
                         result[label] = {column.name: value.isoformat() if isinstance(value, (date, datetime))
@@ -598,7 +718,14 @@ def main() -> None:
     q.add_argument('kind', choices=('machine','product','financial','quality','material'))
     q.add_argument('--year', type=int, required=True)
     q.add_argument('--id', type=int)
-    t = sub.add_parser('trace', help='Return raw/public lineage of one fact ID')
+    c = sub.add_parser('contributors', help='Page through fact IDs behind one aggregate row')
+    c.add_argument('kind', choices=tuple(CONTRIBUTOR_FACTS))
+    c.add_argument('--year', type=int, required=True)
+    c.add_argument('--id', type=int, required=True)
+    c.add_argument('--fact', choices=tuple(target for _, target in FACTS.values()))
+    c.add_argument('--after', type=int, default=0)
+    c.add_argument('--limit', type=int, default=100)
+    t = sub.add_parser('trace', help='Return DW/raw/public lineage of one fact ID')
     t.add_argument('fact', choices=tuple(target for _, target in FACTS.values()))
     t.add_argument('id', type=int)
     args = parser.parse_args()
@@ -608,6 +735,9 @@ def main() -> None:
         result = verify()
     elif args.command == 'query':
         result = query(args.kind, args.year, args.id)
+    elif args.command == 'contributors':
+        result = contributors(args.kind, args.year, args.id, fact=args.fact,
+                              after=args.after, limit=args.limit)
     else:
         result = trace(args.fact, args.id)
     if args.command in ('build','verify'):

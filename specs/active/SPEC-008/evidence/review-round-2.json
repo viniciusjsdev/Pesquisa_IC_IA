@@ -1,0 +1,30 @@
+{
+  "spec_id": "SPEC-008",
+  "contract_version": 2,
+  "status": "changes_requested",
+  "thread_id": null,
+  "runtime": {"classification": "critical_review", "model": "gpt-5.6-sol", "reasoning": "high"},
+  "review_input": [
+    "Segunda rodada read-only da subagente /root/spec008_review após correções de F-001 a F-004 em 16/10/2026.",
+    "copy_logical_databases.py, services e componentes React, teste Playwright, SPEC/manifest/índices/lifecycle/completion e recibos fixture.",
+    "Schemas execution, completion e review-round-1 e git diff --check; nenhum contêiner ou banco foi alterado pela revisora."
+  ],
+  "baseline_assessment": [
+    {"category": "tests", "result": "changed_as_approved", "evidence": ["Browser mock exige leitura de orçamento antes de cada POST /api/runs e fonte exibida."], "notes": ["Ensaios Docker e Playwright não foram reexecutados na revisão read-only."]},
+    {"category": "cli", "result": "regressed", "evidence": ["O guard de postgres contava pg_class, pg_proc, schemas extras e extensões, mas não pg_type; CREATE TYPE/DOMAIN poderia passar."], "notes": ["Mount, projeto, serviço, nome e labels do volume já são confirmados."]},
+    {"category": "json_contracts", "result": "preserved", "evidence": ["Schemas execution/completion/review-round-1 validaram."], "notes": []},
+    {"category": "persistence", "result": "preserved", "evidence": ["Recibos fixture confirmam cópia e recusa por tabela/segunda execução; nenhum banco real foi copiado."], "notes": []},
+    {"category": "schemas", "result": "changed_as_approved", "evidence": ["SPEC e manifest estão em review; lifecycle existe e índices distinguem implementação de revisão."], "notes": []},
+    {"category": "protected_paths", "result": "preserved", "evidence": ["Nenhuma alteração em dados/artefatos protegidos foi relatada na revisão."], "notes": []},
+    {"category": "decisions", "result": "changed_as_approved", "evidence": ["Orçamento pré-run, fonte/horários e service boundaries corrigidos; separação científica preservada."], "notes": []}
+  ],
+  "findings": [
+    "F-001-R2 Média: copy_logical_databases.py:121-131 aceitava CREATE TYPE public.mood ou DOMAIN em postgres, pois pg_type não integrava as quatro contagens; volume usado podia ser chamado vazio. Exigir guarda mais ampla e ensaio enum/domain."
+  ],
+  "evidence": [
+    "F-002, F-003 e F-004 da primeira rodada foram resolvidos na inspeção read-only.",
+    "O ensaio existente de tabela em postgres não exercitava tipo/domínio.",
+    "git diff --check sem erro de whitespace; revisão não executou Docker, cópia ou Playwright."
+  ],
+  "usage": null
+}

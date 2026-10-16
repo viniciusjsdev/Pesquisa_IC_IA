@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.pesquisa-ic-ia/model_evaluation/cases_manifest/v1",
+  "title": "Manifesto de casos candidatos v1",
+  "type": "object",
+  "required": ["schema_version", "cases"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": 1},
+    "cases": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["case_id", "question", "domain", "queries"],
+        "additionalProperties": false,
+        "properties": {
+          "case_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"},
+          "question": {"type": "string", "minLength": 1, "maxLength": 2000},
+          "domain": {"enum": ["financeiro", "industrial", "integrado"]},
+          "queries": {
+            "type": "array", "minItems": 1, "maxItems": 5,
+            "items": {
+              "oneOf": [
+                {"type": "object", "required": ["query", "year"], "additionalProperties": false,
+                 "properties": {"query": {"const": "financial"}, "year": {"type": "integer", "minimum": 2015, "maximum": 2026}}},
+                {"type": "object", "required": ["query", "year", "id"], "additionalProperties": false,
+                 "properties": {"query": {"enum": ["machine", "product", "quality", "material"]},
+                                "year": {"type": "integer", "minimum": 2015, "maximum": 2026},
+                                "id": {"type": "integer", "minimum": 1}}}
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

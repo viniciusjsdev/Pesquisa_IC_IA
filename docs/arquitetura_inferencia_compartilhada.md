@@ -1,5 +1,16 @@
 # Arquitetura da inferência compartilhada
 
+**Atualização local em 16/10/2026 (checkout baseado em `772ea0d`):** a
+[SPEC-008](../specs/active/SPEC-008/SPEC.md) integrou o Observatório sintético
+e a Bancada em um front React servido pela mesma API Python. O snapshot BI
+privado exige sessão; o Docker Compose acrescentou um PostgreSQL 15 isolado
+com cópia lógica manual testada somente entre bancos descartáveis. Nenhum banco
+real foi copiado. A [revisão independente da SPEC-008](../specs/active/SPEC-008/evidence/review.json)
+aprovou o escopo local na quinta rodada em 16/10/2026; a
+[evidência local](../specs/active/SPEC-008/evidence/local-2026-10-16.md)
+delimita os testes. A topologia com ngrok e RunPod abaixo
+descreve uma sessão futura, não uma implantação realizada.
+
 **Estado em 15/10/2026:** arquitetura acordada, SPEC-001 e SPEC-003 implementadas e aprovadas para o escopo local. A bancada da SPEC-004 foi implementada no checkout sobre `1e8cb76`, com critérios versionados e comparação visual. Sua migração 002 passou em banco descartável e foi aplicada em `db_inference_app` após backup lógico; a interface passou em navegador com API simulada e a [revisão independente](../specs/active/SPEC-004/evidence/review.json) aprovou o escopo local. O [DW local v1](../BancoModeloUse/dw/README.md) está em outro banco e não está ligado à API. A SPEC-002 preparou serving vLLM, Terraform e [procedimento de custo e aplicação futura](../runpod/serving/README.md) apenas no checkout, com revisão independente aprovada para esse escopo. Pod, ngrok e validação compartilhada não foram executados. Este documento não comprova implantação ou teste remoto. A decisão original foi registrada no commit `ba79b36`.
 
 ## Objetivo e limites
@@ -8,7 +19,7 @@ Disponibilizar por uma sessão científica curta e compartilhada uma interface p
 
 O [protocolo de fine-tuning](../FineTuning/docs/protocol_v1.md), os [dados de origem](../BancoModeloUse/README.md), os [adapters e seus manifests](../FineTuning/docs/modelos_disponiveis.md) e os resultados já registrados permanecem preservados. O DW local v1 já foi implementado; sua integração ao backend e o harness formal por API continuam planejados e não são pré-requisitos implícitos para o primeiro serviço de inferência.
 
-Para a comparação científica futura, a [arquitetura de avaliação](../BancoModeloUse/docs/arquitetura_avaliacao_modelos.md) distingue evidências fixas, iguais entre modelos, de pesquisa com tools. A [SPEC-007](../specs/active/SPEC-007/SPEC.md) prepara apenas a exportação local e reproduzível de evidências fixas a partir da DW. A API exploratória atual continua selecionando suas duas consultas por escopo declarado; escolha de tools pela LLM e pontuação formal ainda exigem contratos e implementação próprios.
+Para a comparação científica futura, a [arquitetura de avaliação](../BancoModeloUse/docs/arquitetura_avaliacao_modelos.md) distingue evidências fixas, iguais entre modelos, de pesquisa com tools. O [exportador da SPEC-007](../model_evaluation/README.md) foi implementado localmente em 16/10/2026 e prepara pacotes candidatos reproduzíveis a partir da DW. A API exploratória atual continua selecionando suas duas consultas por escopo declarado; escolha de tools pela LLM e pontuação formal ainda exigem contratos e implementação próprios.
 
 ## Topologia escolhida
 
@@ -38,22 +49,27 @@ o DW local e distingue as ligações implementadas das previstas. O
 | [`BancoModeloUse/`](../BancoModeloUse/README.md) | Contém os CSVs preservados, modelos SQLAlchemy, importador e dois bancos locais `db_industrial` e `db_financeiro`. O [DW v1](../BancoModeloUse/dw/README.md) está em `db_pesquisa_dw`, separado das fontes e da aplicação. A API atual continua lendo diretamente os bancos de origem. |
 | [`FineTuning/`](../FineTuning/AGENTS.md) | Continua sendo a fonte de verdade dos experimentos, configurações, adapters, manifests e resultados. Seus scripts de treino não serão executados para atender requisições do front. |
 | [`runpod/`](../runpod/README.md) | Contém scripts históricos de preparação, treino e avaliação. [`runpod/serving/`](../runpod/serving/README.md) contém preparação local do vLLM, gateway protegido, verificador e Terraform; nenhum Pod foi criado. |
-| [`inference_api/`](../inference_api/README.md) | HTTP local, login individual aprovado da SPEC-003, três escopos declarados sobre duas consultas fixas, bundle versionado, catálogo de aliases e cliente vLLM. A SPEC-004 acrescentou bancada responsiva, critérios versionados e comparação visual de snapshots no checkout; a migração foi aplicada no banco da aplicação e a revisão independente aprovou o escopo local. Exposição compartilhada e verificação científica seguem pendentes. |
+| [`inference_api/`](../inference_api/README.md) | HTTP local, login individual da SPEC-003, três escopos declarados e cliente vLLM. A SPEC-008 serve React após login, com quatro abas BI de snapshot sintético e Bancada exploratória. Compose local usa banco isolado; exposição compartilhada e verificação científica seguem pendentes. |
 | [Arquitetura da avaliação](../BancoModeloUse/docs/arquitetura_avaliacao_modelos.md) | Define perguntas, evidências, gold set e verificações científicas. O DW local v1 existe sob SPEC-006; integração e harness formal seguem pendentes. |
 
-Estrutura atual e extensão prevista:
+Estrutura local atual:
 
 ```text
 inference_api/
   README.md
-  web/                  # bancada local, servida pela API
+  frontend/src/         # React: login, Observatório e Bancada
+  frontend/dist/        # build gerado e ignorado pelo Git
+  private/bi_snapshot.json  # retrato sintético, apenas endpoint autenticado
+  Dockerfile
+  compose.yaml          # app HTTP e PostgreSQL sem porta de banco publicada
+  scripts/copy_logical_databases.py  # cópia manual e por recusa
   src/
     inference_api/      # HTTP, evidências, cliente vLLM, serviço e persistência
 runpod/
   serving/              # manifesto, preflight, gateway, verificador e Terraform locais
 ```
 
-O contrato HTTP e o esquema inicial estão descritos no [README da API](../inference_api/README.md). Não criar diretórios vazios nem reaproveitar o antigo RAG/agentes retirado do checkout. O importador atual aceita apenas o cluster isolado em `127.0.0.1:5544`; a aplicação nova exige essa configuração explícita e não usa os valores padrão `localhost:5432` de [`database_config.py`](../BancoModeloUse/infrastructure/config/database_config.py). A conexão falha se a configuração estiver ausente.
+O contrato HTTP e o esquema inicial estão descritos no [README da API](../inference_api/README.md). Não criar diretórios vazios nem reaproveitar o antigo RAG/agentes retirado do checkout. O modo direto da aplicação exige o cluster isolado em `127.0.0.1:5544`; o modo Docker exige somente `db:5432` na rede do Compose. Nenhum modo aceita os valores padrão `localhost:5432` de [`database_config.py`](../BancoModeloUse/infrastructure/config/database_config.py). A conexão falha se a configuração estiver ausente ou apontar para outro host.
 
 ## Modelos na RunPod e troca pelo front
 

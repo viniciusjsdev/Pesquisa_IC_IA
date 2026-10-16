@@ -1,0 +1,35 @@
+{
+  "spec_id": "SPEC-008",
+  "contract_version": 2,
+  "status": "changes_requested",
+  "thread_id": null,
+  "runtime": {"classification": "critical_review", "model": "gpt-5.6-sol", "reasoning": "high"},
+  "review_input": [
+    "Revisão independente somente leitura pela subagente /root/spec008_review da SPEC-008 v2, baseline, fixture e checkout atual em 16/10/2026.",
+    "Código React/Python, Compose, Dockerfile, script de cópia lógica, testes e evidência completion/local.",
+    "Inspeção de git diff --check, arquivos protegidos, hashes do snapshot e isolamento de dados/segredos."
+  ],
+  "baseline_assessment": [
+    {"category": "tests", "result": "changed_as_approved", "evidence": ["Playwright compara KPIs, todas as linhas, geometria SVG e bytes do CSV com o HTML congelado."], "notes": ["Suítes e Compose não foram reexecutados na revisão read-only."]},
+    {"category": "cli", "result": "regressed", "evidence": ["copy_logical_databases.py verificava apenas lista de bancos não-template, sem mount esperado ou objetos em postgres."], "notes": ["Recusa de segunda execução e falha parcial estavam cobertas, mas este caso adversarial não."]},
+    {"category": "json_contracts", "result": "preserved", "evidence": ["Endpoint BI exige bearer, retorna no-store, arquivo privado estático retorna 404."] , "notes": []},
+    {"category": "persistence", "result": "preserved", "evidence": ["Recibos fixture confirmam hashes, contagens e readback; nenhuma cópia real foi executada."], "notes": []},
+    {"category": "schemas", "result": "regressed", "evidence": ["SPEC.md e manifest ainda marcavam ready, completion completed, lifecycle ausente."], "notes": []},
+    {"category": "protected_paths", "result": "preserved", "evidence": ["Nenhuma mudança observada em dados congelados, pesos, checkpoints, resultados ou runpod/."], "notes": ["Alterações SPEC-006/007/DW foram tratadas como paralelas."]},
+    {"category": "decisions", "result": "regressed", "evidence": ["Budget pré-run e fonte estavam ausentes no React; BI e sessão faziam HTTP diretamente em componentes."], "notes": ["Bancada não gerou score ou ranking científico."]}
+  ],
+  "findings": [
+    "F-001 Alta: copy_logical_databases.py:111-115 não validava volume/mount Compose esperado nem objetos de usuário no banco postgres antes da cópia; contrariava REQ-012.",
+    "F-002 Média: BenchPage.tsx não atualizava GET /budget imediatamente antes de POST /runs nem exibia runpod_source; regressão da SPEC-003 e do README.",
+    "F-003 Média: BIPage.tsx e session.tsx usavam cliente HTTP diretamente nos componentes, contrariando REQ-009.",
+    "F-004 Média: SPEC.md e manifest ready, completion completed, lifecycle inexistente e índices ainda em implementação; estado durável incoerente."
+  ],
+  "evidence": [
+    "Fixture HTML SHA-256 9C4C5C16603AE2CD5EC316BFE970A611067542C6D2DFBA4B51E585196B1CD1E2; JSON embutido byte a byte igual ao arquivo privado.",
+    "Bundle atual não contém valores únicos do snapshot; endpoint protegido, logout e 401 limpam bearer, cache e identidade.",
+    "Docker runtime sem Node e com usuário não root; Compose publica apenas HTTP em loopback e PostgreSQL não possui ports.",
+    "Cópia fixture de três bancos com hashes e contagens, recusa de segunda execução e falha parcial documentadas.",
+    "git diff --check exit 0 com avisos LF/CRLF; nenhuma implantação ou avaliação científica observada."
+  ],
+  "usage": null
+}
