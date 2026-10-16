@@ -11,6 +11,7 @@ LEGACY_ROUTE_SCOPE = {tools[0]: scope for scope, tools in TOOLS_BY_SCOPE.items()
 ALLOWED_FIELDS = {
     "author", "question", "model_alias", "prompt_revision_id", "system_prompt",
     "scope", "evidence_route", "year", "temperature", "max_tokens", "tools",
+    "criteria_revision_id", "criteria",
 }
 ASSOCIATION_LIMIT = (
     "Agregados financeiro e industrial coincidem no ano; isso permite investigar "

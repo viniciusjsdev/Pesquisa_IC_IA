@@ -72,6 +72,14 @@ class Handler(BaseHTTPRequestHandler):
                                                data.get("system_prompt"),
                                                data.get("expected_revision"))
                 self._send(201, result)
+            elif method == "GET" and path == "/api/criteria":
+                self._send(200, storage.list_criteria())
+            elif method == "POST" and path == "/api/criteria":
+                data = self._body()
+                result = storage.create_criteria(data.get("name"), principal.username,
+                                                 data.get("config"),
+                                                 data.get("expected_revision"))
+                self._send(201, result)
             elif method == "GET" and path == "/api/runs":
                 self._send(200, storage.list_runs())
             elif method == "POST" and path == "/api/runs":
@@ -91,6 +99,8 @@ class Handler(BaseHTTPRequestHandler):
                 self._send(404, {"error": "not_found"})
         except (auth.LoginBusy, limits.BusyError, limits.QuotaError) as exc:
             self._send(429, {"error": str(exc)})
+        except storage.RevisionConflict as exc:
+            self._send(409, {"error": str(exc), "kind": exc.kind, "current": exc.current})
         except (ValueError, json.JSONDecodeError) as exc:
             self._send(400, {"error": str(exc)})
         except Exception as exc:

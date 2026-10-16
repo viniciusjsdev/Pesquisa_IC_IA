@@ -78,6 +78,7 @@ class RunSnapshot:
     schema_version: int
     question_request: QuestionRequest
     prompt: dict[str, Any]
+    verification_criteria: dict[str, Any]
     model: dict[str, Any]
     route_plan: RoutePlan | None
     evidence_bundle: EvidenceBundle | None

@@ -1,7 +1,7 @@
 ---
 id: SPEC-005
 title: Validacao integrada e operacao da sessao curta
-status: ready
+status: done
 contract_version: 1
 ---
 
@@ -15,9 +15,10 @@ validação remota e encerramento.
 
 ## Context
 
-As SPECs 001–004 constroem cadeia de agentes, serving, identidade e interface.
-O checkout atual só tem a primeira API/front local e banco de histórico. A
-validação local anterior não prova geração na RunPod nem acesso pelo ngrok.
+As SPECs 001–004 têm implementação e revisão independente aprovadas em seus
+escopos locais. O checkout contém cadeia de agentes, preparação de serving,
+identidade individual e bancada de comparação. A validação local anterior não
+prova geração na RunPod nem acesso pelo ngrok.
 
 ## Scope
 

@@ -1,7 +1,7 @@
 """One request owns its deterministic route, LLM call and immutable snapshot."""
 from dataclasses import asdict
 
-from . import config, evidence, models, orchestrator, response_agent, storage, verifier
+from . import config, criteria, evidence, models, orchestrator, response_agent, storage, verifier
 from .contracts import ModelOutput, QuestionRequest, RunSnapshot, SCHEMA_VERSION
 from .auth import Principal
 
@@ -32,6 +32,26 @@ def _prompt(payload: dict) -> dict:
     return {"schema_version": 1, "revision_id": None, "revision": None, "system_prompt": draft}
 
 
+def _criteria(payload: dict) -> dict:
+    criteria_id = payload.get("criteria_revision_id")
+    draft = payload.get("criteria")
+    if criteria_id is not None and draft is not None:
+        raise ValueError("Provide criteria_revision_id or criteria, not both")
+    if criteria_id is not None:
+        if not isinstance(criteria_id, str):
+            raise ValueError("criteria_revision_id must be a UUID string")
+        from uuid import UUID
+        criteria_id = str(UUID(criteria_id))
+        saved = storage.get_criteria(criteria_id)
+        if saved is None:
+            raise ValueError("Criteria revision not found")
+        return {"schema_version": criteria.CRITERIA_VERSION, "revision_id": criteria_id,
+                "revision": saved["revision"], "config": criteria.validate(saved["config"])}
+    return {"schema_version": criteria.CRITERIA_VERSION, "revision_id": None,
+            "revision": None,
+            "config": criteria.validate(draft if draft is not None else criteria.DEFAULT)}
+
+
 def execute_run(payload: dict, principal: Principal) -> dict:
     question, alias = (payload.get(key) for key in ("question", "model_alias"))
     if not isinstance(question, str) or not question.strip() or len(question) > 4000:
@@ -40,6 +60,7 @@ def execute_run(payload: dict, principal: Principal) -> dict:
         raise ValueError("Unknown model alias")
     temperature, max_tokens = _options(payload)
     prompt = _prompt(payload)
+    verification_criteria = _criteria(payload)
     model = {"alias": alias, "base": models.BASE,
              "battery": models.MODELS[alias]["battery"], "endpoint": config.vllm_url() or None,
              "base_revision": None, "adapter_run": None, "adapter_hash": None,
@@ -98,12 +119,14 @@ def execute_run(payload: dict, principal: Principal) -> dict:
                         error = {"stage": "response", "type": "EmptyModelResponse"}
                     else:
                         try:
-                            checks = verifier.check(bundle, output)
+                            checks = (verifier.check(bundle, output) +
+                                      criteria.check(bundle, output, verification_criteria["config"]))
                             status = "answered_unverified"
                         except Exception as exc:
                             status = "verification_error"
                             error = {"stage": "verification", "type": type(exc).__name__}
-    snapshot = RunSnapshot(SCHEMA_VERSION, request, prompt, model, route, bundle,
+    snapshot = RunSnapshot(SCHEMA_VERSION, request, prompt, verification_criteria,
+                           model, route, bundle,
                            output, checks, status, error)
     recorded = snapshot.to_dict()
     recorded["identity"] = {"principal_id": principal.id, "author_verified": True}

@@ -1,7 +1,7 @@
 ---
 id: SPEC-004
 title: Bancada web de prompts verificacoes e comparacao
-status: ready
+status: done
 contract_version: 1
 ---
 
@@ -15,10 +15,13 @@ com suas evidências e limitações lado a lado.
 
 ## Context
 
-`inference_api/web/index.html` já permite rascunho/revisão de prompt, seleção
-de alias disponível, pergunta e histórico básico. Não há revisão de critérios,
-comparação estruturada nem identidade individual. SPEC-001 define evidências e
-checks; SPEC-003 define autoria autenticada.
+No momento da escrita do contrato, `inference_api/web/index.html` permitia
+rascunho/revisão de prompt, seleção de alias, pergunta e histórico básico, mas
+não tinha revisão de critérios nem comparação. A SPEC-001 define evidências e
+checks; a SPEC-003 implementou a autoria autenticada antes desta execução.
+Em 15/10/2026 a implementação local da SPEC-004 foi concluída e aprovada em
+[revisão independente](evidence/review.json); o recibo de estado está em
+`evidence/lifecycle.json`. A aprovação cobre apenas o escopo local.
 
 ## Scope
 

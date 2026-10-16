@@ -1,0 +1,13 @@
+{
+  "spec_id": "SPEC-005",
+  "contract_version": 1,
+  "implementation": "completed_locally",
+  "review": "approved_independent_review",
+  "remote_validation": "not_run",
+  "ngrok": "not_opened_requires_explicit_session_action",
+  "base_commit": "1e8cb768fc63bc6259c1bf31833dd156e5ea1d16",
+  "recorded_on": "2026-10-16",
+  "evidence": "specs/active/SPEC-005/evidence/completion.json",
+  "local_evidence": "specs/active/SPEC-005/evidence/local-2026-10-16.md",
+  "review_evidence": "specs/active/SPEC-005/evidence/review.json"
+}

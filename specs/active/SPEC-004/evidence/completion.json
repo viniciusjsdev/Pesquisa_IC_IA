@@ -1,0 +1,63 @@
+{
+  "spec_id": "SPEC-004",
+  "contract_version": 1,
+  "status": "completed",
+  "thread_id": "01a137c7-94f3-7933-baed-ac635bcfb8e5",
+  "runtime": {
+    "classification": "normal_implementation",
+    "model": "session-selected",
+    "reasoning": "session-selected"
+  },
+  "changed_files": [
+    {"path": "README.md", "change": "modified"},
+    {"path": "docs/arquitetura_inferencia_compartilhada.md", "change": "modified"},
+    {"path": "inference_api/README.md", "change": "modified"},
+    {"path": "inference_api/run.py", "change": "modified"},
+    {"path": "inference_api/migrations/002_criteria_up.sql", "change": "added"},
+    {"path": "inference_api/migrations/002_criteria_down.sql", "change": "added"},
+    {"path": "inference_api/src/inference_api/contracts.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/criteria.py", "change": "added"},
+    {"path": "inference_api/src/inference_api/orchestrator.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/server.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/service.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/storage.py", "change": "modified"},
+    {"path": "inference_api/tests/browser_spec004.cjs", "change": "added"},
+    {"path": "inference_api/tests/test_criteria.py", "change": "added"},
+    {"path": "inference_api/web/index.html", "change": "modified"},
+    {"path": "specs/README.md", "change": "modified"},
+    {"path": "specs/active/SPEC-004/SPEC.md", "change": "modified"},
+    {"path": "specs/active/SPEC-004/SPEC.execution.json", "change": "modified"},
+    {"path": "specs/active/SPEC-004/evidence/local-2026-10-15.md", "change": "added"},
+    {"path": "specs/active/SPEC-004/evidence/completion.json", "change": "added"},
+    {"path": "specs/active/SPEC-004/evidence/lifecycle.json", "change": "added"},
+    {"path": "specs/active/SPEC-004/evidence/review.json", "change": "added"}
+  ],
+  "artifacts": [
+    "inference_api/web/index.html",
+    "inference_api/migrations/002_criteria_up.sql",
+    "inference_api/tests/browser_spec004.cjs",
+    "specs/active/SPEC-004/evidence/local-2026-10-15.md"
+  ],
+  "acceptance_evidence": [
+    {"id": "AC-001", "result": "passed", "evidence": ["test_criteria.py::test_migration_revision_conflict_and_down_preserve_old_records", "test_criteria.py::test_saved_revision_snapshot_remains_exact_after_later_edit", "browser_spec004.cjs: two prompt and criteria revisions"], "notes": ["Revisions and old snapshots were tested locally; browser API was simulated, no remote model generation."]},
+    {"id": "AC-002", "result": "passed", "evidence": ["browser_spec004.cjs: qwen-base and qwen-fin mock aliases, side-by-side cards and snapshot fields", "inference_api/web/index.html::renderRun"], "notes": ["Alias availability was returned by a fake local API; real Pod aliases and generation remain unverified."]},
+    {"id": "AC-003", "result": "passed", "evidence": ["browser_spec004.cjs: differing question, prompt, criteria and model warning", "inference_api/web/index.html::differences"], "notes": ["No numeric accuracy score is computed; comparison is visual only."]},
+    {"id": "AC-004", "result": "passed", "evidence": ["test_criteria.py::test_schema_rejects_executable_shape_and_limits", "test_criteria.py::test_caveats_are_literal_and_never_executed", "Front inspection for absence of eval and editable SQL"], "notes": ["Code-shaped extra keys are rejected; text inside required_caveats is literal and never executed."]},
+    {"id": "AC-005", "result": "passed", "evidence": ["browser_spec004.cjs: prompt and criteria conflict preserves draft, query/model errors, unavailable model, 390px and 1280px layouts", "inference_api/.local/spec004-browser-mobile.png", "inference_api/.local/spec004-browser-desktop.png"], "notes": ["Screenshots contain only simulated data and are ignored by Git."]}
+  ],
+  "validation_evidence": [
+    {"validation_id": "VAL-001", "canonical_command": "git diff --check", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Run on 2026-10-15; no whitespace errors"], "notes": ["Git printed only LF/CRLF conversion warnings."]},
+    {"validation_id": "VAL-002", "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["PowerShell set INFERENCE_IDENTITY_DB_TEST=1 before canonical command; 32 tests passed, zero skipped", "Disposable PostgreSQL integration included migration, HTTP conflict and legacy identity tests"], "notes": ["Initial DB-enabled attempt failed when the local cluster stopped; it was restarted once and the full suite passed."]},
+    {"validation_id": "VAL-003", "canonical_command": "Exercise local browser flows for revisions, comparisons, conflicts and failures.", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["node inference_api/tests/browser_spec004.cjs passed on 2026-10-15", "Ignored local mobile and desktop screenshots with hashes in local-2026-10-15.md"], "notes": ["Playwright used an in-memory fake API at localhost; no real user credential, Pod or ngrok."]},
+    {"validation_id": "VAL-004", "canonical_command": "Inspect web code for absence of eval, free SQL and secrets in URLs.", "verification": "reported", "result": "passed", "exit_code": null, "evidence": ["rg found no eval, new Function, localStorage, sessionStorage, URL token or SQL textarea in web/index.html", "UI inserts API data using textContent"], "notes": ["Token is held only in a JavaScript variable for the open page, as in SPEC-003."]}
+  ],
+  "deviations": [
+    "The manifest-selected model and reasoning were not exposed by the active session; runtime is recorded as session-selected.",
+    "The required browser validation used a simulated local API and fake aliases because Pod serving was not authorized or available."
+  ],
+  "unresolved_items": [
+    "Real model serving, ngrok and shared-session validation remain outside this local SPEC."
+  ],
+  "needs_design": null,
+  "usage": null
+}

@@ -1,12 +1,15 @@
 # Inferência compartilhada: primeira implementação local
 
-**Estado em 15/10/2026 (base `622fc0f` mais mudanças locais sem commit):**
+**Estado em 15/10/2026 (base `1e8cb76` mais mudanças locais da SPEC-004 sem commit):**
 cadeia exploratória determinística da SPEC-001 implementada localmente e aprovada
 em revisão independente. A SPEC-002 também foi aprovada para seu escopo local:
 código de serving e procedimento de custo e aplicação futura, ainda sem Pod ou
 túnel ngrok. A SPEC-003 acrescenta login local e uma vaga global de inferência;
 seus 28 testes locais passaram em 15/10/2026 e a revisão independente aprovou
-esse escopo local, separado do benchmark científico. A
+esse escopo local, separado do benchmark científico. A SPEC-004 acrescentou
+critérios versionados e comparação visual: 32 testes locais passaram e a
+[revisão independente](../specs/active/SPEC-004/evidence/review.json) aprovou
+o escopo local em 15/10/2026. A
 arquitetura acordada e seus limites estão em
 [`../docs/arquitetura_inferencia_compartilhada.md`](../docs/arquitetura_inferencia_compartilhada.md).
 As frentes seguintes têm contratos e ordem próprios em
@@ -17,6 +20,13 @@ modelo. A API atual escolhe suas duas consultas pelo escopo declarado pelo
 pesquisador; a [SPEC-007](../specs/active/SPEC-007/SPEC.md) prepara pacotes
 fixos fora da API e não muda esse comportamento.
 
+**SPEC-005 em 16/10/2026:** `session_checks.py` acrescenta pré-voo local de
+leitura, teste HTTP opt-in do túnel e ensaio opt-in das três rotas com dois
+aliases. O [runbook da sessão](../docs/sessao_inferencia_curta.md) separa esses
+gates da implantação paga. Nenhuma geração remota ou exposição ngrok foi feita
+pela SPEC-005; a [revisão independente](../specs/active/SPEC-005/evidence/review.json)
+aprovou esse escopo local.
+
 ## Contrato implementado
 
 - `GET /api/models`: sete aliases candidatos (base e seis adapters), derivados
@@ -26,10 +36,24 @@ fixos fora da API e não muda esse comportamento.
   e sessão. Um candidato não prova pesos carregados nem geração.
 - `GET/POST /api/prompts`: revisão imutável de nome, autor e texto do sistema.
   `POST` exige `expected_revision` para recusar salvamentos simultâneos sobre
-  a mesma versão. O front permite usar uma revisão ou um rascunho.
+  a mesma versão. Em conflito, HTTP 409 devolve a revisão atual e a página
+  preserva o rascunho local.
+- `GET/POST /api/criteria`: revisões imutáveis de critérios exploratórios.
+  `POST` recebe `name`, `expected_revision` e `config` com exatamente
+  `schema_version: 1`, `require_evidence`, `require_period`,
+  `required_units` (lista de unidades literais), `require_cited_ids` e
+  `required_caveats` (lista de frases literais). Cada lista aceita até oito
+  entradas; unidade tem até 80 caracteres e ressalva até 160. Campos extras,
+  expressões executáveis e listas fora do contrato falham antes da execução.
+  JavaScript ou SQL digitado como ressalva é somente texto literal. O backend
+  não executa essas strings. Conflito também devolve HTTP 409 e a revisão atual.
 - `POST /api/runs`: `question`, `model_alias`, exatamente um de
   `prompt_revision_id` ou `system_prompt`, `scope` (`financeiro`, `industrial`
-  ou `integrado`), `year`, `temperature` e `max_tokens`. O escopo é declarado
+  ou `integrado`), `year`, `temperature` e `max_tokens`. Aceita
+  `criteria_revision_id` **ou** `criteria` estruturado como rascunho; se ambos
+  faltarem, grava uma configuração padrão explícita para clientes anteriores.
+  O snapshot guarda a revisão e configuração exata utilizada, inclusive quando
+  a consulta ou o modelo falha. O escopo é declarado
   pelo pesquisador; não há classificação automática. Para compatibilidade,
   `evidence_route` aceita isoladamente as duas rotas antigas. `scope` e
   `evidence_route` juntos são inválidos. O campo opcional `tools`, se enviado,
@@ -67,7 +91,9 @@ resposta recebe apenas pergunta, prompt exato e o bundle gravado, além do alias
 e parâmetros; o retorno bruto do servidor é preservado em `model_output.serving`.
 O verificador confere schema, itens obrigatórios, resposta e IDs citados no
 formato `[evidence:financeiro_vendas_ano:2020]`. Verdade numérica e causalidade
-ficam `not_checked`.
+ficam `not_checked`. Os critérios da SPEC-004 acrescentam somente checks
+determinísticos de presença, ano, unidade literal, IDs citados e frases literais
+na resposta. Um resultado `passed` nesses checks não comprova verdade numérica.
 
 `answered_unverified` significa apenas resposta gerada e checagem exploratória;
 um ID citado inexistente gera check `failed` sem reescrever a resposta. Falhas
@@ -78,8 +104,10 @@ endpoint/modelo servido, a tentativa guarda o bundle e `model_error`; não se
 fabrica resposta. JSON inválido ou resposta fora do contrato do servidor gera
 `response_error` e preserva o corpo recebido em `model_output.serving`, inclusive
 os bytes originais em Base64. Snapshots anteriores com `schema_version: 1` continuam
-legíveis sem migração ou reescrita. As verificações formais, o gold set, a
-comparação estruturada, a integração do [DW local v1](../BancoModeloUse/dw/README.md)
+legíveis sem migração ou reescrita. A comparação lado a lado é somente visual:
+ela lê runs existentes, avisa quando pergunta, período, evidência, prompt,
+critérios, parâmetros ou versão do modelo diferem e não calcula acurácia.
+As verificações formais, o gold set, a integração do [DW local v1](../BancoModeloUse/dw/README.md)
 e consultas científicas adicionais permanecem
 fora desta primeira fatia. O snapshot só preenche revisão exata da base,
 run e SHA-256 do adapter quando a resposta vem com os headers de sessão do
@@ -94,15 +122,16 @@ Ainda não há recibo real ou reprodução científica de inferência.
 | Caminho | Responsabilidade atual |
 | --- | --- |
 | `run.py` e `src/inference_api/server.py` | Entrada por linha de comando, servidor HTTP, rotas e entrega do front. |
-| `web/index.html` | Interface local para prompts, modelos, execuções e histórico. |
+| `web/index.html` | Bancada local responsiva para revisões de prompt/critério, modelos por run, detalhes do snapshot e comparação exploratória. |
 | `src/inference_api/auth.py`, `limits.py` e `budget.py` | Login de dois pesquisadores, sessão revogável, vaga única de inferência e leitura separada do saldo RunPod. |
 | `src/inference_api/service.py` | Coordena uma execução e grava seu snapshot final. |
 | `src/inference_api/orchestrator.py` | Valida a entrada e planeja as consultas permitidas conforme o escopo declarado. |
 | `src/inference_api/evidence.py` | Executa as consultas fixas de leitura e monta o bundle com origem e ressalvas. |
 | `src/inference_api/response_agent.py`, `models.py` e `serving_catalog.py` | Montam a entrada do modelo, consultam vLLM e vinculam a proveniência da sessão ao manifesto. O serving remoto ainda não foi implantado. |
-| `src/inference_api/verifier.py` | Confere estrutura e IDs das evidências citadas; não valida verdade numérica ou causalidade. |
+| `src/inference_api/verifier.py` e `criteria.py` | Confere estrutura, IDs e critérios declarativos; não valida verdade numérica ou causalidade. |
 | `src/inference_api/contracts.py`, `config.py` e `storage.py` | Contratos versionados, configuração local e persistência de prompts, execuções e feedback. |
-| `tests/test_contract.py`, `test_serving.py` e `test_identity.py` | Testes locais dos contratos, serving e identidade; os de banco usam banco temporário isolado. |
+| `tests/test_contract.py`, `test_serving.py`, `test_identity.py`, `test_criteria.py` e `browser_spec004.cjs` | Testes locais dos contratos, identidade, critérios e navegador simulado; os de banco usam banco temporário isolado. |
+| `session_checks.py` e `tests/test_session_checks.py` | Pré-voo somente leitura, ensaio HTTP e prova local/mock de que a execução padrão não chama rede externa. |
 
 O contrato e a revisão independente da SPEC-001 ficam em
 [`specs/active/SPEC-001/`](../specs/active/SPEC-001/SPEC.md).
@@ -122,6 +151,7 @@ inference_api/.venv/Scripts/python.exe -m pip install -r inference_api/requireme
 BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/scripts/local_postgres.py start
 inference_api/.venv/Scripts/python.exe inference_api/run.py init-db
 inference_api/.venv/Scripts/python.exe inference_api/run.py migrate-db --pg-dump 'C:/Program Files/PostgreSQL/15/bin/pg_dump.exe'
+inference_api/.venv/Scripts/python.exe inference_api/run.py migrate-criteria --pg-dump 'C:/Program Files/PostgreSQL/15/bin/pg_dump.exe'
 inference_api/.venv/Scripts/python.exe inference_api/run.py configure-users
 inference_api/.venv/Scripts/python.exe inference_api/run.py serve
 ```
@@ -136,6 +166,11 @@ e faz logout das duas. Ele não cria prompts, execuções ou feedback.
 `migrate-db` faz backup lógico custom em `inference_api/.local/` antes de
 acrescentar as tabelas de identidade, sessão e uso. O SQL reverso está em
 `migrations/001_identity_down.sql`; não o aplique sem preservar o backup.
+`migrate-criteria` exige a versão 1, cria outro backup lógico antes de adicionar
+`verification_criteria_revisions` e registra a versão 2. O SQL reverso está em
+`migrations/002_criteria_down.sql`. A migração da SPEC-004 passou em banco
+descartável e foi aplicada em `db_inference_app` em 15/10/2026 após backup
+lógico. O readback confirmou versões 1 e 2 e tabela de critérios vazia.
 `configure-users` pede as duas senhas e confirmações em prompt oculto; após
 as quatro entradas, registra os dois logins aprovados. `set-password`
 permite trocar uma senha posteriormente e exige 12 a 128 caracteres para
@@ -196,7 +231,21 @@ Testes locais sem infraestrutura remota:
 ```powershell
 $env:INFERENCE_IDENTITY_DB_TEST = '1'
 inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v
+$env:NODE_PATH = 'C:/Users/vinic/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules'
+node inference_api/tests/browser_spec004.cjs
 ```
+
+O pré-voo da SPEC-005 pode ser chamado sem Pod ou túnel:
+
+```powershell
+inference_api/.venv/Scripts/python.exe inference_api/session_checks.py preflight
+```
+
+Ele retorna `BLOCKED` enquanto o Git estiver sujo ou URL HTTPS, revisão exata
+da base e token do gateway ainda não estiverem configurados. Esse resultado
+não cria recurso nem contata o endpoint; veja o
+[procedimento completo](../docs/sessao_inferencia_curta.md) para os comandos
+opt-in e os readbacks exigidos na sessão futura.
 
 **Validação local em 13/10/2026:** a carga existente foi lida, sem nova importação:
 o bundle integrado retornou 13 vendas em `db_financeiro.public.vendas` e

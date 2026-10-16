@@ -10,6 +10,11 @@ A SPEC-002 teve a **preparação local aprovada em revisão independente** em
 15/10/2026. A implantação paga e a prova de inferência real ficam para outra
 interação; essa aprovação não atesta funcionamento remoto.
 
+A [SPEC-005](../../docs/sessao_inferencia_curta.md) acrescenta pré-voo local,
+ensaio de três rotas/dois aliases, prova HTTP de túnel e encerramento com
+readback. O `verify_remote.py` abaixo continua sendo o smoke test explícito
+de sete aliases; a SPEC-005 não o executou contra uma Pod.
+
 ## Peças e limites
 
 - [`manifest.json`](manifest.json) lista `qwen-base` e os seis adapters A/B,

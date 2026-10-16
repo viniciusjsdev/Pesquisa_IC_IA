@@ -6,7 +6,7 @@ limites. As SPECs 001–006 têm threads dedicadas registradas nos manifests;
 retomadas devem usar seus IDs. A SPEC-007 foi preparada como contrato futuro,
 com `thread_id: null`; nenhuma nova thread ou execução foi iniciada. A primeira
 API e os contratos foram incluídos em `622fc0f`; a SPEC-002 foi registrada
-em `513114d`. As mudanças atuais da SPEC-003 compartilham o checkout.
+em `513114d`. As mudanças atuais da SPEC-004 compartilham o checkout.
 
 | Ordem | SPEC | Frente | Dependência de execução |
 | --- | --- | --- | --- |
@@ -35,6 +35,21 @@ ou Basic Auth no ngrok. Antes da exposição futura, as senhas escolhidas no
 chat devem ser trocadas em terminal local. A aprovação não cobre ngrok ou
 avaliação científica. A revisão independente da SPEC-006 permanece
 separada.
+
+Em 15/10/2026, a SPEC-004 foi implementada localmente sobre `1e8cb76` com
+revisões declarativas de critérios e comparação visual. A migração 002 passou
+em banco descartável e foi aplicada em `db_inference_app` após backup lógico;
+a UI passou em navegador com API simulada. A
+[revisão independente](active/SPEC-004/evidence/review.json) aprovou o escopo
+local em 15/10/2026; esses testes não provam inferência remota.
+
+Em 16/10/2026, a SPEC-005 recebeu pré-voo local, ensaio HTTP opt-in e
+[runbook da sessão curta](../docs/sessao_inferencia_curta.md). A validação
+local tem recibo e [revisão independente](active/SPEC-005/evidence/review.json)
+aprovada. O router não pôde abrir uma thread SDK porque falta
+`.codex/references/runtime-policy.json`; a revisão foi feita por subagente
+separado, em leitura. O contrato está `done` no escopo local. Geração remota,
+ngrok e encerramento real de recursos continuam não executados.
 
 As threads são separadas para manter o contexto de cada frente. Todas usam o
 mesmo checkout local; só uma deve escrever nele por vez. A thread seguinte

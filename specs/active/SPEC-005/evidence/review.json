@@ -1,0 +1,57 @@
+{
+  "spec_id": "SPEC-005",
+  "contract_version": 1,
+  "status": "approved",
+  "thread_id": null,
+  "runtime": {
+    "classification": "critical_review",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high"
+  },
+  "review_input": [
+    "specs/active/SPEC-005/SPEC.md and SPEC.execution.json",
+    "specs/active/SPEC-005/evidence/completion.json and local-2026-10-16.md",
+    "Current working-tree diff and inference_api/session_checks.py",
+    "inference_api/tests/test_session_checks.py and full-suite result",
+    "docs/sessao_inferencia_curta.md and affected README files"
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": ["Final implementation run recorded 41 canonical tests passing, zero failures and zero skips", "Independent reviewer reran nine focused SPEC-005 tests and git diff --check"],
+      "notes": ["The reviewer did not start PostgreSQL or execute remote HTTP calls."]
+    },
+    {
+      "category": "cli",
+      "result": "changed_as_approved",
+      "evidence": ["Default preflight is local and read-only", "Tunnel and rehearsal actions require --execute and explicit session inputs", "Rehearsal has no automatic POST retry and journals pending mutations before calls"],
+      "notes": ["Lost login responses and failed logout keep session state UNCERTAIN until reconciliation."]
+    },
+    {
+      "category": "json_contracts",
+      "result": "changed_as_approved",
+      "evidence": ["SPEC.execution.json and completion.json validate against project schemas", "Local reports distinguish CONFIRMED, BLOCKED, UNCERTAIN and not_run"],
+      "notes": []
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": ["Reviewer found no changed scientific data, weights, checkpoints, raw results or articles", "Preexisting SPEC-004 changes were reconciled as part of the shared checkout"],
+      "notes": []
+    },
+    {
+      "category": "decisions",
+      "result": "preserved",
+      "evidence": ["Runbook separates local checks, paid activation, HTTP rehearsal, scientific evaluation and teardown", "No remote generation, ngrok exposure or scientific metric is claimed"],
+      "notes": ["Actual paid and remote gates remain not_run pending explicit authorization."]
+    }
+  ],
+  "findings": ["No actionable finding remains for the local SPEC-005 scope. The lost-login journal and exact password-rotation command were corrected before approval."],
+  "evidence": [
+    "Independent read-only subagent /root/spec005_review approved the final local implementation on 2026-10-16 after contract, diff, tests and runbook inspection.",
+    "The Codex SDK router dry run stopped before SDK execution because .codex/references/runtime-policy.json is absent; this is a manual independent review with no separate SDK thread ID.",
+    "Final canonical integration suite passed 41 tests with zero skips; reviewer repeated nine focused tests. No Pod, ngrok, remote generation, scientific benchmark or teardown occurred."
+  ],
+  "usage": null
+}

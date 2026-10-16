@@ -1,0 +1,63 @@
+{
+  "spec_id": "SPEC-004",
+  "contract_version": 1,
+  "status": "approved",
+  "thread_id": null,
+  "runtime": {
+    "classification": "critical_review",
+    "model": "gpt-5.6-terra",
+    "reasoning": "medium"
+  },
+  "review_input": [
+    "specs/active/SPEC-004/SPEC.md and SPEC.execution.json",
+    "specs/active/SPEC-004/evidence/completion.json and local-2026-10-15.md",
+    "Current working-tree diff, criteria migration and implementation files",
+    "inference_api/tests/test_criteria.py and browser_spec004.cjs",
+    "README.md, inference_api/README.md and docs/arquitetura_inferencia_compartilhada.md"
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": ["Completion evidence reports 32 passing Python tests with zero skipped and a passing simulated browser flow"],
+      "notes": ["The independent reviewer inspected reported evidence and code; it did not rerun tests."]
+    },
+    {
+      "category": "cli",
+      "result": "changed_as_approved",
+      "evidence": ["migrate-criteria requires a logical backup before applying migration 002"],
+      "notes": ["No RunPod, ngrok or Terraform operation occurred."]
+    },
+    {
+      "category": "json_contracts",
+      "result": "changed_as_approved",
+      "evidence": ["Criteria schema uses a closed set of typed fields and bounded literal strings", "Run snapshot records the resolved criteria revision or draft"],
+      "notes": ["No criterion is evaluated as code or SQL."]
+    },
+    {
+      "category": "persistence",
+      "result": "changed_as_approved",
+      "evidence": ["Append-only criteria revisions and HTTP 409 conflict handling preserve the current revision", "Readback reported schema versions 1 and 2 after a logical backup"],
+      "notes": ["Real application database readback is implementation evidence, not remote model validation."]
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": ["Reviewer found no changed protected scientific data, weights, checkpoints, results or article paths"],
+      "notes": []
+    },
+    {
+      "category": "decisions",
+      "result": "preserved",
+      "evidence": ["Authenticated server identity, per-run model selection, fixed query templates and visible comparison caveats remain intact"],
+      "notes": ["The comparison computes no scientific accuracy metric; real model serving remains unverified."]
+    }
+  ],
+  "findings": ["No blocking finding remains for the local SPEC-004 scope."],
+  "evidence": [
+    "Independent read-only subagent /root/spec004_review approved the working-tree implementation on 2026-10-15 after inspecting the contract, diff, tests, migration and completion evidence.",
+    "This receipt records that reviewer's final decision; the subagent had no separate Codex thread ID and did not rerun tests or start services.",
+    "Playwright used a fake local API; no Pod generation, ngrok exposure or scientific benchmark was validated."
+  ],
+  "usage": null
+}

@@ -1,0 +1,57 @@
+{
+  "spec_id": "SPEC-005",
+  "contract_version": 1,
+  "status": "completed",
+  "thread_id": "01a137c7-986e-7872-9e81-845c330cd34a",
+  "runtime": {
+    "classification": "normal_implementation",
+    "model": "session-selected",
+    "reasoning": "session-selected"
+  },
+  "changed_files": [
+    {"path": "README.md", "change": "modified"},
+    {"path": "docs/arquitetura_inferencia_compartilhada.md", "change": "modified"},
+    {"path": "docs/sessao_inferencia_curta.md", "change": "added"},
+    {"path": "inference_api/README.md", "change": "modified"},
+    {"path": "inference_api/session_checks.py", "change": "added"},
+    {"path": "inference_api/tests/test_session_checks.py", "change": "added"},
+    {"path": "runpod/serving/README.md", "change": "modified"},
+    {"path": "specs/README.md", "change": "modified"},
+    {"path": "specs/active/SPEC-005/SPEC.md", "change": "modified"},
+    {"path": "specs/active/SPEC-005/SPEC.execution.json", "change": "modified"},
+    {"path": "specs/active/SPEC-005/evidence/local-2026-10-16.md", "change": "added"},
+    {"path": "specs/active/SPEC-005/evidence/completion.json", "change": "added"},
+    {"path": "specs/active/SPEC-005/evidence/lifecycle.json", "change": "added"},
+    {"path": "specs/active/SPEC-005/evidence/review.json", "change": "added"}
+  ],
+  "artifacts": [
+    "inference_api/session_checks.py",
+    "inference_api/tests/test_session_checks.py",
+    "docs/sessao_inferencia_curta.md",
+    "specs/active/SPEC-005/evidence/local-2026-10-16.md"
+  ],
+  "acceptance_evidence": [
+    {"id": "AC-001", "result": "passed", "evidence": ["test_session_checks.py verifies blocked gates for missing identity, adapter hash and protected serving configuration", "Local preflight readback in local-2026-10-16.md reports blocked Git/revision and confirmed existing-load read-only checks"], "notes": ["A fully confirmed operational preflight requires the future session configuration and a reviewed clean checkout."]},
+    {"id": "AC-002", "result": "passed", "evidence": ["verify_remote.py requires explicit endpoint, revision and output; test_serving.py mocks all seven generations", "test_session_checks.py verifies default preflight makes no external HTTP call and rehearsal requires --execute"], "notes": ["No real remote smoke was executed."]},
+    {"id": "AC-003", "result": "passed", "evidence": ["docs/sessao_inferencia_curta.md defines independent readbacks for sources, weights, remote model, application, tunnel and shutdown", "States CONFIRMED, BLOCKED and UNCERTAIN are distinguished in the runbook"], "notes": ["Real tunnel and provider readbacks are deferred until an authorized session."]},
+    {"id": "AC-004", "result": "passed", "evidence": ["local-2026-10-16.md records current local tests and the ignored preflight report SHA-256", "The report marks remote_generation, ngrok_http and scientific_evaluation not_run"], "notes": ["Preflight is BLOCKED for future session inputs, not claimed as session readiness."]},
+    {"id": "AC-005", "result": "passed", "evidence": ["docs/sessao_inferencia_curta.md specifies local snapshot journal, application DB backup and readback before Pod/tunnel teardown", "No protected scientific path was modified by this SPEC"], "notes": ["No real shutdown was performed; the runbook requires provider and billing readback when authorized."]}
+  ],
+  "validation_evidence": [
+    {"validation_id": "VAL-001", "canonical_command": "git diff --check", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Run 2026-10-16; no whitespace errors"], "notes": ["Git printed LF/CRLF conversion warnings only."]},
+    {"validation_id": "VAL-002", "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["INFERENCE_IDENTITY_DB_TEST=1; canonical run on corrected tree passed 41 tests, zero skipped", "The suite covers timezone guard and lost login/revision POST responses as UNCERTAIN with exact pending identity"], "notes": ["An earlier concurrent attempt failed with database unavailable; the sequential final rerun passed."]},
+    {"validation_id": "VAL-003", "canonical_command": "Run the local or mocked preflight and confirm that default execution makes no external calls.", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Mock test rejects any external opener during default preflight", "Actual local preflight returned BLOCKED with per-component readback and no HTTP call", "Existing verify_remote mock proves seven short generations without external call"], "notes": ["Passed safety behavior; full operational preflight remains BLOCKED."]},
+    {"validation_id": "VAL-004", "canonical_command": "Review runbook commands and report each gate as confirmed, blocked or uncertain.", "verification": "reported", "result": "passed", "exit_code": null, "evidence": ["Manual command and state inspection of docs/sessao_inferencia_curta.md", "Runbook separates local, paid, HTTP, scientific and teardown evidence", "Independent Sol/high reviewer approved local scope after exact command correction"], "notes": ["Remote/browser validation is not_run."]}
+  ],
+  "deviations": [
+    "The manifest-selected runtime was not exposed in this resumed session; actual model and reasoning are recorded as session-selected.",
+    "The first full-suite attempt lost its PostgreSQL connection; the isolated cluster was restarted and the sequential full suite passed."
+  ],
+  "unresolved_items": [
+    "Codex SDK router remains unavailable because .codex/references/runtime-policy.json is absent; independent read-only subagent review approved the local scope.",
+    "The clean-Git and real serving-configuration preflight gates are BLOCKED until the future session is prepared.",
+    "Real Pod, ngrok, remote generation, end-to-end HTTP rehearsal, cost and shutdown readbacks require separate explicit authorization."
+  ],
+  "needs_design": null,
+  "usage": null
+}

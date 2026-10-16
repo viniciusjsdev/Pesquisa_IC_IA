@@ -3,7 +3,7 @@
   "schema_version": "2.0",
   "spec_id": "SPEC-004",
   "contract_version": 1,
-  "status": "ready",
+  "status": "done",
   "automatic_handoff": false,
   "execution": {
     "classification": "normal_implementation",

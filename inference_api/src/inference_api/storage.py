@@ -36,6 +36,14 @@ CREATE TABLE IF NOT EXISTS feedback (
 """
 
 MIGRATION = Path(__file__).resolve().parents[2] / "migrations" / "001_identity_up.sql"
+CRITERIA_MIGRATION = Path(__file__).resolve().parents[2] / "migrations" / "002_criteria_up.sql"
+
+
+class RevisionConflict(Exception):
+    def __init__(self, kind: str, current: dict | None):
+        super().__init__(f"{kind} revision conflict")
+        self.kind = kind
+        self.current = current
 
 
 def initialize() -> None:
@@ -79,6 +87,39 @@ def migrate_identity(backup_path: Path, pg_dump: str = "pg_dump") -> None:
             cursor.execute(MIGRATION.read_text(encoding="utf-8"))
 
 
+def migrate_criteria(backup_path: Path, pg_dump: str = "pg_dump") -> None:
+    """Apply version 2 only after a logical backup of the application database."""
+    backup_path = backup_path.resolve()
+    if backup_path.exists():
+        raise ValueError("Backup path already exists")
+    params = app_db_params()
+    with psycopg2.connect(**params) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT to_regclass('public.inference_schema_migrations')")
+            if cursor.fetchone()[0] is None:
+                raise ValueError("Identity migration is required before criteria migration")
+            cursor.execute("SELECT version FROM inference_schema_migrations ORDER BY version")
+            versions = {row[0] for row in cursor.fetchall()}
+            if 1 not in versions or 2 in versions:
+                raise ValueError("Criteria migration requires version 1 and no version 2")
+    backup_path.parent.mkdir(parents=True, exist_ok=True)
+    env = dict(os.environ, PGPASSWORD=params["password"])
+    result = subprocess.run(
+        [pg_dump, "--format=custom", "--file", str(backup_path),
+         "--host", params["host"], "--port", str(params["port"]),
+         "--username", params["user"], "--dbname", params["dbname"]],
+        env=env, capture_output=True, text=True, check=False,
+    )
+    if result.returncode or not backup_path.is_file() or backup_path.stat().st_size == 0:
+        raise RuntimeError("Logical backup failed; criteria migration was not applied")
+    with psycopg2.connect(**params) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1 FROM inference_schema_migrations WHERE version = 2")
+            if cursor.fetchone():
+                raise ValueError("Criteria migration already applied")
+            cursor.execute(CRITERIA_MIGRATION.read_text(encoding="utf-8"))
+
+
 def create_prompt(name: str, author: str, system_prompt: str,
                   expected_revision: int) -> dict:
     if not all(isinstance(x, str) and x.strip() for x in (name, author, system_prompt)):
@@ -93,7 +134,11 @@ def create_prompt(name: str, author: str, system_prompt: str,
             cursor.execute("SELECT coalesce(max(revision), 0) AS n FROM prompt_revisions WHERE name = %s", (name,))
             current = cursor.fetchone()["n"]
             if current != expected_revision:
-                raise ValueError(f"Prompt revision conflict: current revision is {current}")
+                cursor.execute("""SELECT id, name, revision, author, system_prompt, created_at
+                                  FROM prompt_revisions WHERE name = %s
+                                  ORDER BY revision DESC LIMIT 1""", (name,))
+                row = cursor.fetchone()
+                raise RevisionConflict("prompt", _jsonable(row) if row else None)
             prompt_id = str(uuid4())
             cursor.execute("""INSERT INTO prompt_revisions (id, name, revision, author, system_prompt)
                               VALUES (%s, %s, %s, %s, %s)
@@ -115,6 +160,55 @@ def get_prompt(prompt_id: str) -> dict | None:
         with connection.cursor(cursor_factory=RealDictCursor) as cursor:
             cursor.execute("""SELECT id, name, revision, author, system_prompt, created_at
                               FROM prompt_revisions WHERE id = %s""", (prompt_id,))
+            row = cursor.fetchone()
+            return _jsonable(row) if row else None
+
+
+def create_criteria(name: str, author: str, config: dict,
+                    expected_revision: int) -> dict:
+    from .criteria import validate
+    if not isinstance(name, str) or not name.strip() or len(name) > 100:
+        raise ValueError("Criteria name is required and limited to 100 characters")
+    if not isinstance(author, str) or not author.strip() or len(author) > 100:
+        raise ValueError("Criteria author is required")
+    if type(expected_revision) is not int or expected_revision < 0:
+        raise ValueError("expected_revision must be a non-negative integer")
+    clean = validate(config)
+    with psycopg2.connect(**app_db_params()) as connection:
+        with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+            cursor.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("criteria:" + name,))
+            cursor.execute("""SELECT coalesce(max(revision), 0) AS n
+                              FROM verification_criteria_revisions WHERE name = %s""", (name,))
+            current = cursor.fetchone()["n"]
+            if current != expected_revision:
+                cursor.execute("""SELECT id, name, revision, author, config, created_at
+                                  FROM verification_criteria_revisions WHERE name = %s
+                                  ORDER BY revision DESC LIMIT 1""", (name,))
+                row = cursor.fetchone()
+                raise RevisionConflict("criteria", _jsonable(row) if row else None)
+            criterion_id = str(uuid4())
+            cursor.execute("""INSERT INTO verification_criteria_revisions
+                              (id, name, revision, author, config) VALUES (%s, %s, %s, %s, %s)
+                              RETURNING id, name, revision, author, config, created_at""",
+                           (criterion_id, name, current + 1, author, Json(clean)))
+            return _jsonable(cursor.fetchone())
+
+
+def list_criteria() -> list:
+    with psycopg2.connect(**app_db_params()) as connection:
+        with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+            cursor.execute("""SELECT id, name, revision, author, config, created_at
+                              FROM verification_criteria_revisions
+                              ORDER BY name, revision DESC LIMIT 200""")
+            return [_jsonable(row) for row in cursor.fetchall()]
+
+
+def get_criteria(criteria_id: str) -> dict | None:
+    with psycopg2.connect(**app_db_params()) as connection:
+        with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+            cursor.execute("""SELECT id, name, revision, author, config, created_at
+                              FROM verification_criteria_revisions WHERE id = %s""",
+                           (criteria_id,))
             row = cursor.fetchone()
             return _jsonable(row) if row else None
 

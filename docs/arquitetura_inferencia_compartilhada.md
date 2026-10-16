@@ -1,6 +1,6 @@
 # Arquitetura da inferência compartilhada
 
-**Estado em 15/10/2026:** arquitetura acordada, primeira API/front locais e cadeia determinística da SPEC-001 implementados em [`inference_api/`](../inference_api/README.md), com revisão independente aprovada para essa frente local. A identidade da SPEC-003 foi implementada, testada e aprovada em revisão independente local. O esquema de `db_inference_app` foi criado e testado no cluster local isolado. O [DW local v1](../BancoModeloUse/dw/README.md) foi criado em outro banco, mas não está ligado à API. A SPEC-002 preparou serving vLLM, Terraform e [procedimento de custo e aplicação futura](../runpod/serving/README.md) apenas no checkout; a revisão independente aprovou esse escopo local. O Pod, o túnel ngrok e a validação compartilhada não foram executados. Este documento não comprova implantação ou teste remoto. A decisão original foi registrada no commit `ba79b36`; as alterações desta frente estão sobre `622fc0f` e ainda não foram commitadas.
+**Estado em 15/10/2026:** arquitetura acordada, SPEC-001 e SPEC-003 implementadas e aprovadas para o escopo local. A bancada da SPEC-004 foi implementada no checkout sobre `1e8cb76`, com critérios versionados e comparação visual. Sua migração 002 passou em banco descartável e foi aplicada em `db_inference_app` após backup lógico; a interface passou em navegador com API simulada e a [revisão independente](../specs/active/SPEC-004/evidence/review.json) aprovou o escopo local. O [DW local v1](../BancoModeloUse/dw/README.md) está em outro banco e não está ligado à API. A SPEC-002 preparou serving vLLM, Terraform e [procedimento de custo e aplicação futura](../runpod/serving/README.md) apenas no checkout, com revisão independente aprovada para esse escopo. Pod, ngrok e validação compartilhada não foram executados. Este documento não comprova implantação ou teste remoto. A decisão original foi registrada no commit `ba79b36`.
 
 ## Objetivo e limites
 
@@ -38,7 +38,7 @@ o DW local e distingue as ligações implementadas das previstas. O
 | [`BancoModeloUse/`](../BancoModeloUse/README.md) | Contém os CSVs preservados, modelos SQLAlchemy, importador e dois bancos locais `db_industrial` e `db_financeiro`. O [DW v1](../BancoModeloUse/dw/README.md) está em `db_pesquisa_dw`, separado das fontes e da aplicação. A API atual continua lendo diretamente os bancos de origem. |
 | [`FineTuning/`](../FineTuning/AGENTS.md) | Continua sendo a fonte de verdade dos experimentos, configurações, adapters, manifests e resultados. Seus scripts de treino não serão executados para atender requisições do front. |
 | [`runpod/`](../runpod/README.md) | Contém scripts históricos de preparação, treino e avaliação. [`runpod/serving/`](../runpod/serving/README.md) contém preparação local do vLLM, gateway protegido, verificador e Terraform; nenhum Pod foi criado. |
-| [`inference_api/`](../inference_api/README.md) | Frente local: HTTP, front simples, login individual da SPEC-003 implementado, testado e aprovado em revisão independente local em 15/10/2026, três escopos declarados sobre duas consultas fixas, bundle versionado, verificador exploratório, catálogo de aliases, cliente HTTP vLLM e histórico de prompts/execuções. Exposição compartilhada e verificação científica seguem pendentes. |
+| [`inference_api/`](../inference_api/README.md) | HTTP local, login individual aprovado da SPEC-003, três escopos declarados sobre duas consultas fixas, bundle versionado, catálogo de aliases e cliente vLLM. A SPEC-004 acrescentou bancada responsiva, critérios versionados e comparação visual de snapshots no checkout; a migração foi aplicada no banco da aplicação e a revisão independente aprovou o escopo local. Exposição compartilhada e verificação científica seguem pendentes. |
 | [Arquitetura da avaliação](../BancoModeloUse/docs/arquitetura_avaliacao_modelos.md) | Define perguntas, evidências, gold set e verificações científicas. O DW local v1 existe sob SPEC-006; integração e harness formal seguem pendentes. |
 
 Estrutura atual e extensão prevista:
@@ -46,7 +46,7 @@ Estrutura atual e extensão prevista:
 ```text
 inference_api/
   README.md
-  web/                  # interface local inicial, servida pela API
+  web/                  # bancada local, servida pela API
   src/
     inference_api/      # HTTP, evidências, cliente vLLM, serviço e persistência
 runpod/
@@ -65,11 +65,11 @@ O comando local registra os seis adapters autorizados na inicialização. O gate
 
 ## Front e histórico compartilhado
 
-O front inicial permite editar o prompt, selecionar um alias disponível, ajustar temperatura e limite de tokens, executar perguntas e inspecionar o histórico. A comparação lado a lado e a edição de critérios exploratórios de verificação ainda faltam; quando implementadas, a versão dos critérios usada deverá ficar registrada em cada execução. A interface mostra as consultas e evidências efetivamente usadas, limites e falhas. Não deve apresentar uma resposta como cientificamente validada apenas porque o modelo respondeu ou porque uma checagem parcial passou.
+O front local permite editar prompt e critérios estruturados, selecionar um alias disponível por run, executar perguntas, inspecionar histórico e comparar snapshots lado a lado. O navegador busca disponibilidade do backend e não escolhe SQL. A interface separa resposta, consulta fixa, evidência, fonte, período, unidade, checks e erro, marcando `answered_unverified` como não verificado cientificamente. A comparação avisa quando pergunta, período, evidência, prompt, critérios, parâmetros ou modelo/versão diferem; não agrega pontuação. Os testes de navegador da SPEC-004 usaram API simulada local, não o Pod nem a URL futura do ngrok.
 
-Cada salvamento de prompt cria uma **nova revisão**; cada execução guarda um snapshot imutável, mesmo quando partiu de um rascunho ainda não salvo. No mínimo, o registro deve identificar autor, data, versão do prompt e seu texto exato, modelo/endpoint/adapter e versões, parâmetros, pergunta, rota, consultas, evidências com origem e período, resposta, verificações, feedback humano e estado de erro. A escolha do modelo pertence à execução de cada usuário, não a uma configuração global que outro usuário possa sobrescrever. A interface pode mostrar diferenças entre revisões e respostas lado a lado.
+Cada salvamento de prompt ou critério cria uma **nova revisão**; cada execução guarda um snapshot imutável com texto exato do prompt e configuração exata dos critérios, mesmo quando partiu de rascunho. O registro identifica autor autenticado, data, versões, modelo/endpoint/adapter quando confirmados, parâmetros, pergunta, rota, consultas, evidências com origem e período, resposta, verificações e estado de erro. Feedback humano fica separado do snapshot. A escolha do modelo pertence à execução de cada usuário, sem configuração global.
 
-O armazenamento editável da aplicação usa um banco local próprio, `db_inference_app`, no mesmo cluster PostgreSQL. O comando `init-db` cria o esquema inicial de revisões, execuções e feedback; o início da API não altera o esquema. A migração explícita 001 acrescenta identidade, sessões e uso depois de backup lógico, e tem SQL reverso. A política de retenção ainda não foi implementada. Os bancos de origem industrial e financeiro são consultados em transações somente leitura, por SQL fixo. Dados congelados, adapters, manifests e resultados brutos existentes não são editados pelo front.
+O armazenamento editável da aplicação usa `db_inference_app` no mesmo cluster PostgreSQL. `init-db` cria o esquema inicial; iniciar a API não altera o esquema. A migração 001 acrescentou identidade, sessões e uso. A migração explícita 002 acrescentou revisões de critérios após backup lógico, com readback das versões 1 e 2. Ambas têm SQL reverso. A política de retenção ainda não foi implementada. Os bancos de origem industrial e financeiro são consultados somente em leitura, por SQL fixo. Dados congelados, adapters, manifests e resultados brutos existentes não são editados pelo front.
 
 Experimentos livres no front e avaliação formal têm estados distintos. Uma comparação científica exigirá um caso e protocolo versionados, mesmo recorte de dados e contexto, parâmetros declarados e verificações apropriadas. O gold set e os critérios oficiais de avaliação ficam fora do contexto entregue à LLM. A [arquitetura de avaliação](../BancoModeloUse/docs/arquitetura_avaliacao_modelos.md) continua sendo a fonte dessa separação.
 
@@ -87,3 +87,10 @@ Experimentos livres no front e avaliação formal têm estados distintos. Uma co
 Antes de dizer que o serviço está pronto, verificar separadamente: carga da base e dos adapters com seus identificadores; resposta da API do vLLM; consultas de leitura aos dois bancos locais; persistência de revisões e execuções; front pela URL do ngrok; autenticação; e uma execução ponta a ponta com proveniência legível. Um teste local ou um manifest com estado `completed` não equivale a essa validação.
 
 Atualizar este documento e os README das frentes afetadas na mesma mudança que alterar topologia, contratos ou comandos. Marcar decisões propostas e partes ainda não implementadas; registrar data/commit e evidência para afirmações que envelhecem. Remover instruções e código comprovadamente fora de uso após conferir consumidores, preservando dados e resultados protegidos conforme o [AGENTS.md da raiz](../AGENTS.md).
+
+Em 16/10/2026, a [SPEC-005](sessao_inferencia_curta.md) acrescentou verificações
+e runbook para a sessão curta, com [revisão independente](../specs/active/SPEC-005/evidence/review.json)
+aprovada no escopo local. O pré-voo lê bancos locais e valida adapters;
+o teste do túnel e o ensaio com gerações exigem `--execute` e ativação
+autorizada. Implementar esses comandos não constitui prova de Pod, ngrok ou
+avaliação científica: cada camada precisa de seu próprio readback na sessão.
