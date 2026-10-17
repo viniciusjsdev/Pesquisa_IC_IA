@@ -1,0 +1,5 @@
+projeto_id,nome_projeto,categoria,investimento_brl,economia_anual_estimada_brl,roi_verde_perc,payback_anos,data_aprovacao,status
+1,Expansão Usina Solar Fotovoltaica (300 kWp),Energia Renovável,125000.0,28500.0,22.8,4.4,2021-05-18,Operacional
+2,Sistema Avançado de Reuso de Água Industrial,Recursos Hídricos,85000.0,15200.0,17.9,5.6,2022-02-14,Operacional
+3,Inversores de Alta Eficiência IE4 e Drives,Eficiência Energética,45000.0,12800.0,28.4,3.5,2023-08-11,Operacional
+4,Gestão e Valorização de Resíduos Eletrônicos,Gestão de Resíduos,32000.0,8900.0,27.8,3.6,2024-03-20,Operacional

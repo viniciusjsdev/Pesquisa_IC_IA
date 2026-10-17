@@ -1,0 +1,21 @@
+componente_id,maquina_id,nome_componente,criticidade,vida_util_horas,data_instalacao
+1,1,Alimentador Feeder 8mm,MEDIA,8000,2014-08-20
+2,1,Bico de Sucção Nozzle,ALTA,4000,2014-08-20
+3,1,Câmera Alinhamento Óptico,CRITICA,18000,2014-08-20
+4,1,Servomotor Eixo X,CRITICA,25000,2014-08-20
+5,1,Correia de Posicionamento,ALTA,6000,2014-08-20
+6,2,Cabeçote de Inserção,CRITICA,12000,2014-08-20
+7,2,Sistema de Corte Clinch,ALTA,7000,2014-08-20
+8,2,Guias Lineares de Precisão,MEDIA,15000,2014-08-20
+9,2,Cilindro Pneumático de Pressão,ALTA,5000,2014-08-20
+10,2,Motor de Alimentação,MEDIA,10000,2014-08-20
+11,3,Redutor Harmônico J1,CRITICA,22000,2014-08-20
+12,3,Redutor Articular J2,CRITICA,20000,2014-08-20
+13,3,Fuso de Esferas Eixo Z,ALTA,14000,2014-08-20
+14,3,Placa Controladora de Eixos,CRITICA,30000,2014-08-20
+15,3,Garra Pneumática,MEDIA,6000,2014-08-20
+16,4,Bomba de Onda de Solda,CRITICA,9000,2014-08-20
+17,4,Resistência Pré-aquecimento,ALTA,7500,2014-08-20
+18,4,Cadinho de Solda Duplo,CRITICA,24000,2014-08-20
+19,4,Bico Pulverizador de Fluxo,MEDIA,4500,2014-08-20
+20,4,Exaustor de Vapores,MEDIA,11000,2014-08-20

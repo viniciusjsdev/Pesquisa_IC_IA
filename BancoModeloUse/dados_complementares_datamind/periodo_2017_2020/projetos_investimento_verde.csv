@@ -1,0 +1,4 @@
+projeto_id,nome_projeto,categoria,investimento_brl,economia_anual_estimada_brl,roi_verde_perc,payback_anos,data_aprovacao,status
+1,Instalação Painéis Solares Fase 1 (150 kWp),Energia Renovável,95000.0,21500.0,22.6,4.4,2018-03-10,Operacional
+2,Sistema de Recuperação e Reuso de Água,Recursos Hídricos,65000.0,12800.0,19.6,5.1,2019-06-15,Operacional
+3,Otimização de Linhas de Ar Comprimido,Eficiência Energética,28000.0,8200.0,29.2,3.4,2017-09-22,Operacional

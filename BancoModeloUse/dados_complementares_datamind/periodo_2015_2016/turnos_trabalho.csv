@@ -1,0 +1,4 @@
+turno_id,nome_turno,hora_inicio,hora_fim,meta_oee_perc,meta_produtividade_un_h,data_registro
+1,1º Turno,06:00:00,14:00:00,81.0,230.0,2015-01-01
+2,2º Turno,14:00:00,22:00:00,79.0,220.0,2015-01-01
+3,3º Turno,22:00:00,06:00:00,77.0,205.0,2015-01-01

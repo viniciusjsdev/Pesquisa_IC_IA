@@ -1,0 +1,121 @@
+om_id,codigo_om,maquina_id,componente_id,tipo_manutencao,prioridade,data_abertura,data_limite,data_conclusao,status,custo_estimado,custo_real,horas_estimadas,horas_reais,motivo
+1,OM-2016-0001,1,1,CORRETIVA,CRITICA,2016-10-16,2016-10-17,2016-10-16 00:00:00,CONCLUIDA,3064.08,3594.3,4.0,4.9,Intervenção corretiva emergencial por falha em Alimentador Feeder 8mm
+2,OM-2015-0002,4,20,CORRETIVA,ALTA,2015-03-31,2015-04-01,2015-03-31 00:00:00,CONCLUIDA,2884.84,3145.37,3.1,3.2,Intervenção corretiva emergencial por falha em Exaustor de Vapores
+3,OM-2016-0003,3,11,PREVENTIVA,ALTA,2016-10-27,2016-10-31,2016-10-27 00:00:00,CONCLUIDA,1902.25,1951.48,3.3,3.2,Revisão periódica programada e lubrificação em Redutor Harmônico J1
+4,OM-2015-0004,1,1,PREVENTIVA,ALTA,2015-06-13,2015-06-18,2015-06-13 00:00:00,CONCLUIDA,1177.77,1129.8,2.5,2.6,Revisão periódica programada e lubrificação em Alimentador Feeder 8mm
+5,OM-2015-0005,2,6,CORRETIVA,CRITICA,2015-04-10,2015-04-12,2015-04-10 00:00:00,CONCLUIDA,2726.95,3254.01,7.7,9.3,Intervenção corretiva emergencial por falha em Cabeçote de Inserção
+6,OM-2016-0006,1,4,CORRETIVA,CRITICA,2016-01-23,2016-01-25,2016-01-23 00:00:00,CONCLUIDA,1549.98,1560.79,6.3,7.6,Intervenção corretiva emergencial por falha em Servomotor Eixo X
+7,OM-2015-0007,3,14,PREVENTIVA,MEDIA,2015-10-24,2015-10-27,2015-10-24 00:00:00,CONCLUIDA,1854.39,1791.83,3.1,3.1,Revisão periódica programada e lubrificação em Placa Controladora de Eixos
+8,OM-2015-0008,4,18,CORRETIVA,CRITICA,2015-12-30,2015-12-31,2015-12-30 00:00:00,CONCLUIDA,3189.9,3160.71,6.5,6.6,Intervenção corretiva emergencial por falha em Cadinho de Solda Duplo
+9,OM-2016-0009,4,18,CORRETIVA,ALTA,2016-01-24,2016-01-26,2016-01-24 00:00:00,CONCLUIDA,1989.72,1906.2,8.0,9.8,Intervenção corretiva emergencial por falha em Cadinho de Solda Duplo
+10,OM-2015-0010,1,5,CORRETIVA,ALTA,2015-11-20,2015-11-21,2015-11-20 00:00:00,CONCLUIDA,3162.99,3172.97,8.4,9.7,Intervenção corretiva emergencial por falha em Correia de Posicionamento
+11,OM-2016-0011,1,3,CORRETIVA,CRITICA,2016-05-26,2016-05-27,2016-05-26 00:00:00,CONCLUIDA,2787.28,2831.0,4.2,4.3,Intervenção corretiva emergencial por falha em Câmera Alinhamento Óptico
+12,OM-2016-0012,3,15,CORRETIVA,CRITICA,2016-08-21,2016-08-23,2016-08-21 00:00:00,CONCLUIDA,2662.86,2590.24,3.9,5.1,Intervenção corretiva emergencial por falha em Garra Pneumática
+13,OM-2015-0013,2,10,PREVENTIVA,MEDIA,2015-02-18,2015-02-22,2015-02-18 00:00:00,CONCLUIDA,806.4,796.85,4.4,4.4,Revisão periódica programada e lubrificação em Motor de Alimentação
+14,OM-2016-0014,2,6,CORRETIVA,ALTA,2016-04-24,2016-04-25,2016-04-24 00:00:00,CONCLUIDA,2080.38,2309.72,6.9,7.9,Intervenção corretiva emergencial por falha em Cabeçote de Inserção
+15,OM-2015-0015,3,15,CORRETIVA,ALTA,2015-04-25,2015-04-27,2015-04-25 00:00:00,CONCLUIDA,3167.23,3778.42,2.5,3.0,Intervenção corretiva emergencial por falha em Garra Pneumática
+16,OM-2015-0016,2,7,CORRETIVA,ALTA,2015-07-02,2015-07-04,2015-07-02 00:00:00,CONCLUIDA,1917.39,2000.76,8.0,9.1,Intervenção corretiva emergencial por falha em Sistema de Corte Clinch
+17,OM-2015-0017,3,15,CORRETIVA,ALTA,2015-06-15,2015-06-17,2015-06-15 00:00:00,CONCLUIDA,2311.15,2764.9,5.7,5.6,Intervenção corretiva emergencial por falha em Garra Pneumática
+18,OM-2015-0018,2,8,CORRETIVA,ALTA,2015-11-11,2015-11-12,2015-11-11 00:00:00,CONCLUIDA,1606.11,1831.21,3.1,3.5,Intervenção corretiva emergencial por falha em Guias Lineares de Precisão
+19,OM-2015-0019,2,9,CORRETIVA,CRITICA,2015-05-09,2015-05-10,2015-05-09 00:00:00,CONCLUIDA,2455.53,2462.77,4.2,5.3,Intervenção corretiva emergencial por falha em Cilindro Pneumático de Pressão
+20,OM-2016-0020,4,18,PREVENTIVA,MEDIA,2016-07-06,2016-07-11,2016-07-06 00:00:00,CONCLUIDA,1227.85,1276.92,3.2,3.3,Revisão periódica programada e lubrificação em Cadinho de Solda Duplo
+21,OM-2016-0021,3,14,CORRETIVA,ALTA,2016-04-07,2016-04-08,2016-04-07 00:00:00,CONCLUIDA,1992.28,2002.35,4.7,5.5,Intervenção corretiva emergencial por falha em Placa Controladora de Eixos
+22,OM-2015-0022,1,5,PREVENTIVA,MEDIA,2015-03-14,2015-03-18,2015-03-14 00:00:00,CONCLUIDA,1169.38,1171.04,2.2,2.1,Revisão periódica programada e lubrificação em Correia de Posicionamento
+23,OM-2015-0023,1,3,PREVENTIVA,MEDIA,2015-10-13,2015-10-20,2015-10-13 00:00:00,CONCLUIDA,1496.62,1492.53,2.4,2.5,Revisão periódica programada e lubrificação em Câmera Alinhamento Óptico
+24,OM-2016-0024,1,4,PREVENTIVA,MEDIA,2016-04-29,2016-05-02,2016-04-29 00:00:00,CONCLUIDA,1296.07,1291.8,2.3,2.3,Revisão periódica programada e lubrificação em Servomotor Eixo X
+25,OM-2015-0025,4,19,PREVENTIVA,MEDIA,2015-02-25,2015-02-28,2015-02-25 00:00:00,CONCLUIDA,1891.87,1844.32,3.2,3.1,Revisão periódica programada e lubrificação em Bico Pulverizador de Fluxo
+26,OM-2015-0026,2,6,CORRETIVA,ALTA,2015-07-14,2015-07-16,2015-07-14 00:00:00,CONCLUIDA,3538.77,3428.52,3.7,4.1,Intervenção corretiva emergencial por falha em Cabeçote de Inserção
+27,OM-2016-0027,3,11,CORRETIVA,ALTA,2016-07-17,2016-07-18,2016-07-17 00:00:00,CONCLUIDA,1839.15,1970.48,8.5,10.7,Intervenção corretiva emergencial por falha em Redutor Harmônico J1
+28,OM-2015-0028,2,6,PREVENTIVA,MEDIA,2015-08-07,2015-08-11,2015-08-07 00:00:00,CONCLUIDA,1080.68,1111.38,3.1,3.3,Revisão periódica programada e lubrificação em Cabeçote de Inserção
+29,OM-2016-0029,3,13,CORRETIVA,CRITICA,2016-04-10,2016-04-11,2016-04-10 00:00:00,CONCLUIDA,1580.36,1792.02,3.7,3.8,Intervenção corretiva emergencial por falha em Fuso de Esferas Eixo Z
+30,OM-2015-0030,3,15,PREVENTIVA,MEDIA,2015-03-04,2015-03-07,2015-03-04 00:00:00,CONCLUIDA,1879.7,1815.31,3.8,3.8,Revisão periódica programada e lubrificação em Garra Pneumática
+31,OM-2016-0031,1,2,CORRETIVA,ALTA,2016-06-04,2016-06-05,2016-06-04 00:00:00,CONCLUIDA,2004.49,1964.34,6.4,7.6,Intervenção corretiva emergencial por falha em Bico de Sucção Nozzle
+32,OM-2016-0032,3,13,CORRETIVA,ALTA,2016-08-06,2016-08-07,2016-08-06 00:00:00,CONCLUIDA,2694.68,3189.63,5.2,6.0,Intervenção corretiva emergencial por falha em Fuso de Esferas Eixo Z
+33,OM-2015-0033,4,17,PREVENTIVA,ALTA,2015-07-29,2015-08-02,2015-07-29 00:00:00,CONCLUIDA,1597.88,1591.05,2.8,2.7,Revisão periódica programada e lubrificação em Resistência Pré-aquecimento
+34,OM-2015-0034,3,11,CORRETIVA,ALTA,2015-03-16,2015-03-17,2015-03-16 00:00:00,CONCLUIDA,1757.9,1823.39,6.0,6.8,Intervenção corretiva emergencial por falha em Redutor Harmônico J1
+35,OM-2015-0035,3,11,PREVENTIVA,ALTA,2015-03-12,2015-03-17,2015-03-12 00:00:00,CONCLUIDA,1676.81,1695.54,2.5,2.6,Revisão periódica programada e lubrificação em Redutor Harmônico J1
+36,OM-2016-0036,3,11,CORRETIVA,CRITICA,2016-10-31,2016-11-01,2016-10-31 00:00:00,CONCLUIDA,1717.03,1677.12,8.6,8.6,Intervenção corretiva emergencial por falha em Redutor Harmônico J1
+37,OM-2016-0037,2,8,CORRETIVA,CRITICA,2016-07-20,2016-07-21,2016-07-20 00:00:00,CONCLUIDA,2962.17,3009.55,7.2,7.3,Intervenção corretiva emergencial por falha em Guias Lineares de Precisão
+38,OM-2016-0038,1,3,CORRETIVA,ALTA,2016-05-15,2016-05-16,2016-05-15 00:00:00,CONCLUIDA,1545.81,1597.42,6.6,8.2,Intervenção corretiva emergencial por falha em Câmera Alinhamento Óptico
+39,OM-2015-0039,1,4,CORRETIVA,CRITICA,2015-05-14,2015-05-15,2015-05-14 00:00:00,CONCLUIDA,2466.45,2349.09,7.3,8.4,Intervenção corretiva emergencial por falha em Servomotor Eixo X
+40,OM-2015-0040,4,16,PREVENTIVA,MEDIA,2015-03-19,2015-03-26,2015-03-19 00:00:00,CONCLUIDA,1471.43,1461.1,2.1,2.1,Revisão periódica programada e lubrificação em Bomba de Onda de Solda
+41,OM-2015-0041,3,15,CORRETIVA,ALTA,2015-02-12,2015-02-14,2015-02-12 00:00:00,CONCLUIDA,1686.7,1931.32,3.9,4.0,Intervenção corretiva emergencial por falha em Garra Pneumática
+42,OM-2016-0042,3,13,PREVENTIVA,MEDIA,2016-02-21,2016-02-25,2016-02-21 00:00:00,CONCLUIDA,1822.65,1892.17,4.6,4.8,Revisão periódica programada e lubrificação em Fuso de Esferas Eixo Z
+43,OM-2015-0043,1,5,CORRETIVA,CRITICA,2015-01-26,2015-01-28,2015-01-26 00:00:00,CONCLUIDA,3385.8,3442.35,7.7,9.7,Intervenção corretiva emergencial por falha em Correia de Posicionamento
+44,OM-2016-0044,3,13,CORRETIVA,ALTA,2016-12-19,2016-12-21,2016-12-19 00:00:00,CONCLUIDA,2544.73,2611.65,3.9,4.9,Intervenção corretiva emergencial por falha em Fuso de Esferas Eixo Z
+45,OM-2015-0045,3,13,CORRETIVA,ALTA,2015-08-22,2015-08-24,2015-08-22 00:00:00,CONCLUIDA,3760.53,3834.92,4.6,5.8,Intervenção corretiva emergencial por falha em Fuso de Esferas Eixo Z
+46,OM-2016-0046,2,8,CORRETIVA,CRITICA,2016-10-18,2016-10-19,2016-10-18 00:00:00,CONCLUIDA,1868.56,2224.77,3.2,4.2,Intervenção corretiva emergencial por falha em Guias Lineares de Precisão
+47,OM-2015-0047,3,12,CORRETIVA,CRITICA,2015-09-29,2015-10-01,2015-09-29 00:00:00,CONCLUIDA,2894.9,3120.28,7.2,7.6,Intervenção corretiva emergencial por falha em Redutor Articular J2
+48,OM-2016-0048,4,17,PREVENTIVA,MEDIA,2016-01-30,2016-02-04,2016-01-30 00:00:00,CONCLUIDA,1427.09,1470.83,2.1,2.1,Revisão periódica programada e lubrificação em Resistência Pré-aquecimento
+49,OM-2016-0049,2,8,PREVENTIVA,MEDIA,2016-12-04,2016-12-09,2016-12-04 00:00:00,CONCLUIDA,1972.25,1996.54,3.3,3.4,Revisão periódica programada e lubrificação em Guias Lineares de Precisão
+50,OM-2016-0050,1,3,PREVENTIVA,ALTA,2016-11-10,2016-11-17,2016-11-10 00:00:00,CONCLUIDA,1267.26,1241.36,2.9,2.9,Revisão periódica programada e lubrificação em Câmera Alinhamento Óptico
+51,OM-2015-0051,1,1,CORRETIVA,CRITICA,2015-05-11,2015-05-12,2015-05-11 00:00:00,CONCLUIDA,2755.05,2617.58,6.5,6.9,Intervenção corretiva emergencial por falha em Alimentador Feeder 8mm
+52,OM-2015-0052,2,7,CORRETIVA,CRITICA,2015-10-21,2015-10-23,2015-10-21 00:00:00,CONCLUIDA,2666.82,3062.67,5.4,6.4,Intervenção corretiva emergencial por falha em Sistema de Corte Clinch
+53,OM-2015-0053,3,12,PREVENTIVA,ALTA,2015-06-23,2015-06-30,2015-06-23 00:00:00,CONCLUIDA,847.01,885.29,4.0,4.0,Revisão periódica programada e lubrificação em Redutor Articular J2
+54,OM-2015-0054,3,12,PREVENTIVA,MEDIA,2015-08-29,2015-09-02,2015-08-29 00:00:00,CONCLUIDA,2058.15,2081.05,2.4,2.3,Revisão periódica programada e lubrificação em Redutor Articular J2
+55,OM-2015-0055,4,18,CORRETIVA,ALTA,2015-03-16,2015-03-18,2015-03-16 00:00:00,CONCLUIDA,3014.54,2867.99,5.7,5.9,Intervenção corretiva emergencial por falha em Cadinho de Solda Duplo
+56,OM-2015-0056,4,20,PREVENTIVA,MEDIA,2015-04-20,2015-04-24,2015-04-20 00:00:00,CONCLUIDA,1351.79,1359.55,4.4,4.5,Revisão periódica programada e lubrificação em Exaustor de Vapores
+57,OM-2015-0057,4,16,CORRETIVA,CRITICA,2015-05-05,2015-05-07,2015-05-05 00:00:00,CONCLUIDA,2910.37,3288.19,8.7,11.1,Intervenção corretiva emergencial por falha em Bomba de Onda de Solda
+58,OM-2016-0058,3,12,CORRETIVA,CRITICA,2016-05-31,2016-06-01,2016-05-31 00:00:00,CONCLUIDA,2062.06,2086.41,7.3,8.2,Intervenção corretiva emergencial por falha em Redutor Articular J2
+59,OM-2016-0059,2,7,CORRETIVA,CRITICA,2016-10-14,2016-10-15,2016-10-14 00:00:00,CONCLUIDA,2125.75,2163.86,4.3,4.2,Intervenção corretiva emergencial por falha em Sistema de Corte Clinch
+60,OM-2015-0060,1,5,PREVENTIVA,MEDIA,2015-11-24,2015-11-28,2015-11-24 00:00:00,CONCLUIDA,927.82,901.28,2.5,2.5,Revisão periódica programada e lubrificação em Correia de Posicionamento
+61,OM-2016-0061,1,4,CORRETIVA,CRITICA,2016-02-29,2016-03-02,2016-02-29 00:00:00,CONCLUIDA,2374.74,2713.02,2.9,3.6,Intervenção corretiva emergencial por falha em Servomotor Eixo X
+62,OM-2016-0062,3,11,CORRETIVA,CRITICA,2016-12-13,2016-12-15,2016-12-13 00:00:00,CONCLUIDA,3248.34,3779.0,2.5,2.7,Intervenção corretiva emergencial por falha em Redutor Harmônico J1
+63,OM-2016-0063,3,14,CORRETIVA,ALTA,2016-03-05,2016-03-07,2016-03-05 00:00:00,CONCLUIDA,1509.66,1561.04,3.9,4.3,Intervenção corretiva emergencial por falha em Placa Controladora de Eixos
+64,OM-2016-0064,3,12,PREVENTIVA,MEDIA,2016-11-26,2016-12-02,2016-11-26 00:00:00,CONCLUIDA,1446.41,1505.27,4.8,5.0,Revisão periódica programada e lubrificação em Redutor Articular J2
+65,OM-2016-0065,4,20,CORRETIVA,ALTA,2016-08-29,2016-08-30,2016-08-29 00:00:00,CONCLUIDA,2548.08,2452.71,6.7,6.7,Intervenção corretiva emergencial por falha em Exaustor de Vapores
+66,OM-2016-0066,2,8,CORRETIVA,CRITICA,2016-01-24,2016-01-26,2016-01-24 00:00:00,CONCLUIDA,2107.82,2503.67,4.7,6.0,Intervenção corretiva emergencial por falha em Guias Lineares de Precisão
+67,OM-2016-0067,2,7,CORRETIVA,ALTA,2016-03-07,2016-03-09,2016-03-07 00:00:00,CONCLUIDA,3839.78,3983.73,2.6,3.0,Intervenção corretiva emergencial por falha em Sistema de Corte Clinch
+68,OM-2016-0068,2,8,CORRETIVA,ALTA,2016-10-27,2016-10-28,2016-10-27 00:00:00,CONCLUIDA,1488.91,1471.19,8.7,8.9,Intervenção corretiva emergencial por falha em Guias Lineares de Precisão
+69,OM-2015-0069,3,13,CORRETIVA,ALTA,2015-05-10,2015-05-11,2015-05-10 00:00:00,CONCLUIDA,2325.35,2561.31,5.5,5.7,Intervenção corretiva emergencial por falha em Fuso de Esferas Eixo Z
+70,OM-2015-0070,2,6,PREVENTIVA,MEDIA,2015-04-28,2015-05-03,2015-04-28 00:00:00,CONCLUIDA,1144.26,1164.55,2.3,2.2,Revisão periódica programada e lubrificação em Cabeçote de Inserção
+71,OM-2016-0071,2,7,CORRETIVA,ALTA,2016-01-20,2016-01-21,2016-01-20 00:00:00,CONCLUIDA,2022.84,2274.28,6.3,7.9,Intervenção corretiva emergencial por falha em Sistema de Corte Clinch
+72,OM-2015-0072,1,3,PREVENTIVA,MEDIA,2015-11-05,2015-11-12,2015-11-05 00:00:00,CONCLUIDA,1302.59,1285.73,4.3,4.2,Revisão periódica programada e lubrificação em Câmera Alinhamento Óptico
+73,OM-2016-0073,2,9,CORRETIVA,ALTA,2016-06-02,2016-06-04,2016-06-02 00:00:00,CONCLUIDA,3745.89,4153.8,7.8,7.7,Intervenção corretiva emergencial por falha em Cilindro Pneumático de Pressão
+74,OM-2016-0074,2,10,PREVENTIVA,ALTA,2016-04-15,2016-04-19,2016-04-15 00:00:00,CONCLUIDA,1087.31,1120.82,4.2,4.4,Revisão periódica programada e lubrificação em Motor de Alimentação
+75,OM-2016-0075,2,9,PREVENTIVA,ALTA,2016-07-05,2016-07-11,2016-07-05 00:00:00,CONCLUIDA,1158.33,1128.85,4.5,4.5,Revisão periódica programada e lubrificação em Cilindro Pneumático de Pressão
+76,OM-2015-0076,3,13,CORRETIVA,CRITICA,2015-03-30,2015-03-31,2015-03-30 00:00:00,CONCLUIDA,3043.65,3147.44,7.4,8.5,Intervenção corretiva emergencial por falha em Fuso de Esferas Eixo Z
+77,OM-2016-0077,2,8,PREVENTIVA,MEDIA,2016-05-21,2016-05-27,2016-05-21 00:00:00,CONCLUIDA,1182.86,1227.85,2.6,2.7,Revisão periódica programada e lubrificação em Guias Lineares de Precisão
+78,OM-2016-0078,2,6,PREVENTIVA,MEDIA,2016-12-19,2016-12-26,2016-12-19 00:00:00,CONCLUIDA,1699.3,1697.36,4.8,4.6,Revisão periódica programada e lubrificação em Cabeçote de Inserção
+79,OM-2015-0079,1,3,PREVENTIVA,ALTA,2015-09-04,2015-09-10,2015-09-04 00:00:00,CONCLUIDA,1021.37,1040.96,4.4,4.2,Revisão periódica programada e lubrificação em Câmera Alinhamento Óptico
+80,OM-2015-0080,3,14,PREVENTIVA,ALTA,2015-11-10,2015-11-16,2015-11-10 00:00:00,CONCLUIDA,2075.42,2085.88,3.7,3.6,Revisão periódica programada e lubrificação em Placa Controladora de Eixos
+81,OM-2015-0081,2,10,PREVENTIVA,ALTA,2015-12-27,2016-01-01,2015-12-27 00:00:00,CONCLUIDA,981.91,944.55,2.8,2.7,Revisão periódica programada e lubrificação em Motor de Alimentação
+82,OM-2016-0082,2,10,PREVENTIVA,MEDIA,2016-07-02,2016-07-06,2016-07-02 00:00:00,CONCLUIDA,1705.44,1786.72,2.6,2.6,Revisão periódica programada e lubrificação em Motor de Alimentação
+83,OM-2016-0083,1,4,CORRETIVA,ALTA,2016-06-21,2016-06-22,2016-06-21 00:00:00,CONCLUIDA,2165.44,2440.46,4.4,4.7,Intervenção corretiva emergencial por falha em Servomotor Eixo X
+84,OM-2015-0084,3,15,CORRETIVA,ALTA,2015-05-10,2015-05-12,2015-05-10 00:00:00,CONCLUIDA,3524.31,3780.6,7.0,6.9,Intervenção corretiva emergencial por falha em Garra Pneumática
+85,OM-2015-0085,2,6,CORRETIVA,CRITICA,2015-01-13,2015-01-15,2015-01-13 00:00:00,CONCLUIDA,1563.3,1852.93,5.4,5.5,Intervenção corretiva emergencial por falha em Cabeçote de Inserção
+86,OM-2016-0086,1,3,CORRETIVA,ALTA,2016-05-04,2016-05-06,2016-05-04 00:00:00,CONCLUIDA,3087.48,3050.22,5.7,6.6,Intervenção corretiva emergencial por falha em Câmera Alinhamento Óptico
+87,OM-2016-0087,4,16,PREVENTIVA,MEDIA,2016-07-30,2016-08-03,2016-07-30 00:00:00,CONCLUIDA,1544.59,1589.5,2.4,2.5,Revisão periódica programada e lubrificação em Bomba de Onda de Solda
+88,OM-2015-0088,4,16,PREVENTIVA,ALTA,2015-08-20,2015-08-26,2015-08-20 00:00:00,CONCLUIDA,1520.39,1509.57,4.7,4.6,Revisão periódica programada e lubrificação em Bomba de Onda de Solda
+89,OM-2016-0089,2,6,CORRETIVA,ALTA,2016-08-05,2016-08-06,2016-08-05 00:00:00,CONCLUIDA,1634.85,1651.14,6.6,6.9,Intervenção corretiva emergencial por falha em Cabeçote de Inserção
+90,OM-2016-0090,3,13,CORRETIVA,ALTA,2016-07-19,2016-07-21,2016-07-19 00:00:00,CONCLUIDA,2139.02,2155.85,5.4,6.3,Intervenção corretiva emergencial por falha em Fuso de Esferas Eixo Z
+91,OM-2016-0091,2,6,CORRETIVA,CRITICA,2016-12-24,2016-12-25,,ABERTA,3330.79,,7.0,,Intervenção corretiva emergencial por falha em Cabeçote de Inserção
+92,OM-2016-0092,4,16,CORRETIVA,ALTA,2016-03-11,2016-03-12,2016-03-11 00:00:00,CONCLUIDA,1611.38,1597.65,8.4,10.5,Intervenção corretiva emergencial por falha em Bomba de Onda de Solda
+93,OM-2015-0093,2,10,CORRETIVA,CRITICA,2015-11-11,2015-11-13,2015-11-11 00:00:00,CONCLUIDA,3119.36,3698.53,3.3,4.0,Intervenção corretiva emergencial por falha em Motor de Alimentação
+94,OM-2016-0094,2,10,CORRETIVA,CRITICA,2016-05-27,2016-05-28,2016-05-27 00:00:00,CONCLUIDA,3202.88,3526.14,6.4,8.1,Intervenção corretiva emergencial por falha em Motor de Alimentação
+95,OM-2015-0095,2,8,CORRETIVA,ALTA,2015-01-27,2015-01-29,2015-01-27 00:00:00,CONCLUIDA,1860.46,2008.81,6.2,7.6,Intervenção corretiva emergencial por falha em Guias Lineares de Precisão
+96,OM-2016-0096,2,7,PREVENTIVA,MEDIA,2016-03-28,2016-04-04,2016-03-28 00:00:00,CONCLUIDA,2037.92,2031.81,3.3,3.4,Revisão periódica programada e lubrificação em Sistema de Corte Clinch
+97,OM-2016-0097,3,13,CORRETIVA,ALTA,2016-02-23,2016-02-24,2016-02-23 00:00:00,CONCLUIDA,2131.72,2528.86,4.6,5.5,Intervenção corretiva emergencial por falha em Fuso de Esferas Eixo Z
+98,OM-2016-0098,3,11,CORRETIVA,ALTA,2016-07-17,2016-07-19,2016-07-17 00:00:00,CONCLUIDA,3294.12,3841.69,4.1,4.0,Intervenção corretiva emergencial por falha em Redutor Harmônico J1
+99,OM-2015-0099,3,14,PREVENTIVA,ALTA,2015-01-02,2015-01-08,2015-01-02 00:00:00,CONCLUIDA,1566.78,1566.54,2.2,2.2,Revisão periódica programada e lubrificação em Placa Controladora de Eixos
+100,OM-2016-0100,3,11,PREVENTIVA,MEDIA,2016-03-28,2016-04-02,2016-03-28 00:00:00,CONCLUIDA,1315.84,1341.93,3.6,3.8,Revisão periódica programada e lubrificação em Redutor Harmônico J1
+101,OM-2015-0101,4,16,CORRETIVA,ALTA,2015-05-05,2015-05-06,2015-05-05 00:00:00,CONCLUIDA,2419.18,2434.12,4.5,4.3,Intervenção corretiva emergencial por falha em Bomba de Onda de Solda
+102,OM-2015-0102,4,18,CORRETIVA,ALTA,2015-04-27,2015-04-28,2015-04-27 00:00:00,CONCLUIDA,2661.29,2710.14,5.7,6.9,Intervenção corretiva emergencial por falha em Cadinho de Solda Duplo
+103,OM-2016-0103,2,10,PREVENTIVA,MEDIA,2016-05-09,2016-05-15,2016-05-09 00:00:00,CONCLUIDA,1973.74,1975.37,3.7,3.7,Revisão periódica programada e lubrificação em Motor de Alimentação
+104,OM-2015-0104,3,13,PREVENTIVA,ALTA,2015-05-20,2015-05-26,2015-05-20 00:00:00,CONCLUIDA,1083.35,1029.46,3.0,3.1,Revisão periódica programada e lubrificação em Fuso de Esferas Eixo Z
+105,OM-2015-0105,2,10,PREVENTIVA,ALTA,2015-11-02,2015-11-06,2015-11-02 00:00:00,CONCLUIDA,1172.12,1202.93,3.3,3.3,Revisão periódica programada e lubrificação em Motor de Alimentação
+106,OM-2016-0106,4,16,CORRETIVA,CRITICA,2016-01-22,2016-01-23,2016-01-22 00:00:00,CONCLUIDA,2359.13,2746.03,8.9,9.2,Intervenção corretiva emergencial por falha em Bomba de Onda de Solda
+107,OM-2016-0107,2,9,CORRETIVA,CRITICA,2016-02-25,2016-02-27,2016-02-25 00:00:00,CONCLUIDA,3409.79,4075.4,5.0,5.9,Intervenção corretiva emergencial por falha em Cilindro Pneumático de Pressão
+108,OM-2016-0108,2,8,PREVENTIVA,MEDIA,2016-05-22,2016-05-29,2016-05-22 00:00:00,CONCLUIDA,856.5,886.05,4.9,4.8,Revisão periódica programada e lubrificação em Guias Lineares de Precisão
+109,OM-2015-0109,4,17,CORRETIVA,CRITICA,2015-04-13,2015-04-14,2015-04-13 00:00:00,CONCLUIDA,3011.48,2977.12,7.2,7.9,Intervenção corretiva emergencial por falha em Resistência Pré-aquecimento
+110,OM-2016-0110,4,19,PREVENTIVA,ALTA,2016-04-25,2016-04-30,2016-04-25 00:00:00,CONCLUIDA,829.23,815.01,3.9,3.9,Revisão periódica programada e lubrificação em Bico Pulverizador de Fluxo
+111,OM-2016-0111,4,16,PREVENTIVA,ALTA,2016-11-21,2016-11-26,2016-11-21 00:00:00,CONCLUIDA,1383.61,1389.29,3.9,4.1,Revisão periódica programada e lubrificação em Bomba de Onda de Solda
+112,OM-2016-0112,2,8,CORRETIVA,CRITICA,2016-09-24,2016-09-25,2016-09-24 00:00:00,CONCLUIDA,1676.26,1858.03,7.4,8.2,Intervenção corretiva emergencial por falha em Guias Lineares de Precisão
+113,OM-2015-0113,1,2,CORRETIVA,CRITICA,2015-04-13,2015-04-14,2015-04-13 00:00:00,CONCLUIDA,2144.08,2237.8,2.8,3.5,Intervenção corretiva emergencial por falha em Bico de Sucção Nozzle
+114,OM-2015-0114,3,13,CORRETIVA,CRITICA,2015-05-30,2015-05-31,2015-05-30 00:00:00,CONCLUIDA,3530.02,3900.42,3.6,3.5,Intervenção corretiva emergencial por falha em Fuso de Esferas Eixo Z
+115,OM-2015-0115,2,9,CORRETIVA,ALTA,2015-09-04,2015-09-05,2015-09-04 00:00:00,CONCLUIDA,2052.78,1954.96,5.5,5.7,Intervenção corretiva emergencial por falha em Cilindro Pneumático de Pressão
+116,OM-2016-0116,3,12,PREVENTIVA,MEDIA,2016-04-21,2016-04-24,2016-04-21 00:00:00,CONCLUIDA,1519.1,1540.21,3.3,3.2,Revisão periódica programada e lubrificação em Redutor Articular J2
+117,OM-2016-0117,1,5,PREVENTIVA,ALTA,2016-03-10,2016-03-15,2016-03-10 00:00:00,CONCLUIDA,1377.16,1340.97,2.6,2.6,Revisão periódica programada e lubrificação em Correia de Posicionamento
+118,OM-2016-0118,4,16,CORRETIVA,CRITICA,2016-08-08,2016-08-10,2016-08-08 00:00:00,CONCLUIDA,2389.93,2275.27,2.6,3.3,Intervenção corretiva emergencial por falha em Bomba de Onda de Solda
+119,OM-2016-0119,3,14,PREVENTIVA,MEDIA,2016-12-03,2016-12-10,2016-12-03 00:00:00,CONCLUIDA,1947.99,2001.7,4.2,4.3,Revisão periódica programada e lubrificação em Placa Controladora de Eixos
+120,OM-2015-0120,4,17,CORRETIVA,CRITICA,2015-08-24,2015-08-25,2015-08-24 00:00:00,CONCLUIDA,3066.63,3466.0,6.6,7.7,Intervenção corretiva emergencial por falha em Resistência Pré-aquecimento

@@ -1,0 +1,5 @@
+meta_id,maquina_id,meta_produtividade_un_h,meta_disponibilidade_perc,meta_performance_perc,meta_qualidade_perc,meta_oee_perc,data_vigencia_inicio,data_vigencia_fim
+1,1,240.5,91.5,90.0,98.5,83.2,2017-01-01,2020-12-31
+2,2,243.0,91.5,90.0,98.5,83.2,2017-01-01,2020-12-31
+3,3,245.5,91.5,90.0,98.5,83.2,2017-01-01,2020-12-31
+4,4,248.0,91.5,90.0,98.5,83.2,2017-01-01,2020-12-31

@@ -1,0 +1,4 @@
+certificacao_id,norma,escopo,orgao_emissor,status,data_emissao,data_validade,progresso_conformidade_perc
+1,ISO 9001,Gestão da Qualidade,Bureau Veritas,Ativa,2014-06-10,2017-06-09,100
+2,ISO 14001,Gestão Ambiental,DNV,Em Processo,2015-01-01,2017-12-31,40
+3,ISO 50001,Eficiência Energética,TUV,Planejada,2016-01-01,2018-12-31,15

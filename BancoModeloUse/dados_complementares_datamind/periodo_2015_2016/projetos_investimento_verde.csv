@@ -1,0 +1,4 @@
+projeto_id,nome_projeto,categoria,investimento_brl,economia_anual_estimada_brl,roi_verde_perc,payback_anos,data_aprovacao,status
+1,Retrofit Iluminação LED Fábrica,Eficiência Energética,32000.0,9500.0,29.6,3.4,2015-04-12,Operacional
+2,Estudo de Viabilidade Energia Solar,Energia Renovável,15000.0,0.0,0.0,0.0,2016-08-20,Concluído
+3,Coleta Seletiva e Prensa de Sucata,Gestão de Resíduos,18000.0,5200.0,28.8,3.5,2015-11-05,Operacional

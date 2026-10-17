@@ -1,0 +1,5 @@
+modelo_id,nome_modelo,modulo,versao,algoritmo,acuracia_perc,f1_score,data_treinamento,frequencia_treino,predicoes_mes,status
+1,Preditor de Falhas,Manutenção,v2.1,LightGBM + Random Forest,0.0,0.0,,Semanal,0,Treinando
+2,Otimizador de Energia,Energia,v2.2,Linear Programming + XGBoost,83.3,0.81,2020-11-15,Mensal,79,Ativo
+3,Detector de Anomalias,Produção,v2.3,Isolation Forest + Autoencoder,87.0,0.85,2020-11-15,Diário,88,Ativo
+4,Analisador Financeiro,Financeiro,v2.4,Time-Series Prophet + CatBoost,0.0,0.0,,Mensal,0,Treinando
