@@ -67,64 +67,49 @@ def _headers() -> dict:
     return {"Authorization": f"Bearer {token}"} if token else {}
 
 
-def infer(alias: str, system_prompt: str, question: str, evidence: dict,
-          temperature: float, max_tokens: int) -> tuple[str, dict]:
+def chat_turn(alias: str, messages: list[dict], temperature: float, max_tokens: int,
+              *, tools: list[dict] | None, session_id: str | None) -> tuple[dict, dict]:
+    """One OpenAI chat turn; caller owns tool validation and conversation limits."""
     if alias not in MODELS:
         raise ValueError("Unknown model alias")
     endpoint = vllm_url()
     if not endpoint:
         raise RuntimeError("vLLM endpoint is not configured")
     listed = available_models()[alias]
-    if not listed["available"]:
-        raise RuntimeError("Selected model is not served by vLLM")
-    payload = {
-        "model": alias,
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": question + "\n\nEvidências JSON:\n" + json.dumps(evidence, ensure_ascii=False)},
-        ],
-        "temperature": temperature,
-        "max_tokens": max_tokens,
-        "stream": False,
-    }
-    headers = {"Content-Type": "application/json", **_headers()}
-    request = Request(endpoint + "/v1/chat/completions", data=json.dumps(payload).encode(),
-                      headers=headers, method="POST")
+    if not listed["available"] or not listed.get("session_id"):
+        raise RuntimeError("Selected model has no attested serving session")
+    if session_id is not None and listed["session_id"] != session_id:
+        raise ModelResponseError("Serving session changed before turn", {"session_id": listed["session_id"]})
+    payload = {"model": alias, "messages": messages, "temperature": temperature,
+               "max_tokens": max_tokens, "stream": False}
+    if tools is not None:
+        payload.update({"tools": tools, "tool_choice": "auto", "parallel_tool_calls": False})
+    request = Request(endpoint + "/v1/chat/completions",
+                      data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+                      headers={"Content-Type": "application/json", **_headers()}, method="POST")
     with urlopen(request, timeout=120) as response:
         identity = serving_catalog.response_identity(response)
         raw_body = response.read()
-    if listed.get("session_id") and (identity is None or
-                                     identity["session_id"] != listed["session_id"]):
-        raise ModelResponseError(
-            "Serving session changed between catalog and generation",
-            _serving_record(endpoint, raw_body.decode("utf-8", errors="replace"),
-                            parsed=False, raw_body=raw_body),
-        )
-    attested = serving_catalog.provenance(alias, identity, endpoint)
+    if identity is None or identity["session_id"] != listed["session_id"]:
+        raise ModelResponseError("Serving session changed during turn",
+                                 _serving_record(endpoint, raw_body.decode("utf-8", errors="replace"),
+                                                 parsed=False, raw_body=raw_body))
+    provenance = serving_catalog.provenance(alias, identity, endpoint)
     try:
         result = json.loads(raw_body)
-    except (json.JSONDecodeError, UnicodeDecodeError) as exc:
-        raise ModelResponseError(
-            "Invalid chat completion JSON",
-            _serving_record(endpoint, raw_body.decode("utf-8", errors="replace"),
-                            parsed=False, raw_body=raw_body, provenance=attested),
-        ) from exc
-    try:
-        content = result["choices"][0]["message"]["content"]
-        if not isinstance(content, str):
-            raise TypeError("Chat completion content is not text")
-    except (KeyError, IndexError, TypeError) as exc:
-        raise ModelResponseError(
-            "Invalid chat completion shape",
-            _serving_record(endpoint, result, parsed=True, raw_body=raw_body,
-                            provenance=attested),
-        ) from exc
-    if result.get("model", alias) != alias:
-        raise ModelResponseError(
-            "Chat completion model differs from requested alias",
-            _serving_record(endpoint, result, parsed=True, raw_body=raw_body,
-                            provenance=attested),
-        )
-    serving = _serving_record(endpoint, result, parsed=True, provenance=attested)
-    serving["served_model"] = result.get("model", alias)
-    return content, serving
+        choice = result["choices"][0]
+        message = choice["message"]
+        if not isinstance(message, dict) or message.get("role") != "assistant":
+            raise TypeError("Invalid assistant message")
+        finish = choice.get("finish_reason")
+        if finish not in {"stop", "tool_calls"} or bool(message.get("tool_calls")) != (finish == "tool_calls"):
+            raise TypeError("Invalid or incomplete chat turn")
+        if result.get("model", alias) != alias:
+            raise TypeError("Served model differs from alias")
+    except (ValueError, KeyError, IndexError, TypeError) as exc:
+        raise ModelResponseError("Invalid chat completion shape",
+                                 _serving_record(endpoint, raw_body.decode("utf-8", errors="replace"),
+                                                 parsed=False, raw_body=raw_body, provenance=provenance)) from exc
+    record = _serving_record(endpoint, result, parsed=True, raw_body=raw_body, provenance=provenance)
+    record["request"] = payload
+    return message, record

@@ -13,10 +13,27 @@ medir também a busca. O [exportador local da SPEC-007](../model_evaluation/READ
 prepara pacotes fixos candidatos a partir da DW. A avaliação científica e o
 harness por API ainda não foram implementados.
 
-A [primeira API de inferência compartilhada](../inference_api/README.md)
-consulta estes dois bancos locais com SQL fixo e transações somente leitura.
+A [Bancada exploratória](../inference_api/README.md) usa a DW em dois modos explícitos
+para novos runs: pacote candidato já exportado ou consultas fixas escolhidas
+pela LLM. O fluxo anterior consultava estes dois bancos de origem e seus
+snapshots permanecem legíveis.
 O banco de histórico `db_inference_app` é criado separadamente por comando
 explícito; o importador desta pasta não é o servidor da aplicação.
+
+## Perguntas de teste e estado científico
+
+- A [seção de fluxo da Bancada](../inference_api/README.md) explica onde cada
+  pergunta entra, como a LLM recebe evidências e onde o run fica registrado.
+- [`model_evaluation/examples/cases_2020.json`](../model_evaluation/examples/cases_2020.json)
+  é um exemplo versionado de pergunta para preparar pacote fixo. O manifesto
+  escolhido e o pacote exportado precisam ser identificados por versão/hash;
+  esse exemplo não é a bateria oficial.
+- No modo tools, a pergunta livre é entrada do run e seu texto fica no snapshot
+  de `db_inference_app`, não numa lista de perguntas do repositório.
+- O catálogo científico de casos, seus gabaritos e a pontuação permanecem
+  pendentes, conforme [arquitetura da avaliação](docs/arquitetura_avaliacao_modelos.md).
+  Um rascunho antigo que se intitulava “Gold Set” foi arquivado fora do
+  checkout: seus campos, premissas e comandos não correspondiam à DW v1.
 
 O RAG/agentes, o esquema DW anterior, os repositórios da aplicação anterior e
 os scripts antigos de criação/carga/limpeza não integram este checkout ativo.
@@ -145,9 +162,9 @@ até `2026-01-01 00:00:00`, apesar do rótulo 2021–2025 da última pasta.
 Esse limite foi preservado e deverá ser considerado no recorte do benchmark.
 
 As perguntas, o grão e a primeira carga do DW estão em [dw/README.md](dw/README.md).
-O DW ainda não alimenta `inference_api/`; o contrato de evidências para esse
-novo caminho e o harness formal são etapas posteriores. A API exploratória
-continua consultando os dois bancos de origem diretamente.
+A SPEC-009 liga a DW à Bancada exploratória por pacotes candidatos e tools
+de leitura. O harness científico formal continua posterior; a integração não
+valida um caso, score ou inferência real dos pesos.
 
 ## Consulta inicial
 

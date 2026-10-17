@@ -43,6 +43,31 @@ def app_db_params() -> dict:
     return params
 
 
+def dw_db_params() -> dict:
+    """Only the isolated research DW, never the source databases."""
+    mode = os.getenv("INFERENCE_RUNTIME_MODE", "host")
+    expected = ("db", 5432) if mode == "docker" else ("127.0.0.1", 5544)
+    if mode not in {"host", "docker"}:
+        raise ValueError("Invalid inference runtime mode")
+    host = _required("DW_DB_HOST")
+    port = int(_required("DW_DB_PORT"))
+    if (host, port) != expected or _required("DW_DB_NAME") != "db_pesquisa_dw":
+        raise ValueError("DW connection must target the isolated db_pesquisa_dw")
+    return {"host": host, "port": port, "dbname": "db_pesquisa_dw",
+            "user": _required("DW_DB_USER"), "password": _required("DW_DB_PASSWORD"),
+            "connect_timeout": 5}
+
+
+def packet_directory() -> Path:
+    value = os.getenv("INFERENCE_EVIDENCE_PACKETS_DIR", "").strip()
+    if not value:
+        return ROOT / "model_evaluation" / ".local" / "packets"
+    path = Path(value)
+    if not path.is_absolute():
+        raise ValueError("Packet directory must be absolute")
+    return path
+
+
 def vllm_url() -> str:
     value = os.getenv("INFERENCE_VLLM_URL", "").strip().rstrip("/")
     if value:

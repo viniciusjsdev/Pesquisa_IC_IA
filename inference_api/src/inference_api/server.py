@@ -7,7 +7,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 from uuid import UUID
 
-from . import auth, budget, limits, models, service, storage
+from . import auth, budget, dw_tools, evidence_packets, limits, models, service, storage
 
 ROOT = Path(__file__).resolve().parents[2]
 WEB = ROOT / "frontend" / "dist"
@@ -81,6 +81,10 @@ class Handler(BaseHTTPRequestHandler):
                 self._send(200, {"status": "logged_out"})
             elif method == "GET" and path == "/api/models":
                 self._send(200, models.available_models())
+            elif method == "GET" and path == "/api/bench/evidence-packets":
+                self._send(200, evidence_packets.list_packets())
+            elif method == "GET" and path == "/api/bench/dw-tools":
+                self._send(200, dw_tools.availability())
             elif method == "GET" and path == "/api/prompts":
                 self._send(200, storage.list_prompts())
             elif method == "POST" and path == "/api/prompts":
@@ -101,6 +105,7 @@ class Handler(BaseHTTPRequestHandler):
                 self._send(200, storage.list_runs())
             elif method == "POST" and path == "/api/runs":
                 data = self._body()
+                service._validate_input(data)
                 with limits.reserve(principal.id):
                     self._send(201, service.execute_run(data, principal))
             elif method == "GET" and path.startswith("/api/runs/"):

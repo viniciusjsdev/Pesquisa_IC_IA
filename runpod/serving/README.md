@@ -11,9 +11,16 @@ A SPEC-002 teve a **preparação local aprovada em revisão independente** em
 interação; essa aprovação não atesta funcionamento remoto.
 
 A [SPEC-005](../../docs/sessao_inferencia_curta.md) acrescenta pré-voo local,
-ensaio de três rotas/dois aliases, prova HTTP de túnel e encerramento com
-readback. O `verify_remote.py` abaixo continua sendo o smoke test explícito
+ensaio histórico de três rotas/dois aliases, prova HTTP de túnel e encerramento com
+readback. A SPEC-009 retirou o ensaio das rotas anteriores do comando ativo;
+um novo ensaio dos dois modos ainda precisa ser contratado. O `verify_remote.py` abaixo continua sendo o smoke test explícito
 de sete aliases; a SPEC-005 não o executou contra uma Pod.
+
+A SPEC-009 acrescentou ao comando vLLM `--enable-auto-tool-choice` e
+`--tool-call-parser hermes` para Qwen2.5. O backend solicita
+`tool_choice: auto` e valida a identidade de sessão em cada turno. Testes
+locais com servidor simulado não provam que os adapters reais farão chamadas
+válidas; esse ensaio depende de uma sessão RunPod futura e explícita.
 
 ## Peças e limites
 

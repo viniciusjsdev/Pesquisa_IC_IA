@@ -1,0 +1,15 @@
+{
+  "spec_id": "SPEC-009",
+  "contract_version": 1,
+  "implementation": "completed_locally",
+  "review": "approved_independent_review_round_2",
+  "integration": "disposable_docker_fixture_only",
+  "real_database_copy": "not_run",
+  "remote_inference": "not_run",
+  "scientific_evaluation": "not_run",
+  "base_commit": "9239ea58ff84a0ebc1d47598a8bd8c57d7e408ef",
+  "recorded_on": "2026-10-16",
+  "evidence": "specs/active/SPEC-009/evidence/completion.json",
+  "local_evidence": "specs/active/SPEC-009/evidence/local-2026-10-16.md",
+  "review_evidence": "specs/active/SPEC-009/evidence/review.json"
+}

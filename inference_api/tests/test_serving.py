@@ -251,14 +251,16 @@ class ServingTests(unittest.TestCase):
             if request.full_url.endswith("/v1/models"):
                 return Response({"data": [{"id": "ft-finqa-a"}]}, headers)
             return Response({"model": "ft-finqa-a", "choices": [
-                {"message": {"content": "OK"}}]}, headers)
+                {"finish_reason": "stop", "message": {"role": "assistant", "content": "OK"}}]}, headers)
 
         with patch("inference_api.models.vllm_url", return_value="https://pod.example"), \
              patch("inference_api.models.urlopen", side_effect=open_request):
             listing = models.available_models()
             self.assertTrue(listing["ft-finqa-a"]["available"])
             self.assertFalse(listing["ft-finqa-a"]["generation_confirmed"])
-            _, record = models.infer("ft-finqa-a", "P", "Q", {}, 0, 8)
+            _, record = models.chat_turn("ft-finqa-a", [{"role": "system", "content": "P"},
+                                                      {"role": "user", "content": "Q"}],
+                                         0, 8, tools=None, session_id=listing["ft-finqa-a"]["session_id"])
         self.assertEqual(record["base_revision"], REVISION)
         self.assertEqual(record["adapter_run"], "run_v1_seed42")
         self.assertEqual(record["adapter_hash"], self.manifest["adapters"][0]["weight_sha256"])

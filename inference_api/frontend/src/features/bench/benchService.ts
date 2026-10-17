@@ -8,6 +8,8 @@ export type Criterion = { id: string; name: string; revision: number; author: st
 export type Run = { id: string; author: string; created_at: string; snapshot: Record<string, any> };
 export type Model = { available: boolean; generation_confirmed?: boolean; kind?: string };
 export type Budget = { session_ceiling_usd: number; runpod_status: string; runpod_balance_usd: number | null; runpod_spend_per_hour_usd: number | null; runpod_source: string; status_checked_at: string; checked_at: string | null };
+export type Packet = { case_id: string; sha256: string; question: string; domain: string; source_snapshot: { source_fingerprint: string } };
+export type DWStatus = { available: boolean; reason?: string; source_fingerprint?: string };
 
 export const benchService = {
   models: async () => (await api.get<Record<string, Model>>('/models')).data,
@@ -16,6 +18,8 @@ export const benchService = {
   runs: async () => (await api.get<Run[]>('/runs')).data,
   run: async (id: string) => (await api.get<Run>(`/runs/${encodeURIComponent(id)}`)).data,
   budget: async () => (await api.get<Budget>('/budget')).data,
+  packets: async () => (await api.get<Packet[]>('/bench/evidence-packets')).data,
+  dwStatus: async () => (await api.get<DWStatus>('/bench/dw-tools')).data,
   savePrompt: async (name: string, system_prompt: string, expected_revision: number) => (await api.post<Prompt>('/prompts', { name, system_prompt, expected_revision })).data,
   saveCriteria: async (name: string, config: CriteriaConfig, expected_revision: number) => (await api.post<Criterion>('/criteria', { name, config, expected_revision })).data,
   execute: async (body: Record<string, unknown>) => (await api.post<Run>('/runs', body, { timeout: 120_000 })).data,
@@ -24,7 +28,11 @@ export const benchService = {
 
 export function comparisonDifferences(runs: Run[]): string[] {
   const signatures = runs.map(({ snapshot: s }) => ({
+    modo: JSON.stringify(s.evidence_mode || 'legacy_scope'),
     pergunta: JSON.stringify(s.question_request?.question),
+    pacote: JSON.stringify({ case_id: s.packet?.case_id, sha256: s.packet?.sha256 }),
+    'fingerprint DW': JSON.stringify(s.packet?.source_snapshot?.source_fingerprint || s.dw_source?.source_fingerprint),
+    'catálogo e traço': JSON.stringify({ catalog: s.tool_catalog, trace: s.tool_trace }),
     período: JSON.stringify({ year: s.question_request?.year, route: s.route_plan }),
     evidência: JSON.stringify(s.evidence_bundle),
     prompt: JSON.stringify(s.prompt),

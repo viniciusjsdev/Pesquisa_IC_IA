@@ -1,0 +1,32 @@
+{
+  "spec_id": "SPEC-009",
+  "contract_version": 1,
+  "status": "changes_requested",
+  "thread_id": null,
+  "runtime": {"classification": "critical_review", "model": "gpt-6.1-sol", "reasoning": "high"},
+  "review_input": [
+    "SPEC.md, SPEC.execution.json, completion.json, local evidence, AGENTS.md and README files",
+    "Current diff and implementation across API, DW, exporter, frontend, Compose and copy script",
+    "Canonical local test suites and adversarial in-memory probes"
+  ],
+  "baseline_assessment": [
+    {"category": "tests", "result": "regressed", "evidence": ["38 API tests completed: 31 passed, 7 opt-in skipped; 10 exporter tests passed", "No tests yet covered post-validation error classification and cumulative limits"], "notes": []},
+    {"category": "cli", "result": "changed_as_approved", "evidence": ["Five fixed queries shared by CLI, exporter and API"], "notes": []},
+    {"category": "json_contracts", "result": "changed_as_approved", "evidence": ["Packets verified by ID, hash, canonical bytes and schema; v3 snapshots keep legacy records readable"], "notes": []},
+    {"category": "persistence", "result": "preserved", "evidence": ["Append-only run storage and historical JSON reads unchanged"], "notes": []},
+    {"category": "schemas", "result": "changed_as_approved", "evidence": ["Closed packet schema and tool parameter contracts"], "notes": []},
+    {"category": "protected_paths", "result": "preserved", "evidence": ["No protected data, weights, checkpoints, results or articles modified; legacy archive hashes matched"], "notes": []},
+    {"category": "decisions", "result": "regressed", "evidence": ["Some active docs still named the old API flow; optional four-database copy receipt identified SPEC-008"], "notes": []}
+  ],
+  "findings": [
+    "[P1] Post-validation fingerprint and individual/cumulative result limits were incorrectly caught as tool_validation errors in service.py; add distinct query/limit outcomes and tests.",
+    "[P2] model_evaluation/README.md and docs/arquitetura_inferencia_compartilhada.md contained current-state claims from the old route or old query hash source.",
+    "[P2] copy_logical_databases.py recorded spec_id SPEC-008 even when --include-dw copied the fourth database."
+  ],
+  "evidence": [
+    "Tool choice came from assistant.tool_calls, not backend scope selection.",
+    "DW connections used fixed parametrized SQL and SET TRANSACTION READ ONLY.",
+    "UI, Compose private ro mount, serving flags and scientific boundary were otherwise consistent with the contract."
+  ],
+  "usage": null
+}

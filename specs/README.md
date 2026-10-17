@@ -26,6 +26,7 @@ em 16/10/2026 têm evidências próprias nos respectivos diretórios.
 | 6 | [SPEC-006](active/SPEC-006/SPEC.md) | DW local rastreável para análise industrial e financeira | `done` no escopo local; não altera a API das SPECs 001 a 005 |
 | 7 | [SPEC-007](active/SPEC-007/SPEC.md) | Exportar pacotes fixos de evidência do DW, sem LLM ou gabarito | `done` no escopo local; gold set e caso científico oficial seguem pendentes |
 | 8 | [SPEC-008](active/SPEC-008/SPEC.md) | Observatório unificado com Bancada de testes após login, modo host e Docker local | `done` no escopo local, revisão independente aprovada; cluster Windows preservado |
+| 9 | [SPEC-009](active/SPEC-009/SPEC.md) | Alternância explícita na Bancada entre pacote fixo da DW e tools escolhidas pela LLM | `done` no escopo local, [revisão independente aprovada](active/SPEC-009/evidence/review.json); sem execução remota nem cópia real do DW |
 
 A SPEC-001 foi implementada localmente e aprovada em revisão independente em
 14/10/2026. A SPEC-002 tem implementação local de manifesto, scripts e
@@ -67,9 +68,11 @@ independente é exigida onde o manifest indicar. Nenhuma SPEC autoriza iniciar
 Pod, abrir ngrok, gastar créditos, publicar ou alterar dados científicos. A
 SPEC-006 autorizou uma carga local em `db_pesquisa_dw` após verificar as fontes;
 ela não modifica os dois bancos de origem nem o banco da aplicação. A SPEC-007
-não autoriza nova carga: sua exportação local usa somente leitura. O cenário
-de escolha de tools pela LLM e a pontuação científica formal ainda precisam de
-contratos próprios, conforme a arquitetura de avaliação.
+não autoriza nova carga: sua exportação local usa somente leitura. A SPEC-009
+contrata a escolha de tools pela LLM **para runs exploratórios da Bancada** e
+o uso dos pacotes candidatos da SPEC-007 no outro modo. Ela não define gold
+set, rubrica ou pontuação científica; o harness formal ainda exige contrato
+separado, conforme a arquitetura de avaliação.
 
 Fonte de verdade científica: [`BancoModeloUse/docs/arquitetura_avaliacao_modelos.md`](../BancoModeloUse/docs/arquitetura_avaliacao_modelos.md).
 Topologia: [`docs/arquitetura_inferencia_compartilhada.md`](../docs/arquitetura_inferencia_compartilhada.md).

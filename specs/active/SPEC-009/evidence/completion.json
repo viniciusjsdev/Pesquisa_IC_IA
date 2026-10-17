@@ -1,0 +1,425 @@
+{
+  "spec_id": "SPEC-009",
+  "contract_version": 1,
+  "status": "completed",
+  "thread_id": "01a146d6-8c79-7270-bec7-093c72ad5528",
+  "runtime": {
+    "classification": "normal_implementation",
+    "model": "session-selected",
+    "reasoning": "session-selected"
+  },
+  "changed_files": [
+    {
+      "path": ".dockerignore",
+      "change": "modified"
+    },
+    {
+      "path": "AGENTS.md",
+      "change": "modified"
+    },
+    {
+      "path": "BancoModeloUse/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "BancoModeloUse/docs/arquitetura_avaliacao_modelos.md",
+      "change": "modified"
+    },
+    {
+      "path": "BancoModeloUse/dw/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "BancoModeloUse/dw/cli.py",
+      "change": "modified"
+    },
+    {
+      "path": "BancoModeloUse/requirements-local.txt",
+      "change": "modified"
+    },
+    {
+      "path": "README.md",
+      "change": "modified"
+    },
+    {
+      "path": "docs/arquitetura_inferencia_compartilhada.md",
+      "change": "modified"
+    },
+    {
+      "path": "docs/sessao_inferencia_curta.md",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/Dockerfile",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/compose.yaml",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/BenchPage.tsx",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/RunDetail.tsx",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/benchService.ts",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/requirements.txt",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/scripts/copy_logical_databases.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/session_checks.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/config.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/contracts.py",
+      "change": "deleted"
+    },
+    {
+      "path": "inference_api/src/inference_api/criteria.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/evidence.py",
+      "change": "deleted"
+    },
+    {
+      "path": "inference_api/src/inference_api/models.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/orchestrator.py",
+      "change": "deleted"
+    },
+    {
+      "path": "inference_api/src/inference_api/response_agent.py",
+      "change": "deleted"
+    },
+    {
+      "path": "inference_api/src/inference_api/server.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/service.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/verifier.py",
+      "change": "deleted"
+    },
+    {
+      "path": "inference_api/tests/browser_spec008.cjs",
+      "change": "deleted"
+    },
+    {
+      "path": "inference_api/tests/test_contract.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_criteria.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_serving.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_session_checks.py",
+      "change": "modified"
+    },
+    {
+      "path": "model_evaluation/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "model_evaluation/export.py",
+      "change": "modified"
+    },
+    {
+      "path": "runpod/serving/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "runpod/serving/serving.py",
+      "change": "modified"
+    },
+    {
+      "path": "specs/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "BancoModeloUse/dw/fixed_queries.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/dw_tools.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/evidence_packets.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/browser_spec009.cjs",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec009_http.py",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-009/SPEC.execution.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-009/SPEC.md",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-009/evidence/completion.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-009/evidence/lifecycle.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-009/evidence/local-2026-10-16.md",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-009/evidence/review-round-1.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-009/evidence/review.json",
+      "change": "added"
+    }
+  ],
+  "artifacts": [
+    "BancoModeloUse/dw/fixed_queries.py",
+    "inference_api/src/inference_api/dw_tools.py",
+    "inference_api/src/inference_api/evidence_packets.py",
+    "inference_api/frontend/src/features/bench/BenchPage.tsx",
+    "inference_api/tests/browser_spec009.cjs",
+    "specs/active/SPEC-009/evidence/local-2026-10-16.md"
+  ],
+  "acceptance_evidence": [
+    {
+      "id": "AC-001",
+      "result": "passed",
+      "evidence": [
+        "Browser fixture shows no preselected mode, accepts both explicit modes, labels history and comparison",
+        "HTTP rejects missing or cross-mode parameters before run reservation"
+      ],
+      "notes": []
+    },
+    {
+      "id": "AC-002",
+      "result": "passed",
+      "evidence": [
+        "Packet tests reject wrong hash, tampering and invalid files",
+        "Snapshot sends exact verified packet JSON and its question to simulated model; private Compose fixture listed by ID/hash"
+      ],
+      "notes": [
+        "No real model generation performed."
+      ]
+    },
+    {
+      "id": "AC-003",
+      "result": "passed",
+      "evidence": [
+        "Simulated model requests a named tool and receives fixed-query result before final answer",
+        "Tests cover malformed calls, bounds, no observation and unavailable DW",
+        "Disposable Compose DW financial query returned one dated row and coverage"
+      ],
+      "notes": [
+        "Real adapter tool calling is unverified."
+      ]
+    },
+    {
+      "id": "AC-004",
+      "result": "passed",
+      "evidence": [
+        "Host unit/HTTP/browser fixture tests and Compose config/build/smoke passed",
+        "Disposable four-database copy included DW with dump hashes and matching counts"
+      ],
+      "notes": [
+        "No real database copy, remote inference or tunnel."
+      ]
+    },
+    {
+      "id": "AC-005",
+      "result": "passed",
+      "evidence": [
+        "Historical snapshots are read without rewrite and labeled legacy",
+        "Old active route modules/test archived externally with SHA-256 inventory after consumer search",
+        "Affected README and architecture documents describe exploratory modes and scientific limits"
+      ],
+      "notes": [
+        "Independent review is recorded separately in review.json after completion."
+      ]
+    }
+  ],
+  "validation_evidence": [
+    {
+      "validation_id": "VAL-001",
+      "canonical_command": "git diff --check",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "No whitespace errors"
+      ],
+      "notes": [
+        "LF/CRLF warnings only."
+      ]
+    },
+    {
+      "validation_id": "VAL-002",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "40 executed: 33 passed, 7 opt-in PostgreSQL integration skips after first-review fixes"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-003",
+      "canonical_command": "BancoModeloUse/.venv/Scripts/python.exe -m unittest discover -s model_evaluation/tests -v",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "10 passed"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-004",
+      "canonical_command": "npm --prefix inference_api/frontend run typecheck",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "pnpm.cmd --dir inference_api/frontend typecheck passed"
+      ],
+      "notes": [
+        "Host npm absent; equivalent package script run with pnpm."
+      ]
+    },
+    {
+      "validation_id": "VAL-005",
+      "canonical_command": "npm --prefix inference_api/frontend run lint",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "pnpm.cmd --dir inference_api/frontend lint passed"
+      ],
+      "notes": [
+        "Host npm absent; equivalent package script run with pnpm."
+      ]
+    },
+    {
+      "validation_id": "VAL-006",
+      "canonical_command": "npm --prefix inference_api/frontend run test -- --run",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "pnpm.cmd --dir inference_api/frontend test -- --run: 2 Vitest tests passed"
+      ],
+      "notes": [
+        "Host npm absent; equivalent package script run with pnpm."
+      ]
+    },
+    {
+      "validation_id": "VAL-007",
+      "canonical_command": "npm --prefix inference_api/frontend run build",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "pnpm.cmd --dir inference_api/frontend build and Docker frontend stage passed"
+      ],
+      "notes": [
+        "Host npm absent; equivalent package script run with pnpm."
+      ]
+    },
+    {
+      "validation_id": "VAL-008",
+      "canonical_command": "Testar HTTP autenticado e browser local nos dois modos com servidor vLLM simulado, erros, historico e comparacao",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "test_spec009_http.py and browser_spec009.cjs passed on fixture API"
+      ],
+      "notes": [
+        "No actual vLLM generation."
+      ]
+    },
+    {
+      "validation_id": "VAL-009",
+      "canonical_command": "docker compose config, build e smoke isolado com DW e pacotes de fixture, sem copiar dados reais",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "Compose config/build and disposable no-DW/one-packet/one-financial-row smoke passed",
+        "Four disposable logical databases copied with hashes and row-count readback"
+      ],
+      "notes": [
+        "Docker Desktop D: bind did not display packet; one fixture was copied to TEMP and mounted. No real DB copy.",
+        "Four-database fixture receipt predates receipt provenance fix and identifies SPEC-008; no full copy was rerun afterward."
+      ]
+    },
+    {
+      "validation_id": "VAL-010",
+      "canonical_command": "Conferir consumidores, ausencia de fallback, documentacao e diff antes da revisao independente",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "Consumer search before retirement; external SHA-256 archive inventory",
+        "Active READMEs and architecture updated; diff inspected"
+      ],
+      "notes": []
+    }
+  ],
+  "deviations": [
+    "Implementation ran in existing user thread; actual model/reasoning are session-selected, not manifest-enforced.",
+    "Host npm unavailable, so equivalent pnpm scripts and Docker Node stage ran.",
+    "Docker Desktop D: packet bind required a temporary fixture copy under C: TEMP; its cleanup was rejected by automatic command review, leaving one fixture file.",
+    "Legacy SPEC-005 rehearsal for the retired route was removed; read-only preflight and tunnel check remain.",
+    "First independent review requested error classification, documentation and copy receipt provenance fixes; corrections were made before second review.",
+    "Independent critical review approved local scope in round 2; round 1 findings are preserved.",
+    "Manifest requested gpt-5.6-sol/high for review; independent reviewer reported gpt-6.1-sol/high in its evidence."
+  ],
+  "unresolved_items": [
+    "Real vLLM adapter tool calling, remote inference, real DW copy, ngrok and scientific evaluation require separate authorization/validation."
+  ],
+  "needs_design": null,
+  "usage": null
+}

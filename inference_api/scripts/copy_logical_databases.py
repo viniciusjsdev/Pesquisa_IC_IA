@@ -46,7 +46,7 @@ def quoted(identifier: str) -> str:
 
 def source_config(values: dict[str, str | None], database: str,
                   fixture: bool) -> tuple[dict[str, str], list[str]]:
-    domain = "INDUSTRIAL" if database == "db_industrial" else "FINANCEIRO"
+    domain = "INDUSTRIAL" if database in {"db_industrial", "db_pesquisa_dw"} else "FINANCEIRO"
     prefix = domain + "_DB_"
     host, port = values.get(prefix + "HOST"), values.get(prefix + "PORT")
     name, user, password = (values.get(prefix + key) for key in ("NAME", "USER", "PASSWORD"))
@@ -156,8 +156,8 @@ def copy(args: argparse.Namespace) -> dict:
         raise ValueError("Source and Compose environment files must exist")
     if not re.fullmatch(r"[a-z][a-z0-9_-]{2,50}", args.project):
         raise ValueError("Invalid Compose project name")
-    if args.fixture and not args.project.startswith("spec008-test-"):
-        raise ValueError("Fixture copy requires a spec008-test-* project")
+    if args.fixture and not args.project.startswith(("spec008-test-", "spec009-test-")):
+        raise ValueError("Fixture copy requires a spec008-test-* or spec009-test-* project")
     if args.inject_failure_after_first and not args.fixture:
         raise ValueError("Failure injection is fixture-only")
 
@@ -172,18 +172,20 @@ def copy(args: argparse.Namespace) -> dict:
     verify_empty_target(compose)
     if args.receipt.exists():
         raise ValueError("Receipt already exists; refusing to overwrite prior evidence")
-    for database in DATABASES:
+    databases = DATABASES + (("db_pesquisa_dw",) if args.include_dw else ())
+    for database in databases:
         source_config(source_values, database, args.fixture)
 
-    receipt: dict = {"schema_version": 1, "spec_id": "SPEC-008", "state": "preparing",
+    receipt: dict = {"schema_version": 1, "spec_id": "SPEC-009" if args.include_dw else "SPEC-008",
+                     "include_dw": args.include_dw, "state": "preparing",
                      "captured_at": datetime.now(timezone.utc).isoformat(),
                      "project": args.project, "source_mode": "fixture" if args.fixture else "isolated_windows_5544",
                      "databases": {}}
     args.receipt.parent.mkdir(parents=True, exist_ok=True)
     (ROOT / "inference_api" / ".local").mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix="spec008-dumps-", dir=ROOT / "inference_api" / ".local") as temp:
+    with tempfile.TemporaryDirectory(prefix="spec009-dumps-" if args.include_dw else "spec008-dumps-", dir=ROOT / "inference_api" / ".local") as temp:
         dumps = {}
-        for database in DATABASES:
+        for database in databases:
             env, flags = source_config(source_values, database, args.fixture)
             path = Path(temp) / f"{database}.dump"
             run([pg_dump, *flags, "-Fc", "--no-owner", "--no-acl", "-f", str(path)], env=env)
@@ -192,7 +194,7 @@ def copy(args: argparse.Namespace) -> dict:
             receipt["databases"][database] = {"dump_sha256": digest(path), "dump_bytes": path.stat().st_size,
                                                "source_counts": counts, "state": "dumped"}
         args.receipt.write_text(json.dumps(receipt, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-        for index, database in enumerate(DATABASES):
+        for index, database in enumerate(databases):
             path, counts = dumps[database]
             try:
                 run([*compose, "exec", "-T", "db", "createdb", "-U", "pesquisa_local",
@@ -225,6 +227,7 @@ def main() -> None:
     parser.add_argument("--pg-bin", type=Path, default=Path(r"C:\Program Files\PostgreSQL\15\bin"))
     parser.add_argument("--receipt", type=Path, required=True)
     parser.add_argument("--fixture", action="store_true", help="allow only a disposable alternate source port")
+    parser.add_argument("--include-dw", action="store_true", help="explicitly include db_pesquisa_dw as fourth database")
     parser.add_argument("--inject-failure-after-first", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
     if not args.execute:

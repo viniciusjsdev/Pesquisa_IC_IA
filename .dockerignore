@@ -23,5 +23,12 @@
 !runpod/
 !runpod/serving/
 !runpod/serving/manifest.json
+!BancoModeloUse/
+!BancoModeloUse/dw/
+!BancoModeloUse/dw/fixed_queries.py
+!model_evaluation/
+!model_evaluation/export.py
+!model_evaluation/schemas/
+!model_evaluation/schemas/evidence_packet.schema.json
 **/__pycache__/
 **/*.pyc

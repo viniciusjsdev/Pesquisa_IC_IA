@@ -20,24 +20,10 @@ import psycopg2
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from inference_api import config, criteria, evidence, orchestrator, server, service, storage
+from inference_api import config, criteria, server, service, storage
 from inference_api.auth import Principal
-from inference_api.contracts import EvidenceBundle, EvidenceItem, ModelOutput, SCHEMA_VERSION
 
 PRINCIPAL = Principal("00000000-0000-0000-0000-000000000001", "Nicoli")
-BASE = {"question": "Qual o valor?", "system_prompt": "Cite evidências.",
-        "model_alias": "qwen-base", "scope": "financeiro", "year": 2020}
-
-
-def bundle():
-    plan = orchestrator.plan(BASE, "qwen-base", BASE["question"], 0, 256)[1]
-    spec = evidence.QUERIES["financeiro_vendas_ano"]
-    item = EvidenceItem(SCHEMA_VERSION, "financeiro_vendas_ano:2020",
-                        "financeiro_vendas_ano", "db_financeiro", spec["table"],
-                        spec["fields"], {"year": 2020}, {"year": 2020}, "annual",
-                        spec["unit"], "123", 13, spec["formula"], spec["statement"],
-                        (2020, 2020), "available", spec["limitation"])
-    return EvidenceBundle(SCHEMA_VERSION, plan, (item,), "available", ("limite",))
 
 
 class CriteriaTests(unittest.TestCase):
@@ -51,48 +37,20 @@ class CriteriaTests(unittest.TestCase):
                 criteria.validate(value)
 
     def test_caveats_are_literal_and_never_executed(self):
-        config = criteria.validate({**criteria.DEFAULT, "required_units": [bundle().items[0].unit],
-                                    "require_cited_ids": True,
-                                    "required_caveats": ["SELECT * FROM users", "alert(1)"]})
-        output = ModelOutput(SCHEMA_VERSION,
-                             "SELECT * FROM users [evidence:financeiro_vendas_ano:2020]",
-                             ("financeiro_vendas_ano:2020",), {})
-        results = criteria.check(bundle(), output, config)
-        self.assertEqual([item.result for item in results],
-                         ["passed", "passed", "passed", "passed", "passed", "failed"])
+        config = criteria.validate({**criteria.DEFAULT, "required_caveats": ["limitação"]})
+        result = service._checks([{"year": 2020, "coverage": {"state": "observed"},
+                                   "units": {"amount": "BRL"}}], "SQL e limitação", config)
+        self.assertEqual(next(item for item in result if item["check"] == "criteria_caveat_literal")["result"], "passed")
+        self.assertEqual(next(item for item in result if item["check"] == "numerical_truth")["result"], "not_checked")
 
     def test_saved_revision_snapshot_remains_exact_after_later_edit(self):
-        revisions = {
-            "00000000-0000-0000-0000-000000000002":
-                {"revision": 1, "config": copy.deepcopy(criteria.DEFAULT)},
-            "00000000-0000-0000-0000-000000000003":
-                {"revision": 2, "config": {**criteria.DEFAULT,
-                                           "required_caveats": ["limitação"]}},
-        }
-        snapshots = []
-        def create_run(author, snapshot):
-            result = copy.deepcopy(snapshot)
-            snapshots.append(result)
-            return result
-        def respond(*_):
-            return ModelOutput(SCHEMA_VERSION,
-                               "Resposta [evidence:financeiro_vendas_ano:2020]",
-                               ("financeiro_vendas_ano:2020",), {})
-        with patch("inference_api.service.storage.get_criteria", side_effect=lambda key: revisions[key]), \
-             patch("inference_api.service.storage.create_run", side_effect=create_run), \
-             patch("inference_api.service.evidence.assemble", return_value=bundle()), \
-             patch("inference_api.service.response_agent.respond", side_effect=respond):
-            first = service.execute_run({**BASE, "criteria_revision_id":
-                                         "00000000-0000-0000-0000-000000000002"}, PRINCIPAL)
-            second = service.execute_run({**BASE, "criteria_revision_id":
-                                          "00000000-0000-0000-0000-000000000003"}, PRINCIPAL)
-        self.assertEqual(first["verification_criteria"]["revision"], 1)
-        self.assertEqual(first["verification_criteria"]["config"], criteria.DEFAULT)
-        self.assertEqual(second["verification_criteria"]["revision"], 2)
-        self.assertEqual(second["checks"][-1]["result"], "failed")
-        self.assertEqual(first["status"], "answered_unverified")
-        self.assertEqual(first["identity"]["author_verified"], True)
-        self.assertNotIn("criteria_revision_id", json.dumps(asdict(bundle())))
+        saved = {"revision": 1, "system_prompt": "P", "config": copy.deepcopy(criteria.DEFAULT)}
+        with patch("inference_api.service.storage.get_criteria", return_value=saved):
+            first = service._criteria({"criteria_revision_id": "00000000-0000-0000-0000-000000000002"})
+        saved["config"]["required_caveats"].append("novo")
+        self.assertEqual(first["revision"], 1)
+        self.assertEqual(first["config"], criteria.DEFAULT)
+        self.assertEqual(first["revision_id"], "00000000-0000-0000-0000-000000000002")
 
 
 @unittest.skipUnless(os.getenv("INFERENCE_IDENTITY_DB_TEST") == "1",

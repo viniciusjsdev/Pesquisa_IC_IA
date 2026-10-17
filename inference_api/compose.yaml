@@ -30,11 +30,19 @@ services:
       FINANCEIRO_DB_NAME: db_financeiro
       FINANCEIRO_DB_USER: pesquisa_local
       FINANCEIRO_DB_PASSWORD: ${FINANCEIRO_DB_PASSWORD:?FINANCEIRO_DB_PASSWORD is required}
+      DW_DB_HOST: db
+      DW_DB_PORT: "5432"
+      DW_DB_NAME: db_pesquisa_dw
+      DW_DB_USER: pesquisa_local
+      DW_DB_PASSWORD: ${FINANCEIRO_DB_PASSWORD:?FINANCEIRO_DB_PASSWORD is required}
+      INFERENCE_EVIDENCE_PACKETS_DIR: /app/private/packets
       INFERENCE_VLLM_URL: ${INFERENCE_VLLM_URL:-}
       INFERENCE_VLLM_TOKEN: ${INFERENCE_VLLM_TOKEN:-}
       RUNPOD_BALANCE_READ_KEY: ${RUNPOD_BALANCE_READ_KEY:-}
     ports:
       - "127.0.0.1:${INFERENCE_HTTP_PORT:-8875}:8765"
+    volumes:
+      - ${INFERENCE_EVIDENCE_PACKETS_DIR:-../model_evaluation/.local/packets}:/app/private/packets:ro
     depends_on:
       db:
         condition: service_healthy

@@ -1,6 +1,6 @@
-# Inferência compartilhada: primeira implementação local
+# Inferência compartilhada: Observatório e Bancada local
 
-**Implementação local da SPEC-008 em 16/10/2026, sobre `772ea0d` e alterações
+**Histórico da SPEC-008 em 16/10/2026, sobre `772ea0d` e alterações
 locais preservadas:** a rota `/` entrega o React compilado, com login primeiro,
 quatro abas do Observatório e Bancada na quinta aba. O snapshot sintético de
 06/09/2026 é servido somente por `GET /api/bi/snapshot` autenticado. A imagem
@@ -27,17 +27,59 @@ As frentes seguintes têm contratos e ordem próprios em
 [`../specs/README.md`](../specs/README.md).
 O [desenho da avaliação](../BancoModeloUse/docs/arquitetura_avaliacao_modelos.md)
 separa raciocínio sobre evidências fixas de pesquisa com tools escolhidas pelo
-modelo. A API atual escolhe suas duas consultas pelo escopo declarado pelo
-pesquisador; o [exportador da SPEC-007](../model_evaluation/README.md) foi
-implementado localmente em 16/10/2026, prepara pacotes fixos fora da API e não
-muda esse comportamento.
+modelo. O fluxo da SPEC-001 escolhia duas consultas pelo escopo declarado pelo
+pesquisador. A SPEC-009 substitui novos runs por dois modos explícitos, preservando
+a leitura dos snapshots anteriores. O [exportador da SPEC-007](../model_evaluation/README.md)
+continua produzindo pacotes candidatos fora da API.
 
-**SPEC-005 em 16/10/2026:** `session_checks.py` acrescenta pré-voo local de
-leitura, teste HTTP opt-in do túnel e ensaio opt-in das três rotas com dois
-aliases. O [runbook da sessão](../docs/sessao_inferencia_curta.md) separa esses
+**SPEC-005 histórica em 16/10/2026:** `session_checks.py` acrescentou pré-voo local,
+teste HTTP opt-in do túnel e ensaio das três rotas antigas. A SPEC-009 retirou
+o ensaio antigo do fluxo ativo; pré-voo e tunnel-check continuam disponíveis. O [runbook da sessão](../docs/sessao_inferencia_curta.md) separa esses
 gates da implantação paga. Nenhuma geração remota ou exposição ngrok foi feita
 pela SPEC-005; a [revisão independente](../specs/active/SPEC-005/evidence/review.json)
 aprovou esse escopo local.
+
+## Como uma pergunta percorre a Bancada hoje
+
+Este é o ponto de entrada para um chat novo entender **o fluxo ativo**. A
+[SPEC-009](../specs/active/SPEC-009/SPEC.md) registra o contrato da mudança;
+o comportamento executado fica em `frontend/src/features/bench/BenchPage.tsx`,
+`src/inference_api/server.py` e `src/inference_api/service.py`. Os módulos
+`orchestrator.py`, `evidence.py` e `response_agent.py` citados em descrições
+anteriores foram retirados do fluxo ativo após a SPEC-009.
+
+1. Após login, o pesquisador escolhe **Pacote fixo da DW** ou **LLM consulta a
+   DW por tools**, um alias de modelo, prompt, critérios e parâmetros. O front
+   envia `POST /api/runs` com `evidence_mode` obrigatório. A API autentica,
+   reserva a única vaga global e chama `service.execute_run()`.
+2. Em `dw_snapshot`, o servidor busca `case_id` mais SHA-256 no diretório
+   privado de pacotes. `evidence_packets.py` valida o arquivo; a pergunta e o
+   domínio vêm do corpo do pacote e não são editados nesse run. `service.py`
+   envia ao modelo a pergunta e o JSON exato do pacote. **Não consulta a DW
+   durante a execução**; a exportação anterior está em `model_evaluation/`.
+3. Em `dw_tools`, o pesquisador digita uma pergunta livre. `service.py` anuncia
+   cinco funções de leitura ao modelo por `models.chat_turn()`. Se a LLM pedir
+   uma tool, `dw_tools.py` valida nome e argumentos, executa a consulta fixa
+   compartilhada de `BancoModeloUse/dw/fixed_queries.py` em
+   `db_pesquisa_dw` somente leitura e devolve o resultado ao modelo. O ciclo
+   continua até a resposta ou um limite/erro. O backend **não escolhe a tool
+   pelo escopo** e não oferece SQL livre.
+4. `models.py` chama o endpoint vLLM configurado e confere modelo e identidade
+   da sessão de serving. `service.py` grava no `db_inference_app` um snapshot
+   v3 com pergunta, modo, prompt, modelo, pacote ou trilha de tools, resposta,
+   verificações e erros. `storage.py` serve histórico; `RunDetail.tsx` mostra
+   os detalhes. Runs v1/v2 continuam legíveis apenas como fluxo anterior.
+
+**Onde estão as perguntas:** o repositório versiona
+[`model_evaluation/examples/cases_2020.json`](../model_evaluation/examples/cases_2020.json)
+como **exemplo** de manifesto para exportar um pacote, não como bateria
+científica oficial. Pacotes efetivamente exportados ficam no diretório privado
+`model_evaluation/.local/packets` por padrão e são ignorados pelo Git. Perguntas
+livres digitadas no modo tools e a pergunta efetiva de cada pacote ficam no
+snapshot do run em `db_inference_app`; não há uma lista dessas perguntas no
+checkout. Prompts editáveis são revisões separadas da pergunta. Ainda não há
+catálogo oficial de casos, gold set ou pontuação científica; veja a
+[arquitetura da avaliação](../BancoModeloUse/docs/arquitetura_avaliacao_modelos.md).
 
 ## Contrato implementado
 
@@ -59,26 +101,31 @@ aprovou esse escopo local.
   expressões executáveis e listas fora do contrato falham antes da execução.
   JavaScript ou SQL digitado como ressalva é somente texto literal. O backend
   não executa essas strings. Conflito também devolve HTTP 409 e a revisão atual.
-- `POST /api/runs`: `question`, `model_alias`, exatamente um de
-  `prompt_revision_id` ou `system_prompt`, `scope` (`financeiro`, `industrial`
-  ou `integrado`), `year`, `temperature` e `max_tokens`. Aceita
-  `criteria_revision_id` **ou** `criteria` estruturado como rascunho; se ambos
-  faltarem, grava uma configuração padrão explícita para clientes anteriores.
-  O snapshot guarda a revisão e configuração exata utilizada, inclusive quando
-  a consulta ou o modelo falha. O escopo é declarado
-  pelo pesquisador; não há classificação automática. Para compatibilidade,
-  `evidence_route` aceita isoladamente as duas rotas antigas. `scope` e
-  `evidence_route` juntos são inválidos. O campo opcional `tools`, se enviado,
-  deve coincidir exatamente com a allowlist do escopo. Campos desconhecidos
-  falham antes de consultar as fontes. A escolha do modelo vale só para a chamada.
-  A linha da execução é gravada uma vez, após a tentativa; não é reescrita.
+- `GET /api/bench/evidence-packets`: lista pacotes privados verificados por
+  `case_id` e SHA-256 somente após autenticação. O servidor recusa pacotes
+  adulterados, não canônicos, fora do schema, duplicados, grandes ou ligados por
+  symlink. Sem diretório ou arquivos, a lista é vazia.
+- `GET /api/bench/dw-tools`: informa disponibilidade da DW isolada, fingerprint,
+  schema e hash do código de consultas. Sem carga da DW no Compose, responde
+  `available: false` e não consulta as origens.
+- `POST /api/runs`: novos runs exigem `evidence_mode: dw_snapshot|dw_tools`,
+  `model_alias`, exatamente uma revisão de prompt ou `system_prompt`, critérios
+  opcionais e parâmetros. `dw_snapshot` exige `case_id` e `packet_sha256` e usa
+  a pergunta/domínio do corpo do pacote já exportado. `dw_tools` exige pergunta
+  livre e deixa a LLM escolher `machine`, `product`, `financial`, `quality` ou
+  `material` via `tool_choice: auto`, sem chamadas paralelas. `scope`, `year`,
+  `evidence_route`, SQL e campos do outro modo são recusados. Cada tool aceita
+  ano inteiro de 2015 a 2026; as quatro tools de entidade exigem ID positivo;
+  `financial` proíbe ID. As consultas usam SQL fixo único de
+  `BancoModeloUse/dw/fixed_queries.py`, transações somente leitura e apenas
+  `db_pesquisa_dw`. Não há fallback aos dois bancos de origem.
+- O loop limita a cinco chamadas, seis turnos, 200 linhas e 16 KiB canônicos
+  acumulados. Chamada/argumentos inválidos ficam em `tool_error`, resultado
+  excessivo em `tool_limit_error`, fingerprint/consulta em `query_error`,
+  resposta/serving e ausência de observação em seus estados próprios;
+  nenhuma resposta é inventada.
 - `GET /api/runs` e `GET /api/runs/{id}`: histórico. `POST
   /api/runs/{id}/feedback` anexa feedback humano sem alterar o snapshot.
-- A allowlist de ferramentas contém `financeiro_vendas_ano` e
-  `industrial_operacoes_ano`, com ano inteiro de 2015 a 2026. `integrado`
-  executa ambas para o mesmo ano. SQL é fixo e parametrizado; cada conexão de
-  origem usa transação somente leitura, timeout de consulta e limite implícito
-  de uma linha agregada. Não se aceita SQL do navegador.
 - O servidor escuta somente `127.0.0.1:8765`. `POST /api/login` aceita somente
   os dois pesquisadores cadastrados localmente e devolve uma sessão temporária.
   Todas as demais rotas de API exigem seu bearer; `GET /api/me` identifica a
@@ -94,40 +141,25 @@ aprovou esse escopo local.
   chave de leitura do backend. Sem resposta autenticada, o saldo aparece
   indisponível, nunca estimado.
 
-O snapshot novo usa `schema_version: 2` e os contratos `question_request`,
-`route_plan`, `evidence_bundle`, `model_output` e `checks`. Cada item de evidência
-registra ID estável (`ferramenta:ano`), fonte, campos, filtros, ano, granularidade,
-unidade, valor, fórmula, SQL fixo parametrizado, qualidade e ressalva. O bundle
-integrado inclui aviso de associação temporal sem causalidade. O agente de
-resposta recebe apenas pergunta, prompt exato e o bundle gravado, além do alias
-e parâmetros; o retorno bruto do servidor é preservado em `model_output.serving`.
-O verificador confere schema, itens obrigatórios, resposta e IDs citados no
-formato `[evidence:financeiro_vendas_ano:2020]`. Verdade numérica e causalidade
-ficam `not_checked`. Os critérios da SPEC-004 acrescentam somente checks
-determinísticos de presença, ano, unidade literal, IDs citados e frases literais
-na resposta. Um resultado `passed` nesses checks não comprova verdade numérica.
+Novos runs usam `schema_version: 3`, com modo explícito, prompt/critérios,
+modelo efetivo e parâmetros, pergunta, origem da DW, pacote integral em Base64 e
+JSON exato entregue ou catálogo/traço de tools, requests/responses brutos,
+timestamps, resposta, falhas e checks exploratórios. Os snapshots versões 1 e 2
+permanecem legíveis e aparecem como “Fluxo anterior: escopo e consultas do
+backend”; não são reescritos. `answered_unverified` não é resultado científico.
+Os checks de verdade numérica e causalidade seguem `not_checked`. Sem gold set,
+rubrica ou inferência real dos pesos, a comparação A/B é visual e estratificada.
+A compatibilidade de tool calling dos adapters reais ainda depende de ensaio
+RunPod autorizado; o teste local usa servidor simulado.
 
-`answered_unverified` significa apenas resposta gerada e checagem exploratória;
-um ID citado inexistente gera check `failed` sem reescrever a resposta. Falhas
-ficam distintas como `route_error`, `query_error`, `evidence_error`,
-`insufficient_evidence`, `model_error`, `response_error` ou
-`verification_error`. Sem evidência obrigatória, a LLM não é chamada. Sem
-endpoint/modelo servido, a tentativa guarda o bundle e `model_error`; não se
-fabrica resposta. JSON inválido ou resposta fora do contrato do servidor gera
-`response_error` e preserva o corpo recebido em `model_output.serving`, inclusive
-os bytes originais em Base64. Snapshots anteriores com `schema_version: 1` continuam
-legíveis sem migração ou reescrita. A comparação lado a lado é somente visual:
-ela lê runs existentes, avisa quando pergunta, período, evidência, prompt,
-critérios, parâmetros ou versão do modelo diferem e não calcula acurácia.
-As verificações formais, o gold set, a integração do [DW local v1](../BancoModeloUse/dw/README.md)
-e consultas científicas adicionais permanecem
-fora desta primeira fatia. O snapshot só preenche revisão exata da base,
-run e SHA-256 do adapter quando a resposta vem com os headers de sessão do
-gateway que coincidem com o manifesto local. Sem eles, esses campos ficam
-`null` e `provenance_status: unverified`. Mesmo com headers, o estado
-`session_manifest_checked` descreve o preflight daquela sessão; somente um
-recibo remoto `passed` da mesma sessão marca `generation_confirmed`.
-Ainda não há recibo real ou reprodução científica de inferência.
+No host, configure `DW_DB_HOST=127.0.0.1`, `DW_DB_PORT=5544`,
+`DW_DB_NAME=db_pesquisa_dw`, `DW_DB_USER` e `DW_DB_PASSWORD` no ambiente privado
+do processo; somente esse destino é aceito. `INFERENCE_EVIDENCE_PACKETS_DIR`
+aponta para diretório absoluto privado, por padrão
+`model_evaluation/.local/packets`. Para preparar candidatos, siga
+[model_evaluation/README.md](../model_evaluation/README.md). A API não exporta
+pacotes durante o run. No Compose, as variáveis da DW apontam apenas para
+`db:5432/db_pesquisa_dw` e o diretório de pacotes é montado `:ro`, fora da imagem.
 
 ## Mapa do código
 
@@ -139,13 +171,11 @@ Ainda não há recibo real ou reprodução científica de inferência.
 | `Dockerfile`, `compose.yaml`, `scripts/copy_logical_databases.py` | Imagem app, PostgreSQL isolado e cópia lógica explícita por recusa de destino não vazio. |
 | `src/inference_api/auth.py`, `limits.py` e `budget.py` | Login de dois pesquisadores, sessão revogável, vaga única de inferência e leitura separada do saldo RunPod. |
 | `src/inference_api/service.py` | Coordena uma execução e grava seu snapshot final. |
-| `src/inference_api/orchestrator.py` | Valida a entrada e planeja as consultas permitidas conforme o escopo declarado. |
-| `src/inference_api/evidence.py` | Executa as consultas fixas de leitura e monta o bundle com origem e ressalvas. |
-| `src/inference_api/response_agent.py`, `models.py` e `serving_catalog.py` | Montam a entrada do modelo, consultam vLLM e vinculam a proveniência da sessão ao manifesto. O serving remoto ainda não foi implantado. |
-| `src/inference_api/verifier.py` e `criteria.py` | Confere estrutura, IDs e critérios declarativos; não valida verdade numérica ou causalidade. |
-| `src/inference_api/contracts.py`, `config.py` e `storage.py` | Contratos versionados, configuração local e persistência de prompts, execuções e feedback. |
-| `tests/test_contract.py`, `test_serving.py`, `test_identity.py`, `test_criteria.py`, `test_bi_http.py` e `browser_spec008*.cjs` | Contratos Python, proteção do BI, paridade de navegador com referência e smoke Docker descartável. |
-| `session_checks.py` e `tests/test_session_checks.py` | Pré-voo somente leitura, ensaio HTTP e prova local/mock de que a execução padrão não chama rede externa. |
+| `src/inference_api/evidence_packets.py` e `dw_tools.py` | Selecionam pacote por ID/hash e executam as cinco consultas fixas da DW após escolha da LLM. |
+| `src/inference_api/models.py` e `serving_catalog.py` | Fazem turnos de chat e vinculam a proveniência da sessão ao manifesto. O serving remoto ainda não foi ensaiado com tool calling real. |
+| `src/inference_api/criteria.py`, `config.py` e `storage.py` | Validam critérios, restringem destinos e persistem prompts, runs e feedback. |
+| `tests/test_contract.py`, `test_serving.py`, `test_identity.py`, `test_criteria.py`, `test_bi_http.py`, `test_spec009_http.py` e `browser_spec009.cjs` | Contratos Python, proteção do BI, paridade de navegador com referência e smoke Docker descartável. |
+| `session_checks.py` e `tests/test_session_checks.py` | Pré-voo somente leitura da DW e prova HTTP do túnel; o ensaio legado foi retirado. |
 
 O contrato e a revisão independente da SPEC-001 ficam em
 [`specs/active/SPEC-001/`](../specs/active/SPEC-001/SPEC.md).
@@ -265,7 +295,7 @@ docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inferenc
 ```
 
 O Docker usa a senha local `FINANCEIRO_DB_PASSWORD` como senha do **novo** role
-`pesquisa_local` no volume isolado. A imagem recebe somente código, manifesto
+`pesquisa_local` no volume isolado. A imagem recebe código da API, consultas fixas da DW, verificador/schema de pacotes, manifesto
 de aliases e snapshot BI privado; `.env.local`, CSVs, pesos, resultados e dumps
 ficam fora do contexto de build. O modo host continua usando o cluster Windows
 em `127.0.0.1:5544`, sem alterar `listen_addresses`, `pg_hba.conf` ou seus
@@ -283,8 +313,12 @@ e templates, dumps plain completos de `postgres` e `template1` sem DDL ou
 dados de usuário, roles e tablespaces esperados, e recusa destino
 já usado; falha parcial deixa recibo e bloqueia
 nova execução até reconciliação manual. Também recusa substituir um recibo
-anterior, mesmo se o destino tiver sido recriado. A cópia inclui `db_industrial`,
-`db_financeiro` e `db_inference_app`; o DW v1 permanece separado.
+anterior, mesmo se o destino tiver sido recriado. A cópia padrão inclui `db_industrial`, `db_financeiro` e `db_inference_app`.
+`--include-dw` acrescenta `db_pesquisa_dw` como quarto banco apenas por comando
+explícito, com as mesmas recusas, hash, contagens e readback. O recibo grava
+`spec_id: SPEC-009` e `include_dw: true` nesse modo; a cópia padrão mantém
+`spec_id: SPEC-008`. Nenhuma cópia real
+do DW foi executada na SPEC-009; a validação Docker usa somente fixtures.
 
 ```powershell
 inference_api/.venv/Scripts/python.exe inference_api/scripts/copy_logical_databases.py --execute --source-env BancoModeloUse/.env.local --compose-env BancoModeloUse/.env.local --project inference_api --receipt inference_api/.local/copy-real-receipt.json
@@ -327,7 +361,7 @@ Testes locais sem infraestrutura remota:
 $env:INFERENCE_IDENTITY_DB_TEST = '1'
 inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v
 $env:NODE_PATH = 'C:/Users/vinic/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules'
-node inference_api/tests/browser_spec008.cjs
+node inference_api/tests/browser_spec009.cjs
 ```
 
 O pré-voo da SPEC-005 pode ser chamado sem Pod ou túnel:

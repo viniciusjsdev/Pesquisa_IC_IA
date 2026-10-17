@@ -16,6 +16,9 @@ RUN pip install --no-cache-dir -r /app/inference_api/requirements.txt \
     && groupadd --system inference && useradd --system --gid inference --home /app inference
 COPY inference_api/run.py /app/inference_api/run.py
 COPY inference_api/src /app/inference_api/src
+COPY BancoModeloUse/dw/fixed_queries.py /app/BancoModeloUse/dw/fixed_queries.py
+COPY model_evaluation/export.py /app/model_evaluation/export.py
+COPY model_evaluation/schemas/evidence_packet.schema.json /app/model_evaluation/schemas/evidence_packet.schema.json
 COPY inference_api/private/bi_snapshot.json /app/inference_api/private/bi_snapshot.json
 COPY runpod/serving/manifest.json /app/runpod/serving/manifest.json
 COPY --from=frontend /build/dist /app/inference_api/frontend/dist

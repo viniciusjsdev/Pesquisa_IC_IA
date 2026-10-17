@@ -28,12 +28,12 @@ relatório para confirmar separadamente os gates locais e **não** declarar a
 sessão pronta. Repita o pré-voo completo após obter a origem HTTPS e as
 credenciais da sessão. O pré-voo não consulta a URL: verifica que ela é uma
 origem HTTPS sem credenciais embutidas. Ele falha
-se o Git não estiver limpo, se faltar carga nos bancos de origem, migrações 1/2
+se o Git não estiver limpo, se faltar a DW v1 em `db_pesquisa_dw`, migrações 1/2
 ou os dois usuários ativos no banco da aplicação, se faltar qualquer adapter
 ou SHA-256, revisão exata da base, URL/token protegido ou a configuração de
-uma inferência global sem cotas diárias. As três conexões usam transações
-somente leitura em `127.0.0.1:5544`. O `count(*)` prova apenas leitura da carga
-existente; não refaz a importação e não valida o DW. O relatório não contém
+uma inferência global sem cotas diárias. As conexões de aplicação e DW usam transações somente leitura em
+`127.0.0.1:5544`. A leitura da migração/fingerprint da DW prova apenas
+disponibilidade local, não valida novamente a carga ou o harness. O relatório não contém
 senhas, token nem resposta de modelo e marca geração remota e ngrok `not_run`.
 
 O Git deve estar limpo após a revisão/commit das alterações locais. Caso haja
@@ -118,40 +118,21 @@ de outros túneis continua obrigatória para afirmar que PostgreSQL e vLLM
 interno não estão expostos por engano. Registrar URL, horário, processo e
 destino vistos, sem publicar a URL em documentação versionada.
 
-## 5. Ensaio ponta a ponta, uma tentativa por caso
+## 5. Ensaio ponta a ponta pendente de novo contrato
 
-Depois de pré-voo `CONFIRMED`, recibo remoto da mesma sessão, túnel verificado
-e autorização da geração, executar:
+A SPEC-009 substituiu `scope` por `dw_snapshot` e `dw_tools` para novos runs.
+O comando antigo `session_checks.py rehearsal` foi retirado do fluxo ativo
+porque fazia seis runs das rotas anteriores e interpretava sua escolha de
+consulta como se pudesse representar a pesquisa por tools. Não executá-lo nem
+adaptar seus resultados para os modos novos. O pré-voo local e `tunnel-check`
+continuam disponíveis.
 
-```powershell
-inference_api/.venv/Scripts/python.exe inference_api/session_checks.py rehearsal --execute --app-origin $ngrokOrigin --tunnel-report inference_api/.local/tunnel-YYYYMMDD-HHMMSS.json --forwarding-reviewed --aliases qwen-base ft-finqa-a --year 2020 --output inference_api/.local/session-YYYYMMDD-HHMMSS.json
-```
-
-O programa pede as senhas de Nicoli e Vinicius sem eco, mantém tokens só em
-memória e faz logout no final. Ele verifica acesso anônimo negado, dois logins,
-exige relatório HTTP recente para a mesma origem e a confirmação manual de que
-o encaminhamento aponta somente para `127.0.0.1:8765`. Em seguida verifica
-dois aliases disponíveis com recibo de geração, duas revisões de prompt e
-critérios, e seis runs: `financeiro`, `industrial` e `integrado` para dois
-modelos. Cada run faz readback do snapshot, autor verificado apesar do campo
-`author` falso enviado no teste, revisão exata, fonte/ano, modelo, proveniência
-e checks. Um alias inválido deve dar HTTP 400; um ano inválido cria snapshot
-`route_error` sem chamar o modelo. A rotina para na primeira falha, não
-repete chamadas e mantém no arquivo local os IDs criados até aquele ponto
-para reconciliação. O arquivo ignorado pelo Git contém snapshots, prompts,
-evidências e respostas: protegê-lo como dado de pesquisa, sem incluí-lo em
-logs públicos ou commits. Não há gabarito no payload.
-
-Se a resposta HTTP de um `POST` se perder, o relatório marca `UNCERTAIN` e
-preserva `pending` com o autor do login, nome/revisão ou
-escopo/alias/autor/ano. Antes de qualquer repetição, consultar o histórico da
-aplicação por essa identidade e pelos IDs já registrados; um `POST`
-aparentemente falho pode ter criado uma sessão, gravado uma revisão ou um run.
-Se o login ficou pendente sem token de resposta, reconciliar as sessões dessa
-conta e revogar a sessão incerta por troca de senha com
-`inference_api/.venv/Scripts/python.exe inference_api/run.py set-password --username <nome>`
-antes de tentar novo login. Falha no logout também deixa o
-encerramento da sessão `UNCERTAIN` até readback ou revogação explícita.
+Antes de uma sessão paga, definir e revisar um ensaio com pacotes candidatos
+identificados por ID/hash, perguntas livres para tools, recibo do serving real
+Qwen2.5, limites por turno, autores e readback dos snapshots v3. Essa preparação
+não cria gold set nem benchmark científico. Cada geração externa continua
+exigindo acionamento explícito da sessão; em resposta perdida, reconciliar o
+histórico por identidade exata antes de tentar novamente.
 
 ## 6. Exportação, custo e encerramento
 
@@ -159,7 +140,7 @@ Durante a sessão, anotar horário inicial, tempo decorrido, preço da GPU e
 discos, saldo real e gasto por hora lidos no console da RunPod ou, quando
 confirmado, em `/api/budget`. Se a leitura falhar, registrar `UNCERTAIN` e
 usar o console para reconciliar; o teto manual de US$ 10 não interrompe a
-cobrança. Guardar o relatório do ensaio e seu SHA-256:
+cobrança. Quando houver um novo relatório de ensaio aprovado, guardar seu SHA-256:
 
 ```powershell
 Get-FileHash -Algorithm SHA256 inference_api/.local/session-YYYYMMDD-HHMMSS.json
@@ -196,10 +177,10 @@ pois podem apagar o armazenamento remoto. Se qualquer readback faltar, marcar
 
 | Gate | Prova para `CONFIRMED` | Limite |
 | --- | --- | --- |
-| Fontes locais | Pré-voo com contagens e `transaction_read_only` nos dois bancos | Leitura de carga existente, não importação nem DW |
+| DW local | Pré-voo com migração/fingerprint e `transaction_read_only` | Leitura da carga existente, não recarga ou validação científica |
 | Pesos locais | Manifesto, caminhos e SHA-256 dos seis adapters | Não prova base ou pesos servidos |
 | Modelo remoto | Recibo de `/v1/models` e sete gerações da mesma sessão | Não é benchmark |
-| Aplicação | Seis runs, revisões, checks e readback dos snapshots | Checks exploratórios, sem verdade numérica/causal validada |
+| Aplicação | Futuro ensaio dos dois modos com readback dos snapshots v3 | Não executado; checks exploratórios sem verdade numérica/causal validada |
 | Túnel | HTTP externo observado e encaminhamento único para `8765` conferido | Não prova ausência de outros túneis sem inspeção |
 | Desligamento | Estado do túnel, processo, Pod e cobrança/armazenamento lidos novamente | Parada de GPU não remove custo do volume persistente |
 

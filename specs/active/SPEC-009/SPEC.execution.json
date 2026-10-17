@@ -1,0 +1,79 @@
+{
+  "$schema": "../../../.codex/schemas/project-spec-execution.schema.json",
+  "schema_version": "2.0",
+  "spec_id": "SPEC-009",
+  "contract_version": 1,
+  "status": "done",
+  "automatic_handoff": false,
+  "execution": {
+    "classification": "normal_implementation",
+    "role": "developer",
+    "model": "gpt-5.6-terra",
+    "reasoning": "medium",
+    "routing_rationale": "O contrato delimita os dois modos exploratorios, protocolo de tools, origem da DW, snapshots, Docker e validacoes; a execucao exige implementacao normal e testes de integracao locais.",
+    "runtime_override": null,
+    "working_directory": ".",
+    "sandbox_mode": "workspace-write",
+    "approval_mode": "auto_review",
+    "thread": {"mode": "resume", "purpose": "implementation", "thread_id": "01a146d6-8c79-7270-bec7-093c72ad5528"},
+    "handoff_prompt": "Implemente SPEC-009 a partir de SPEC.md e SPEC.execution.json, lendo AGENTS.md e as referencias declaradas. Verifique Git e consumidores antes de editar. So esta thread escreve no checkout. Entregue os dois modos reais da Bancada, testes locais com vLLM simulado e DW fixture, documentacao e completion; pare em needs_design se faltar decisao consequencial. Nao execute RunPod, ngrok, terraform ou copia real de bancos. Depois, submeta a revisao independente exigida pelo manifest."
+  },
+  "skills": [],
+  "references": [
+    {"path": "AGENTS.md", "purpose": "Orientacao e protecoes do checkout", "required": true},
+    {"path": "README.md", "purpose": "Mapa atual das frentes", "required": true},
+    {"path": "specs/README.md", "purpose": "Sequencia e fronteira cientifica das SPECs", "required": true},
+    {"path": "BancoModeloUse/docs/arquitetura_avaliacao_modelos.md", "purpose": "Definicao cientifica dos cenarios A e B", "required": true},
+    {"path": "BancoModeloUse/dw/README.md", "purpose": "Estado, consultas e limites da DW", "required": true},
+    {"path": "BancoModeloUse/dw/cli.py", "purpose": "Implementacao unica das consultas fixas", "required": true},
+    {"path": "model_evaluation/README.md", "purpose": "Contrato dos pacotes locais candidatos", "required": true},
+    {"path": "model_evaluation/export.py", "purpose": "Verificacao e hashes dos pacotes", "required": true},
+    {"path": "model_evaluation/schemas/evidence_packet.schema.json", "purpose": "Schema do pacote fixo", "required": true},
+    {"path": "inference_api/README.md", "purpose": "Mapa atual da API e Bancada", "required": true},
+    {"path": "docs/arquitetura_inferencia_compartilhada.md", "purpose": "Topologia atual host, Docker e RunPod", "required": true},
+    {"path": "inference_api/src/inference_api/service.py", "purpose": "Execucao atual de runs", "required": true},
+    {"path": "inference_api/src/inference_api/config.py", "purpose": "Allowlist de host e banco", "required": true},
+    {"path": "inference_api/src/inference_api/models.py", "purpose": "Cliente e proveniencia vLLM", "required": true},
+    {"path": "inference_api/src/inference_api/server.py", "purpose": "Rotas autenticadas e limite global", "required": true},
+    {"path": "inference_api/frontend/src/features/bench/BenchPage.tsx", "purpose": "Formulario e modo de execucao da Bancada", "required": true},
+    {"path": "inference_api/frontend/src/features/bench/RunDetail.tsx", "purpose": "Leitura de snapshots historicos e novos", "required": true},
+    {"path": "inference_api/frontend/src/features/bench/benchService.ts", "purpose": "Cliente e comparacao da Bancada", "required": true},
+    {"path": "inference_api/compose.yaml", "purpose": "Banco isolado e volumes privados", "required": true},
+    {"path": "inference_api/scripts/copy_logical_databases.py", "purpose": "Copia logica opcional com recusa de sobrescrita", "required": true},
+    {"path": "runpod/serving/serving.py", "purpose": "Comando vLLM para Qwen2.5", "required": true}
+  ],
+  "validation": [
+    {"id": "VAL-001", "kind": "check", "command": "git diff --check", "required": true},
+    {"id": "VAL-002", "kind": "test", "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v", "required": true},
+    {"id": "VAL-003", "kind": "test", "command": "BancoModeloUse/.venv/Scripts/python.exe -m unittest discover -s model_evaluation/tests -v", "required": true},
+    {"id": "VAL-004", "kind": "test", "command": "npm --prefix inference_api/frontend run typecheck", "required": true},
+    {"id": "VAL-005", "kind": "lint", "command": "npm --prefix inference_api/frontend run lint", "required": true},
+    {"id": "VAL-006", "kind": "test", "command": "npm --prefix inference_api/frontend run test -- --run", "required": true},
+    {"id": "VAL-007", "kind": "build", "command": "npm --prefix inference_api/frontend run build", "required": true},
+    {"id": "VAL-008", "kind": "browser", "command": "Testar HTTP autenticado e browser local nos dois modos com servidor vLLM simulado, erros, historico e comparacao", "required": true},
+    {"id": "VAL-009", "kind": "integration", "command": "docker compose config, build e smoke isolado com DW e pacotes de fixture, sem copiar dados reais", "required": true},
+    {"id": "VAL-010", "kind": "manual", "command": "Conferir consumidores, ausencia de fallback, documentacao e diff antes da revisao independente", "required": true}
+  ],
+  "review": {
+    "required": true,
+    "independence": "independent",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high",
+    "rationale": "Novo contrato de evidencias, tool calling, acesso read only a DW e preparacao Docker afetam seguranca, proveniencia e interpretacao cientifica.",
+    "schema_path": ".codex/schemas/project-spec-review.schema.json",
+    "output_path": "specs/active/SPEC-009/evidence/review.json",
+    "handoff_prompt": "Revise independentemente SPEC-009 a partir de contrato, manifest, diff, testes e completion. Confira escolha real da tool pela LLM, SQL fixo read only, limites e erros, pacotes por hash, historico, UX explicita, Compose e ausencia de claims cientificos ou chamadas remotas."
+  },
+  "escalation": {"policy_version": "1.0", "allowed": ["terra_high", "needs_design", "sol_high"]},
+  "completion": {
+    "schema_path": ".codex/schemas/project-spec-completion.schema.json",
+    "output_path": "specs/active/SPEC-009/evidence/completion.json"
+  },
+  "baseline": {
+    "required": false,
+    "path": null,
+    "snapshot_path": null,
+    "rationale": "Mudanca delimitada da Bancada e do contrato de runs; snapshots historicos ficam preservados e sao cobertos por testes."
+  },
+  "lifecycle": {"output_path": "specs/active/SPEC-009/evidence/lifecycle.json"}
+}

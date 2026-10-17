@@ -1,23 +1,29 @@
 # Arquitetura proposta para consulta e avaliacao dos modelos
 
-Status em 16/10/2026, no checkout iniciado em `772ea0d`: arquitetura do harness ainda em planejamento. O [DW local v1](../dw/README.md) da SPEC-006 foi implementado, carregado e [aprovado em revisao independente local](../../specs/active/SPEC-006/evidence/review.json). Ele nao alimenta a API exploratoria nem comprova avaliacao cientifica. O [exportador local da SPEC-007](../../model_evaluation/README.md) prepara pacotes fixos candidatos e foi [aprovado em revisao independente local](../../specs/active/SPEC-007/evidence/review.json), sem implementar o harness ou a avaliacao de modelos.
+Status em 16/10/2026, no checkout iniciado em `772ea0d`: arquitetura do harness ainda em planejamento. O [DW local v1](../dw/README.md) da SPEC-006 foi implementado, carregado e [aprovado em revisao independente local](../../specs/active/SPEC-006/evidence/review.json). A SPEC-009 o integrou à Bancada exploratória; isso não comprova avaliação científica. O [exportador local da SPEC-007](../../model_evaluation/README.md) prepara pacotes fixos candidatos e foi [aprovado em revisao independente local](../../specs/active/SPEC-007/evidence/review.json), sem implementar o harness ou a avaliacao de modelos.
+
+Em 16/10/2026, a [SPEC-009](../../specs/active/SPEC-009/SPEC.md) definiu
+e implementou localmente esses dois modos na **Bancada exploratória**. O protocolo científico
+formal permanece separado. Essa SPEC não estabelece casos oficiais, gold set ou
+pontuação; o harness científico formal continua em planejamento.
 
 ## Objetivo e escopo
 
 Comparar o modelo base, os modelos ajustados para financeiro, industrial e hibrido, e eventualmente modelos externos, usando perguntas sobre as bases simuladas. O mesmo harness deve executar casos financeiros, industriais e integrados, registrar evidencias e separar erros de recuperacao, calculo e resposta.
 
-O harness consumira os modelos por uma interface de API padronizada, tanto os modelos hospedados quanto eventuais servicos externos. A topologia da primeira inferencia compartilhada foi [definida separadamente](../../docs/arquitetura_inferencia_compartilhada.md): backend e bancos no notebook, modelos servidos por vLLM na RunPod e front via ngrok. A primeira API HTTP local ja existe em [`inference_api/`](../../inference_api/README.md), com duas consultas exploratorias; os adaptadores de provedores externos e o harness formal ainda nao foram implementados. O serving remoto e a exposicao via ngrok tambem nao foram validados. Os CSVs originais permanecem como fonte preservada; os bancos relacionais de cada dominio sao a fonte de consulta tipada. O esquema DW antigo foi retirado do codigo ativo. O banco local `db_datamind_dw` preexistente permanece intocado e nao representa um DW validado. O novo banco `db_pesquisa_dw` contem a [primeira camada analitica rastreavel](../dw/README.md), sem integracao ao backend/harness.
+O harness consumira os modelos por uma interface de API padronizada, tanto os modelos hospedados quanto eventuais servicos externos. A topologia da primeira inferencia compartilhada foi [definida separadamente](../../docs/arquitetura_inferencia_compartilhada.md): backend e bancos no notebook, modelos servidos por vLLM na RunPod e front via ngrok. A API HTTP local em [`inference_api/`](../../inference_api/README.md) tem dois modos exploratórios; os adaptadores de provedores externos e o harness formal ainda nao foram implementados. O serving remoto e a exposicao via ngrok tambem nao foram validados. Os CSVs originais permanecem como fonte preservada; os bancos relacionais de cada dominio sao a fonte de consulta tipada. O esquema DW antigo foi retirado do codigo ativo. O banco local `db_datamind_dw` preexistente permanece intocado e nao representa um DW validado. O novo banco `db_pesquisa_dw` contem a [primeira camada analitica rastreavel](../dw/README.md), integrado apenas à Bancada exploratória pela SPEC-009, sem harness científico.
 
 ## Fluxo atual e extensoes previstas
 
 ```mermaid
 flowchart TD
-    S[(db_industrial e db_financeiro)] --> O[API atual: escopo declarado e SQL fixo]
+    S[(db_industrial e db_financeiro)] --> O[Fluxo histórico SPEC-001: escopo declarado]
     S --> D[(db_pesquisa_dw: carga v1 existente)]
     O --> E[Bundle exploratorio versionado]
     D -->|SPEC-007: exportacao local| P[Pacote fixo candidato por caso]
-    D -. integracao futura .-> O
-    E --> M[Modelo em teste]
+    D --> B[Bancada exploratória SPEC-009: pacotes ou tools]
+    E -. snapshot histórico .-> M[Modelo em teste]
+    B --> M
     P -. harness futuro .-> M
     M -. harness futuro .-> H[Avaliador: etapas e gold set reservado]
     E -. harness futuro .-> H
@@ -38,12 +44,18 @@ A figura foi produzida em 14/10/2026. O selo "planejado" do cenario A continua s
 
 | Cenario | Entrada do modelo | O que se mede | Estado em 16/10/2026 |
 | --- | --- | --- | --- |
-| A. Evidencia fixa | Mesma pergunta e mesmo pacote imutavel de evidencias para cada modelo no caso | Calculo, interpretacao, sustentacao e comunicacao dos limites, dado o mesmo contexto | DW, consultas fixas e exportador local de pacotes candidatos existem; harness e avaliacao de modelos ainda nao existem. |
-| B. Pesquisa com tools | Mesma pergunta e mesmo catalogo, contratos, limites e dados disponiveis; o modelo deve obter a evidencia | Escolha de ferramenta/rota, recuperacao, calculo e resposta, com falhas por etapa | A API atual executa duas tools por escopo **declarado pelo pesquisador**. Escolha autonoma de tool pelo modelo e harness ainda nao existem. |
+| A. Evidencia fixa | Mesma pergunta e mesmo pacote imutavel de evidencias para cada modelo no caso | Calculo, interpretacao, sustentacao e comunicacao dos limites, dado o mesmo contexto | Pacotes candidatos e execução exploratória na Bancada existem; harness e avaliação científica ainda não existem. |
+| B. Pesquisa com tools | Mesma pergunta e mesmo catalogo, contratos, limites e dados disponiveis; o modelo deve obter a evidencia | Escolha de ferramenta/rota, recuperacao, calculo e resposta, com falhas por etapa | A Bancada exploratória anuncia cinco tools e a LLM escolhe chamadas; ensaio com pesos reais e harness científico ainda não existem. |
 
 No cenario A, o backend/gerador consulta fontes permitidas ou a DW antes da chamada e congela o pacote. Cada modelo recebe exatamente os mesmos bytes de pergunta, evidencias e instrucoes comuns do caso; variacoes de prompt especificas de um experimento devem ser registradas como outra condicao, nunca misturadas na mesma comparacao. O pacote expõe valores, unidades, formulas, periodo, granularidade, cobertura, chaves de origem e ressalvas. Ele nao contem resposta esperada, rubrica ou gold set.
 
-No cenario B, uma futura interface de tools permitira ao modelo solicitar consultas durante a execucao. O backend validara nome, parametros, quantidade de chamadas, timeout e tamanho de resultado, executara somente SQL fixo em transacao de leitura e registrara cada pedido e retorno. Erro de escolha, ausencia de consulta, falha de recuperacao, erro numerico e conclusao indevida serao classificados separadamente. A API atual nao satisfaz esse modo: seu `route_plan` vem do escopo informado pelo pesquisador; portanto, nao se pode pontuar sua rota atual como escolha autonoma da LLM. O protocolo exato de chamada de tools, numero de rodadas e orcamento exige SPEC propria antes da implementacao.
+No cenário B exploratório da SPEC-009, a LLM solicita uma das cinco consultas
+fixas da DW. O backend valida nome, argumentos, turnos, chamadas e tamanho,
+executa somente leitura e registra pedidos/retornos. A seleção anterior por
+`route_plan` vinha do escopo informado pelo pesquisador; snapshots antigos
+continuam legíveis como fluxo anterior e nunca representam escolha da LLM.
+O protocolo científico formal, seu orçamento, scoring e repetição permanecem
+pendentes de contrato próprio.
 
 ### Regra de comparabilidade
 
@@ -53,7 +65,7 @@ O recorte de perguntas deve incluir financeiro, industrial e integrado, alem de 
 
 ### Papel da DW e continuidade entre as bases
 
-A DW v1 fornece uma camada analitica rastreavel, consultas fixas e flags; ela pode preparar pacotes do cenario A e ser uma fonte futura para tools do cenario B. O modelo recebe resultados de consultas por contrato, sem credencial ou SQL livre. A API atual continua consultando `db_industrial` e `db_financeiro` diretamente. Trocar essa fonte por `db_pesquisa_dw` exige reconciliar cada consulta e versionar o contrato; resultados antigos nao serao reescritos.
+A DW v1 fornece uma camada analitica rastreavel, consultas fixas e flags; ela prepara pacotes candidatos do cenario A e alimenta tools exploratórias do cenario B. O modelo recebe resultados de consultas por contrato, sem credencial ou SQL livre. O fluxo antigo consultava `db_industrial` e `db_financeiro` diretamente; novos runs v3 usam apenas `db_pesquisa_dw` ou pacote já exportado. Resultados antigos não são reescritos.
 
 As cinco consultas atuais da DW informam tabelas, filtros, grao e formulas. Para agregados de maquina, produto, qualidade e material, `contributors` pagina os IDs dos fatos que compoem uma linha; `trace` devolve a linha DW e sua linhagem CSV/raw/public. O pacote da SPEC-007 ainda nao embute esses IDs, para manter seu limite de linhas e tamanho. O relatorio `verify` fornece flags globais da carga; uma flag global nao deve ser atribuida automaticamente a um item de um caso. O pacote preserva a distincao entre proveniencia da consulta e resumo global de qualidade.
 
@@ -64,7 +76,7 @@ Os tres indices de importacao representam particoes, nao uma identidade historic
 1. **Reconciliar as bases:** as revisoes independentes das SPECs 001, 006 e 007 aprovaram seus respectivos escopos locais; nenhuma equivale a aprovacao cientifica. Os pacotes da SPEC-007 nao viram casos oficiais antes da selecao cientifica e da aprovacao do gold set.
 2. **Preparar evidencia fixa:** o [exportador da SPEC-007](../../model_evaluation/README.md) implementa leitura local, formato versionado e hashes para pacotes candidatos do cenario A. Testes com fixtures cobrem reproducibilidade, falta de dado, flags e ausencia de gold no pacote. Nenhum modelo e chamado nessa etapa; a revisao independente local foi aprovada em 16/10/2026.
 3. **Definir casos e gabaritos:** selecionar perguntas e recortes, escrever calculos e tolerancias verificaveis, rubricar interpretacoes aceitaveis e revisar por humano. O conteudo oficial, tamanho da bateria e regras de pontuacao ainda precisam de contrato cientifico proprio.
-4. **Implementar o harness:** consumir pacotes fixos no cenario A e definir a interface de tools do cenario B em SPECs posteriores. Reusar a API de modelos quando sua proveniencia estiver conferida; comparar primeiro com fixtures/mock, depois executar cada modelo sob o mesmo protocolo. Persistir passos e falhas por etapa.
+4. **Implementar o harness:** consumir pacotes fixos no cenario A e as tools exploratórias da SPEC-009 no cenario B sob um protocolo científico próprio. Reusar a API de modelos quando sua proveniencia estiver conferida; comparar primeiro com fixtures/mock, depois executar cada modelo sob o mesmo protocolo. Persistir passos e falhas por etapa.
 5. **Validar a execucao real:** verificar serving e hashes dos modelos, leituras somente leitura, snapshots, isolamento de gold set e repeticao de casos. RunPod/ngrok exigem acionamento explicito da sessao; a interface exploratoria nao gera metricas do artigo por si.
 
 Pontos que ainda exigem decisao antes de marcar o harness como `ready`: selecao e quantidade de casos por categoria; tolerancias e rubrica oficial; interface de tool-call suportada pelo serving real; limite de rodadas/chamadas; politica para modelos incapazes de usar tools; tratamento estatistico de variacao entre repeticoes. Essas decisoes nao sao preenchidas pelo DW nem pela SPEC-007.
@@ -76,11 +88,11 @@ Pontos que ainda exigem decisao antes de marcar o harness como `ready`: selecao 
 | Orquestrador | Na primeira cadeia, validar escopo declarado como financeiro, industrial ou integrado, escolher consultas anuais permitidas e registrar a origem da escolha. Classificacao automatica permanece futura. |
 | Servico financeiro | Na primeira cadeia, somar vendas anuais disponiveis e devolver origem, formula e filtros; outros indicadores dependem de contrato posterior. |
 | Servico industrial | Na primeira cadeia, somar registros anuais de operacao e devolver origem, formula e filtros; consultas de maquinas e paradas dependem de contrato posterior. |
-| Camada analitica / DW local v1 | Sete fatos detalhados, dimensoes por particao, linhagem raw/public, flags e cinco consultas fixas. Existe em `db_pesquisa_dw`; ainda nao e dependencia da primeira API. |
+| Camada analitica / DW local v1 | Sete fatos detalhados, dimensoes por particao, linhagem raw/public, flags e cinco consultas fixas. Existe em `db_pesquisa_dw` e é fonte da Bancada exploratória v3. |
 | Montador de contexto | Entregar ao modelo apenas evidencias pertinentes a pergunta, com valores, unidades, periodos e ressalvas. |
 | Modelo em teste | Interpretar as evidencias e responder com os dados que sustentam a conclusao. |
 | Harness | Executar casos e modelos sob protocolo comparavel; guardar consulta, evidencias, resposta e metricas por etapa. |
-| Verificador exploratorio / avaliador futuro | O verificador local confere schema, presenca de evidencia, citacoes e estado de resposta; numeros e causalidade ficam `not_checked`. O avaliador do harness futuro comparara com gold set e rubrica fora do caminho da LLM. |
+| Verificador exploratorio / avaliador futuro | Os checks exploratórios conferem presença, período e critérios literais; numeros e causalidade ficam `not_checked`. O avaliador do harness futuro comparara com gold set e rubrica fora do caminho da LLM. |
 
 ## Relacao entre as bases
 
@@ -111,7 +123,7 @@ Um juiz baseado em LLM pode auxiliar a avaliar se a resposta atende a pergunta, 
 ## Proximas definicoes
 
 - Ampliar o DW somente com novas perguntas, regras de grao/agregacao e migracao explicitamente versionadas; a v1 implementa o recorte da SPEC-006.
-- Integrar consultas do DW ao backend apenas com contrato de evidencia e testes proprios, sem mudar implicitamente as duas consultas atuais.
+- Para o harness futuro, reutilizar as consultas fixas integradas pela SPEC-009 após definir o contrato científico e validar o serving real.
 - Definir o caso formal e as saidas dos modelos; o [schema v1 do pacote candidato](../../model_evaluation/schemas/evidence_packet.schema.json) ja existe, mas nao substitui o protocolo de avaliacao.
 - Construir um pequeno gold set auditavel para cada categoria e casos de evidencia insuficiente.
 - Fixar protocolo de comparacao: mesmo recorte de dados, consultas, contexto, parametros e versao de cada modelo.

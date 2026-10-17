@@ -1,0 +1,30 @@
+{
+  "spec_id": "SPEC-009",
+  "contract_version": 1,
+  "status": "approved",
+  "thread_id": null,
+  "runtime": {"classification": "critical_review", "model": "gpt-6.1-sol", "reasoning": "high"},
+  "review_input": [
+    "Independent review round 1 findings and evidence",
+    "Final delta in service.py, dw_tools.py, test_contract.py, copy_logical_databases.py, documentation and SPEC-009 evidence",
+    "SPEC.md, SPEC.execution.json, completion.json, local-2026-10-16.md and project-spec-review v2 schema",
+    "Canonical local suites, adversarial in-memory probes, git diff and checkout inventory"
+  ],
+  "baseline_assessment": [
+    {"category": "tests", "result": "changed_as_approved", "evidence": ["Independent API suite: 40 tests, 33 passed and 7 opt-in PostgreSQL skips", "Independent exporter suite: 10 passed", "test_contract.py covers fingerprint/backend errors, individual/cumulative limits and five calls in six turns"], "notes": ["Opt-in skips were not counted as executed integration proof."]},
+    {"category": "cli", "result": "changed_as_approved", "evidence": ["Five fixed queries are shared by CLI, exporter and API", "DW enters logical copy only with --include-dw"], "notes": []},
+    {"category": "json_contracts", "result": "changed_as_approved", "evidence": ["Invalid call/arguments produce tool_error", "DWResultLimitError produces tool_limit_error/limit", "DWFingerprintError and backend faults produce query_error/query; independent probes reproduced all three"], "notes": []},
+    {"category": "persistence", "result": "preserved", "evidence": ["Historical snapshots remain read-only and rendered as previous flow", "New v3 states persist without rewriting old records"], "notes": []},
+    {"category": "schemas", "result": "changed_as_approved", "evidence": ["Packets retain schema, canonical-byte, checksum, case_id and hash verification", "Typed exceptions do not widen the five-tool contract"], "notes": []},
+    {"category": "protected_paths", "result": "preserved", "evidence": ["No tracked changes to frozen data, splits, weights, checkpoints, raw results or articles", "Review had no external effects or checkout edits"], "notes": []},
+    {"category": "decisions", "result": "changed_as_approved", "evidence": ["README and architecture now distinguish v3 Bancada from historical v1/v2", "New --include-dw receipts use SPEC-009/include_dw true; default uses SPEC-008", "Evidence states earlier fixture receipt still says SPEC-008 and full copy was not rerun"], "notes": ["No scientific or remote proof claimed."]}
+  ],
+  "findings": [],
+  "evidence": [
+    "Parsing and validation end before fixed DW query execution; operational limit and query failures have distinct snapshot states.",
+    "Independent limit probe confirmed at most five accepted queries and six model turns.",
+    "git diff --check passed with LF/CRLF warnings only.",
+    "No new material blockers found in round 2; scientific evaluation, real copy, RunPod and ngrok remain unexecuted."
+  ],
+  "usage": null
+}

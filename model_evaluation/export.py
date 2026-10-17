@@ -10,11 +10,13 @@ from pathlib import Path
 import re
 import sys
 import tempfile
+from functools import lru_cache
+from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from BancoModeloUse.dw import cli as dw
+from BancoModeloUse.dw import fixed_queries
 
 SCHEMA_VERSION = 1
 QUERY_CONTRACT_VERSION = 1
@@ -48,6 +50,12 @@ def _unique_pairs(pairs: list[tuple[str, object]]) -> dict:
 
 def _reject_constant(value: str) -> None:
     raise ExportError(f"Número JSON inválido: {value}")
+
+
+@lru_cache(maxsize=1)
+def _packet_validator():
+    schema = json.loads((Path(__file__).parent / "schemas" / "evidence_packet.schema.json").read_text(encoding="utf-8"))
+    return Draft202012Validator(schema)
 
 
 def _keys(value: object, required: set[str], optional: set[str], where: str) -> dict:
@@ -116,8 +124,8 @@ def load_manifest(path: Path) -> list[dict]:
 
 
 def _verified_snapshot(report: dict) -> dict:
-    if (not isinstance(report, dict) or report.get("database") != dw.DATABASE or
-            type(report.get("schema_version")) is not int or report["schema_version"] != dw.VERSION or
+    if (not isinstance(report, dict) or report.get("database") != "db_pesquisa_dw" or
+            type(report.get("schema_version")) is not int or report["schema_version"] != 1 or
             not isinstance(report.get("source_fingerprint"), str) or
             re.fullmatch(r"[0-9a-f]{64}", report["source_fingerprint"]) is None or
             type(report.get("source_files")) is not int or report["source_files"] < 1 or
@@ -149,9 +157,11 @@ def build_packets(cases: list[dict], *, verify_fn=None, query_fn=None,
                   query_code_path: Path | None = None) -> dict[str, bytes]:
     """Prepara todo o lote em memória; nenhuma saída é publicada em erro."""
     validate_manifest({"schema_version": SCHEMA_VERSION, "cases": cases})
-    verify_fn = verify_fn or dw.verify
-    query_fn = query_fn or dw.query
-    query_code_path = query_code_path or Path(dw.__file__)
+    if verify_fn is None or query_fn is None:
+        from BancoModeloUse.dw import cli as dw
+        verify_fn = verify_fn or dw.verify
+        query_fn = query_fn or dw.query
+    query_code_path = query_code_path or Path(fixed_queries.__file__)
     query_code_sha256 = hashlib.sha256(query_code_path.read_bytes()).hexdigest()
     report = verify_fn()
     snapshot = _verified_snapshot(report)
@@ -257,6 +267,9 @@ def verify_packet_bytes(payload: bytes, *, expected_case_id: str | None = None) 
     validate_manifest({"schema_version": SCHEMA_VERSION, "cases": [
         {"case_id": body["case_id"], "question": body["question"],
          "domain": body["domain"], "queries": requests}]})
+    errors = list(_packet_validator().iter_errors(envelope))
+    if errors:
+        raise ExportError(f"Pacote não atende ao schema: {errors[0].message}")
     return envelope
 
 
