@@ -2,6 +2,15 @@
 
 ## SPEC-010: Groq sintética e sessão de navegador (19/10/2026)
 
+**Leitura do histórico em 22/10/2026 (checkout base `2d507a9`, alteração
+local sem commit):** a lista e o detalhe da Bancada passaram a priorizar data
+local, estado em português, pergunta, resposta, origem, tools e verificações
+exploratórias. Metadados e JSON permanecem em **Detalhes técnicos e
+rastreabilidade**. O build React,
+typecheck e lint passaram; a interface foi conferida com um run Groq real já
+salvo e um run RunPod histórico com erro, sem nova inferência. Os snapshots e
+as tabelas não foram alterados.
+
 A Bancada anuncia `groq` como provedor separado dos sete aliases RunPod.
 Sem `GROQ_API_KEY` e `GROQ_MODEL` no **processo backend**, o item fica
 indisponível com motivo. A URL de produção do cliente é fixa em
@@ -33,12 +42,16 @@ que não enviam `X-Browser-Session: 1` no login continuam recebendo bearer e
 podem usar `Authorization: Bearer ...` sem cookie. O job preserva a chave de
 idempotência em `sessionStorage` e é consultado após refresh, sem reenvio.
 
-**Estado em 19/10/2026:** implementação, testes unitários/HTTP e navegador
-com Groq simulado foram executados localmente, e a
+**Estado em 22/10/2026:** implementação, testes unitários/HTTP e navegador
+com Groq simulado foram executados localmente em 19/10, e a
 [revisão independente](../specs/active/SPEC-010/evidence/review.json) aprovou
-esse escopo local. O ensaio real com chave Free está `blocked_external_key`.
-Não houve chamada à Groq real, RunPod, ngrok, Terraform ou DW real
-para esta SPEC. Veja a [evidência local](../specs/active/SPEC-010/evidence/local-2026-10-19.md).
+esse escopo local. Em 22/10, o [ensaio real somente com fixture sintética](../specs/active/SPEC-010/evidence/groq-real-2026-10-22.md)
+confirmou dois jobs pela Bancada autenticada, resposta do pacote, escolha da
+tool `synthetic_metric` pelo modelo, persistência no histórico e limites da
+conta Free. O refresh manteve o login e o run no histórico; a recuperação
+visual de um job ainda pendente foi coberta pelo teste simulado. Não houve
+RunPod, ngrok, Terraform ou DW real neste ensaio. Veja também a
+[evidência local](../specs/active/SPEC-010/evidence/local-2026-10-19.md).
 
 **Estado remoto em 17/10/2026:** o
 [smoke na RTX A5000](../runpod/serving/evidence/2026-10-17-a5000.md)
@@ -190,7 +203,13 @@ anteriores foram retirados do fluxo ativo após a SPEC-009.
    da sessão de serving. `service.py` grava no `db_inference_app` um snapshot
    v3 com pergunta, modo, prompt, modelo, pacote ou trilha de tools, resposta,
    verificações e erros. `storage.py` serve histórico; `RunDetail.tsx` mostra
-   os detalhes. Runs v1/v2 continuam legíveis apenas como fluxo anterior.
+   primeiro um resumo com data local do navegador, estado explicado, pergunta,
+   resposta, origem e verificações exploratórias. JSON, parâmetros, hashes e
+   trilhas completas ficam em
+   **Detalhes técnicos e rastreabilidade**. A lista mostra as 100 execuções
+   mais recentes; registros antigos continuam no banco. Runs v1/v2 continuam
+   legíveis como fluxo anterior. Essa apresentação não pontua nem valida
+   cientificamente as respostas.
 
 **Onde estão as perguntas:** o repositório versiona
 [`model_evaluation/examples/cases_2020.json`](../model_evaluation/examples/cases_2020.json)

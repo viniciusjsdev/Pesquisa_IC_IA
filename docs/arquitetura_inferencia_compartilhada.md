@@ -64,6 +64,12 @@ Para a comparação científica futura, a [arquitetura de avaliação](../BancoM
 
 ## Topologia escolhida
 
+Na Bancada, os snapshots persistidos no banco da aplicação aparecem em
+**Histórico e feedback**. O detalhe apresenta um resumo de leitura humana e
+guarda JSON e proveniência completos em uma seção técnica expansível. A lista
+consulta as 100 execuções mais recentes. Essa apresentação não modifica os
+snapshots nem transforma checks exploratórios em avaliação científica.
+
 ```mermaid
 flowchart LR
     U[Pesquisadores no navegador] --> N[URL HTTPS do ngrok]
@@ -127,7 +133,9 @@ usam fixture inventada e prompt aprovado no servidor. A sessão do navegador
 usa cookie HttpOnly de mesma origem, com proteção de Origin em POST; clientes
 bearer continuam compatíveis. Snapshots Groq são v4; os v1-v3 permanecem
 legíveis. Testes locais simulados passaram e a revisão independente aprovou
-o escopo local; o ensaio real Free ainda falta. Groq não serve os adapters Qwen desta pesquisa
+o escopo local em 19/10/2026. Em 22/10, [jobs reais sintéticos pela Bancada](../specs/active/SPEC-010/evidence/groq-real-2026-10-22.md)
+confirmaram pacote, tool escolhida pela LLM, histórico e limites da conta
+Free. Groq não serve os adapters Qwen desta pesquisa
 nem compõe o harness científico.
 
 Os pesos disponíveis no checkout são adapters PEFT/LoRA, não cópias completas da LLM. O [catálogo de modelos](../FineTuning/docs/modelos_disponiveis.md) identifica a base `Qwen/Qwen2.5-7B-Instruct`, os seis adapters locais, suas runs e seus manifests. A versão exata dos pesos da base ainda não está fixada por hash nesse catálogo. Antes de servir, registrar a revisão efetivamente obtida da base e conferir os arquivos dos adapters escolhidos.

@@ -1,7 +1,7 @@
 ---
 id: SPEC-010
 title: Bancada com Groq gratuito e fluxo de teste confiavel
-status: implemented
+status: done
 contract_version: 1
 ---
 

@@ -1,4 +1,5 @@
 import type { Run } from './benchService';
+import { runDateLabel, runStatusLabel } from './runPresentation';
 // Evidence bundles retain historical fields from versioned backend snapshots.
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -6,36 +7,71 @@ function Field({ label, value }: { label: string; value: unknown }) {
   return <div className="bench-field"><strong>{label}</strong><span>{value === null || value === undefined || value === '' ? 'Não registrado' : String(value)}</span></div>;
 }
 
-const statusLabel: Record<string, string> = {
-  provider_bad_request: 'Pedido recusado pelo provedor (400)',
-  provider_tool_error: 'Provedor recusou a chamada de tool (400)',
-  provider_auth_error: 'Credencial do provedor recusada (401/403)',
-  provider_rate_limited: 'Cota ou limite da Groq (429)',
-  provider_error: 'Falha do provedor (5xx)',
-  provider_timeout: 'Tempo de espera do provedor esgotado',
-  provider_connection_error: 'Conexão com o provedor falhou',
-  stream_incomplete: 'Stream incompleto ou inválido',
-  context_limit: 'Resposta truncada pelo limite de contexto',
-  tool_error: 'Tool inválida',
-  insufficient_evidence: 'Evidência insuficiente',
+function ReadableAnswer({ value }: { value: string }) {
+  return <p className="run-summary-copy">{value.split(/(\*\*[^*]+\*\*)/g).map((part, index) => part.startsWith('**') && part.endsWith('**')
+    ? <strong key={index}>{part.slice(2, -2)}</strong> : part)}</p>;
+}
+
+const toolStatusLabel: Record<string, string> = { returned: 'concluída', failed: 'falhou', rejected: 'recusada' };
+const checkLabel: Record<string, string> = {
+  criteria_evidence_presence: 'Presença de evidência',
+  criteria_period: 'Período informado',
+  numerical_truth: 'Conferência dos números',
+  causality: 'Análise de causalidade',
 };
+const checkResultLabel: Record<string, string> = {
+  passed: 'Condição atendida',
+  failed: 'Condição não atendida',
+  not_checked: 'Não verificada',
+  skipped: 'Não executada',
+};
+
+function RunSummary({ run }: { run: Run }) {
+  const s = run.snapshot || {};
+  const model = s.model || {};
+  const question = s.question_request?.question;
+  const answer = s.model_output?.raw_text;
+  const mode = s.evidence_mode === 'dw_snapshot' ? 'Pacote fixo da DW'
+    : s.evidence_mode === 'dw_tools' ? 'LLM consulta a DW por tools'
+      : s.evidence_mode === 'synthetic_snapshot' ? 'Pacote sintético fixo'
+        : s.evidence_mode === 'synthetic_tools' ? 'LLM escolhe tool sintética' : 'Fluxo histórico';
+  const tools = Array.isArray(s.tool_trace) ? s.tool_trace : [];
+  const checks = Array.isArray(s.checks) ? s.checks : [];
+  const source = s.provider === 'groq' ? 'Fixture sintética inventada'
+    : s.packet?.case_id ? `Pacote ${s.packet.case_id}`
+      : s.dw_source?.database ? `Consulta registrada à ${s.dw_source.database}`
+        : s.evidence_bundle?.items?.length ? `${s.evidence_bundle.items.length} item(ns) de evidência registrado(s)`
+          : 'Origem não resumida neste snapshot';
+  return <div className="run-summary">
+    <p className="run-summary-meta">{runDateLabel(run.created_at)} <span>· horário deste dispositivo</span> · {run.author}</p>
+    <p className={`run-summary-status ${s.status === 'answered_unverified' ? 'is-complete' : 'is-error'}`}><strong>{runStatusLabel(s.status)}</strong></p>
+    <div className="run-summary-facts"><span>{s.provider || 'Provedor não registrado'}</span><span>{model.model_id || model.alias || 'Modelo não registrado'}</span><span>{mode}</span></div>
+    <h4>Pergunta</h4><p className="run-summary-copy">{question || 'Pergunta não registrada neste snapshot.'}</p>
+    <h4>Resposta</h4><ReadableAnswer value={answer || 'Nenhuma resposta foi registrada nesta execução.'}/>
+    <h4>Evidência usada</h4><p className="run-summary-copy">{source}</p>
+    {s.error?.message && <p className="run-summary-error"><strong>Falha registrada:</strong> {s.error.message}</p>}
+    {tools.length > 0 && <p className="run-summary-tools"><strong>Ferramentas chamadas:</strong> {tools.map((tool: any) => `${tool.name || tool.raw_request?.function?.name || 'nome não registrado'} (${toolStatusLabel[tool.status] || tool.status || 'estado não registrado'})`).join(' · ')}</p>}
+    {checks.length > 0 && <><h4>Verificações exploratórias</h4><ul className="run-summary-checks">{checks.map((check: any, index: number) => <li key={index}><strong>{checkLabel[check.check] || check.check || 'Verificação sem nome'}:</strong> {checkResultLabel[check.result] || check.result || 'Resultado não registrado'}</li>)}</ul></>}
+    <p className="run-summary-caveat">Leitura exploratória. Essas verificações não medem acurácia nem validam a pesquisa científica.</p>
+  </div>;
+}
 
 export function RunDetail({ run }: { run: Run }) {
   const s = run.snapshot || {};
   const model = s.model || {};
   const bundle = s.evidence_bundle;
-  if (s.schema_version === 3 || s.schema_version === 4) return <article className="run-card"><h3>Execução {run.id}</h3>
-    <Field label="Autor e data" value={`${run.author} · ${run.created_at}`}/><Field label="Estado" value={statusLabel[s.status] || s.status}/>
+  if (s.schema_version === 3 || s.schema_version === 4) return <article className="run-card"><h3>Execução {run.id.slice(0, 8)}</h3><RunSummary run={run}/><details className="run-technical"><summary>Detalhes técnicos e rastreabilidade</summary><Field label="ID completo" value={run.id}/>
+    <Field label="Autor e data" value={`${run.author} · ${run.created_at}`}/><Field label="Estado" value={runStatusLabel(s.status)}/>
     <Field label="Provedor" value={s.provider || 'runpod (snapshot histórico)'}/><Field label="Modelo configurado" value={model.model_id || model.alias}/>
     <Field label="Modo de evidência" value={s.evidence_mode === 'dw_snapshot' ? 'Pacote fixo da DW' : s.evidence_mode === 'dw_tools' ? 'LLM consulta a DW por tools' : s.evidence_mode === 'synthetic_snapshot' ? 'Pacote sintético fixo' : 'LLM escolhe tool sintética'}/>
     <p className="bench-notice">Execução exploratória; modos A e B respondem perguntas de avaliação distintas. Checks não são pontuação científica.</p>
     <section><h4>Pergunta e origem</h4><Field label="Pergunta" value={s.question_request?.question}/><Field label="Domínio" value={s.question_request?.domain || (s.provider === 'groq' ? 'fixture sintética' : null)}/><Field label="Pacote e hash" value={s.provider === 'groq' ? 'synthetic-v1; hash privado não se aplica' : s.packet ? `${s.packet.case_id} · ${s.packet.sha256}` : 'Não se aplica'}/><Field label="Fingerprint da DW" value={s.provider === 'groq' ? 'Não se aplica' : s.packet?.source_snapshot?.source_fingerprint || s.dw_source?.source_fingerprint}/><Field label="Versões e hash da consulta" value={s.provider === 'groq' ? 'Fixture sintética v1; consulta privada não se aplica' : s.packet ? `${s.packet.schema_version} · ${s.packet.query_contract_version} · ${s.packet.query_code_sha256}` : `${s.dw_source?.schema_version ?? '?'} · ${s.dw_source?.query_contract_version ?? '?'} · ${s.dw_source?.query_code_sha256 ?? '?'}`}/></section>
     <section><h4>Prompt, critérios e modelo</h4><Field label="Prompt exato" value={s.prompt?.system_prompt}/><Field label="Revisão do prompt" value={s.prompt?.revision ?? 'Rascunho'}/><Field label="Revisão dos critérios" value={s.verification_criteria?.revision ?? 'Rascunho'}/><pre>{JSON.stringify(s.verification_criteria?.config || {}, null, 2)}</pre><Field label="Modelo servido e sessão" value={`${model.alias || '?'} · ${model.served_model || model.model_id || 'não confirmado'} · ${model.session_id || 'não se aplica'}`}/><pre>{JSON.stringify({ parameters: model.parameters, usage: model.usage, finish_reason: model.finish_reason, base_revision: model.base_revision, adapter_run: model.adapter_run, adapter_hash: model.adapter_hash }, null, 2)}</pre></section>
     <section><h4>Evidência entregue</h4><Field label="Origem" value={s.evidence_source?.kind || s.dw_source?.database || s.packet?.source_snapshot?.kind}/>{['dw_snapshot', 'synthetic_snapshot'].includes(s.evidence_mode) ? <><Field label="SHA-256 dos bytes do arquivo" value={s.packet?.file_sha256}/><pre>{s.evidence_json_sent || 'Pacote não entregue.'}</pre></> : <><details><summary>Catálogo anunciado</summary><pre>{JSON.stringify(s.tool_catalog || [], null, 2)}</pre></details><pre>{JSON.stringify(s.tool_trace || [], null, 2)}</pre></>}</section>
-    <section><h4>Resposta, falhas e verificações</h4><Field label="Resposta bruta" value={s.model_output?.raw_text || 'Sem resposta'}/><pre>{JSON.stringify({ error: s.error, checks: s.checks }, null, 2)}</pre><details><summary>Turnos do provedor</summary><pre>{JSON.stringify(s.model_turns || [], null, 2)}</pre></details></section>
+    <section><h4>Resposta, falhas e verificações</h4><Field label="Resposta bruta" value={s.model_output?.raw_text || 'Sem resposta'}/><pre>{JSON.stringify({ error: s.error, checks: s.checks }, null, 2)}</pre><details><summary>Turnos do provedor</summary><pre>{JSON.stringify(s.model_turns || [], null, 2)}</pre></details></section></details>
   </article>;
   return <article className="run-card">
-    <h3>Execução {run.id}</h3><Field label="Autor e data" value={`${run.author} · ${run.created_at}`}/><Field label="Estado" value={s.status}/>
+    <h3>Execução {run.id.slice(0, 8)}</h3><RunSummary run={run}/><details className="run-technical"><summary>Detalhes técnicos e rastreabilidade</summary><Field label="ID completo" value={run.id}/><Field label="Autor e data" value={`${run.author} · ${run.created_at}`}/><Field label="Estado" value={s.status}/>
     <p className="bench-notice">Fluxo anterior: escopo e consultas do backend.</p>
     {s.status === 'answered_unverified' && <p className="bench-notice">Respondido, sem validação científica.</p>}
     <section><h4>Pergunta e rota</h4><Field label="Pergunta" value={s.question_request?.question}/><Field label="Escopo e ano" value={`${s.question_request?.scope || '?'} · ${s.question_request?.year ?? '?'}`}/><Field label="Ferramentas e origem da escolha" value={`${(s.route_plan?.tools || []).join(', ') || 'Nenhuma'} · ${s.route_plan?.choice_origin || '?'}`}/></section>
@@ -47,6 +83,6 @@ export function RunDetail({ run }: { run: Run }) {
     </section>
     <section><h4>Resposta</h4><Field label="Texto bruto" value={s.model_output?.raw_text || 'Sem resposta'}/><Field label="IDs citados" value={(s.model_output?.cited_evidence_ids || []).join(', ') || 'Nenhum'}/>{s.model_output?.serving && <details><summary>Resposta bruta do serving</summary><pre>{JSON.stringify(s.model_output.serving, null, 2)}</pre></details>}</section>
     <section><h4>Checks exploratórios</h4>{!s.checks?.length && <p>Nenhum check registrado.</p>}{(s.checks || []).map((check: Record<string, string>, index: number) => <Field key={index} label={`${check.check}: ${check.result}`} value={check.detail}/>)}</section>
-    <section><h4>Erro</h4><pre>{s.error ? JSON.stringify(s.error, null, 2) : 'Nenhum erro registrado.'}</pre></section>
+    <section><h4>Erro</h4><pre>{s.error ? JSON.stringify(s.error, null, 2) : 'Nenhum erro registrado.'}</pre></section></details>
   </article>;
 }
