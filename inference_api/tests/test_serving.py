@@ -240,18 +240,21 @@ class ServingTests(unittest.TestCase):
                    "X-Inference-Session-ID": "session-a"}
 
         class Response:
-            def __init__(self, body, identity):
-                self.body = json.dumps(body).encode()
-                self.headers = identity
+            def __init__(self, body, identity, stream=False):
+                self.body = json.dumps(body).encode() if not stream else (
+                    b'data: {"model":"ft-finqa-a","choices":[{"index":0,"delta":{"role":"assistant","content":"OK"},"finish_reason":null}]}\n'
+                    b'data: {"model":"ft-finqa-a","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}\n'
+                    b'data: [DONE]\n')
+                self.headers = {**identity, **({"Content-Type": "text/event-stream"} if stream else {})}
             def __enter__(self): return self
             def __exit__(self, *_): return None
             def read(self, *_): return self.body
+            def __iter__(self): return iter(self.body.splitlines(keepends=True))
 
         def open_request(request, timeout):
             if request.full_url.endswith("/v1/models"):
                 return Response({"data": [{"id": "ft-finqa-a"}]}, headers)
-            return Response({"model": "ft-finqa-a", "choices": [
-                {"finish_reason": "stop", "message": {"role": "assistant", "content": "OK"}}]}, headers)
+            return Response({}, headers, stream=True)
 
         with patch("inference_api.models.vllm_url", return_value="https://pod.example"), \
              patch("inference_api.models.urlopen", side_effect=open_request):

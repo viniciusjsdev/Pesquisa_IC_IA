@@ -27,6 +27,17 @@ em 16/10/2026 têm evidências próprias nos respectivos diretórios.
 | 7 | [SPEC-007](active/SPEC-007/SPEC.md) | Exportar pacotes fixos de evidência do DW, sem LLM ou gabarito | `done` no escopo local; gold set e caso científico oficial seguem pendentes |
 | 8 | [SPEC-008](active/SPEC-008/SPEC.md) | Observatório unificado com Bancada de testes após login, modo host e Docker local | `done` no escopo local, revisão independente aprovada; cluster Windows preservado |
 | 9 | [SPEC-009](active/SPEC-009/SPEC.md) | Alternância explícita na Bancada entre pacote fixo da DW e tools escolhidas pela LLM | `done` no escopo local, [revisão independente aprovada](active/SPEC-009/evidence/review.json); sem execução remota nem cópia real do DW |
+| 10 | [SPEC-010](active/SPEC-010/SPEC.md) | Groq gratuito para testar o fluxo da Bancada e corrigir sessão/erros de plataforma | implementação e teste simulado locais, [revisão independente aprovada](active/SPEC-010/evidence/review.json) em 19/10/2026; ensaio real Free pendente; sem RunPod ou dados reais na Groq |
+| 11 | [SPEC-011](active/SPEC-011/SPEC.md) | Diagnóstico e correção demonstrável dos FT-FinQA | inventário e matriz local em 19/10/2026, [diagnóstico](active/SPEC-011/evidence/local-2026-10-19.md) causal `unresolved` e [revisão independente aprovada para o escopo local](active/SPEC-011/evidence/review.json); ensaio real pendente de autorização específica para RunPod |
+
+Em 19/10/2026, as SPECs 010 e 011 foram contratadas como duas fases separadas.
+A primeira usa Groq Free e fixtures sintéticas para validar login, jobs,
+streaming, tools e histórico sem GPU. A segunda confronta os outputs brutos,
+parâmetros, prompts e manifests dos FT-FinQA A/B com a base antes de atribuir
+causa aos adapters. A implementação local da SPEC-010 não constitui teste
+real da Groq, reinício de Pod ou validação científica. O checkout de partida
+era `bf238ec` com mudanças anteriores sem commit; as duas threads devem
+reconciliá-las e não escrever simultaneamente.
 
 A SPEC-001 foi implementada localmente e aprovada em revisão independente em
 14/10/2026. A SPEC-002 tem implementação local de manifesto, scripts e

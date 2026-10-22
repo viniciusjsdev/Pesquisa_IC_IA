@@ -1,31 +1,32 @@
 import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { errorMessage, onSessionExpired, setSessionToken } from '../../services/api';
+import { errorMessage, onSessionExpired } from '../../services/api';
 import { SessionContext, useSession, type Identity } from './sessionContext';
 import { sessionService } from './sessionService';
 
 export function SessionProvider({ children }: { children: ReactNode }) {
   const [identity, setIdentity] = useState<Identity | null>(null);
+  const [restoring, setRestoring] = useState(true);
   const queryClient = useQueryClient();
   useEffect(() => {
-    onSessionExpired(() => { setSessionToken(null); queryClient.clear(); setIdentity(null); });
+    onSessionExpired(() => { queryClient.clear(); setIdentity(null); });
+    void sessionService.identity().then(setIdentity).catch(() => setIdentity(null)).finally(() => setRestoring(false));
     return () => onSessionExpired(null);
   }, [queryClient]);
   const login = async (username: string, password: string) => {
-    setSessionToken(await sessionService.login(username, password));
+    await sessionService.login(username, password);
     try {
       setIdentity(await sessionService.identity());
     } catch (error) {
-      setSessionToken(null);
       queryClient.clear();
       throw error;
     }
   };
   const logout = async () => {
     try { await sessionService.logout(); }
-    finally { setSessionToken(null); queryClient.clear(); setIdentity(null); }
+    finally { queryClient.clear(); setIdentity(null); }
   };
-  return <SessionContext.Provider value={{ identity, login, logout }}>{children}</SessionContext.Provider>;
+  return <SessionContext.Provider value={{ identity, login, logout }}>{restoring ? <main className="login-screen">Restaurando sessão…</main> : children}</SessionContext.Provider>;
 }
 
 export function LoginPage() {

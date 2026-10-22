@@ -1,0 +1,56 @@
+{
+  "spec_id": "SPEC-011",
+  "contract_version": 1,
+  "status": "approved",
+  "thread_id": null,
+  "runtime": {
+    "classification": "critical_review",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high"
+  },
+  "review_input": [
+    "specs/active/SPEC-011/SPEC.md",
+    "specs/active/SPEC-011/SPEC.execution.json",
+    "specs/active/SPEC-011/evidence/local-2026-10-19.md",
+    "runpod/serving/diagnose_finqa.py",
+    "inference_api/tests/test_spec011.py",
+    "Working tree diff and scientific source files on 2026-10-19"
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": ["inference_api/tests/test_spec011.py"],
+      "notes": ["Independent reviewer ran the local Python suite: 57 tests passed and eight opt-in isolated database tests were skipped."]
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": ["FineTuning/AGENTS.md", "runpod/serving/manifest.json", "specs/active/SPEC-011/evidence/local-2026-10-19.md"],
+      "notes": ["No training weights, frozen data, raw historical results or articles were changed by SPEC-011; six adapter hashes match the local manifest and catalog."]
+    },
+    {
+      "category": "decisions",
+      "result": "preserved",
+      "evidence": ["specs/active/SPEC-011/SPEC.md", "runpod/serving/README.md"],
+      "notes": ["Remote inference and transfer of the preserved private request remain behind a session-specific cost and authorization gate. Scientific evaluation was not claimed."]
+    },
+    {
+      "category": "cli",
+      "result": "changed_as_approved",
+      "evidence": ["runpod/serving/diagnose_finqa.py", "inference_api/tests/test_spec011.py"],
+      "notes": ["The read-only plan produced 15 proposed calls with the expected request hash. The execute path was not exercised against a real vLLM server."]
+    }
+  ],
+  "findings": [
+    "Initial P1 finding: a stale remote verification receipt could misattribute direct vLLM output to the intended live process. Corrected with authenticated live gateway identity checks before and after every direct call; reviewer rechecked the code and test.",
+    "Initial P2 finding: an HTTP failure could omit its response body and partial attempt receipt. Corrected with protected error-body artifact and partial summary; reviewer rechecked the code and test.",
+    "No remaining P1/P2 finding in the local diagnostic scope. Adapter cause remains unresolved and no correction or scientific benchmark has been demonstrated."
+  ],
+  "evidence": [
+    "Independent read-only review returned approved for the local/offline scope on 2026-10-19 after the two corrections.",
+    "Reviewer checked the 15-call plan, six adapter/ seven alias manifest, 57-test local suite and git diff --check.",
+    "Approval does not attest the unrun remote execute path, adapter quality, RunPod costs or scientific evaluation."
+  ],
+  "usage": null
+}

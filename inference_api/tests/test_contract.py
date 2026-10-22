@@ -59,6 +59,12 @@ class ModeTests(unittest.TestCase):
             with self.subTest(change=change), self.assertRaises(ValueError):
                 service._validate_input({**BASE, **change})
         self.assertEqual(service._validate_input({**BASE, "evidence_mode": "dw_tools", "question": "Q"})[0], "dw_tools")
+        self.assertIsNone(service._validate_input({**BASE, "evidence_mode": "dw_tools", "question": "Q"})[3])
+        self.assertEqual(service._validate_input({**BASE, "evidence_mode": "dw_tools",
+                                                  "question": "Q", "max_tokens": 2048})[3], 2048)
+        with self.assertRaises(ValueError):
+            service._validate_input({**BASE, "evidence_mode": "dw_tools", "question": "Q",
+                                     "max_tokens": 0})
 
     def test_private_packet_hash_bytes_and_tamper(self):
         with patch("inference_api.evidence_packets.packet_directory", return_value=self.root):
@@ -86,6 +92,17 @@ class ModeTests(unittest.TestCase):
         self.assertEqual(run["evidence_json_sent"].encode(), self.packet_bytes)
         self.assertIn(self.packet_bytes.decode(), chat.call_args.args[1][1]["content"])
         self.assertIsNone(chat.call_args.kwargs["tools"])
+        self.assertIsNone(chat.call_args.args[3])
+        self.assertIsNone(run["model"]["parameters"]["max_tokens"])
+
+    def test_snapshot_accepts_empty_tool_calls_in_normal_completion(self):
+        with patch("inference_api.evidence_packets.packet_directory", return_value=self.root), \
+             patch("inference_api.service.models.chat_turn", return_value=turn({
+                 "role": "assistant", "content": "Resposta", "tool_calls": []})):
+            run = self.run_saved({**BASE, "evidence_mode": "dw_snapshot",
+                                  "case_id": "integrated-1", "packet_sha256": self.packet["sha256"]})
+        self.assertEqual(run["status"], "answered_unverified")
+        self.assertEqual(run["model_output"]["raw_text"], "Resposta")
 
     def test_model_chooses_tool_and_result_is_returned(self):
         call = {"id": "call-1", "type": "function", "function": {
@@ -108,7 +125,8 @@ class ModeTests(unittest.TestCase):
     def test_tool_protocol_and_no_evidence_fail_closed(self):
         for message, expected in [({"role": "assistant", "content": "Sem consulta"}, "insufficient_evidence"),
                                   ({"role": "assistant", "tool_calls": [{"id": "x", "type": "function", "function": {"name": "DELETE", "arguments": "{}"}}]}, "tool_error"),
-                                  ({"role": "assistant", "tool_calls": []}, "tool_protocol_error")]:
+                                  ({"role": "assistant", "content": "Resposta", "tool_calls": {}}, "tool_protocol_error"),
+                                  ({"role": "assistant", "tool_calls": []}, "response_error")]:
             with self.subTest(message=message), \
                  patch("inference_api.service.dw_tools.availability", return_value=DW), \
                  patch("inference_api.service.dw_tools.execute") as query, \
@@ -173,10 +191,13 @@ class ModeTests(unittest.TestCase):
     def test_chat_turn_sends_auto_choice_and_checks_session(self):
         sent = []
         class Response:
-            headers = {}
+            headers = {"Content-Type": "text/event-stream"}
             def __enter__(self): return self
             def __exit__(self, *_): return None
-            def read(self): return json.dumps({"model": "qwen-base", "choices": [{"finish_reason": "stop", "message": {"role": "assistant", "content": "A"}}]}).encode()
+            def __iter__(self):
+                yield b'data: {"model":"qwen-base","choices":[{"index":0,"delta":{"role":"assistant","content":"A"},"finish_reason":null}]}\n'
+                yield b'data: {"model":"qwen-base","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}\n'
+                yield b'data: [DONE]\n'
         def open_request(request, timeout):
             sent.append(json.loads(request.data))
             return Response()
@@ -185,11 +206,17 @@ class ModeTests(unittest.TestCase):
              patch("inference_api.models.available_models", return_value={"qwen-base": {"available": True, "session_id": "s"}}), \
              patch("inference_api.models.urlopen", side_effect=open_request), \
              patch("inference_api.models.serving_catalog.response_identity", return_value=identity):
-            _, record = models.chat_turn("qwen-base", [{"role": "user", "content": "Q"}], 0, 64,
+            _, record = models.chat_turn("qwen-base", [{"role": "user", "content": "Q"}], 0, None,
                                          tools=dw_tools.catalog(), session_id="s")
             self.assertEqual(record["session_id"], "s")
             self.assertEqual(sent[0]["tool_choice"], "auto")
             self.assertIs(sent[0]["parallel_tool_calls"], False)
+            self.assertNotIn("max_tokens", sent[0])
+            self.assertTrue(sent[0]["stream"])
+            self.assertEqual(record["raw_response_format"], "sse")
+            models.chat_turn("qwen-base", [{"role": "user", "content": "Q"}], 0, 2048,
+                             tools=None, session_id="s")
+            self.assertEqual(sent[1]["max_tokens"], 2048)
             with self.assertRaises(models.ModelResponseError):
                 models.chat_turn("qwen-base", [], 0, 64, tools=None, session_id="other")
 

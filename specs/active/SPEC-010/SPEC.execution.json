@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../.codex/schemas/project-spec-execution.schema.json",
+  "schema_version": "2.0",
+  "spec_id": "SPEC-010",
+  "contract_version": 1,
+  "status": "implemented",
+  "automatic_handoff": false,
+  "execution": {
+    "classification": "normal_implementation",
+    "role": "developer",
+    "model": "gpt-5.6-terra",
+    "reasoning": "medium",
+    "routing_rationale": "Provedor, snapshots, sessão e critérios estão delimitados; a implementação exige integração Python/React e testes locais.",
+    "runtime_override": null,
+    "working_directory": ".",
+    "sandbox_mode": "workspace-write",
+    "approval_mode": "auto_review",
+    "thread": { "mode": "resume", "purpose": "implementation", "thread_id": "01a15553-ed7f-7c60-a505-4fc0987efce6" },
+    "handoff_prompt": "Implemente SPEC-010 a partir de SPEC.md, SPEC.execution.json e AGENTS.md. Reconcile primeiro o checkout sujo e preserve as mudanças existentes. Faça a integração Groq Free com fixtures sintéticas, sessão segura após refresh, estados/proveniência de erros, testes e docs. Não use RunPod, ngrok, DW real ou plano pago. Se faltar chave Groq para o ensaio real, conclua o trabalho local, registre blocked_external_key e peça ao usuário que a configure localmente, sem recebê-la no chat. Solicite revisão independente exigida antes de declarar done."
+  },
+  "skills": [],
+  "references": [
+    { "path": "AGENTS.md", "purpose": "Regras do checkout e efeitos externos", "required": true },
+    { "path": "README.md", "purpose": "Mapa do projeto e estados atuais", "required": true },
+    { "path": "specs/README.md", "purpose": "Ordem das SPECs", "required": true },
+    { "path": "specs/active/SPEC-003/SPEC.md", "purpose": "Contrato de autenticação e limite global", "required": true },
+    { "path": "specs/active/SPEC-009/SPEC.md", "purpose": "Contrato de pacotes e tools", "required": true },
+    { "path": "inference_api/README.md", "purpose": "API e Bancada atuais", "required": true },
+    { "path": "docs/arquitetura_inferencia_compartilhada.md", "purpose": "Topologia e fronteira científica", "required": true },
+    { "path": "inference_api/src/inference_api/auth.py", "purpose": "Sessões revogáveis", "required": true },
+    { "path": "inference_api/src/inference_api/server.py", "purpose": "Rotas e autenticação HTTP", "required": true },
+    { "path": "inference_api/src/inference_api/models.py", "purpose": "Cliente e parser SSE", "required": true },
+    { "path": "inference_api/src/inference_api/serving_catalog.py", "purpose": "Catálogo e recibos RunPod", "required": true },
+    { "path": "inference_api/src/inference_api/service.py", "purpose": "Snapshots e falhas", "required": true },
+    { "path": "inference_api/src/inference_api/jobs.py", "purpose": "Jobs persistidos e idempotência", "required": true },
+    { "path": "inference_api/frontend/src/features/session/session.tsx", "purpose": "Refresh e login no navegador", "required": true },
+    { "path": "inference_api/frontend/src/features/bench/BenchPage.tsx", "purpose": "Seleção de provedor e jobs", "required": true },
+    { "path": "runpod/serving/evidence/2026-10-17-streaming-bancada-l4.md", "purpose": "Falhas observadas em 17/10/2026", "required": true }
+  ],
+  "validation": [
+    { "id": "VAL-001", "kind": "check", "command": "git diff --check", "required": true },
+    { "id": "VAL-002", "kind": "test", "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v", "required": true },
+    { "id": "VAL-003", "kind": "test", "command": "npm --prefix inference_api/frontend run typecheck", "required": true },
+    { "id": "VAL-004", "kind": "lint", "command": "npm --prefix inference_api/frontend run lint", "required": true },
+    { "id": "VAL-005", "kind": "test", "command": "npm --prefix inference_api/frontend run test -- --run", "required": true },
+    { "id": "VAL-006", "kind": "build", "command": "npm --prefix inference_api/frontend run build", "required": true },
+    { "id": "VAL-007", "kind": "browser", "command": "Ensaio HTTP/browser local com Groq simulado, fixture sintética, refresh/logout/CSRF, idempotência, 429 e SSE incompleto", "required": true },
+    { "id": "VAL-008", "kind": "integration", "command": "Com chave Free local executar ensaio Groq real somente com fixture sintética e recibo sanitizado. Marcar blocked_external_key se a chave faltar", "required": true },
+    { "id": "VAL-009", "kind": "manual", "command": "Conferir diff, documentação e ausência da chave em código, logs, bundle, snapshots e evidências", "required": true }
+  ],
+  "review": {
+    "required": true,
+    "independence": "independent",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high",
+    "rationale": "Autenticação persistente, CSRF, chave de provedor externo e dados de pesquisa são mudanças críticas de segurança e proveniência.",
+    "schema_path": ".codex/schemas/project-spec-review.schema.json",
+    "output_path": "specs/active/SPEC-010/evidence/review.json",
+    "handoff_prompt": "Revise independentemente SPEC-010 com contrato, diff, testes e completion. Confira sessão/cookie/CSRF, compatibilidade bearer, segredos e dados sintéticos, tool choice, 429/SSE, proveniência por provedor e snapshots históricos. Não trate teste simulado como integração Groq real."
+  },
+  "escalation": { "policy_version": "1.0", "allowed": ["terra_high", "needs_design", "sol_high"] },
+  "completion": {
+    "schema_path": ".codex/schemas/project-spec-completion.schema.json",
+    "output_path": "specs/active/SPEC-010/evidence/completion.json"
+  },
+  "baseline": {
+    "required": false,
+    "path": null,
+    "snapshot_path": null,
+    "rationale": "Inclusão de provedor e correção de sessão sem migração estrutural ou reescrita de snapshots existentes."
+  },
+  "lifecycle": { "output_path": "specs/active/SPEC-010/evidence/lifecycle.json" }
+}

@@ -6,7 +6,8 @@ export type Prompt = { id: string; name: string; revision: number; author: strin
 export type CriteriaConfig = { schema_version: 1; require_evidence: boolean; require_period: boolean; required_units: string[]; require_cited_ids: boolean; required_caveats: string[] };
 export type Criterion = { id: string; name: string; revision: number; author: string; config: CriteriaConfig };
 export type Run = { id: string; author: string; created_at: string; snapshot: Record<string, any> };
-export type Model = { available: boolean; generation_confirmed?: boolean; kind?: string };
+export type RunJob = { id: string; status: 'accepted' | 'running' | 'completed' | 'failed' | 'interrupted' | 'busy'; run_id: string | null; error: string | null; created_at: string; started_at: string | null; finished_at: string | null };
+export type Model = { available: boolean; generation_confirmed?: boolean; kind?: string; provider?: string; model_id?: string | null; reason?: string | null };
 export type Budget = { session_ceiling_usd: number; runpod_status: string; runpod_balance_usd: number | null; runpod_spend_per_hour_usd: number | null; runpod_source: string; status_checked_at: string; checked_at: string | null };
 export type Packet = { case_id: string; sha256: string; question: string; domain: string; source_snapshot: { source_fingerprint: string } };
 export type DWStatus = { available: boolean; reason?: string; source_fingerprint?: string };
@@ -22,7 +23,9 @@ export const benchService = {
   dwStatus: async () => (await api.get<DWStatus>('/bench/dw-tools')).data,
   savePrompt: async (name: string, system_prompt: string, expected_revision: number) => (await api.post<Prompt>('/prompts', { name, system_prompt, expected_revision })).data,
   saveCriteria: async (name: string, config: CriteriaConfig, expected_revision: number) => (await api.post<Criterion>('/criteria', { name, config, expected_revision })).data,
-  execute: async (body: Record<string, unknown>) => (await api.post<Run>('/runs', body, { timeout: 120_000 })).data,
+  submit: async (body: Record<string, unknown>, requestKey: string) => (await api.post<RunJob>('/run-jobs', { ...body, request_key: requestKey })).data,
+  job: async (id: string) => (await api.get<RunJob>(`/run-jobs/${encodeURIComponent(id)}`)).data,
+  jobByKey: async (key: string) => (await api.get<RunJob>(`/run-jobs/by-key/${encodeURIComponent(key)}`)).data,
   feedback: async (id: string, text: string) => (await api.post(`/runs/${encodeURIComponent(id)}/feedback`, { text })).data,
 };
 

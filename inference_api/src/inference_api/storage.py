@@ -1,6 +1,7 @@
 """Append-only experiment records in a separate local PostgreSQL database."""
 import json
 import os
+from contextlib import closing
 from pathlib import Path
 import subprocess
 from uuid import uuid4
@@ -37,6 +38,7 @@ CREATE TABLE IF NOT EXISTS feedback (
 
 MIGRATION = Path(__file__).resolve().parents[2] / "migrations" / "001_identity_up.sql"
 CRITERIA_MIGRATION = Path(__file__).resolve().parents[2] / "migrations" / "002_criteria_up.sql"
+JOBS_MIGRATION = Path(__file__).resolve().parents[2] / "migrations" / "003_run_jobs_up.sql"
 
 
 class RevisionConflict(Exception):
@@ -118,6 +120,108 @@ def migrate_criteria(backup_path: Path, pg_dump: str = "pg_dump") -> None:
             if cursor.fetchone():
                 raise ValueError("Criteria migration already applied")
             cursor.execute(CRITERIA_MIGRATION.read_text(encoding="utf-8"))
+
+
+def migrate_run_jobs(backup_path: Path, pg_dump: str = "pg_dump") -> None:
+    """Add durable async job receipts after a logical application DB backup."""
+    backup_path = backup_path.resolve()
+    if backup_path.exists():
+        raise ValueError("Backup path already exists")
+    params = app_db_params()
+    with closing(psycopg2.connect(**params)) as connection, connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT version FROM inference_schema_migrations ORDER BY version")
+            if {row[0] for row in cursor.fetchall()} != {1, 2}:
+                raise ValueError("Run job migration requires schema versions 1 and 2 only")
+    backup_path.parent.mkdir(parents=True, exist_ok=True)
+    env = dict(os.environ, PGPASSWORD=params["password"])
+    result = subprocess.run(
+        [pg_dump, "--format=custom", "--file", str(backup_path),
+         "--host", params["host"], "--port", str(params["port"]),
+         "--username", params["user"], "--dbname", params["dbname"]],
+        env=env, capture_output=True, text=True, check=False,
+    )
+    if result.returncode or not backup_path.is_file() or backup_path.stat().st_size == 0:
+        raise RuntimeError("Logical backup failed; run job migration was not applied")
+    with closing(psycopg2.connect(**params)) as connection, connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT version FROM inference_schema_migrations ORDER BY version")
+            if {row[0] for row in cursor.fetchall()} != {1, 2}:
+                raise ValueError("Run job migration already applied or prerequisite changed")
+            cursor.execute(JOBS_MIGRATION.read_text(encoding="utf-8"))
+
+
+def create_job(researcher_id: str, request_key: str, request: dict) -> tuple[dict, bool]:
+    from .limits import BusyError
+
+    job_id = str(uuid4())
+    with closing(psycopg2.connect(**app_db_params())) as connection, connection:
+        with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+            cursor.execute("""INSERT INTO run_jobs (id, researcher_id, request_key, request, status)
+                              VALUES (%s, %s, %s, %s, 'accepted')
+                              ON CONFLICT DO NOTHING RETURNING id""",
+                           (job_id, researcher_id, request_key, Json(request)))
+            created = cursor.fetchone() is not None
+            cursor.execute("""SELECT id, researcher_id, request_key, request, status,
+                                     run_id, error, created_at, started_at, finished_at
+                              FROM run_jobs WHERE researcher_id = %s AND request_key = %s""",
+                           (researcher_id, request_key))
+            row = cursor.fetchone()
+            if row is None:
+                raise BusyError("Another inference is running; try again after it finishes")
+            if row["request"] != request:
+                raise ValueError("Request key was already used for different parameters")
+            return _public_job(row), created
+
+
+def get_job(job_id: str, researcher_id: str) -> dict | None:
+    with closing(psycopg2.connect(**app_db_params())) as connection, connection:
+        with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+            cursor.execute("""SELECT id, researcher_id, request_key, request, status,
+                                     run_id, error, created_at, started_at, finished_at
+                              FROM run_jobs WHERE id = %s AND researcher_id = %s""",
+                           (job_id, researcher_id))
+            row = cursor.fetchone()
+            return _public_job(row) if row else None
+
+
+def get_job_by_key(request_key: str, researcher_id: str) -> dict | None:
+    with closing(psycopg2.connect(**app_db_params())) as connection, connection:
+        with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+            cursor.execute("""SELECT id, researcher_id, request_key, request, status,
+                                     run_id, error, created_at, started_at, finished_at
+                              FROM run_jobs WHERE request_key = %s AND researcher_id = %s""",
+                           (request_key, researcher_id))
+            row = cursor.fetchone()
+            return _public_job(row) if row else None
+
+
+def update_job(job_id: str, previous: str, status: str, *, run_id: str | None = None,
+               error: str | None = None) -> None:
+    with closing(psycopg2.connect(**app_db_params())) as connection, connection:
+        with connection.cursor() as cursor:
+            cursor.execute("""UPDATE run_jobs SET status = %s, run_id = %s, error = %s,
+                              started_at = CASE WHEN %s = 'running' THEN now() ELSE started_at END,
+                              finished_at = CASE WHEN %s IN ('completed', 'failed', 'interrupted', 'busy')
+                                                 THEN now() ELSE finished_at END
+                              WHERE id = %s AND status = %s""",
+                           (status, run_id, error, status, status, job_id, previous))
+            if cursor.rowcount != 1:
+                raise RuntimeError("Run job state changed unexpectedly")
+
+
+def interrupt_unfinished_jobs() -> None:
+    """No automatic retry after an API process restart."""
+    with closing(psycopg2.connect(**app_db_params())) as connection, connection:
+        with connection.cursor() as cursor:
+            cursor.execute("""UPDATE run_jobs SET status = 'interrupted', finished_at = now(),
+                              error = 'API process restarted; inspect history before a new attempt'
+                              WHERE status IN ('accepted', 'running')""")
+
+
+def _public_job(row: dict) -> dict:
+    return _jsonable({key: row[key] for key in (
+        "id", "status", "run_id", "error", "created_at", "started_at", "finished_at")})
 
 
 def create_prompt(name: str, author: str, system_prompt: str,

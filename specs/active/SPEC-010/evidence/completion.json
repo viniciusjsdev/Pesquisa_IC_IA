@@ -1,0 +1,73 @@
+{
+  "spec_id": "SPEC-010",
+  "contract_version": 1,
+  "status": "blocked",
+  "thread_id": "01a15553-ed7f-7c60-a505-4fc0987efce6",
+  "runtime": {
+    "classification": "normal_implementation",
+    "model": "session-selected",
+    "reasoning": "session-selected"
+  },
+  "changed_files": [
+    {"path": "README.md", "change": "modified"},
+    {"path": "docs/arquitetura_inferencia_compartilhada.md", "change": "modified"},
+    {"path": "inference_api/README.md", "change": "modified"},
+    {"path": "inference_api/compose.yaml", "change": "modified"},
+    {"path": "inference_api/frontend/src/features/bench/BenchPage.tsx", "change": "modified"},
+    {"path": "inference_api/frontend/src/features/bench/RunDetail.tsx", "change": "modified"},
+    {"path": "inference_api/frontend/src/features/bench/benchService.ts", "change": "modified"},
+    {"path": "inference_api/frontend/src/features/session/session.tsx", "change": "modified"},
+    {"path": "inference_api/frontend/src/features/session/sessionService.ts", "change": "modified"},
+    {"path": "inference_api/frontend/src/services/api.ts", "change": "modified"},
+    {"path": "inference_api/src/inference_api/groq.py", "change": "added"},
+    {"path": "inference_api/src/inference_api/models.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/server.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/service.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/synthetic_data.py", "change": "added"},
+    {"path": "inference_api/tests/browser_spec009.cjs", "change": "modified"},
+    {"path": "inference_api/tests/test_spec010.py", "change": "added"},
+    {"path": "specs/README.md", "change": "modified"},
+    {"path": "specs/active/SPEC-010/SPEC.md", "change": "modified"},
+    {"path": "specs/active/SPEC-010/SPEC.execution.json", "change": "modified"},
+    {"path": "specs/active/SPEC-010/evidence/local-2026-10-19.md", "change": "added"},
+    {"path": "specs/active/SPEC-010/evidence/review.json", "change": "added"},
+    {"path": "specs/active/SPEC-010/evidence/lifecycle.json", "change": "added"},
+    {"path": "specs/active/SPEC-010/evidence/completion.json", "change": "added"}
+  ],
+  "artifacts": [
+    "specs/active/SPEC-010/evidence/local-2026-10-19.md",
+    "specs/active/SPEC-010/evidence/review.json",
+    "specs/active/SPEC-010/evidence/lifecycle.json"
+  ],
+  "acceptance_evidence": [
+    {"id": "AC-001", "result": "passed", "evidence": ["test_spec010.py", "browser_spec009.cjs"], "notes": ["HTTP and browser fixture tests cover refresh, same job, logout, CSRF and bearer. HTTPS proxy was simulated by headers, not a real tunnel."]},
+    {"id": "AC-002", "result": "passed", "evidence": ["test_spec010.py", "browser_spec009.cjs"], "notes": ["Synthetic packet and model-selected local tool passed. Private DW and packet calls were asserted absent."]},
+    {"id": "AC-003", "result": "passed", "evidence": ["test_spec010.py", "browser_spec009.cjs"], "notes": ["429 Retry-After, context length, partial SSE, failed job reconciliation and error provenance tested with fixtures."]},
+    {"id": "AC-004", "result": "not-run", "evidence": [], "notes": ["blocked_external_key: no local Groq Free key/model configured; no real provider call or quota observation."]},
+    {"id": "AC-005", "result": "passed", "evidence": ["specs/active/SPEC-010/evidence/review.json"], "notes": ["Independent review approved local scope after four corrections; real Groq and real HTTPS proxy remain unverified."]}
+  ],
+  "validation_evidence": [
+    {"validation_id": "VAL-001", "canonical_command": "git diff --check", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Working tree diff checked on 2026-10-19"], "notes": ["Only preexisting LF/CRLF warnings."]},
+    {"validation_id": "VAL-002", "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["51 tests OK; 8 DB opt-in tests skipped"], "notes": []},
+    {"validation_id": "VAL-003", "canonical_command": "npm --prefix inference_api/frontend run typecheck", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Local TypeScript binary tsc -b --pretty false passed"], "notes": ["npm absent on host PATH; equivalent project binary used."]},
+    {"validation_id": "VAL-004", "canonical_command": "npm --prefix inference_api/frontend run lint", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Local ESLint binary eslint . passed"], "notes": ["npm absent on host PATH; equivalent project binary used."]},
+    {"validation_id": "VAL-005", "canonical_command": "npm --prefix inference_api/frontend run test -- --run", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Vitest run: 1 file, 2 tests passed"], "notes": ["npm absent on host PATH; equivalent project binary used."]},
+    {"validation_id": "VAL-006", "canonical_command": "npm --prefix inference_api/frontend run build", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Vite build: 129 modules transformed"], "notes": ["npm absent on host PATH; TypeScript and Vite binaries used."]},
+    {"validation_id": "VAL-007", "canonical_command": "Ensaio HTTP/browser local com Groq simulado, fixture sintética, refresh/logout/CSRF, idempotência, 429 e SSE incompleto", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["test_spec010.py", "browser_spec009.cjs"], "notes": ["No Groq or RunPod network call."]},
+    {"validation_id": "VAL-008", "canonical_command": "Com chave Free local executar ensaio Groq real somente com fixture sintética e recibo sanitizado. Marcar blocked_external_key se a chave faltar", "verification": "reported", "result": "not-run", "exit_code": null, "evidence": ["groq.configuration()['available'] returned False"], "notes": ["blocked_external_key; no key requested in chat."]},
+    {"validation_id": "VAL-009", "canonical_command": "Conferir diff, documentação, dados preservados e ausência da chave em código, logs, bundle, snapshots e evidências", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Diff, status and docs inspected; secret pattern scan found zero candidates; frontend bundle has no GROQ_API_KEY literal"], "notes": ["No real key was available for value matching; no secret-containing real snapshot exists."]}
+  ],
+  "deviations": [
+    "Implementation ran in the manifest's existing thread with session-selected runtime; the SDK router could not be used because the project runtime policy file is absent.",
+    "Host npm was absent; equivalent local Node project binaries were used.",
+    "The independent reviewer inspected code/diff and ran targeted tests, but did not rerun the browser smoke.",
+    "PostgreSQL opt-in integration tests were skipped because INFERENCE_IDENTITY_DB_TEST was not enabled."
+  ],
+  "unresolved_items": [
+    "blocked_external_key: user must configure GROQ_API_KEY and GROQ_MODEL locally for a Free account before the sanitized real fixture trial.",
+    "Real HTTPS reverse proxy cookie behavior remains unverified; local HTTP test simulated the HTTPS Host and Origin headers.",
+    "An uncertain job with no linked run requires manual history inspection before the request key is discarded."
+  ],
+  "needs_design": null,
+  "usage": null
+}

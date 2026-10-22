@@ -28,7 +28,8 @@ def _url(value: str) -> str:
 
 def _call(opener, url: str, token: str, body: dict | None = None) -> tuple[dict, dict]:
     data = json.dumps(body).encode("utf-8") if body is not None else None
-    headers = {"Authorization": "Bearer " + token}
+    headers = {"Authorization": "Bearer " + token,
+               "User-Agent": "PesquisaICIA/1.0"}
     if data is not None:
         headers["Content-Type"] = "application/json"
     with opener.open(Request(url, data=data, headers=headers,

@@ -13,7 +13,7 @@ from inference_api.server import serve  # noqa: E402
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("action", choices=("init-db", "migrate-db", "migrate-criteria", "configure-users",
+    parser.add_argument("action", choices=("init-db", "migrate-db", "migrate-criteria", "migrate-run-jobs", "configure-users",
                                            "set-password",
                                            "revoke", "serve"))
     parser.add_argument("--username", choices=sorted(auth.ALLOWED_USERS))
@@ -32,6 +32,11 @@ def main() -> None:
             "criteria-backup-" + datetime.now().strftime("%Y%m%d-%H%M%S") + ".dump")
         storage.migrate_criteria(backup, args.pg_dump)
         print(f"Criteria schema ready; logical backup: {backup}")
+    elif args.action == "migrate-run-jobs":
+        backup = Path(__file__).resolve().parent / ".local" / (
+            "run-jobs-backup-" + datetime.now().strftime("%Y%m%d-%H%M%S") + ".dump")
+        storage.migrate_run_jobs(backup, args.pg_dump)
+        print(f"Run jobs schema ready; logical backup: {backup}")
     elif args.action == "configure-users":
         supplied = {}
         for username in ("Nicoli", "Vinicius"):

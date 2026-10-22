@@ -1,5 +1,29 @@
 # Arquitetura da inferência compartilhada
 
+**Atualização remota em 17/10/2026:** um [smoke na RTX A5000](../runpod/serving/evidence/2026-10-17-a5000.md)
+confirmou base Qwen e seis adapters no vLLM e sete gerações curtas por HTTPS.
+Uma [segunda sessão](../runpod/serving/evidence/2026-10-17-integracao-bancada.md)
+validou exploratoriamente backend e ngrok com os dois modos da Bancada na base,
+mais duas requisições simultâneas diretas ao serving. Um run de FT-FinQA A
+falhou por saída truncada e alheia à evidência. A Pod está parada, sem custo
+residual observado; o disco temporário foi apagado. O harness científico
+continua pendente.
+
+A [validação posterior da infraestrutura](../runpod/serving/evidence/2026-10-17-validacao-infra.md)
+usou outra A5000 após a falta de capacidade no host antigo. O driver do
+novo host exigiu um ambiente vLLM/CUDA 12.8; os sete aliases passaram no
+verificador formal. O backend passou a aceitar `tool_calls: []` em uma
+resposta normal sem tools, preservando a rejeição de chamadas inválidas.
+Um smoke pela Bancada via ngrok foi persistido como `answered_unverified`.
+A Pod foi parada; a prova é de conectividade, não de acurácia.
+
+Um [teste posterior dos sete aliases na Bancada](../runpod/serving/evidence/2026-10-17-bancada-sete-aliases.md)
+em 17/10/2026 confirmou o caminho ngrok → API local → gateway → vLLM e a
+persistência de sete runs. Cinco terminaram `answered_unverified`; FinQA A/B
+atingiram o limite de geração e ficaram `response_error`. Um run separado da
+base fez chamada `product` à DW. A Pod está parada e o backend local não está
+apontado a um serving remoto; qualidade e carga sustentada seguem sem prova.
+
 **SPEC-009, implementação local de 16/10/2026:** novos runs da Bancada
 selecionam explicitamente pacote fixo candidato da DW ou tools da DW escolhidas
 pela LLM. As cinco consultas fixas são compartilhadas com o exportador; o
@@ -94,6 +118,18 @@ O contrato HTTP e o esquema inicial estão descritos no [README da API](../infer
 
 ## Modelos na RunPod e troca pelo front
 
+Na implementação local da SPEC-010 em 19/10/2026, `groq` passou a ser um
+provedor separado no catálogo. Seu backend usa Chat Completions HTTPS com
+streaming e tool calling local, sem headers, recibos ou identidade Qwen da
+RunPod. Para impedir transmissão acidental de pesquisa privada, somente os
+modos `synthetic_snapshot` e `synthetic_tools` são aceitos pela Groq; ambos
+usam fixture inventada e prompt aprovado no servidor. A sessão do navegador
+usa cookie HttpOnly de mesma origem, com proteção de Origin em POST; clientes
+bearer continuam compatíveis. Snapshots Groq são v4; os v1-v3 permanecem
+legíveis. Testes locais simulados passaram e a revisão independente aprovou
+o escopo local; o ensaio real Free ainda falta. Groq não serve os adapters Qwen desta pesquisa
+nem compõe o harness científico.
+
 Os pesos disponíveis no checkout são adapters PEFT/LoRA, não cópias completas da LLM. O [catálogo de modelos](../FineTuning/docs/modelos_disponiveis.md) identifica a base `Qwen/Qwen2.5-7B-Instruct`, os seis adapters locais, suas runs e seus manifests. A versão exata dos pesos da base ainda não está fixada por hash nesse catálogo. Antes de servir, registrar a revisão efetivamente obtida da base e conferir os arquivos dos adapters escolhidos.
 
 O [manifesto de serving](../runpod/serving/manifest.json) registra aliases, baterias, runs e hashes dos seis adapters. O preflight local recusa divergências antes de montar o comando estático do vLLM. A revisão exata da base é entrada obrigatória da sessão futura, pois não ficou registrada nos treinos históricos. O backend marca um modelo disponível somente se aparecer em `/v1/models` e marca geração confirmada apenas com recibo da mesma sessão. Ao clicar em outro modelo fine-tunado, o front muda o alias na próxima requisição; não reinicia o Pod nem altera a escolha dos demais usuários. A capacidade concreta ainda requer teste no Pod escolhido. [Referência: serving LoRA do vLLM](https://docs.vllm.ai/en/stable/features/lora/).
@@ -104,9 +140,25 @@ O comando local registra os seis adapters autorizados na inicialização. O gate
 
 O front local permite editar prompt e critérios estruturados, selecionar um alias disponível por run, escolher explicitamente pacote fixo ou tools da DW, executar perguntas, inspecionar histórico e comparar snapshots lado a lado. O navegador busca disponibilidade do backend e não escolhe SQL. No modo tools, a LLM solicita uma das cinco consultas fixas; no modo snapshot, a pergunta vem do pacote. A interface mostra evidência, resposta, checks e erro, marcando `answered_unverified` como não verificado cientificamente. A comparação avisa quando modo, pergunta, evidência, prompt, critérios, parâmetros ou modelo/versão diferem; não agrega pontuação. Os testes locais da SPEC-009 usaram API e modelo simulados, não o Pod nem a URL futura do ngrok.
 
+Em 17/10/2026, após os runs históricos de 500 tokens, o código local da
+Bancada deixou de definir ou enviar limite de tokens de saída por padrão.
+`max_tokens: null` no snapshot indica ausência de teto da aplicação; clientes
+da API ainda podem informar um inteiro positivo para um ensaio controlado.
+O serving continua com janela total de 4.096 tokens (`--max-model-len`), que
+inclui prompt e resposta. O [replay na L4](../runpod/serving/evidence/2026-10-17-finqa-sem-teto-l4.md)
+confirmou por invocação direta do serviço backend, sem login HTTP, que B
+conclui sem esse teto da aplicação, embora a saída
+seja um fragmento numérico, e que A atinge a janela total do vLLM. Naquela
+sessão, o gateway reteve a resposta inteira e a URL HTTPS devolveu HTTP 524.
+Depois, o código local passou a encaminhar SSE da Pod, reconstruir o turno no
+backend e usar job persistido com polling curto no front. Essa alteração
+passou em testes locais com servidor simulado e PostgreSQL isolado;
+a migração 003 foi aplicada ao banco host, mas não à cópia Docker. A mudança
+não foi comprovada em RunPod/ngrok. Não houve avaliação científica.
+
 Cada salvamento de prompt ou critério cria uma **nova revisão**; cada execução guarda um snapshot imutável com texto exato do prompt e configuração exata dos critérios, mesmo quando partiu de rascunho. O registro identifica autor autenticado, data, versões, modelo/endpoint/adapter quando confirmados, parâmetros, pergunta, rota, consultas, evidências com origem e período, resposta, verificações e estado de erro. Feedback humano fica separado do snapshot. A escolha do modelo pertence à execução de cada usuário, sem configuração global.
 
-O armazenamento editável da aplicação usa `db_inference_app` no mesmo cluster PostgreSQL. `init-db` cria o esquema inicial; iniciar a API não altera o esquema. A migração 001 acrescentou identidade, sessões e uso. A migração explícita 002 acrescentou revisões de critérios após backup lógico, com readback das versões 1 e 2. Ambas têm SQL reverso. A política de retenção ainda não foi implementada. Novos runs consultam apenas `db_pesquisa_dw` em leitura por SQL fixo; snapshots anteriores registram consultas históricas às origens. Dados congelados, adapters, manifests e resultados brutos existentes não são editados pelo front.
+O armazenamento editável da aplicação usa `db_inference_app` no mesmo cluster PostgreSQL. `init-db` cria o esquema inicial; iniciar a API não altera o esquema. A migração 001 acrescentou identidade, sessões e uso. A migração explícita 002 acrescentou revisões de critérios após backup lógico, com readback das versões 1 e 2. A migração 003 adiciona jobs persistidos e exige outro backup antes de ser aplicada; foi executada no banco host em 17/10/2026, mas não na cópia Docker. Todas têm SQL reverso. A política de retenção ainda não foi implementada. Novos runs consultam apenas `db_pesquisa_dw` em leitura por SQL fixo; snapshots anteriores registram consultas históricas às origens. Dados congelados, adapters, manifests e resultados brutos existentes não são editados pelo front.
 
 Experimentos livres no front e avaliação formal têm estados distintos. Uma comparação científica exigirá um caso e protocolo versionados, mesmo recorte de dados e contexto, parâmetros declarados e verificações apropriadas. O gold set e os critérios oficiais de avaliação ficam fora do contexto entregue à LLM. A [arquitetura de avaliação](../BancoModeloUse/docs/arquitetura_avaliacao_modelos.md) continua sendo a fonte dessa separação.
 
@@ -114,10 +166,10 @@ Experimentos livres no front e avaliação formal têm estados distintos. Uma co
 
 1. **Entrada e saída HTTP:** implementadas para pergunta, revisão ou rascunho, alias, parâmetros e snapshot com evidência, resposta, estado e erro. A API não aceita SQL livre. Veja o [contrato executável](../inference_api/README.md).
 2. **Evidência dos runs:** novos snapshots usam `schema_version: 3` e `evidence_mode` explícito: pacote candidato da DW por ID/hash ou tools fixas da DW escolhidas pela LLM. O fluxo anterior (`schema_version: 1` e `2`) usava escopos declarados financeiro, industrial e integrado e agregações das origens; seus snapshots permanecem legíveis, sem novos runs nessa rota. Nenhum desses checks equivale à validação científica.
-3. **Catálogo de modelos:** sete aliases candidatos do manifesto e consulta de disponibilidade em `/v1/models` implementados. Headers de uma sessão cujo manifesto coincide com o local permitem registrar revisão da base, run e hash do adapter no snapshot; um recibo da mesma sessão distingue geração confirmada. Nenhuma sessão remota foi validada. Janela efetivamente suportada e identidade da base usada no treino continuam sem prova. Segredos ficam apenas no ambiente dos processos, fora do Git.
+3. **Catálogo de modelos:** sete aliases candidatos do manifesto e consulta de disponibilidade em `/v1/models` implementados. Headers de uma sessão cujo manifesto coincide com o local permitem registrar revisão da base, run e hash do adapter no snapshot; um recibo da mesma sessão distingue geração confirmada. Uma sessão de 17/10/2026 confirmou sete gerações e a seguinte conectou o serving ao backend, registrando snapshots v3. A revisão da base usada no treino continua sem prova. Segredos ficam apenas no ambiente dos processos, fora do Git.
 4. **Persistência e concorrência:** esquema inicial de revisões de prompt, snapshots de execução e feedback implementado, com conflito por revisão esperada. A migração 001 de identidade foi aplicada localmente em 15/10/2026 após backup lógico e o SQL reverso foi testado em banco isolado. Novos registros usam autoria verificada no backend; registros históricos mantêm autoria declarada. A política de retenção ainda falta.
-5. **Acesso compartilhado:** a SPEC-003 implementou localmente login exclusivo para Nicoli e Vinicius, sessões revogáveis e uma vaga global de inferência. Ambos podem permanecer logados; a segunda inferência simultânea recebe HTTP 429 antes de consultar fontes ou chamar a LLM. O limite diário está desativado. O front mostra teto manual informativo de US$ 10 e saldo real apenas quando a API de leitura da RunPod responde, sem transformar o teto em bloqueio de cobrança. Os [testes locais de 15/10/2026](../specs/active/SPEC-003/evidence/local-2026-10-15.md) passaram e a [revisão independente](../specs/active/SPEC-003/evidence/review.json) aprovou o escopo local; o ngrok ainda não foi aberto. O gateway remoto foi escrito com bearer token e allowlist de duas rotas; sua proteção ainda requer teste real pela URL HTTPS da RunPod. A chave nativa do vLLM não protege todos os seus endpoints. [Referência: segurança do vLLM](https://docs.vllm.ai/en/stable/serving/online_serving/openai_compatible_server/).
-6. **Capacidade e operação:** Terraform e comandos de preflight/start/verificação estão preparados localmente. O [runbook](../runpod/serving/README.md) contém fórmula de custo de GPU e discos, procedimento de `plan` e sequência de implantação para outra interação. GPU/VRAM, quantização, concorrência, compatibilidade real dos seis adapters, parada/remoção externas e teste de ponta a ponta continuam pendentes. A oferta concreta da Pod não foi escolhida; `terraform apply` exige confirmação explícita do usuário após revisar plano e estimativa.
+5. **Acesso compartilhado:** a SPEC-003 implementou localmente login exclusivo para Nicoli e Vinicius, sessões revogáveis e uma vaga global de inferência. Ambos podem permanecer logados; a segunda inferência simultânea recebe HTTP 429 antes de consultar fontes ou chamar a LLM. O limite diário está desativado. O front mostra teto manual informativo de US$ 10 e saldo real apenas quando a API de leitura da RunPod responde, sem transformar o teto em bloqueio de cobrança. Os [testes locais de 15/10/2026](../specs/active/SPEC-003/evidence/local-2026-10-15.md) passaram e a [revisão independente](../specs/active/SPEC-003/evidence/review.json) aprovou o escopo local. Em 17/10 o gateway remoto recusou acesso sem bearer; três runs foram feitos pela Bancada autenticada como Vinicius via ngrok. Duas requisições diretas simultâneas ao serving passaram, mas duas pessoas executando pela API ao mesmo tempo não foram ensaiadas. A chave nativa do vLLM não protege todos os seus endpoints. [Referência: segurança do vLLM](https://docs.vllm.ai/en/stable/serving/online_serving/openai_compatible_server/).
+6. **Capacidade e operação:** Terraform e comandos de preflight/start/verificação estão preparados localmente. O [runbook](../runpod/serving/README.md) contém fórmula de custo de GPU e discos e procedimento de `plan/apply`, ainda não executado. Uma RTX A5000 de 24 GB carregou a base e seis adapters; dois prompts simultâneos de 3.126 tokens passaram diretamente pelo gateway e uma tool `product` foi escolhida pela base no modo `dw_tools` da Bancada. A Pod foi parada. Concorrência sustentada, qualidade dos adapters e avaliação científica continuam pendentes. Uma nova Pod sem volume precisa baixar novamente modelo e dependências; `terraform apply` exige confirmação explícita do usuário após revisar plano e estimativa.
 
 ## Evidência e manutenção
 

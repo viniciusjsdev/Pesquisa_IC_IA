@@ -131,7 +131,7 @@ def command(manifest: dict, root: Path, base_revision: str) -> list[str]:
         "--revision", base_revision,
         "--tokenizer-revision", base_revision,
         "--served-model-name", manifest["base_alias"],
-        "--host", "127.0.0.1", "--port", "8001",
+        "--host", "127.0.0.1", "--port", "8002",
         "--max-model-len", "4096",
         "--enable-auto-tool-choice", "--tool-call-parser", "hermes",
         "--enable-lora", "--max-lora-rank", "8", "--max-cpu-loras", "6",

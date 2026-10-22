@@ -14,7 +14,7 @@ class SessionChecksTests(unittest.TestCase):
     def test_preflight_reads_dw_and_never_opens_external_http(self):
         with patch.object(session_checks, "_git", return_value={"head": "abc"}), \
              patch.object(session_checks, "_dw", return_value={"database": "db_pesquisa_dw", "transaction_read_only": True}), \
-             patch.object(session_checks, "_app", return_value={"schema_versions": [1, 2]}), \
+             patch.object(session_checks, "_app", return_value={"schema_versions": [1, 2, 3]}), \
              patch.object(session_checks, "_artifacts", return_value={"adapter_count": 6}), \
              patch.object(session_checks, "_serving_config", return_value={"network_call": False}), \
              patch.object(session_checks, "_limits", return_value={"global_concurrent_inferences": 1}), \

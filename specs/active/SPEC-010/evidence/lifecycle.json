@@ -1,0 +1,16 @@
+{
+  "spec_id": "SPEC-010",
+  "contract_version": 1,
+  "base_commit": "bf238ec8cc40714c8ad2d763081454d3ac52f588",
+  "recorded_on": "2026-10-19",
+  "implementation": "completed_locally",
+  "review": "approved_independent_local_review",
+  "integration": "blocked_external_key",
+  "real_groq_inference": "not_run",
+  "real_https_proxy": "not_run",
+  "runpod": "not_run",
+  "scientific_evaluation": "not_run",
+  "completion": "specs/active/SPEC-010/evidence/completion.json",
+  "local_evidence": "specs/active/SPEC-010/evidence/local-2026-10-19.md",
+  "review_evidence": "specs/active/SPEC-010/evidence/review.json"
+}

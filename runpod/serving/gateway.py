@@ -16,7 +16,7 @@ IDENTITY_HEADERS = {
 
 
 def make_server(token: str, session: dict, *, port: int = 8000,
-                upstream_port: int = 8001) -> ThreadingHTTPServer:
+                upstream_port: int = 8002) -> ThreadingHTTPServer:
     if len(token) < 32:
         raise ValueError("Gateway token is missing or too short")
     if not all(session.get(key) for key in IDENTITY_HEADERS):
@@ -72,11 +72,39 @@ def make_server(token: str, session: dict, *, port: int = 8000,
                 if request_payload.get("model") not in session.get("aliases", ()):
                     self._reply(400, b'{"error":"unknown model alias"}')
                     return
-            connection = HTTPConnection("127.0.0.1", upstream_port, timeout=125)
+            connection = HTTPConnection("127.0.0.1", upstream_port, timeout=610)
+            headers_sent = False
             try:
                 connection.request(self.command, self.path, body=body,
                                    headers={"Content-Type": "application/json"})
                 response = connection.getresponse()
+                if (self.command == "POST" and request_payload.get("stream") is True
+                        and response.status == 200):
+                    if response.getheader("Content-Type", "").split(";")[0].strip() != "text/event-stream":
+                        self._reply(502, b'{"error":"upstream did not stream"}')
+                        return
+                    self.close_connection = True
+                    self.send_response(200)
+                    self.send_header("Content-Type", "text/event-stream")
+                    self.send_header("Transfer-Encoding", "chunked")
+                    self.send_header("Cache-Control", "no-store, no-transform")
+                    self.send_header("Connection", "close")
+                    for key, header in IDENTITY_HEADERS.items():
+                        self.send_header(header, session[key])
+                    if session.get("vllm_version"):
+                        self.send_header("X-Inference-VLLM-Version", session["vllm_version"])
+                    self.end_headers()
+                    headers_sent = True
+                    total = 0
+                    for line in iter(response.readline, b""):
+                        total += len(line)
+                        if total > MAX_RESPONSE:
+                            return  # Truncated chunked response fails closed in the client.
+                        self.wfile.write(f"{len(line):X}\r\n".encode("ascii") + line + b"\r\n")
+                        self.wfile.flush()
+                    self.wfile.write(b"0\r\n\r\n")
+                    self.wfile.flush()
+                    return
                 payload = response.read(MAX_RESPONSE + 1)
                 if len(payload) > MAX_RESPONSE:
                     self._reply(502, b'{"error":"upstream response too large"}')
@@ -94,7 +122,8 @@ def make_server(token: str, session: dict, *, port: int = 8000,
                 self.end_headers()
                 self.wfile.write(payload)
             except OSError:
-                self._reply(502, b'{"error":"model unavailable"}')
+                if not headers_sent:
+                    self._reply(502, b'{"error":"model unavailable"}')
             finally:
                 connection.close()
 

@@ -1,5 +1,126 @@
 # Inferência compartilhada: Observatório e Bancada local
 
+## SPEC-010: Groq sintética e sessão de navegador (19/10/2026)
+
+A Bancada anuncia `groq` como provedor separado dos sete aliases RunPod.
+Sem `GROQ_API_KEY` e `GROQ_MODEL` no **processo backend**, o item fica
+indisponível com motivo. A URL de produção do cliente é fixa em
+`https://api.groq.com/openai/v1/chat/completions`; o navegador não recebe
+a chave. Em modo host, configure as variáveis no terminal local ou no arquivo
+ignorado `BancoModeloUse/.env.local` antes de iniciar a API. Em Docker Compose,
+configure as variáveis no ambiente usado para iniciar o Compose. Confirme na
+conta Groq que o ID escolhido está disponível no plano Free; modelo e cotas
+podem mudar. Não cole a chave no chat, no Git nem em logs.
+
+Groq aceita somente `synthetic_snapshot` e `synthetic_tools`. Ambos usam a
+pergunta e o prompt fixos de `synthetic_data.py`; o segundo modo anuncia a
+tool local `synthetic_metric`, cuja chamada deve ser escolhida pela LLM e
+validada antes de a fixture inventada responder. A API recusa pacotes privados,
+perguntas livres e critérios editáveis nesses runs. A DW real não é consultada
+nem enviada à Groq. Runs Groq são snapshots v4 com provedor, ID configurado,
+parâmetros, origem sintética, uso quando retornado, status e erro; não recebem
+hash de adapter, revisão Qwen ou recibo de sessão RunPod. Snapshots v1-v3
+continuam legíveis. `answered_unverified` só indica resposta exploratória
+concluída; 429, limite de contexto, stream incompleto e falha de tool conservam
+estados de erro. `Retry-After` aparece no detalhe de 429 quando retornado.
+
+O login do navegador grava a sessão revogável em cookie `HttpOnly`,
+`SameSite=Strict`, `Path=/api`; a origem HTTPS recebe também `Secure`.
+POSTs autenticados por cookie exigem `Origin` igual ao `Host` público HTTPS,
+ou ao `localhost`/`127.0.0.1` HTTP. O logout revoga no servidor e limpa o
+cookie; refresh consulta `/api/me` e recupera a identidade. Clientes legados
+que não enviam `X-Browser-Session: 1` no login continuam recebendo bearer e
+podem usar `Authorization: Bearer ...` sem cookie. O job preserva a chave de
+idempotência em `sessionStorage` e é consultado após refresh, sem reenvio.
+
+**Estado em 19/10/2026:** implementação, testes unitários/HTTP e navegador
+com Groq simulado foram executados localmente, e a
+[revisão independente](../specs/active/SPEC-010/evidence/review.json) aprovou
+esse escopo local. O ensaio real com chave Free está `blocked_external_key`.
+Não houve chamada à Groq real, RunPod, ngrok, Terraform ou DW real
+para esta SPEC. Veja a [evidência local](../specs/active/SPEC-010/evidence/local-2026-10-19.md).
+
+**Estado remoto em 17/10/2026:** o
+[smoke na RTX A5000](../runpod/serving/evidence/2026-10-17-a5000.md)
+confirmou sete gerações curtas por HTTPS. Uma
+[sessão posterior de integração](../runpod/serving/evidence/2026-10-17-integracao-bancada.md)
+validou a Bancada → ngrok → backend → RunPod nos modos de pacote fixo e tools
+com `qwen-base`, guardando snapshots v3. Um run com `ft-finqa-a` terminou em
+`response_error` por geração truncada e alheia à evidência. A Pod foi parada
+sem volume persistente; a API local voltou a operar sem endpoint remoto e o
+catálogo marca os modelos indisponíveis. O harness científico continua
+pendente.
+
+Uma [validação posterior da infraestrutura](../runpod/serving/evidence/2026-10-17-validacao-infra.md)
+usou outra RTX A5000 porque o host da Pod anterior não tinha GPU livre.
+O driver do novo host exigiu vLLM 0.11.0 com PyTorch/CUDA 12.8 e
+transformers 4.x. Os sete aliases passaram no verificador formal. O vLLM
+0.11.0 devolveu `tool_calls: []` em uma resposta normal sem tools; o backend
+foi corrigido para não classificar a lista vazia como chamada de tool.
+Um novo run pela Bancada via ngrok terminou em `answered_unverified`.
+A nova Pod também foi parada a US$ 0,00/h; modelos indisponíveis enquanto
+não houver sessão remota. Isso atesta conectividade e execução exploratória,
+não acurácia dos modelos.
+
+Um [teste adicional dos sete aliases pela Bancada](../runpod/serving/evidence/2026-10-17-bancada-sete-aliases.md)
+usou outra A5000 em 17/10/2026. Todos foram roteados e salvos: base, Failure
+A/B e Híbrido A/B terminaram `answered_unverified`; FinQA A/B atingiram o
+limite de 500 tokens e foram registrados `response_error`. A base também
+executou `product` no modo tools. A Pod foi parada sem volume persistente e o
+backend local voltou a anunciar os modelos como indisponíveis. Esses estados
+não constituem comparação científica.
+
+**Mudança local posterior em 17/10/2026:**
+a Bancada deixou de enviar `max_tokens` por padrão. A API também não define
+um valor padrão nem um teto próprio de 1.024 tokens; se um cliente de API enviar
+um inteiro positivo explicitamente, ele será repassado ao serving e ficará no
+snapshot. Sem o parâmetro, `max_tokens: null` no snapshot indica que a
+aplicação não impôs limite de saída. O serving ainda usa
+`--max-model-len 4096` para entrada e saída juntas. Os runs históricos de
+500 tokens não foram alterados.
+
+O [replay na L4](../runpod/serving/evidence/2026-10-17-finqa-sem-teto-l4.md)
+testou os FT-FinQA sem `max_tokens`: B concluiu por invocação direta do serviço
+backend, sem login HTTP, e foi salvo como `answered_unverified`, mas devolveu
+apenas um fragmento numérico; A gerou
+até os 4.096 tokens da janela e terminou `length` no acesso direto ao gateway.
+O gateway HTTPS devolveu 524 no caso longo, pois naquela sessão a resposta era enviada
+ao proxy somente após a geração inteira. As esperas do backend e gateway
+foram ampliadas para 600 e 610 segundos, respectivamente; isso não remove o
+prazo do proxy. A Pod foi parada sem volume persistente, com US$ 0,00/h no
+console. A execução desta sessão foi pelo backend direto, sem React/ngrok;
+o harness científico e o transporte público para saídas longas seguem
+pendentes.
+
+**Correção local de transporte, antes do replay remoto:** `models.py` agora
+pede SSE ao vLLM e reconstrói conteúdo, tools, uso e motivo de parada, guardando
+os bytes do fluxo no snapshot. `gateway.py` encaminha os eventos sem esperar a
+resposta inteira. A Bancada usa `POST /api/run-jobs`, recebe HTTP 202 e consulta
+`GET /api/run-jobs/{id}`; o job e sua chave de envio ficam no banco, o run final
+continua no histórico imutável. Uma resposta HTTP perdida é reconciliada por
+chave antes de permitir novo envio; atualizar a página não reenvia o modelo.
+A migração explícita 003 com backup lógico foi aplicada ao banco host local,
+com readback das versões `[1, 2, 3]`, e ainda é necessária em cada outra cópia
+do banco antes de iniciar esta versão da API. Testes locais de PostgreSQL,
+HTTP e navegador passaram; naquele momento Docker, RunPod HTTPS e ngrok ainda
+precisavam de readback com essa versão. Veja
+[evidência local](../runpod/serving/evidence/2026-10-17-transporte-assincrono-local.md).
+
+O [replay público de 17/10/2026](../runpod/serving/evidence/2026-10-17-streaming-bancada-l4.md)
+confirmou o caminho autenticado Bancada → ngrok → API host → gateway SSE →
+vLLM L4 → run no PostgreSQL. Dois jobs públicos receberam HTTP 202: a base
+respondeu (`answered_unverified`) e FT-FinQA A enviou todo o fluxo longo sem
+HTTP 524, mas atingiu a janela de 4.096 tokens e ficou `response_error`.
+Ao atualizar a página, o login foi perdido; depois de novo login, o mesmo
+job/run foi recuperado sem reenvio. A Pod e os serviços locais foram parados.
+Essa prova é de um job por vez; a imagem Docker desta versão e a avaliação
+científica continuam pendentes.
+
+Validação local anterior desta mudança sobre `4943257` mais alterações sem commit:
+11 testes de contrato e 8 de serving passaram; o TypeScript e o build Vite
+passaram. A API não estava escutando em `127.0.0.1:8765` no readback final;
+naquele momento não houve nova execução pela interface, ngrok ou RunPod.
+
 **Histórico da SPEC-008 em 16/10/2026, sobre `772ea0d` e alterações
 locais preservadas:** a rota `/` entrega o React compilado, com login primeiro,
 quatro abas do Observatório e Bancada na quinta aba. O snapshot sintético de
@@ -50,8 +171,9 @@ anteriores foram retirados do fluxo ativo após a SPEC-009.
 
 1. Após login, o pesquisador escolhe **Pacote fixo da DW** ou **LLM consulta a
    DW por tools**, um alias de modelo, prompt, critérios e parâmetros. O front
-   envia `POST /api/runs` com `evidence_mode` obrigatório. A API autentica,
-   reserva a única vaga global e chama `service.execute_run()`.
+   envia `POST /api/run-jobs` com `evidence_mode` e uma chave UUID. A API
+   autentica, registra o job e responde HTTP 202; o worker reserva a única
+   vaga global e chama `service.execute_run()`. A tela consulta o job por ID.
 2. Em `dw_snapshot`, o servidor busca `case_id` mais SHA-256 no diretório
    privado de pacotes. `evidence_packets.py` valida o arquivo; a pergunta e o
    domínio vêm do corpo do pacote e não são editados nesse run. `service.py`
@@ -119,6 +241,13 @@ catálogo oficial de casos, gold set ou pontuação científica; veja a
   `financial` proíbe ID. As consultas usam SQL fixo único de
   `BancoModeloUse/dw/fixed_queries.py`, transações somente leitura e apenas
   `db_pesquisa_dw`. Não há fallback aos dois bancos de origem.
+- `POST /api/run-jobs`: mesmo payload de run mais `request_key` UUID. Cria um
+  job persistido e devolve HTTP 202 sem aguardar a geração. A mesma chave e o
+  mesmo payload devolvem o mesmo job, sem segunda inferência; payload diferente
+  com a mesma chave é recusado. `GET /api/run-jobs/{id}` e
+  `GET /api/run-jobs/by-key/{request_key}` consultam apenas jobs do pesquisador
+  autenticado. `completed` aponta para um run salvo; após reinício da API, jobs
+  inacabados viram `interrupted` e não são reenviados automaticamente.
 - O loop limita a cinco chamadas, seis turnos, 200 linhas e 16 KiB canônicos
   acumulados. Chamada/argumentos inválidos ficam em `tool_error`, resultado
   excessivo em `tool_limit_error`, fingerprint/consulta em `query_error`,
@@ -132,9 +261,9 @@ catálogo oficial de casos, gold set ou pontuação científica; veja a
   sessão e `POST /api/logout` a revoga. O navegador mantém o bearer só em
   memória. `author` enviado no corpo não é usado: o backend grava o nome do
   pesquisador autenticado e seu ID estável no snapshot novo.
-- Dois pesquisadores podem estar logados ao mesmo tempo. Um advisory lock no
-  PostgreSQL permite somente uma `POST /api/runs` global; a segunda recebe
-  HTTP 429 antes de consultar fontes ou chamar a LLM. Não há limite diário por
+- Dois pesquisadores podem estar logados ao mesmo tempo. Um índice parcial de
+  jobs ativos e o advisory lock no PostgreSQL permitem somente uma inferência
+  global; um segundo envio recebe HTTP 429 antes de chamar a LLM. Não há limite diário por
   padrão; configurações opcionais podem ativá-lo no futuro.
 - `GET /api/budget` mostra o teto informativo de US$ 10 e tenta ler
   `clientBalance` e `currentSpendPerHr` da API GraphQL da RunPod com uma
@@ -213,6 +342,7 @@ BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/scripts/local_postgres.py
 inference_api/.venv/Scripts/python.exe inference_api/run.py init-db
 inference_api/.venv/Scripts/python.exe inference_api/run.py migrate-db --pg-dump 'C:/Program Files/PostgreSQL/15/bin/pg_dump.exe'
 inference_api/.venv/Scripts/python.exe inference_api/run.py migrate-criteria --pg-dump 'C:/Program Files/PostgreSQL/15/bin/pg_dump.exe'
+inference_api/.venv/Scripts/python.exe inference_api/run.py migrate-run-jobs --pg-dump 'C:/Program Files/PostgreSQL/15/bin/pg_dump.exe'
 inference_api/.venv/Scripts/python.exe inference_api/run.py configure-users
 npm --prefix inference_api/frontend ci
 npm --prefix inference_api/frontend run build
@@ -234,6 +364,13 @@ acrescentar as tabelas de identidade, sessão e uso. O SQL reverso está em
 `migrations/002_criteria_down.sql`. A migração da SPEC-004 passou em banco
 descartável e foi aplicada em `db_inference_app` em 15/10/2026 após backup
 lógico. O readback confirmou versões 1 e 2 e tabela de critérios vazia.
+`migrate-run-jobs` exige exatamente as versões 1 e 2, faz outro backup lógico
+e registra a versão 3 e a tabela `run_jobs`; o SQL reverso está em
+`migrations/003_run_jobs_down.sql`. Execute uma vez em cada banco da aplicação
+que receber esta versão do backend. A migração 003 foi executada no banco host
+local em 17/10/2026, com backup e readback; a cópia Docker ainda não a recebeu.
+Não execute novamente `init-db`,
+`migrate-db`, `migrate-criteria` ou `configure-users` para aplicá-la.
 `configure-users` pede as duas senhas e confirmações em prompt oculto; após
 as quatro entradas, registra os dois logins aprovados. `set-password`
 permite trocar uma senha posteriormente e exige 12 a 128 caracteres para
@@ -268,6 +405,10 @@ credenciais ou parâmetros. O cliente recusa redirecionamentos para não
 reenviar o bearer token a outra origem. Após uma verificação remota
 autorizada, pode receber
 `INFERENCE_SERVING_VERIFICATION` com caminho local para o recibo da sessão.
+O cliente envia `User-Agent: PesquisaICIA/1.0`: em 17/10/2026 o proxy da
+RunPod recusou o identificador padrão do `urllib` com HTTP 403, enquanto o
+identificador explícito recebeu 200; veja a
+[evidência de integração](../runpod/serving/evidence/2026-10-17-integracao-bancada.md).
 Veja o [runbook de serving](../runpod/serving/README.md). Nenhuma dessas
 variáveis deve ser enviada ao navegador.
 O runbook também separa a conclusão local da SPEC-002 da sessão paga: a
@@ -279,10 +420,10 @@ explícita do `apply` ocorrerão antes de uma implantação futura.
 `compose.yaml` constrói um contêiner de aplicação (React compilado e Python) e
 um PostgreSQL 15 em volume nomeado. Somente o HTTP da aplicação é publicado em
 `127.0.0.1`, na porta `8875` por padrão; `INFERENCE_HTTP_PORT` permite outra
-porta. O banco fica em `db:5432` apenas na rede do Compose. O comando `up`
+porta. O banco fica em `db:5432` apenas na rede do Compose. `up -d db`
 inicializa o serviço PostgreSQL vazio, mas **não importa dados, não migra
-esquema e não cria pesquisadores**. A tela de login abre; autenticação acusa
-indisponibilidade até existir uma cópia preparada de `db_inference_app`.
+esquema e não cria pesquisadores**. Inicie o app somente depois de preparar
+`db_inference_app` com a versão 3.
 
 Na raiz do repositório, com Docker Desktop e o arquivo privado
 `BancoModeloUse/.env.local` já existente:
@@ -290,9 +431,36 @@ Na raiz do repositório, com Docker Desktop e o arquivo privado
 ```powershell
 docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml config --quiet
 docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml build
-docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml up -d
+docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml up -d db
 docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml ps
 ```
+
+**Antes de iniciar esta versão do app em uma cópia Docker existente com
+versões 1/2**, aplicar a migração 003 com o app parado. O Docker Linux estava
+indisponível em 17/10/2026, então estes comandos de operação ainda exigem
+execução e readback no destino real. O backup fica fora do contêiner e não
+deve ser substituído:
+
+```powershell
+docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml up -d db
+$dbId = docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml ps -q db
+$stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+$backup = "inference_api/.local/run-jobs-docker-$stamp.dump"
+$remoteBackup = "/tmp/run-jobs-$stamp.dump"
+if (-not $dbId -or (Test-Path -LiteralPath $backup)) { throw 'Banco não identificado ou backup já existe' }
+docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml exec -T db sh -c ('PGPASSWORD="$POSTGRES_PASSWORD" pg_dump -U "$POSTGRES_USER" -d db_inference_app -Fc -f ' + $remoteBackup)
+docker cp "${dbId}:$remoteBackup" $backup
+if ((Get-Item -LiteralPath $backup).Length -eq 0) { throw 'Backup vazio; migração bloqueada' }
+Get-FileHash -LiteralPath $backup -Algorithm SHA256
+docker cp inference_api/migrations/003_run_jobs_up.sql "${dbId}:/tmp/003_run_jobs_up.sql"
+docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml exec -T db sh -c 'PGPASSWORD="$POSTGRES_PASSWORD" psql -X -v ON_ERROR_STOP=1 -1 -U "$POSTGRES_USER" -d db_inference_app -f /tmp/003_run_jobs_up.sql'
+docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml exec -T db sh -c 'PGPASSWORD="$POSTGRES_PASSWORD" psql -X -At -U "$POSTGRES_USER" -d db_inference_app -c "SELECT version FROM inference_schema_migrations ORDER BY version"'
+docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml exec -T db sh -c 'PGPASSWORD="$POSTGRES_PASSWORD" psql -X -At -U "$POSTGRES_USER" -d db_inference_app -c "\dt run_jobs"'
+```
+
+Confirme versões `1`, `2`, `3` e `run_jobs` antes de iniciar o app. Se o banco
+Docker ainda não tiver versões 1/2, prepare essa cópia pelo procedimento já
+documentado; não aplique a 003 fora de ordem.
 
 O Docker usa a senha local `FINANCEIRO_DB_PASSWORD` como senha do **novo** role
 `pesquisa_local` no volume isolado. A imagem recebe código da API, consultas fixas da DW, verificador/schema de pacotes, manifesto
@@ -324,7 +492,14 @@ do DW foi executada na SPEC-009; a validação Docker usa somente fixtures.
 inference_api/.venv/Scripts/python.exe inference_api/scripts/copy_logical_databases.py --execute --source-env BancoModeloUse/.env.local --compose-env BancoModeloUse/.env.local --project inference_api --receipt inference_api/.local/copy-real-receipt.json
 ```
 
-Após a cópia e a verificação da sessão, abrir `http://127.0.0.1:8875`. Para
+Após a cópia, confira a versão 3 no banco de destino; se vier de uma cópia
+antiga em 1/2, aplique a migração acima. Então inicie o app:
+
+```powershell
+docker compose -p inference_api --env-file BancoModeloUse/.env.local -f inference_api/compose.yaml up -d app
+```
+
+Após o readback de saúde, abrir `http://127.0.0.1:8875`. Para
 encerrar a aplicação sem perder o banco:
 
 ```powershell
@@ -339,21 +514,24 @@ recibos e capturas de tela locais ficam em `inference_api/.local/` (ignorados pe
 e o resumo verificável está na evidência da SPEC-008. Esse smoke não prova
 cópia dos bancos reais nem geração remota.
 
-## Alvo futuro do ngrok
+## Exposição da aplicação via ngrok
 
 O usuário escolheu usar apenas a autenticação da aplicação: bearer opaco
 revogável por pesquisador, validado no backend. Não há OAuth ou Basic Auth na
-borda. Quando uma sessão posterior autorizar a exposição, o alvo previsto é
+borda. O alvo usado na sessão exploratória de 17/10/2026 foi
 **somente** o HTTP da aplicação em `127.0.0.1:8765`:
 
 ```powershell
 ngrok http 8765
 ```
 
-O comando acima é documentação, não foi executado. Nunca apontar o ngrok para
-`5544` nem expor PostgreSQL. Antes da primeira exposição, trocar as duas senhas
-com `run.py set-password --username ...` em terminal local, pois as escolhas
-originais passaram pelo chat; depois confirmar login e revogação novamente.
+Um túnel HTTPS único para essa porta foi observado e o `tunnel-check` passou
+antes e depois da integração. O ngrok permaneceu ativo após a parada da Pod;
+os modelos voltaram a aparecer indisponíveis. Nunca apontar o ngrok para
+`5544` nem expor PostgreSQL. A rotação das senhas de Nicoli e Vinicius não
+foi verificada nesta sessão; se ainda não ocorreu desde as escolhas que
+passaram pelo chat, usar `run.py set-password --username ...` em terminal
+local e confirmar login e revogação novamente.
 
 Testes locais sem infraestrutura remota:
 
@@ -403,16 +581,19 @@ teste. A [evidência local](../specs/active/SPEC-003/evidence/local-2026-10-15.m
 registra comandos, limites e recibo do backup. O saldo real da RunPod não foi
 lido porque ainda não há chave de leitura configurada.
 
-## Segurança e operação pendentes
+## Segurança e operação: limites atuais
 
-Não abra o túnel ngrok ainda. A revisão independente aprovou a identidade e
-a vaga única no escopo local, sem validar exposição pública. A chave de leitura de saldo
-e as senhas não entram no Git; credenciais escolhidas fora de um canal privado
-devem ser trocadas antes de expor a interface. A proteção da API remota e os
-aliases/versões/hashes dos pesos exigem uma sessão autorizada. O servidor HTTP
-segue ferramenta local de desenvolvimento, sem SSO nem garantia de produção.
-Não usar as respostas como métricas do artigo.
+A revisão independente da SPEC-003 aprovou identidade e vaga única somente
+no escopo local. Em 17/10/2026 um ngrok HTTPS para `127.0.0.1:8765` foi
+observado e usado em três runs autenticados; as rotas privadas recusaram
+acesso sem sessão no `tunnel-check`. A chave de leitura de saldo não está
+configurada, e a rotação das senhas de Nicoli e Vinicius não foi verificada
+nesta sessão. Credenciais originalmente escolhidas fora de um canal privado
+devem ser trocadas se isso ainda não ocorreu. O gateway remoto exigiu bearer
+e os sete aliases responderam, mas o servidor HTTP continua sendo ferramenta
+local de desenvolvimento, sem SSO nem garantia de produção. Não usar as
+respostas como métricas do artigo.
 A varredura de segredos e a revisão independente estão registradas nos
 [recibos da SPEC-003](../specs/active/SPEC-003/evidence/review.json). O teste
 HTTP com os usuários efetivamente cadastrados passou em 15/10/2026, sem abrir
-túnel.
+túnel naquela sessão histórica.

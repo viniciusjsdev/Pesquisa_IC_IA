@@ -1,4 +1,4 @@
-/* SPEC-009 browser smoke against local built UI; all API routes are mocked. */
+/* SPEC-009/010 browser smoke against local built UI; all API routes are mocked. */
 const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
@@ -9,10 +9,12 @@ const bi = JSON.parse(fs.readFileSync(path.join(root, 'private', 'bi_snapshot.js
 const output = path.join(root, '.local', 'spec009-browser');
 const packet = { case_id: 'integrated-1', sha256: 'a'.repeat(64), question: 'Pergunta do pacote?', domain: 'integrado', source_snapshot: { source_fingerprint: 'b'.repeat(64) } };
 const runs = [{ id: '00000000-0000-0000-0000-000000000001', author: 'Nicoli', created_at: '2026-10-15T00:00:00Z', snapshot: { schema_version: 2, status: 'answered_unverified', question_request: { question: 'Antiga', scope: 'financeiro', year: 2020 }, model: { alias: 'qwen-base' } } }];
-let next = 2; let dwAvailable = true;
+let next = 2; let dwAvailable = true; let holdGroqJob = false; let failGroqJob = false; let groqPosts = 0;
+const jobs = new Map();
 const reply = (route, status, body) => route.fulfill({ status, contentType: 'application/json', body: JSON.stringify(body) });
 function makeRun(body) {
-  const snapshot = { schema_version: 3, evidence_mode: body.evidence_mode, status: 'answered_unverified', question_request: { question: body.evidence_mode === 'dw_snapshot' ? packet.question : body.question, domain: packet.domain }, prompt: { system_prompt: body.system_prompt, revision: null }, verification_criteria: { config: body.criteria }, model: { alias: body.model_alias, parameters: { temperature: body.temperature, max_tokens: body.max_tokens }, session_id: 'fixture-session', served_model: body.model_alias }, packet: body.evidence_mode === 'dw_snapshot' ? { case_id: packet.case_id, sha256: packet.sha256, file_sha256: 'c'.repeat(64), source_snapshot: packet.source_snapshot, schema_version: 1, query_contract_version: 1, query_code_sha256: 'd'.repeat(64) } : null, dw_source: body.evidence_mode === 'dw_tools' ? { source_fingerprint: 'b'.repeat(64), schema_version: 1, query_contract_version: 1 } : null, evidence_json_sent: body.evidence_mode === 'dw_snapshot' ? '{"fixture":"exact"}' : null, tool_catalog: body.evidence_mode === 'dw_tools' ? [{ function: { name: 'financial' } }] : null, tool_trace: body.evidence_mode === 'dw_tools' ? [{ order: 1, name: 'financial', validated_arguments: { year: 2020 }, result: { coverage: { state: 'observed', rows: 1 }, rows: [{ observation_id: 1 }] } }] : null, model_turns: [{ order: 1, serving: { session_id: 'fixture-session' } }], model_output: { raw_text: 'Resposta fixture' }, checks: [{ check: 'numerical_truth', result: 'not_checked', detail: 'No gold set' }], error: null };
+  const synthetic = body.provider === 'groq';
+  const snapshot = { schema_version: synthetic ? 4 : 3, provider: body.provider, evidence_source: synthetic ? { kind: 'synthetic_fixture', id: 'synthetic-v1' } : null, evidence_mode: body.evidence_mode, status: 'answered_unverified', question_request: { question: synthetic ? 'Qual foi o valor fictício em 2020?' : body.evidence_mode === 'dw_snapshot' ? packet.question : body.question, domain: packet.domain }, prompt: { system_prompt: body.system_prompt, revision: null }, verification_criteria: { config: body.criteria }, model: { alias: body.model_alias, model_id: synthetic ? 'fixture-model' : null, parameters: { temperature: body.temperature, max_tokens: body.max_tokens }, session_id: synthetic ? null : 'fixture-session', served_model: synthetic ? 'fixture-model' : body.model_alias }, packet: body.evidence_mode === 'dw_snapshot' ? { case_id: packet.case_id, sha256: packet.sha256, file_sha256: 'c'.repeat(64), source_snapshot: packet.source_snapshot, schema_version: 1, query_contract_version: 1, query_code_sha256: 'd'.repeat(64) } : null, dw_source: body.evidence_mode === 'dw_tools' ? { source_fingerprint: 'b'.repeat(64), schema_version: 1, query_contract_version: 1 } : null, evidence_json_sent: body.evidence_mode === 'dw_snapshot' || body.evidence_mode === 'synthetic_snapshot' ? '{"fixture":"exact"}' : null, tool_catalog: body.evidence_mode === 'dw_tools' ? [{ function: { name: 'financial' } }] : synthetic && body.evidence_mode === 'synthetic_tools' ? [{ function: { name: 'synthetic_metric' } }] : null, tool_trace: body.evidence_mode === 'dw_tools' ? [{ order: 1, name: 'financial', validated_arguments: { year: 2020 }, result: { coverage: { state: 'observed', rows: 1 }, rows: [{ observation_id: 1 }] } }] : synthetic && body.evidence_mode === 'synthetic_tools' ? [{ order: 1, name: 'synthetic_metric', validated_arguments: { year: 2020 }, result: { coverage: { state: 'observed' }, rows: [{ value: 42 }] } }] : null, model_turns: [{ order: 1, serving: { provider: synthetic ? 'groq' : 'runpod' } }], model_output: { raw_text: 'Resposta fixture' }, checks: [{ check: 'numerical_truth', result: 'not_checked', detail: 'No gold set' }], error: null };
   const run = { id: `00000000-0000-0000-0000-${String(next++).padStart(12, '0')}`, author: 'Nicoli', created_at: '2026-10-16T00:00:00Z', snapshot };
   runs.push(run); return run;
 }
@@ -25,17 +27,27 @@ async function main() {
   await page.route(`${origin}/api/**`, route => {
     const pathname = new URL(route.request().url()).pathname;
     const body = route.request().postDataJSON?.() || {};
-    if (pathname === '/api/login') return reply(route, 200, { token: 'fixture-token', username: 'Nicoli' });
-    if (route.request().headers().authorization !== 'Bearer fixture-token') return reply(route, 401, { error: 'unauthorized' });
+    if (pathname === '/api/login') return route.fulfill({ status: 200, contentType: 'application/json', headers: { 'Set-Cookie': 'inference_session=fixture-token; Path=/api; HttpOnly; SameSite=Strict' }, body: JSON.stringify({ username: 'Nicoli' }) });
+    if (!route.request().headers().cookie?.includes('inference_session=fixture-token')) return reply(route, 401, { error: 'unauthorized' });
     if (pathname === '/api/me') return reply(route, 200, { id: 'fixture', username: 'Nicoli' });
     if (pathname === '/api/bi/snapshot') return reply(route, 200, bi);
     if (pathname === '/api/budget') return reply(route, 200, { session_ceiling_usd: 10, runpod_status: 'not_configured', runpod_balance_usd: null, runpod_spend_per_hour_usd: null, runpod_source: 'fixture', status_checked_at: '2026-10-16T00:00:00Z', checked_at: null });
-    if (pathname === '/api/models') return reply(route, 200, { 'qwen-base': { available: true } });
+    if (pathname === '/api/logout') return route.fulfill({ status: 200, contentType: 'application/json', headers: { 'Set-Cookie': 'inference_session=; Path=/api; HttpOnly; SameSite=Strict; Max-Age=0' }, body: '{"status":"logged_out"}' });
+    if (pathname === '/api/models') return reply(route, 200, { 'qwen-base': { available: true, provider: 'runpod' }, groq: { available: true, provider: 'groq', model_id: 'fixture-model' } });
     if (pathname === '/api/prompts' || pathname === '/api/criteria') return reply(route, 200, []);
     if (pathname === '/api/bench/evidence-packets') return reply(route, 200, [packet]);
     if (pathname === '/api/bench/dw-tools') return reply(route, 200, dwAvailable ? { available: true, source_fingerprint: 'b'.repeat(64) } : { available: false, reason: 'DW ausente' });
     if (pathname === '/api/runs' && route.request().method() === 'GET') return reply(route, 200, [...runs].reverse());
-    if (pathname === '/api/runs' && route.request().method() === 'POST') { assert(body.evidence_mode); assert(!('scope' in body)); return reply(route, 201, makeRun(body)); }
+    if (pathname === '/api/run-jobs' && route.request().method() === 'POST') {
+      assert(body.evidence_mode); assert(!('scope' in body)); assert(body.request_key);
+      if (body.provider === 'groq') { groqPosts++; assert(!('case_id' in body)); assert(!('question' in body)); assert(!('criteria' in body)); }
+      const run = makeRun(body);
+      const job = { id: body.request_key, status: body.provider === 'groq' && failGroqJob ? 'failed' : body.provider === 'groq' && holdGroqJob ? 'running' : 'completed', run_id: failGroqJob ? null : run.id, error: failGroqJob ? 'injected_failure' : null };
+      jobs.set(body.request_key, job);
+      return reply(route, 202, job);
+    }
+    if (pathname.startsWith('/api/run-jobs/by-key/')) return reply(route, 200, jobs.get(pathname.split('/').at(-1)));
+    if (pathname.startsWith('/api/run-jobs/')) { const job = jobs.get(pathname.split('/').at(-1)); return reply(route, 200, holdGroqJob || job.status === 'failed' ? job : { ...job, status: 'completed' }); }
     if (pathname.startsWith('/api/runs/')) return reply(route, 200, runs.find(item => item.id === pathname.split('/')[3]));
     return reply(route, 404, { error: 'not_found' });
   });
@@ -66,13 +78,45 @@ async function main() {
     await page.getByText('Verificar DW').click();
     await page.getByText('Indisponível: DW ausente', { exact: false }).waitFor();
     assert(await page.locator('#run').isDisabled());
+    await page.locator('#model').selectOption('groq');
+    await page.locator('#evidence-mode').selectOption('synthetic_snapshot');
+    holdGroqJob = true;
+    await page.locator('#run').click();
+    await page.getByText('A página pode ser atualizada.', { exact: false }).waitFor();
+    await page.reload();
+    await page.getByText('Conectado como Nicoli', { exact: false }).waitFor();
+    await page.getByRole('button', { name: 'Bancada de testes' }).click();
+    holdGroqJob = false;
+    await page.locator('#result').getByText('Pacote sintético fixo').waitFor();
+    assert.equal(groqPosts, 1, 'refresh must not resubmit');
+    await page.locator('#model').selectOption('groq');
+    await page.locator('#evidence-mode').selectOption('synthetic_tools');
+    await page.locator('#run').click();
+    await page.locator('#result').getByText('LLM escolhe tool sintética').waitFor();
+    assert.equal(groqPosts, 2);
+    failGroqJob = true;
+    await page.locator('#run').click();
+    await page.getByText('injected_failure', { exact: false }).waitFor();
+    assert(await page.locator('#run').isDisabled());
+    assert.equal(groqPosts, 3);
+    await page.reload();
+    await page.getByText('Conectado como Nicoli', { exact: false }).waitFor();
+    await page.getByRole('button', { name: 'Bancada de testes' }).click();
+    assert(await page.locator('#run').isDisabled());
+    await page.getByText('Verificar envio anterior').click();
+    await page.getByText('permanece failed', { exact: false }).waitFor();
+    assert.equal(groqPosts, 3, 'uncertain job must not resubmit');
     await page.screenshot({ path: path.join(output, 'desktop.png'), fullPage: true });
     await page.setViewportSize({ width: 360, height: 740 });
     const width = await page.evaluate(() => document.documentElement.scrollWidth);
     assert(width <= 360, `mobile overflow ${width}`);
     await page.screenshot({ path: path.join(output, 'mobile.png'), fullPage: true });
+    await page.getByRole('button', { name: 'Sair' }).click();
+    await page.locator('#login').waitFor();
+    await page.reload();
+    await page.locator('#login').waitFor();
     assert.deepEqual(errors, []);
-    console.log(`SPEC-009 browser modes, history and comparison passed: ${output}`);
+    console.log(`SPEC-009/010 browser modes, refresh, jobs and logout passed: ${output}`);
   } finally { await browser.close(); }
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

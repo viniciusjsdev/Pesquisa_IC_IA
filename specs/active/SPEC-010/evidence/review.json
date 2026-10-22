@@ -1,0 +1,54 @@
+{
+  "spec_id": "SPEC-010",
+  "contract_version": 1,
+  "status": "approved",
+  "thread_id": null,
+  "runtime": {
+    "classification": "critical_review",
+    "model": "session-selected independent reviewer",
+    "reasoning": "session-selected"
+  },
+  "review_input": [
+    "specs/active/SPEC-010/SPEC.md",
+    "specs/active/SPEC-010/SPEC.execution.json",
+    "specs/active/SPEC-010/evidence/local-2026-10-19.md",
+    "Working tree diff and implementation files on 2026-10-19"
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": ["inference_api/tests/test_spec010.py", "inference_api/tests/browser_spec009.cjs"],
+      "notes": ["Independent reviewer ran six SPEC-010 Python tests; browser smoke was inspected, not rerun by reviewer."]
+    },
+    {
+      "category": "persistence",
+      "result": "preserved",
+      "evidence": ["inference_api/src/inference_api/jobs.py", "inference_api/frontend/src/features/bench/BenchPage.tsx"],
+      "notes": ["Uncertain terminal jobs retain request key and block another POST until manual history check."]
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": ["inference_api/src/inference_api/synthetic_data.py", "inference_api/src/inference_api/service.py"],
+      "notes": ["Groq modes reject private packets, free text and DW queries; no protected research data was changed."]
+    },
+    {
+      "category": "schemas",
+      "result": "changed_as_approved",
+      "evidence": ["inference_api/frontend/src/features/bench/RunDetail.tsx", "inference_api/src/inference_api/service.py"],
+      "notes": ["Groq uses snapshot v4; historical v1-v3 render paths remain."]
+    }
+  ],
+  "findings": [
+    "Initial P2 findings on discarded usage/finish_reason for length, synthetic checks labeled DW, structured HTTP 400 context/tool errors, and uncertain job keys were corrected and rechecked.",
+    "No remaining code blocker for local scope. Real Groq Free and real HTTPS proxy were not executed.",
+    "Discarding an uncertain job key is a manual operational gate; the button does not prove a conclusive run-to-job reconciliation."
+  ],
+  "evidence": [
+    "Independent read-only review returned approved for local implementation after corrections on 2026-10-19.",
+    "Reviewer executed test_spec010.py: six tests passed; git diff --check passed.",
+    "Groq real remains blocked_external_key; no real provider call was claimed."
+  ],
+  "usage": null
+}

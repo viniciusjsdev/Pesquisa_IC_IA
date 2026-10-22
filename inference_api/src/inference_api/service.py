@@ -4,18 +4,18 @@ from copy import deepcopy
 import json
 
 
-from . import config, criteria, dw_tools, evidence_packets, models, storage
+from . import config, criteria, dw_tools, evidence_packets, groq, models, storage, synthetic_data
 from .dw_tools import canonical
 from .auth import Principal
 
 
-def _options(payload: dict) -> tuple[float, int]:
+def _options(payload: dict) -> tuple[float, int | None]:
     temperature = payload.get("temperature", 0)
-    max_tokens = payload.get("max_tokens", 256)
+    max_tokens = payload.get("max_tokens")
     if type(temperature) not in (float, int) or not 0 <= temperature <= 2:
         raise ValueError("Temperature must be between 0 and 2")
-    if type(max_tokens) is not int or not 1 <= max_tokens <= 1024:
-        raise ValueError("max_tokens must be between 1 and 1024")
+    if max_tokens is not None and (type(max_tokens) is not int or max_tokens < 1):
+        raise ValueError("max_tokens must be a positive integer when provided")
     return temperature, max_tokens
 
 
@@ -57,7 +57,8 @@ def _criteria(payload: dict) -> dict:
 
 
 COMMON = {"evidence_mode", "model_alias", "temperature", "max_tokens",
-          "prompt_revision_id", "system_prompt", "criteria_revision_id", "criteria"}
+          "prompt_revision_id", "system_prompt", "criteria_revision_id", "criteria", "provider"}
+SYNTHETIC_PROMPT = "Responda apenas com a fixture inventada. Cite o ano e indique que os dados são sintéticos."
 GUIDANCE = ("Use somente a evidência entregue. Ausência de observação não é zero. "
             "Associação temporal não estabelece causalidade. A tool financeira devolve "
             "linhas observadas, nunca um total anual. Declare cobertura e ressalvas.")
@@ -67,20 +68,29 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def _validate_input(payload: dict) -> tuple[str, str, float, int]:
+def _validate_input(payload: dict) -> tuple[str, str, float, int | None]:
     mode = payload.get("evidence_mode")
-    if not isinstance(mode, str) or mode not in {"dw_snapshot", "dw_tools"}:
-        raise ValueError("evidence_mode must be dw_snapshot or dw_tools")
-    allowed = COMMON | ({"case_id", "packet_sha256"} if mode == "dw_snapshot" else {"question"})
+    provider = payload.get("provider", "runpod")
+    if provider not in {"runpod", "groq"}:
+        raise ValueError("Unknown provider")
+    if provider == "groq":
+        if mode not in {"synthetic_snapshot", "synthetic_tools"} or payload.get("model_alias") != "groq":
+            raise ValueError("Groq only accepts synthetic modes and its configured model")
+        if payload.get("system_prompt") != SYNTHETIC_PROMPT or payload.get("prompt_revision_id") is not None or payload.get("criteria_revision_id") is not None or payload.get("criteria") is not None:
+            raise ValueError("Groq only accepts the server-approved synthetic prompt and default criteria")
+    elif mode not in {"dw_snapshot", "dw_tools"}:
+        raise ValueError("RunPod evidence_mode must be dw_snapshot or dw_tools")
+    allowed = COMMON | ({"case_id", "packet_sha256"} if mode == "dw_snapshot" else
+                        {"question"} if mode == "dw_tools" else set())
     if set(payload) - allowed:
         raise ValueError("Unexpected or cross-mode run parameters")
     alias = payload.get("model_alias")
-    if not isinstance(alias, str) or alias not in models.MODELS:
+    if not isinstance(alias, str) or (alias not in models.MODELS and not (provider == "groq" and alias == "groq")):
         raise ValueError("Unknown model alias")
     if mode == "dw_snapshot":
         if not isinstance(payload.get("case_id"), str) or not isinstance(payload.get("packet_sha256"), str):
             raise ValueError("case_id and packet_sha256 required")
-    else:
+    elif mode == "dw_tools":
         question = payload.get("question")
         if not isinstance(question, str) or not question.strip() or len(question) > 4000:
             raise ValueError("Question is required and limited to 4000 characters")
@@ -88,20 +98,21 @@ def _validate_input(payload: dict) -> tuple[str, str, float, int]:
     return mode, alias, temperature, max_tokens
 
 
-def _checks(evidence_items: list[dict], answer: str, config: dict) -> list[dict]:
+def _checks(evidence_items: list[dict], answer: str, config: dict,
+            source: str = "DW") -> list[dict]:
     """Literal checks only. They never assert numerical truth or causality."""
     results = []
     def add(name, result, detail):
         results.append({"schema_version": 3, "check": name, "result": result, "detail": detail})
     observed = any(item.get("coverage", {}).get("state") == "observed" for item in evidence_items)
     if config["require_evidence"]:
-        add("criteria_evidence_presence", "passed" if observed else "failed", "At least one DW observation delivered.")
+        add("criteria_evidence_presence", "passed" if observed else "failed", f"At least one {source} observation delivered.")
     if config["require_period"]:
-        add("criteria_period", "passed" if all(type(item.get("year")) is int for item in evidence_items) and evidence_items else "failed", "DW evidence contains an explicit year.")
+        add("criteria_period", "passed" if all(type(item.get("year")) is int for item in evidence_items) and evidence_items else "failed", f"{source} evidence contains an explicit year.")
     for unit in config["required_units"]:
         add("criteria_unit", "passed" if any(unit in item.get("units", {}).values() for item in evidence_items) else "failed", unit)
     if config["require_cited_ids"]:
-        add("criteria_cited_ids", "not_checked", "Version 3 DW results have no stable per-row citation IDs.")
+        add("criteria_cited_ids", "not_checked", f"{source} results have no stable per-row citation IDs.")
     for phrase in config["required_caveats"]:
         add("criteria_caveat_literal", "passed" if phrase.casefold() in answer.casefold() else "failed", phrase)
     add("numerical_truth", "not_checked", "No independent gold set in exploratory execution.")
@@ -113,17 +124,33 @@ def execute_run(payload: dict, principal: Principal) -> dict:
     mode, alias, temperature, max_tokens = _validate_input(payload)
     prompt = _prompt(payload)
     verification_criteria = _criteria(payload)
-    model = {"alias": alias, "base": models.BASE, "battery": models.MODELS[alias]["battery"],
-             "parameters": {"temperature": temperature, "max_tokens": max_tokens},
-             "endpoint": config.vllm_url() or None, "provenance_status": "unverified",
-             "generation_confirmed": False}
-    snapshot = {"schema_version": 3, "evidence_mode": mode,
+    provider = payload.get("provider", "runpod")
+    model = ({"alias": alias, "provider": "groq", "model_id": groq.configuration()["model"],
+              "parameters": {"temperature": temperature, "max_tokens": max_tokens},
+              "provenance_status": "configured_only", "generation_confirmed": False}
+             if provider == "groq" else
+             {"alias": alias, "provider": "runpod", "base": models.BASE, "battery": models.MODELS[alias]["battery"],
+              "parameters": {"temperature": temperature, "max_tokens": max_tokens},
+              "endpoint": config.vllm_url() or None, "provenance_status": "unverified",
+              "generation_confirmed": False})
+    snapshot = {"schema_version": 4 if provider == "groq" else 3, "provider": provider,
+                "evidence_mode": mode, "evidence_source": synthetic_data.SOURCE if provider == "groq" else None,
                 "prompt": prompt, "verification_criteria": verification_criteria,
                 "model": model, "status": "preparing", "error": None,
                 "checks": [], "model_output": None, "model_turns": [],
                 "identity": {"principal_id": principal.id, "author_verified": True}}
     try:
-        if mode == "dw_snapshot":
+        if mode == "synthetic_snapshot":
+            question = synthetic_data.QUESTION
+            evidence_json = synthetic_data.packet_json()
+            evidence_items = synthetic_data.PACKET["evidence_items"]
+            snapshot["question_request"] = {"question": question, "model_alias": alias}
+            snapshot["packet"] = {"case_id": "synthetic-v1", "source_snapshot": synthetic_data.SOURCE}
+            snapshot["evidence_json_sent"] = evidence_json
+            messages = [{"role": "system", "content": prompt["system_prompt"] + "\n" + GUIDANCE},
+                        {"role": "user", "content": question + "\n\nFixture JSON:\n" + evidence_json}]
+            tools = None
+        elif mode == "dw_snapshot":
             packet, packet_bytes = evidence_packets.select_packet(payload["case_id"], payload["packet_sha256"])
             body = packet["body"]
             question = body["question"]
@@ -142,13 +169,13 @@ def execute_run(payload: dict, principal: Principal) -> dict:
             snapshot["evidence_json_sent"] = evidence_json
             tools = None
         else:
-            question = payload["question"]
+            question = synthetic_data.QUESTION if mode == "synthetic_tools" else payload["question"]
             snapshot["question_request"] = {"question": question, "model_alias": alias}
-            snapshot["tool_catalog"] = dw_tools.catalog()
+            snapshot["tool_catalog"] = synthetic_data.catalog() if provider == "groq" else dw_tools.catalog()
             snapshot["tool_limits"] = {"calls": dw_tools.MAX_CALLS, "turns": dw_tools.MAX_TURNS,
                                        "rows": dw_tools.MAX_ROWS, "bytes": dw_tools.MAX_BYTES}
             snapshot["tool_trace"] = []
-            availability = dw_tools.availability()
+            availability = {"available": True, "source_fingerprint": "synthetic-v1", **synthetic_data.SOURCE} if provider == "groq" else dw_tools.availability()
             snapshot["dw_source"] = availability
             if not availability["available"]:
                 snapshot["status"] = "dw_unavailable"
@@ -169,13 +196,27 @@ def execute_run(payload: dict, principal: Principal) -> dict:
                                        "temperature": temperature, "max_tokens": max_tokens}}
             snapshot["model_turns"].append(turn_record)
             try:
-                message, serving = models.chat_turn(alias, messages, temperature, max_tokens,
-                                                    tools=tools, session_id=session_id)
+                message, serving = (groq.chat_turn(messages, temperature, max_tokens, tools=tools)
+                                    if provider == "groq" else
+                                    models.chat_turn(alias, messages, temperature, max_tokens,
+                                                     tools=tools, session_id=session_id))
+            except groq.GroqError as exc:
+                snapshot["status"] = exc.status
+                snapshot["error"] = {"stage": "provider", "type": exc.status, "message": str(exc),
+                                     "retry_after": exc.retry_after,
+                                     "finish_reason": exc.metadata.get("finish_reason")}
+                model.update({key: exc.metadata[key] for key in
+                              ("usage", "finish_reason", "served_model") if key in exc.metadata})
+                turn_record.update({"finished_at": _timestamp(), "error": snapshot["error"]})
+                break
             except models.ModelResponseError as exc:
                 snapshot["status"] = "response_error"
                 snapshot["error"] = {"stage": "response", "type": type(exc).__name__, "message": str(exc)}
                 turn_record.update({"finished_at": _timestamp(), "error": str(exc),
                                     "serving": exc.serving})
+                model.update({key: exc.serving.get(key) for key in
+                              ("served_model", "base_revision", "adapter_run", "adapter_hash",
+                               "provenance_status", "generation_confirmed", "session_id")})
                 break
             except Exception as exc:
                 snapshot["status"] = "model_error"
@@ -183,12 +224,15 @@ def execute_run(payload: dict, principal: Principal) -> dict:
                 turn_record.update({"finished_at": _timestamp(), "error": str(exc)})
                 break
             turn_record.update({"finished_at": _timestamp(), "serving": serving})
-            session_id = serving["session_id"]
-            model.update({key: serving.get(key) for key in
-                          ("endpoint", "served_model", "base_revision", "adapter_run", "adapter_hash",
-                           "provenance_status", "generation_confirmed", "session_id")})
+            session_id = serving.get("session_id")
+            keys = ("served_model", "usage", "finish_reason") if provider == "groq" else (
+                "endpoint", "served_model", "base_revision", "adapter_run", "adapter_hash",
+                "provenance_status", "generation_confirmed", "session_id")
+            model.update({key: serving.get(key) for key in keys})
+            if provider == "groq":
+                model["provenance_status"] = "provider_response"
             calls = message.get("tool_calls")
-            if calls is not None:
+            if calls is not None and calls != []:
                 if tools is None or not isinstance(calls, list) or len(calls) != 1 or len(snapshot["tool_trace"]) >= dw_tools.MAX_CALLS or turn_number >= dw_tools.MAX_TURNS:
                     snapshot["status"] = "tool_protocol_error"
                     snapshot["error"] = {"stage": "tool", "type": "ToolCallLimitOrShape"}
@@ -212,7 +256,8 @@ def execute_run(payload: dict, principal: Principal) -> dict:
                         return value
                     args = json.loads(function["arguments"], object_pairs_hook=unique_pairs,
                                       parse_constant=lambda _value: (_ for _ in ()).throw(ValueError("Invalid number")))
-                    args = dw_tools.validate_call(function.get("name"), args)
+                    args = (synthetic_data.validate_call(function.get("name"), args)
+                            if provider == "groq" else dw_tools.validate_call(function.get("name"), args))
                     trace["validated_arguments"] = args
                 except (ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
                     trace.update({"status": "failed", "error": {"stage": "tool_validation", "type": type(exc).__name__, "message": str(exc)}, "finished_at": _timestamp()})
@@ -221,8 +266,9 @@ def execute_run(payload: dict, principal: Principal) -> dict:
                     break
                 trace["name"] = function["name"]
                 try:
-                    result = dw_tools.execute(function["name"], args,
-                                              expected_fingerprint=availability["source_fingerprint"])
+                    result = (synthetic_data.execute(function["name"], args) if provider == "groq" else
+                              dw_tools.execute(function["name"], args,
+                                               expected_fingerprint=availability["source_fingerprint"]))
                     result_bytes = canonical(result)
                     if total_rows + len(result["rows"]) > dw_tools.MAX_ROWS or total_bytes + len(result_bytes) > dw_tools.MAX_BYTES:
                         raise dw_tools.DWResultLimitError("Cumulative DW tool result limit exceeded")
@@ -256,7 +302,8 @@ def execute_run(payload: dict, principal: Principal) -> dict:
             else:
                 snapshot["status"] = "answered_unverified"
                 snapshot["model_output"] = {"raw_text": answer, "serving": serving}
-                snapshot["checks"] = _checks(evidence_items, answer, verification_criteria["config"])
+                snapshot["checks"] = _checks(evidence_items, answer, verification_criteria["config"],
+                                             "synthetic fixture" if provider == "groq" else "DW")
             break
         else:
             snapshot["status"] = "tool_protocol_error"

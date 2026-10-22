@@ -11,7 +11,7 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(undefined, (error: AxiosError) => {
-  if (error.response?.status === 401 && bearer && !error.config?.url?.endsWith('/login')) {
+  if (error.response?.status === 401 && !error.config?.url?.endsWith('/login') && !error.config?.url?.endsWith('/me')) {
     bearer = null;
     sessionExpired?.();
   }

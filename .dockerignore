@@ -4,6 +4,8 @@
 !inference_api/requirements.txt
 !inference_api/src/
 !inference_api/src/**
+!inference_api/migrations/
+!inference_api/migrations/**
 !inference_api/private/
 !inference_api/private/bi_snapshot.json
 !inference_api/frontend/

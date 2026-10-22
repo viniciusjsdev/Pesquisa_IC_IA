@@ -35,7 +35,13 @@ variable "cloud_type" {
 
 variable "volume_in_gb" {
   type        = number
-  description = "Persistent volume capacity selected for the artifacts."
+  description = "Pod volume capacity in GB; 0 omits the volume for an ephemeral test."
+  default     = 0
+
+  validation {
+    condition     = var.volume_in_gb >= 0
+    error_message = "volume_in_gb must be zero or greater."
+  }
 }
 
 variable "container_disk_in_gb" {

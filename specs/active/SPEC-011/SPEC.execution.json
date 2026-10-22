@@ -1,0 +1,76 @@
+{
+  "$schema": "../../../.codex/schemas/project-spec-execution.schema.json",
+  "schema_version": "2.0",
+  "spec_id": "SPEC-011",
+  "contract_version": 1,
+  "status": "ready",
+  "automatic_handoff": false,
+  "execution": {
+    "classification": "normal_implementation",
+    "role": "developer",
+    "model": "gpt-5.6-terra",
+    "reasoning": "medium",
+    "routing_rationale": "A matriz diagnóstica e as fronteiras de correção estão definidas; a execução exige auditoria científica e testes de inferência locais antes da validação remota autorizada.",
+    "runtime_override": null,
+    "working_directory": ".",
+    "sandbox_mode": "workspace-write",
+    "approval_mode": "auto_review",
+    "thread": { "mode": "resume", "purpose": "implementation", "thread_id": "01a15554-1515-7ab0-a137-c13e96257335" },
+    "handoff_prompt": "Execute SPEC-011 a partir de SPEC.md, SPEC.execution.json, AGENTS.md e FineTuning/AGENTS.md. Enquanto SPEC-010 escreve no checkout compartilhado, faça apenas inventário/diagnóstico em leitura e não edite. Depois de reconciliar a fase 010, corrija apenas causas demonstradas, preserve pesos/resultados e valide localmente. Nunca inicie RunPod, ngrok, Terraform ou treino sem autorização específica. Registre lacunas e solicite revisão independente; não declare modelos corrigidos sem prova real."
+  },
+  "skills": [],
+  "references": [
+    { "path": "AGENTS.md", "purpose": "Regras do checkout e efeitos externos", "required": true },
+    { "path": "README.md", "purpose": "Mapa das frentes", "required": true },
+    { "path": "specs/README.md", "purpose": "Sequência e fronteira das SPECs", "required": true },
+    { "path": "FineTuning/AGENTS.md", "purpose": "Ordem das fontes científicas e proteção de artefatos", "required": true },
+    { "path": "FineTuning/CONTEXT_SUMMARY.md", "purpose": "Mapa de treino e avaliação", "required": true },
+    { "path": "FineTuning/docs/protocol_v1.md", "purpose": "Protocolo técnico canônico", "required": true },
+    { "path": "FineTuning/docs/modelos_disponiveis.md", "purpose": "Baterias A/B e hashes", "required": true },
+    { "path": "FineTuning/configs/eval/base.yaml", "purpose": "Configuração de avaliação B", "required": true },
+    { "path": "FineTuning/configs/eval/base_bateria_a.yaml", "purpose": "Configuração de avaliação A", "required": true },
+    { "path": "runpod/README.md", "purpose": "Execução remota e proteções", "required": true },
+    { "path": "runpod/serving/README.md", "purpose": "Serving e custos", "required": true },
+    { "path": "runpod/serving/manifest.json", "purpose": "Sete aliases e hashes", "required": true },
+    { "path": "runpod/serving/serving.py", "purpose": "Janela/contexto vLLM", "required": true },
+    { "path": "runpod/serving/verify_remote.py", "purpose": "Verificação remota explícita", "required": true },
+    { "path": "runpod/serving/evidence/2026-10-17-bancada-sete-aliases.md", "purpose": "Teto de 500 tokens observado", "required": true },
+    { "path": "runpod/serving/evidence/2026-10-17-finqa-sem-teto-l4.md", "purpose": "Repetição A e fragmento B", "required": true },
+    { "path": "runpod/serving/evidence/2026-10-17-streaming-bancada-l4.md", "purpose": "Transporte SSE confirmado", "required": true },
+    { "path": "inference_api/README.md", "purpose": "Bancada e estados atuais", "required": true },
+    { "path": "docs/arquitetura_inferencia_compartilhada.md", "purpose": "Topologia e fronteira científica", "required": true },
+    { "path": "inference_api/src/inference_api/models.py", "purpose": "Parser SSE e validação de turnos", "required": true },
+    { "path": "inference_api/src/inference_api/service.py", "purpose": "Prompt e snapshot", "required": true },
+    { "path": "BancoModeloUse/docs/arquitetura_avaliacao_modelos.md", "purpose": "Comparabilidade e harness pendente", "required": true }
+  ],
+  "validation": [
+    { "id": "VAL-001", "kind": "check", "command": "git diff --check", "required": true },
+    { "id": "VAL-002", "kind": "test", "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v", "required": true },
+    { "id": "VAL-003", "kind": "test", "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_serving.py -v", "required": true },
+    { "id": "VAL-004", "kind": "manual", "command": "Checar hashes SHA-256 dos seis adapters contra FineTuning/docs/modelos_disponiveis.md e runpod/serving/manifest.json", "required": true },
+    { "id": "VAL-005", "kind": "test", "command": "Executar matriz local sintética de parser, stop e uso e comparar configurações A/B versionadas", "required": true },
+    { "id": "VAL-006", "kind": "manual", "command": "Conferir diff, documentação, manifests, dados/resultados protegidos e recibos antes da revisão", "required": true }
+  ],
+  "review": {
+    "required": true,
+    "independence": "independent",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high",
+    "rationale": "Atribuição de causa a adapters e alteração de inferência podem afetar interpretação científica, reprodutibilidade e gasto remoto.",
+    "schema_path": ".codex/schemas/project-spec-review.schema.json",
+    "output_path": "specs/active/SPEC-011/evidence/review.json",
+    "handoff_prompt": "Revise independentemente SPEC-011 com protocolo, configs, manifests, matriz, diff, testes, recibos e completion. Verifique atribuição causal, condições pareadas, artefatos preservados, ausência de benchmark alegado e autorização específica antes de qualquer Pod."
+  },
+  "escalation": { "policy_version": "1.0", "allowed": ["terra_high", "needs_design", "sol_high"] },
+  "completion": {
+    "schema_path": ".codex/schemas/project-spec-completion.schema.json",
+    "output_path": "specs/active/SPEC-011/evidence/completion.json"
+  },
+  "baseline": {
+    "required": false,
+    "path": null,
+    "snapshot_path": null,
+    "rationale": "Diagnóstico e correção limitada por evidência; não reorganiza dados, pesos ou snapshots históricos."
+  },
+  "lifecycle": { "output_path": "specs/active/SPEC-011/evidence/lifecycle.json" }
+}

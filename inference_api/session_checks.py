@@ -80,7 +80,7 @@ def _app() -> dict:
             users = cursor.fetchall()
             cursor.execute("SHOW transaction_read_only")
             readonly = cursor.fetchone()[0]
-    if versions != [1, 2] or users != [("Nicoli", True), ("Vinicius", True)] or readonly != "on":
+    if versions != [1, 2, 3] or users != [("Nicoli", True), ("Vinicius", True)] or readonly != "on":
         raise GateFailure("Application migrations, approved identities or read-only connection are incomplete")
     return {"database": "db_inference_app", "schema_versions": versions,
             "active_researchers": [row[0] for row in users], "transaction_read_only": True}

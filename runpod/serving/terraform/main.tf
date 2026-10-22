@@ -20,12 +20,12 @@ resource "runpod_pod" "inference" {
   image_name           = var.image_name
   gpu_count            = var.gpu_count
   cloud_type           = var.cloud_type
-  volume_in_gb         = var.volume_in_gb
+  volume_in_gb         = var.volume_in_gb > 0 ? var.volume_in_gb : null
   container_disk_in_gb = var.container_disk_in_gb
-  volume_mount_path    = "/workspace"
+  volume_mount_path    = var.volume_in_gb > 0 ? "/workspace" : null
 
   # Only the authenticated gateway is reachable through RunPod's HTTPS proxy.
-  # vLLM itself binds to 127.0.0.1:8001 inside the Pod.
+  # vLLM itself binds to 127.0.0.1:8002 inside the Pod.
   ports = ["8000/http"]
 }
 

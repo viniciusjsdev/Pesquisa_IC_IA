@@ -6,18 +6,33 @@ function Field({ label, value }: { label: string; value: unknown }) {
   return <div className="bench-field"><strong>{label}</strong><span>{value === null || value === undefined || value === '' ? 'Não registrado' : String(value)}</span></div>;
 }
 
+const statusLabel: Record<string, string> = {
+  provider_bad_request: 'Pedido recusado pelo provedor (400)',
+  provider_tool_error: 'Provedor recusou a chamada de tool (400)',
+  provider_auth_error: 'Credencial do provedor recusada (401/403)',
+  provider_rate_limited: 'Cota ou limite da Groq (429)',
+  provider_error: 'Falha do provedor (5xx)',
+  provider_timeout: 'Tempo de espera do provedor esgotado',
+  provider_connection_error: 'Conexão com o provedor falhou',
+  stream_incomplete: 'Stream incompleto ou inválido',
+  context_limit: 'Resposta truncada pelo limite de contexto',
+  tool_error: 'Tool inválida',
+  insufficient_evidence: 'Evidência insuficiente',
+};
+
 export function RunDetail({ run }: { run: Run }) {
   const s = run.snapshot || {};
   const model = s.model || {};
   const bundle = s.evidence_bundle;
-  if (s.schema_version === 3) return <article className="run-card"><h3>Execução {run.id}</h3>
-    <Field label="Autor e data" value={`${run.author} · ${run.created_at}`}/><Field label="Estado" value={s.status}/>
-    <Field label="Modo de evidência" value={s.evidence_mode === 'dw_snapshot' ? 'Pacote fixo da DW' : 'LLM consulta a DW por tools'}/>
+  if (s.schema_version === 3 || s.schema_version === 4) return <article className="run-card"><h3>Execução {run.id}</h3>
+    <Field label="Autor e data" value={`${run.author} · ${run.created_at}`}/><Field label="Estado" value={statusLabel[s.status] || s.status}/>
+    <Field label="Provedor" value={s.provider || 'runpod (snapshot histórico)'}/><Field label="Modelo configurado" value={model.model_id || model.alias}/>
+    <Field label="Modo de evidência" value={s.evidence_mode === 'dw_snapshot' ? 'Pacote fixo da DW' : s.evidence_mode === 'dw_tools' ? 'LLM consulta a DW por tools' : s.evidence_mode === 'synthetic_snapshot' ? 'Pacote sintético fixo' : 'LLM escolhe tool sintética'}/>
     <p className="bench-notice">Execução exploratória; modos A e B respondem perguntas de avaliação distintas. Checks não são pontuação científica.</p>
-    <section><h4>Pergunta e origem</h4><Field label="Pergunta" value={s.question_request?.question}/><Field label="Domínio" value={s.question_request?.domain}/><Field label="Pacote e hash" value={s.packet ? `${s.packet.case_id} · ${s.packet.sha256}` : 'Não se aplica'}/><Field label="Fingerprint da DW" value={s.packet?.source_snapshot?.source_fingerprint || s.dw_source?.source_fingerprint}/><Field label="Versões e hash da consulta" value={s.packet ? `${s.packet.schema_version} · ${s.packet.query_contract_version} · ${s.packet.query_code_sha256}` : `${s.dw_source?.schema_version ?? '?'} · ${s.dw_source?.query_contract_version ?? '?'} · ${s.dw_source?.query_code_sha256 ?? '?'}`}/></section>
-    <section><h4>Prompt, critérios e modelo</h4><Field label="Prompt exato" value={s.prompt?.system_prompt}/><Field label="Revisão do prompt" value={s.prompt?.revision ?? 'Rascunho'}/><Field label="Revisão dos critérios" value={s.verification_criteria?.revision ?? 'Rascunho'}/><pre>{JSON.stringify(s.verification_criteria?.config || {}, null, 2)}</pre><Field label="Modelo servido e sessão" value={`${model.alias || '?'} · ${model.served_model || '?'} · ${model.session_id || '?'}`}/><pre>{JSON.stringify({ parameters: model.parameters, base_revision: model.base_revision, adapter_run: model.adapter_run, adapter_hash: model.adapter_hash }, null, 2)}</pre></section>
-    <section><h4>Evidência entregue</h4>{s.evidence_mode === 'dw_snapshot' ? <><Field label="SHA-256 dos bytes do arquivo" value={s.packet?.file_sha256}/><pre>{s.evidence_json_sent || 'Pacote não entregue.'}</pre></> : <><details><summary>Catálogo anunciado</summary><pre>{JSON.stringify(s.tool_catalog || [], null, 2)}</pre></details><pre>{JSON.stringify(s.tool_trace || [], null, 2)}</pre></>}</section>
-    <section><h4>Resposta, falhas e verificações</h4><Field label="Resposta bruta" value={s.model_output?.raw_text || 'Sem resposta'}/><pre>{JSON.stringify({ error: s.error, checks: s.checks }, null, 2)}</pre><details><summary>Turnos brutos do serving</summary><pre>{JSON.stringify(s.model_turns || [], null, 2)}</pre></details></section>
+    <section><h4>Pergunta e origem</h4><Field label="Pergunta" value={s.question_request?.question}/><Field label="Domínio" value={s.question_request?.domain || (s.provider === 'groq' ? 'fixture sintética' : null)}/><Field label="Pacote e hash" value={s.provider === 'groq' ? 'synthetic-v1; hash privado não se aplica' : s.packet ? `${s.packet.case_id} · ${s.packet.sha256}` : 'Não se aplica'}/><Field label="Fingerprint da DW" value={s.provider === 'groq' ? 'Não se aplica' : s.packet?.source_snapshot?.source_fingerprint || s.dw_source?.source_fingerprint}/><Field label="Versões e hash da consulta" value={s.provider === 'groq' ? 'Fixture sintética v1; consulta privada não se aplica' : s.packet ? `${s.packet.schema_version} · ${s.packet.query_contract_version} · ${s.packet.query_code_sha256}` : `${s.dw_source?.schema_version ?? '?'} · ${s.dw_source?.query_contract_version ?? '?'} · ${s.dw_source?.query_code_sha256 ?? '?'}`}/></section>
+    <section><h4>Prompt, critérios e modelo</h4><Field label="Prompt exato" value={s.prompt?.system_prompt}/><Field label="Revisão do prompt" value={s.prompt?.revision ?? 'Rascunho'}/><Field label="Revisão dos critérios" value={s.verification_criteria?.revision ?? 'Rascunho'}/><pre>{JSON.stringify(s.verification_criteria?.config || {}, null, 2)}</pre><Field label="Modelo servido e sessão" value={`${model.alias || '?'} · ${model.served_model || model.model_id || 'não confirmado'} · ${model.session_id || 'não se aplica'}`}/><pre>{JSON.stringify({ parameters: model.parameters, usage: model.usage, finish_reason: model.finish_reason, base_revision: model.base_revision, adapter_run: model.adapter_run, adapter_hash: model.adapter_hash }, null, 2)}</pre></section>
+    <section><h4>Evidência entregue</h4><Field label="Origem" value={s.evidence_source?.kind || s.dw_source?.database || s.packet?.source_snapshot?.kind}/>{['dw_snapshot', 'synthetic_snapshot'].includes(s.evidence_mode) ? <><Field label="SHA-256 dos bytes do arquivo" value={s.packet?.file_sha256}/><pre>{s.evidence_json_sent || 'Pacote não entregue.'}</pre></> : <><details><summary>Catálogo anunciado</summary><pre>{JSON.stringify(s.tool_catalog || [], null, 2)}</pre></details><pre>{JSON.stringify(s.tool_trace || [], null, 2)}</pre></>}</section>
+    <section><h4>Resposta, falhas e verificações</h4><Field label="Resposta bruta" value={s.model_output?.raw_text || 'Sem resposta'}/><pre>{JSON.stringify({ error: s.error, checks: s.checks }, null, 2)}</pre><details><summary>Turnos do provedor</summary><pre>{JSON.stringify(s.model_turns || [], null, 2)}</pre></details></section>
   </article>;
   return <article className="run-card">
     <h3>Execução {run.id}</h3><Field label="Autor e data" value={`${run.author} · ${run.created_at}`}/><Field label="Estado" value={s.status}/>

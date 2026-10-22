@@ -1,0 +1,54 @@
+{
+  "spec_id": "SPEC-011",
+  "contract_version": 1,
+  "status": "blocked",
+  "thread_id": "01a15554-1515-7ab0-a137-c13e96257335",
+  "runtime": {
+    "classification": "normal_implementation",
+    "model": "session-selected",
+    "reasoning": "session-selected"
+  },
+  "changed_files": [
+    {"path": "README.md", "change": "modified"},
+    {"path": "specs/README.md", "change": "modified"},
+    {"path": "runpod/serving/README.md", "change": "modified"},
+    {"path": "runpod/serving/diagnose_finqa.py", "change": "added"},
+    {"path": "inference_api/tests/test_spec011.py", "change": "added"},
+    {"path": "specs/active/SPEC-011/evidence/local-2026-10-19.md", "change": "added"},
+    {"path": "specs/active/SPEC-011/evidence/review.json", "change": "added"},
+    {"path": "specs/active/SPEC-011/evidence/lifecycle.json", "change": "added"},
+    {"path": "specs/active/SPEC-011/evidence/completion.json", "change": "added"}
+  ],
+  "artifacts": [
+    "specs/active/SPEC-011/evidence/local-2026-10-19.md",
+    "specs/active/SPEC-011/evidence/review.json",
+    "specs/active/SPEC-011/evidence/lifecycle.json"
+  ],
+  "acceptance_evidence": [
+    {"id": "AC-001", "result": "passed", "evidence": ["specs/active/SPEC-011/evidence/local-2026-10-19.md"], "notes": ["A and B observations, training and serving differences, competing hypotheses and unresolved cause are recorded; no adapter fix claimed."]},
+    {"id": "AC-002", "result": "passed", "evidence": ["inference_api/tests/test_spec011.py", "specs/active/SPEC-011/evidence/local-2026-10-19.md"], "notes": ["Synthetic parser tests cover repeated output with length, fragment with stop, usage and raw-byte preservation; direct historical vLLM JSON separately establishes the source outputs."]},
+    {"id": "AC-003", "result": "passed", "evidence": ["runpod/serving/diagnose_finqa.py", "runpod/serving/README.md", "inference_api/tests/test_spec011.py"], "notes": ["Paired 15-call matrix, identity and hash preflight, bounded runbook and partial receipts prepared locally; no real inference executed."]},
+    {"id": "AC-004", "result": "not-run", "evidence": [], "notes": ["Requires a specifically authorized paid Pod session and private request transfer; no new remote run, adapter correction or scientific evaluation was performed."]},
+    {"id": "AC-005", "result": "passed", "evidence": ["specs/active/SPEC-011/evidence/review.json"], "notes": ["Independent reviewer approved the local/offline scope after P1 and P2 corrections; remote and scientific claims remain outside that approval."]}
+  ],
+  "validation_evidence": [
+    {"validation_id": "VAL-001", "canonical_command": "git diff --check", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Working tree diff checked on 2026-10-19"], "notes": ["Preexisting LF/CRLF warnings did not indicate whitespace errors."]},
+    {"validation_id": "VAL-002", "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["57 tests OK; eight isolated database tests skipped without opt-in"], "notes": ["Executed with -B to avoid bytecode writes; same test selection as canonical command."]},
+    {"validation_id": "VAL-003", "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_serving.py -v", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Eight test_serving.py tests OK"], "notes": ["Executed with -B to avoid bytecode writes."]},
+    {"validation_id": "VAL-004", "canonical_command": "Checar hashes SHA-256 dos seis adapters contra FineTuning/docs/modelos_disponiveis.md e runpod/serving/manifest.json", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Six local adapter weights and configs matched manifest and catalog on 2026-10-19", "specs/active/SPEC-011/evidence/local-2026-10-19.md"], "notes": ["File inventory only; no load or generation."]},
+    {"validation_id": "VAL-005", "canonical_command": "Executar matriz local sintética de parser, stop e uso e comparar configurações A/B versionadas", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Six test_spec011.py tests OK", "Read-only plan: expected request SHA-256 and 15 proposed calls", "specs/active/SPEC-011/evidence/local-2026-10-19.md"], "notes": ["No remote execute or model generation."]},
+    {"validation_id": "VAL-006", "canonical_command": "Conferir diff, documentação, manifests, dados/resultados protegidos e recibos antes da revisão", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["specs/active/SPEC-011/evidence/review.json", "specs/active/SPEC-011/evidence/local-2026-10-19.md"], "notes": ["Independent reviewer inspected local changes and confirmed protected artifacts untouched by this SPEC."]}
+  ],
+  "deviations": [
+    "Execution used the existing SPEC-011 thread and session-selected runtime; no project router launch was performed.",
+    "The real matrix and any adapter correction await a separate authorized remote session; local diagnostics do not establish scientific accuracy.",
+    "The eight isolated database tests require an opt-in database and were skipped."
+  ],
+  "unresolved_items": [
+    "Primary cause of FT-FinQA A repetition and B insufficient answer remains unresolved among prompt format, generation policy, weights and unknown training base revision.",
+    "A paid RunPod matrix requires current price and capacity verification, explicit time/cost authorization and authorization to transfer the preserved private request.",
+    "The remote execute path and any model-quality claim require real receipt/readback; formal scientific evaluation harness remains pending."
+  ],
+  "needs_design": null,
+  "usage": null
+}

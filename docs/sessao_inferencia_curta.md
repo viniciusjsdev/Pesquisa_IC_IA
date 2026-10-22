@@ -5,6 +5,15 @@
 Nenhuma Pod, geração remota ou URL ngrok foi ativada por esta SPEC. O ensaio
 descrito abaixo é exploratório: não usa gold set nem produz métricas do artigo.
 
+**Sessão posterior em 17/10/2026:** com autorização do usuário, uma RTX A5000
+foi reiniciada pelo console e a Bancada foi testada pelos dois modos com
+`qwen-base` via ngrok. Um adapter falhou em um run; a Pod foi parada a
+US$ 0,00/h. Veja a [evidência da integração](../runpod/serving/evidence/2026-10-17-integracao-bancada.md).
+O pré-voo desta sessão ficou `BLOCKED` no gate de Git por alterações sem
+commit e, após a parada, por ausência intencional do endpoint remoto. DW,
+banco da aplicação, adapters e limite global foram confirmados. A sessão
+foi registrada como exploratória, sem promover o pré-voo completo a aprovado.
+
 Este roteiro pressupõe uma janela inferior a 24 horas, um operador responsável
 por acompanhar o custo e autorização explícita para **cada** ativação externa.
 O teto manual de US$ 10 exibido no front não é um limite imposto pela RunPod.
@@ -28,7 +37,7 @@ relatório para confirmar separadamente os gates locais e **não** declarar a
 sessão pronta. Repita o pré-voo completo após obter a origem HTTPS e as
 credenciais da sessão. O pré-voo não consulta a URL: verifica que ela é uma
 origem HTTPS sem credenciais embutidas. Ele falha
-se o Git não estiver limpo, se faltar a DW v1 em `db_pesquisa_dw`, migrações 1/2
+se o Git não estiver limpo, se faltar a DW v1 em `db_pesquisa_dw`, migrações 1/2/3
 ou os dois usuários ativos no banco da aplicação, se faltar qualquer adapter
 ou SHA-256, revisão exata da base, URL/token protegido ou a configuração de
 uma inferência global sem cotas diárias. As conexões de aplicação e DW usam transações somente leitura em
@@ -118,7 +127,7 @@ de outros túneis continua obrigatória para afirmar que PostgreSQL e vLLM
 interno não estão expostos por engano. Registrar URL, horário, processo e
 destino vistos, sem publicar a URL em documentação versionada.
 
-## 5. Ensaio ponta a ponta pendente de novo contrato
+## 5. Ensaio ponta a ponta e próximo contrato
 
 A SPEC-009 substituiu `scope` por `dw_snapshot` e `dw_tools` para novos runs.
 O comando antigo `session_checks.py rehearsal` foi retirado do fluxo ativo
@@ -127,12 +136,22 @@ consulta como se pudesse representar a pesquisa por tools. Não executá-lo nem
 adaptar seus resultados para os modos novos. O pré-voo local e `tunnel-check`
 continuam disponíveis.
 
-Antes de uma sessão paga, definir e revisar um ensaio com pacotes candidatos
-identificados por ID/hash, perguntas livres para tools, recibo do serving real
-Qwen2.5, limites por turno, autores e readback dos snapshots v3. Essa preparação
-não cria gold set nem benchmark científico. Cada geração externa continua
-exigindo acionamento explícito da sessão; em resposta perdida, reconciliar o
-histórico por identidade exata antes de tentar novamente.
+O ensaio exploratório de 17/10/2026 usou um pacote candidato identificado por
+ID/hash, uma pergunta livre para tools, recibo do serving real Qwen2.5, autor
+autenticado e readback de três snapshots v3. A base respondeu nos dois modos;
+o run de FT-FinQA A foi registrado como `response_error` após saída truncada,
+sem reenvio. Para comparação científica, ainda é preciso definir casos,
+gold set, rubrica, parâmetros iguais, identidade histórica dos pesos e
+protocolo versionado. Em resposta perdida, reconciliar o histórico por
+identidade exata antes de tentar novamente.
+
+O [replay posterior com streaming e jobs](../runpod/serving/evidence/2026-10-17-streaming-bancada-l4.md)
+em 17/10/2026 executou a base e FT-FinQA A pela Bancada autenticada no ngrok.
+O caso longo chegou completo em SSE sem HTTP 524 e o job ficou gravado após
+refresh e novo login, mas o adapter repetiu texto até `finish_reason=length`
+na janela de 4.096 tokens. A Pod L4 foi parada a US$ 0,00/h, sem volume
+persistente. Isso confirma o caminho de infraestrutura de um job por vez;
+Docker, carga sustentada e avaliação científica permanecem pendentes.
 
 ## 6. Exportação, custo e encerramento
 
