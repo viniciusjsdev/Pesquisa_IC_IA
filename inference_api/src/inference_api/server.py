@@ -126,7 +126,12 @@ class Handler(BaseHTTPRequestHandler):
                     cleared += "; Secure"
                 self._send(200, {"status": "logged_out"}, {"Set-Cookie": cleared} if cookie_token else None)
             elif method == "GET" and path == "/api/models":
-                self._send(200, models.available_models())
+                from .model_service.registry import public_profiles
+                self._send(200, public_profiles())
+            elif method == "GET" and path == "/api/bench/scenarios":
+                from .agent_harness import approved_catalog
+                self._send(200, {"scenarios": ["fixed_evidence", "data_access"],
+                                 "catalog_version": approved_catalog.load()["version"]})
             elif method == "GET" and path == "/api/bench/evidence-packets":
                 self._send(200, evidence_packets.list_packets())
             elif method == "GET" and path == "/api/bench/dw-tools":

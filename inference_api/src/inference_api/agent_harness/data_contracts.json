@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "scope": "local_readonly_pilot",
+  "catalog_sha256": "d2a4a30815f97a7065b9df46fcf36c9e70966cbe3e8c9f0cdd410ba7c8b0f1fb",
+  "dw_query_code_sha256": "f295a6ad1ec35455f3cfd297106748d86ef0faccd2fb2b46753ad7f2f054ddde",
+  "cross_database_joins": false,
+  "fixed_output_fields": {
+    "machine": ["machine_id", "operation_rows", "reported_operation_quantity", "downtime_rows", "downtime_minutes"],
+    "product": ["product_id", "operation_rows", "reported_operation_quantity", "sale_rows", "observed_sales_value"],
+    "financial": ["observation_id", "observed_day", "reported_revenue", "reported_net_profit"],
+    "quality": ["product_id", "inspection_rows", "approved_reported", "rejected_reported", "exceeds_lot_rows"],
+    "material": ["material_id", "consumption_rows", "quantity_consumed", "price_observation_rows", "min_observed_unit_price", "max_observed_unit_price"]
+  },
+  "lineage": {
+    "contributors": {
+      "fields": ["fact", "total", "ids", "next_after"],
+      "filters": ["kind", "year", "id", "fact", "after"],
+      "meaning": "Página de IDs de fatos DW que contribuem para um agregado; next_after exige nova chamada para continuar."
+    },
+    "trace": {
+      "fields": ["mapped_id", "original_id", "period_index", "source_database", "source_table", "source_csv", "source_sha256"],
+      "filters": ["fact", "id"],
+      "meaning": "Proveniência do fato DW e arquivo de origem; não entrega raw_record ou typed_record ao agente."
+    }
+  }
+}

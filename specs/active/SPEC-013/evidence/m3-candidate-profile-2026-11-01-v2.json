@@ -1,0 +1,248 @@
+{
+  "database": "db_pesquisa_dw",
+  "mode": "read_only_counts_and_ids",
+  "source_values_exposed": false,
+  "candidate_profile": {
+    "generated_downtime_machine_year": [
+      {
+        "year": 2021,
+        "machine_id": 2000002,
+        "rows": 13
+      },
+      {
+        "year": 2021,
+        "machine_id": 2000003,
+        "rows": 11
+      },
+      {
+        "year": 2015,
+        "machine_id": 3,
+        "rows": 9
+      },
+      {
+        "year": 2021,
+        "machine_id": 2000004,
+        "rows": 9
+      },
+      {
+        "year": 2021,
+        "machine_id": 2000005,
+        "rows": 7
+      },
+      {
+        "year": 2015,
+        "machine_id": 1,
+        "rows": 6
+      },
+      {
+        "year": 2017,
+        "machine_id": 1000001,
+        "rows": 6
+      },
+      {
+        "year": 2017,
+        "machine_id": 1000003,
+        "rows": 6
+      },
+      {
+        "year": 2017,
+        "machine_id": 1000004,
+        "rows": 6
+      },
+      {
+        "year": 2021,
+        "machine_id": 2000001,
+        "rows": 5
+      },
+      {
+        "year": 2015,
+        "machine_id": 4,
+        "rows": 3
+      },
+      {
+        "year": 2015,
+        "machine_id": 2,
+        "rows": 2
+      }
+    ],
+    "finance_observations_by_year": [
+      {
+        "year": 2015,
+        "rows": 12
+      },
+      {
+        "year": 2017,
+        "rows": 13
+      },
+      {
+        "year": 2018,
+        "rows": 11
+      },
+      {
+        "year": 2021,
+        "rows": 13
+      },
+      {
+        "year": 2022,
+        "rows": 12
+      },
+      {
+        "year": 2023,
+        "rows": 11
+      }
+    ],
+    "downtime_by_year": [
+      {
+        "year": 2015,
+        "rows": 117
+      },
+      {
+        "year": 2016,
+        "rows": 108
+      },
+      {
+        "year": 2017,
+        "rows": 118
+      },
+      {
+        "year": 2018,
+        "rows": 91
+      },
+      {
+        "year": 2019,
+        "rows": 112
+      },
+      {
+        "year": 2020,
+        "rows": 99
+      },
+      {
+        "year": 2021,
+        "rows": 160
+      },
+      {
+        "year": 2022,
+        "rows": 109
+      },
+      {
+        "year": 2023,
+        "rows": 115
+      },
+      {
+        "year": 2024,
+        "rows": 139
+      },
+      {
+        "year": 2025,
+        "rows": 122
+      }
+    ],
+    "operations_by_year": [
+      {
+        "year": 2015,
+        "rows": 35040
+      },
+      {
+        "year": 2016,
+        "rows": 35136
+      },
+      {
+        "year": 2017,
+        "rows": 35044
+      },
+      {
+        "year": 2018,
+        "rows": 35040
+      },
+      {
+        "year": 2019,
+        "rows": 35040
+      },
+      {
+        "year": 2020,
+        "rows": 35136
+      },
+      {
+        "year": 2021,
+        "rows": 43804
+      },
+      {
+        "year": 2022,
+        "rows": 43800
+      },
+      {
+        "year": 2023,
+        "rows": 43800
+      },
+      {
+        "year": 2024,
+        "rows": 43920
+      },
+      {
+        "year": 2025,
+        "rows": 43800
+      },
+      {
+        "year": 2026,
+        "rows": 5
+      }
+    ],
+    "sales_by_year": [
+      {
+        "year": 2015,
+        "rows": 16
+      },
+      {
+        "year": 2016,
+        "rows": 4
+      },
+      {
+        "year": 2017,
+        "rows": 9
+      },
+      {
+        "year": 2018,
+        "rows": 10
+      },
+      {
+        "year": 2019,
+        "rows": 8
+      },
+      {
+        "year": 2020,
+        "rows": 13
+      },
+      {
+        "year": 2021,
+        "rows": 11
+      },
+      {
+        "year": 2022,
+        "rows": 11
+      },
+      {
+        "year": 2023,
+        "rows": 17
+      },
+      {
+        "year": 2024,
+        "rows": 14
+      },
+      {
+        "year": 2025,
+        "rows": 7
+      }
+    ],
+    "machine_without_2026_facts": [
+      {
+        "machine_id": 1
+      },
+      {
+        "machine_id": 2
+      },
+      {
+        "machine_id": 3
+      }
+    ]
+  }
+}

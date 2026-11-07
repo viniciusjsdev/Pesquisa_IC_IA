@@ -1,4 +1,4 @@
-"""Allowlisted read-only access to the five DW v1 fixed queries."""
+"""Allowlisted read-only access to five fixed DW queries on known V1/V2 loads."""
 import hashlib
 from contextlib import closing
 from pathlib import Path
@@ -15,6 +15,7 @@ from BancoModeloUse.dw import fixed_queries  # noqa: E402
 from model_evaluation.export import canonical  # noqa: E402
 
 NAMES = ("machine", "product", "financial", "quality", "material")
+KNOWN_V2_FINGERPRINT = "66f8808cf83902ff6c7fd277937bf8e0671482058f540f3ea9c1ec8c5a182800"
 MAX_CALLS = 5
 MAX_TURNS = 6
 MAX_ROWS = 200
@@ -27,6 +28,18 @@ class DWFingerprintError(ValueError):
 
 class DWResultLimitError(ValueError):
     """A fixed query exceeded the Bancada's operational result budget."""
+
+
+def _supported_migration(rows: list) -> tuple[int, str]:
+    """Accept historical V1 and the reviewed, immutable canonical V2 load."""
+    if len(rows) != 1 or type(rows[0][0]) is not int or not isinstance(rows[0][1], str):
+        raise DWFingerprintError("DW migration unavailable")
+    version, digest = rows[0][0], rows[0][1].strip()
+    if not re.fullmatch(r"[0-9a-f]{64}", digest):
+        raise DWFingerprintError("DW fingerprint invalid")
+    if version != 1 and not (version == 2 and digest == KNOWN_V2_FINGERPRINT):
+        raise DWFingerprintError("DW migration not in the reviewed allowlist")
+    return version, digest
 
 
 def catalog() -> list[dict]:
@@ -67,14 +80,12 @@ def availability() -> dict:
                     cur.execute("SET TRANSACTION READ ONLY")
                     cur.execute("SELECT version, source_fingerprint FROM dw.schema_migrations")
                     rows = cur.fetchall()
-        if (len(rows) != 1 or rows[0][0] != 1 or not isinstance(rows[0][1], str)
-                or not re.fullmatch(r"[0-9a-f]{64}", rows[0][1].strip())):
-            raise ValueError("DW migration or fingerprint unavailable")
-        return {"available": True, "database": "db_pesquisa_dw", "schema_version": 1,
-                "query_contract_version": 1, "source_fingerprint": rows[0][1].strip(),
+        version, digest = _supported_migration(rows)
+        return {"available": True, "database": "db_pesquisa_dw", "schema_version": version,
+                "query_contract_version": 1, "source_fingerprint": digest,
                 "query_code_sha256": hashlib.sha256(Path(fixed_queries.__file__).read_bytes()).hexdigest()}
     except (psycopg2.Error, ValueError, OSError):
-        return {"available": False, "reason": "DW isolada indisponível ou sem migração v1"}
+        return {"available": False, "reason": "DW isolada indisponível ou sem migração permitida"}
 
 
 def execute(name: str, arguments: dict, *, expected_fingerprint: str | None = None) -> dict:
@@ -85,9 +96,8 @@ def execute(name: str, arguments: dict, *, expected_fingerprint: str | None = No
                 cur.execute("SET TRANSACTION READ ONLY")
                 cur.execute("SELECT version, source_fingerprint FROM dw.schema_migrations")
                 rows = cur.fetchall()
-            if (len(rows) != 1 or rows[0][0] != 1 or
-                    not isinstance(rows[0][1], str) or
-                    expected_fingerprint is not None and rows[0][1].strip() != expected_fingerprint):
+            _, digest = _supported_migration(rows)
+            if expected_fingerprint is not None and digest != expected_fingerprint:
                 raise DWFingerprintError("DW fingerprint changed or migration unavailable")
             result = fixed_queries.query(name, args["year"], args.get("id"),
                                          connection=conn, readonly_already=True)

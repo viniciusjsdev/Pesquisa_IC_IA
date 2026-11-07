@@ -1,0 +1,24 @@
+{
+  "cluster": "127.0.0.1:5544",
+  "role": "spec013_reader",
+  "credential_file_ignored": true,
+  "catalog_file_unchanged": true,
+  "databases": {
+    "db_pesquisa_dw": {
+      "approved_tables_selectable": 12,
+      "default_read_only": true,
+      "schema_create": false
+    },
+    "db_industrial": {
+      "approved_tables_selectable": 4,
+      "default_read_only": true,
+      "schema_create": false
+    },
+    "db_financeiro": {
+      "approved_tables_selectable": 3,
+      "default_read_only": true,
+      "schema_create": false
+    }
+  },
+  "provider_called": false
+}

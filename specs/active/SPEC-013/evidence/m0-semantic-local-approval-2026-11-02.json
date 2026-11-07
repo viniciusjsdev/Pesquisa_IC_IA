@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "spec_id": "SPEC-013",
+  "review_date_local": "2026-11-02",
+  "timezone": "America/Sao_Paulo",
+  "reviewer": "pesquisador_responsavel_nesta_conversa",
+  "review_source": {
+    "kind": "user_reply_to_detailed_semantic_catalog_question",
+    "question_item_id": "call_c13a1a7200254f7190341c5371b5fc80/0",
+    "reply_verbatim": "Aprovo o contrato detalhado para uso local"
+  },
+  "reviewed_document": "specs/active/SPEC-013/evidence/m0-semantic-activation-review-2026-11-02.md",
+  "catalog_candidate_path": "specs/active/SPEC-013/evidence/m0-semantic-map-candidate-2026-11-01.json",
+  "catalog_candidate_sha256": "d2a4a30815f97a7065b9df46fcf36c9e70966cbe3e8c9f0cdd410ba7c8b0f1fb",
+  "data_contract_path": "inference_api/src/inference_api/agent_harness/data_contracts.json",
+  "data_contract_sha256": "1ef705c9a42702b451f2ea18d137626d2ec11f25422400e2d1bd9390ca4e6b3b",
+  "approved_scope": "local_readonly_pilot_all_12_sources_without_cross_database_joins",
+  "external_provider_transmission_approved": false,
+  "scientific_scoring_approved": false
+}

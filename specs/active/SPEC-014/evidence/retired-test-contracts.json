@@ -1,0 +1,164 @@
+[
+  {
+    "file": "inference_api/tests/test_agent_harness.py",
+    "test": "test_job_dispatch_runs_synthetic_harness_once",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_agent_harness.py",
+    "test": "test_bancada_synthetic_mode_persists_trace_without_database_access",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_agent_harness.py",
+    "test": "test_harness_rejects_gpt_model_and_wrong_mode_parameters",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_contract.py",
+    "test": "test_mode_and_cross_mode_rejected_before_dependencies",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_contract.py",
+    "test": "test_snapshot_uses_exact_packet_question_and_json",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_contract.py",
+    "test": "test_snapshot_accepts_empty_tool_calls_in_normal_completion",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_contract.py",
+    "test": "test_model_chooses_tool_and_result_is_returned",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_contract.py",
+    "test": "test_tool_protocol_and_no_evidence_fail_closed",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_contract.py",
+    "test": "test_dw_unavailable_does_not_call_model",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_contract.py",
+    "test": "test_post_validation_query_and_limit_failures_are_distinct",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_contract.py",
+    "test": "test_cumulative_budget_and_call_turn_limit",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec009_http.py",
+    "test": "test_auth_packet_listing_and_both_post_modes",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec010.py",
+    "test": "test_groq_dw_tool_choice_sends_only_validated_readonly_result",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec010.py",
+    "test": "test_synthetic_packet_and_tool_choice_never_touch_private_sources",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec010.py",
+    "test": "test_failed_snapshot_keeps_provider_identity_and_retry_metadata",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec010.py",
+    "test": "test_invalid_tool_and_no_tool_are_failures",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec012.py",
+    "test": "test_authenticated_local_http_uses_simulated_responses_transport",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec012.py",
+    "test": "test_catalog_preflight_and_mode_matrix",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec012.py",
+    "test": "test_service_synthetic_and_invalid_tool_never_touch_dw",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec012.py",
+    "test": "test_authorized_dw_modes_send_only_selected_packet_or_chosen_tool_result",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec012.py",
+    "test": "test_stateless_replay_counts_evidence_in_each_attempt",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec013_http.py",
+    "test": "test_authenticated_job_idempotency_and_saved_snapshot_readback",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec013_local_queries.py",
+    "test": "test_pilot_dispatch_keeps_local_catalog_and_trace_with_mocked_provider",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec013_openai_pilot.py",
+    "test": "test_alias_and_provider_cannot_be_swapped",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec013_openai_pilot.py",
+    "test": "test_groq_permission_does_not_enable_openai",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec013_openai_pilot.py",
+    "test": "test_snapshot_records_openai_and_real_query_adapter",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  },
+  {
+    "file": "inference_api/tests/test_spec013_pilot_http.py",
+    "test": "test_pilot_run_preserves_trace_when_storage_fails",
+    "archive_sha256_source": "implementation-baseline.json",
+    "replacement": "test_spec014.py + verify_spec014_local.py (A/B API/jobs/auth/DB/browser)"
+  }
+]

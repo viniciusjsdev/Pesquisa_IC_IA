@@ -1,0 +1,81 @@
+{
+  "case_id": "I3",
+  "run_label": "v6-i3-r1",
+  "matrix_repetition": 1,
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "destination": "https://api.groq.com/openai/v1/chat/completions",
+  "question_sha256": "03dc383e07ad19ed2a8c42aa72ac991eede1107cfa41d4a738a8096bb3dd4083",
+  "approved_case_manifest_sha256": "dc8b691165da7c0be071623cf5bfc195284a676c872c93b1b05a8a505b9364c3",
+  "private_run_sha256": "cffd793234fd03a8aea61a55b1c7b7a42e3904c19ca7518a88a3027987361ed7",
+  "job_id": "b1350c22-5a85-4c98-82bc-a69797fd1a51",
+  "transient_readbacks": 0,
+  "job_status": "completed",
+  "run_id": "c251a9fe-2dc2-40b1-a1f9-ed40c4ffefeb",
+  "run_status": "answered_unverified",
+  "model_calls": 11,
+  "queries": 1,
+  "source_ids": [
+    "paradas_maquinas_geradas"
+  ],
+  "role_statuses": [
+    {
+      "role": "analista_pergunta",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "especialista_indice",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "especialista_dados",
+      "status": "rejected",
+      "error": "specialist_missing_source_ref"
+    },
+    {
+      "role": "especialista_dados",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "especialista_indice",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "especialista_dados",
+      "status": "rejected",
+      "error": "specialist_missing_source_ref"
+    },
+    {
+      "role": "especialista_dados",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "selecionador_fontes",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "planejador_consulta",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "revisor_evidencias",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "redator_resposta",
+      "status": "validated",
+      "error": null
+    }
+  ],
+  "scientific_score": null,
+  "automatic_retry": false,
+  "authentication_note": "local bearer fixture mapped to existing researcher"
+}

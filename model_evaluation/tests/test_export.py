@@ -80,6 +80,42 @@ class ExportTests(unittest.TestCase):
         self.assertNotIn("password", payload.decode())
         self.assertNotIn("127.0.0.1", payload.decode())
 
+    def test_v2_explicit_packet_and_v1_compatibility(self):
+        report = {"database": "db_pesquisa_dw", "schema_version": 2,
+                  "source_fingerprint": subject.KNOWN_V2_FINGERPRINT,
+                  "source_files": 167, "quality_flags": {}}
+        v1 = self.packets()["integrated-1"]
+        v2 = subject.build_packets([fixture_case()], verify_fn=lambda: report,
+                                   query_fn=fixture_query, query_code_path=self.code,
+                                   dw_version=2)["integrated-1"]
+        self.assertEqual(subject.verify_packet_bytes(v1)["body"]["source_snapshot"]["schema_version"], 1)
+        body = subject.verify_packet_bytes(v2)["body"]
+        self.assertEqual(body["source_snapshot"]["schema_version"], 2)
+        self.assertEqual(body["quality_summary"],
+                         {"scope": "local_dw_v2_readback", "flags": {}})
+        schema = json.loads((SCHEMAS / "evidence_packet.schema.json").read_text(encoding="utf-8"))
+        validator = Draft202012Validator(schema)
+        self.assertTrue(validator.is_valid(json.loads(v1)))
+        self.assertTrue(validator.is_valid(json.loads(v2)))
+        for mutate in (lambda p: p["body"]["source_snapshot"].update(source_files=166),
+                       lambda p: p["body"]["quality_summary"].update(scope="global_dw_load")):
+            tampered = json.loads(v2)
+            mutate(tampered)
+            self.assertFalse(validator.is_valid(tampered))
+        for mutation in (lambda r: r.update(source_fingerprint="b" * 64),
+                         lambda r: r.update(source_files=166),
+                         lambda r: r.update(quality_flags={"claimed": 0})):
+            invalid = copy.deepcopy(report)
+            mutation(invalid)
+            with self.assertRaises(subject.ExportError):
+                subject.build_packets([fixture_case()], verify_fn=lambda: invalid,
+                                      query_fn=lambda *_: self.fail("query called"),
+                                      query_code_path=self.code, dw_version=2)
+        with self.assertRaises(subject.ExportError):
+            subject.build_packets([fixture_case()], verify_fn=lambda: report,
+                                  query_fn=lambda *_: self.fail("query called"),
+                                  query_code_path=self.code)
+
     def test_schema_rejects_tampered_filters_coverage_and_row(self):
         schema = json.loads((SCHEMAS / "evidence_packet.schema.json").read_text(encoding="utf-8"))
         original = json.loads(self.packets()["integrated-1"])

@@ -1,0 +1,21 @@
+{
+  "spec_id": "SPEC-012",
+  "contract_version": 1,
+  "base_commit": "13d7df5c748f79387d34f39cd30b6cf82c96c869",
+  "recorded_on": "2026-10-26",
+  "implementation": "completed_locally",
+  "review": "approved_openai_dw_2026-10-26",
+  "external_openai_inference": "synthetic_snapshot_and_dw_tools_confirmed_2026-10-25_dw_snapshot_confirmed_2026-10-26",
+  "real_dw_access": "financial_2021_read_only_confirmed_2026-10-25",
+  "openai_dw_gate": "enabled_in_ignored_local_env_and_confirmed_by_fresh_backend_ui_2026-10-26",
+  "local_retention_decision": "approved_existing_full_snapshot_no_ttl_two_researchers_2026-10-26",
+  "scientific_evaluation": "not_run",
+  "completion": "specs/active/SPEC-012/evidence/completion.json",
+  "local_evidence": "specs/active/SPEC-012/evidence/local-2026-10-25.md",
+  "review_evidence": "specs/active/SPEC-012/evidence/review.json",
+  "dw_review_evidence": "specs/active/SPEC-012/evidence/review_dw.json",
+  "synthetic_external_evidence": "specs/active/SPEC-012/evidence/openai-synthetic-real-2026-10-25.md",
+  "dw_tools_external_evidence": "specs/active/SPEC-012/evidence/openai-dw-tools-real-2026-10-25.md",
+  "dw_snapshot_external_evidence": "specs/active/SPEC-012/evidence/openai-dw-snapshot-real-2026-10-26.md",
+  "dw_review": "approved"
+}

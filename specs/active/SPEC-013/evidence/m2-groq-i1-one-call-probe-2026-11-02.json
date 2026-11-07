@@ -1,0 +1,17 @@
+{
+  "case_id": "I1",
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "destination": "https://api.groq.com/openai/v1/chat/completions",
+  "question_sha256": "922cd752c90a8e026ec3607b9818f65a257299b3c8aa163e9de89218ba1860cf",
+  "contract_sha256": "dc8b691165da7c0be071623cf5bfc195284a676c872c93b1b05a8a505b9364c3",
+  "private_trace_sha256": "f615f25a6339d8b768ccd2c737371559b299bdc9b1ebd232bc14d722d6f3426c",
+  "model_calls": 1,
+  "queries": 0,
+  "first_role": "analista_pergunta",
+  "first_role_status": "validated",
+  "first_role_error": null,
+  "run_status": "contract_error",
+  "scientific_score": null,
+  "automatic_retry": false
+}

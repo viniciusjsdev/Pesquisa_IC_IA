@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-06",
+  "reason": "User rejected stretched layout. Restore section order, shorten dimensions and reestablish readable text ratios.",
+  "page_id": "rC3Onoxkcgc0oOyFh0Ck",
+  "saved_in_drive": true,
+  "readback_cells_match": true,
+  "cells": 154,
+  "content_preserved": [
+    "seven role contract cards and input/output JSON",
+    "B query feedback and budget loops",
+    "three-domain example",
+    "A no-query policy",
+    "provider normalization boundary"
+  ],
+  "canonical_artifacts": {
+    "diagram-spec014.xml": "2c5bdf445344e35883993dde95ab64c92da68bd13539ebe69d11344ca43874ca",
+    "diagram-spec014.drawio": "00b5dd89d7ae6f5315b85aadfcb885cbf16c63617ffed2bbd8ceee4a34f7f932",
+    "diagram-readback.xml": "919e8128d530ebb7a378b47d68025c7204ffb38c47c701929f44adf5a34a410b"
+  },
+  "supersedes": "Diagram hashes and screenshot in planning-validation.json. Functional SPEC unchanged.",
+  "code_changed": false
+}

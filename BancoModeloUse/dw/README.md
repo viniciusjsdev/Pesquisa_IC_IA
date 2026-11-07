@@ -1,6 +1,16 @@
 # DW local de pesquisa (SPEC-006)
 
+Em 01/11/2026, a tool exploratória da Bancada passou a reconhecer a carga V2
+somente pelo fingerprint canônico registrado no código e a consulta `machine`
+passou a listar as fontes de paradas presentes no recorte consultado, incluindo
+as geradas quando houver. Esta é compatibilidade de leitura das cinco tools;
+`dw/cli.py verify` e o exportador de pacotes ainda exigem a V1 e precisam de
+uma reconciliação V2 completa antes de novos pacotes. O harness da SPEC-013
+continua separado e em desenho.
+
 **Estado em 16/10/2026:** esquema e carga local v1 implementados em `db_pesquisa_dw`, no cluster isolado `127.0.0.1:5544`, com [revisão independente local aprovada](../../specs/active/SPEC-006/evidence/review.json). A carga nova foi criada em 13/10/2026 após verificação somente leitura dos dois bancos de origem; a revisão de 16/10/2026 ampliou a reconciliação, sem nova carga. O relatório local ignorado pelo Git fica em `../reports/dw_validation.json`. O fingerprint dos 75 arquivos é `64493abfdfd0b87535778eafd9d5938fad6039a99d9307f85e4cfc6eec0e89f2`. Esta evidência é local e não demonstra validade científica; a SPEC-009 integra consultas da DW apenas à Bancada exploratória.
+
+**Conferência de 31/10/2026 neste host:** a [reconciliação com o DER](../docs/reconciliacao_der_2026-10-31.md) confirmou que a carga histórica v1 só lia `paradas_maquinas` original. Os CSVs das 90 paradas geradas estão no worktree `datamind-dw-rebuild`, não neste checkout. Após a checagem inicial, um [readback posterior](../../specs/active/SPEC-013/evidence/m0-inventory-2026-10-31.md) encontrou os três bancos de pesquisa no cluster isolado: DW V2 com 35 tabelas, 167 partições de origem e `fact_downtime` com 1.200 paradas originais + 90 geradas. A verificação é de schema, fingerprint e contagens, não da avaliação científica.
 
 `db_datamind_dw` é legado e permanece intocado. O novo banco não substitui `db_industrial` e `db_financeiro` nem altera suas cargas. Os CSVs preservados são a fonte bruta; as tabelas `public` dos dois bancos são a fonte tipada. A validação do importador compara ambas com os CSVs antes de criar o DW.
 
@@ -60,3 +70,20 @@ o exportador e as tools da Bancada. Cada chamada da API usa conexão explícita
 limitada a `db_pesquisa_dw` e transação somente leitura. A mudança de código
 altera o hash de consulta de novos pacotes; pacotes antigos preservam o hash
 registrado na sua exportação.
+
+Em 22/10/2026, a Bancada passou a oferecer também `groq` + `dw_tools` após
+autorização explícita do pesquisador. A consulta permanece fixa e somente
+leitura nesta DW; o resultado limitado é enviado ao provedor externo para o
+turno seguinte. Veja o [recibo do ensaio real](../../specs/active/SPEC-010/evidence/groq-dw-real-2026-10-22.md).
+
+## Correção de metadados das consultas fixas (01/11/2026)
+
+Ao preparar referências locais da SPEC-013, uma chamada `financial` expôs que
+`fixed_queries.query()` construía a lista de fontes de `machine` mesmo para
+outros tipos de consulta. Isso gerava `KeyError: 'operation_rows'` quando o
+resultado financeiro tinha linhas. A lista dinâmica de fontes de máquina
+agora é construída somente em `kind == 'machine'`; a consulta SQL e os campos
+dos demais tipos não foram alterados. Há testes de regressão para observação
+financeira presente e ausente. A mudança altera o SHA-256 do arquivo de
+consultas; novos pacotes devem registrar o hash novo, sem reescrever pacotes
+históricos.

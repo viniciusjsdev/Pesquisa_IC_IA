@@ -1,0 +1,149 @@
+{
+  "kind": "local_synthetic_fixture",
+  "external_inference": false,
+  "research_cluster_access": false,
+  "database": {
+    "host": "127.0.0.1",
+    "port": 57526,
+    "cluster": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\inference_api\\.local\\spec014-integration-46a3d1d8\\pgdata",
+    "fixture_version": "spec014_fixture_v1",
+    "stopped": true
+  },
+  "runs": [
+    {
+      "id": "54028ec7-ce41-47dd-af61-f447e64ead9b",
+      "scenario": "data_access",
+      "adapter": "groq_chat",
+      "status": "contract_error",
+      "queries": 0,
+      "sha256": "e4a6a14be8e34fb5277be6cd9dffd3b9cbfd26784f35cef51f59752b6d5a8176"
+    },
+    {
+      "id": "f885156a-2366-4630-9759-a7e3fa9ad8e6",
+      "scenario": "data_access",
+      "adapter": "chat_completions",
+      "status": "answered_unverified",
+      "queries": 3,
+      "sha256": "20b84dab9595182aebdb73cc5f8345590c2c657bbb07ff119da36c9ab8a53aaf"
+    },
+    {
+      "id": "f60ce415-1271-46d3-a058-d2f753d92974",
+      "scenario": "fixed_evidence",
+      "adapter": "chat_completions",
+      "status": "answered_unverified",
+      "queries": 0,
+      "sha256": "4a7cba3cdae11a2c2b3292a906b79c63779afe5bd50746b4632f61971e0eb283"
+    },
+    {
+      "id": "2e9af2dc-e1b1-461e-9ab1-fa651f2413af",
+      "scenario": "data_access",
+      "adapter": "groq_chat",
+      "status": "answered_unverified",
+      "queries": 3,
+      "sha256": "a98430e22a8d19c254ab08ec5eda3e5d89dcd422ab49c99c78724917ec0dcf03"
+    },
+    {
+      "id": "5def8073-7075-457e-bd19-08a3f5d7d0a6",
+      "scenario": "fixed_evidence",
+      "adapter": "groq_chat",
+      "status": "answered_unverified",
+      "queries": 0,
+      "sha256": "2338a8559f8bad3f6b9f4b432d3f40e9eacba525d6267c286988a8589cdeb7e9"
+    },
+    {
+      "id": "0fd70697-3fe2-41f1-b072-8af8a803f7e2",
+      "scenario": "data_access",
+      "adapter": "openai_responses",
+      "status": "answered_unverified",
+      "queries": 3,
+      "sha256": "a794b2cb83fb36ebd920f6b4a0bbfa4e2197cf1918d3f4085ee531f67dfe4613"
+    },
+    {
+      "id": "a80df53b-b291-41d9-85c1-a4b20ae2c3d4",
+      "scenario": "fixed_evidence",
+      "adapter": "openai_responses",
+      "status": "answered_unverified",
+      "queries": 0,
+      "sha256": "dc1a19ce1fa567d22ad174655fde3e145971739de666943bf208b08552dad77c"
+    }
+  ],
+  "browser": {
+    "fixture": true,
+    "scenarios": [
+      {
+        "adapter": "openai_responses",
+        "scenario": "fixed_evidence",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "openai_responses",
+        "scenario": "data_access",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "groq_chat",
+        "scenario": "fixed_evidence",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "groq_chat",
+        "scenario": "data_access",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "chat_completions",
+        "scenario": "fixed_evidence",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "chat_completions",
+        "scenario": "data_access",
+        "status": "answered_unverified"
+      }
+    ],
+    "downloads": [
+      {
+        "id": "a80df53b-b291-41d9-85c1-a4b20ae2c3d4",
+        "version": 7
+      },
+      {
+        "id": "0fd70697-3fe2-41f1-b072-8af8a803f7e2",
+        "version": 7
+      },
+      {
+        "id": "5def8073-7075-457e-bd19-08a3f5d7d0a6",
+        "version": 7
+      },
+      {
+        "id": "2e9af2dc-e1b1-461e-9ab1-fa651f2413af",
+        "version": 7
+      },
+      {
+        "id": "f60ce415-1271-46d3-a058-d2f753d92974",
+        "version": 7
+      },
+      {
+        "id": "f885156a-2366-4630-9759-a7e3fa9ad8e6",
+        "version": 7
+      }
+    ],
+    "page_errors": [],
+    "error_visible": true,
+    "legacy_export": true,
+    "refresh_reopen": true
+  },
+  "query_sources": [
+    "dw_paradas",
+    "ind_parada",
+    "fin_resultado",
+    "dw_paradas",
+    "ind_parada",
+    "fin_resultado",
+    "dw_paradas",
+    "ind_parada",
+    "fin_resultado"
+  ],
+  "fingerprint_calls": 8,
+  "legacy_hash_unchanged": true,
+  "status": "passed"
+}

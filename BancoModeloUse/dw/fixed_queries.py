@@ -78,12 +78,21 @@ def query(kind: str, year: int, identifier: int | None, *, connection=None,
     else:
         conn = connection
         owns_connection = False
+    downtime_sources = []
     try:
         with conn.cursor() as cur:
             if not readonly_already:
                 cur.execute('SET TRANSACTION READ ONLY')
             cur.execute(statements[kind][0], params)
             rows = [dict(zip(statements[kind][1], row)) for row in cur.fetchall()]
+            if kind == 'machine' and rows:
+                cur.execute('''SELECT DISTINCT s.table_name
+                               FROM dw.fact_downtime d
+                               JOIN dw.source_file s USING (source_file_id)
+                               WHERE d.start_day >= %s AND d.start_day < %s
+                                 AND (%s IS NULL OR d.machine_id = %s)
+                               ORDER BY s.table_name''', (start, end, identifier, identifier))
+                downtime_sources = [f'db_industrial.public.{name}' for (name,) in cur.fetchall()]
     finally:
         if owns_connection:
             conn.close()
@@ -104,8 +113,12 @@ def query(kind: str, year: int, identifier: int | None, *, connection=None,
         last_day = max((row['observed_day'] for row in rows if row['observed_day']), default=None)
         coverage['first_day'] = first_day.isoformat() if first_day else None
         coverage['last_day'] = last_day.isoformat() if last_day else None
+    machine_sources = ((['db_industrial.public.registros_operacao']
+                        if any(r['operation_rows'] for r in rows) else [])
+                       + downtime_sources) if kind == 'machine' else []
     metadata = {
-        'machine': ('machine/year', ['db_industrial.public.registros_operacao','db_industrial.public.paradas_maquinas'],
+        'machine': ('machine/year',
+                    machine_sources,
                     {'operation_rows':'count(registro_id)', 'reported_operation_quantity':'sum(quantidade_produzida_real)',
                      'downtime_rows':'count(parada_id)', 'downtime_minutes':'sum(hora_fim_parada - hora_inicio_parada) / 60 seconds'},
                     {'reported_operation_quantity':'reported units', 'downtime_minutes':'minutes'}),
@@ -134,7 +147,9 @@ def query(kind: str, year: int, identifier: int | None, *, connection=None,
             'units': units, 'coverage': coverage,
             'rows': [{key: normalize(value) for key, value in row.items()} for row in rows],
             'interpretation': {
-                'machine':'Operation quantities may repeat production stages; downtime is assigned to start day. Association only.',
+                'machine':('Operation quantities may repeat production stages; downtime is assigned to start day. Association only.'
+                           + (' Generated downtime events are synthetic.' if
+                              'db_industrial.public.paradas_maquinas_geradas' in downtime_sources else '')),
                 'product':'Sales value is from observed sales, not accounting revenue. Operation quantities may repeat stages. Association only.',
                 'financial':'Observed dated rows and month coverage only; no complete annual revenue is inferred.',
                 'quality':'Inspections may repeat lots and disagree with lot quantities; these are reported units, not unique output.',

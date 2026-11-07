@@ -1,4 +1,4 @@
-"""Groq Chat Completions for synthetic Bancada tests only."""
+"""Groq Chat Completions for explicit Bancada evidence modes."""
 import json
 import os
 import re
@@ -11,6 +11,7 @@ from . import models
 
 ENDPOINT = "https://api.groq.com/openai/v1/chat/completions"
 MODEL_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:/-]{0,127}\Z")
+HARNESS_DEFAULT_MODEL = "qwen/qwen3.8-27b"
 
 
 class GroqError(RuntimeError):
@@ -30,12 +31,27 @@ def configuration() -> dict:
             "available": valid, "reason": None if valid else "GROQ_API_KEY e GROQ_MODEL válidos devem ser configurados no servidor"}
 
 
+def harness_configuration() -> dict:
+    """Separate, non-GPT model identity for the synthetic agent prototype."""
+    key = os.getenv("GROQ_API_KEY", "").strip()
+    model = os.getenv("GROQ_HARNESS_MODEL", HARNESS_DEFAULT_MODEL).strip()
+    allowed = bool(MODEL_ID.fullmatch(model) and
+                   "gpt" not in model.casefold() and "openai" not in model.casefold())
+    return {"model": model if allowed else None, "available": bool(key and allowed),
+            "reason": None if key and allowed else
+            "Configure GROQ_API_KEY e um GROQ_HARNESS_MODEL não GPT válido"}
+
+
 def chat_turn(messages: list[dict], temperature: float, max_tokens: int | None,
-              *, tools: list[dict] | None) -> tuple[dict, dict]:
+              *, tools: list[dict] | None,
+              harness_model: str | None = None,
+              max_request_bytes: int | None = None) -> tuple[dict, dict]:
     """The production URL is fixed; local tests replace the transport."""
-    settings = configuration()
+    settings = harness_configuration() if harness_model is not None else configuration()
     if not settings["available"]:
         raise GroqError("provider_unavailable", settings["reason"])
+    if harness_model is not None and harness_model != settings["model"]:
+        raise GroqError("provider_model_mismatch", "Harness model changed during the run")
     model = settings["model"]
     payload = {"model": model, "messages": messages, "temperature": temperature,
                "stream": True, "stream_options": {"include_usage": True}}
@@ -43,11 +59,14 @@ def chat_turn(messages: list[dict], temperature: float, max_tokens: int | None,
         payload["max_tokens"] = max_tokens
     if tools is not None:
         payload.update({"tools": tools, "tool_choice": "auto", "parallel_tool_calls": False})
-    request = Request(ENDPOINT, data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+    from .request_budget import encode_request
+    body, request_budget = encode_request(payload, max_request_bytes)
+    request = Request(ENDPOINT, data=body,
                       headers={"Authorization": f"Bearer {os.environ['GROQ_API_KEY'].strip()}",
                                "Content-Type": "application/json", "User-Agent": "PesquisaICIA/1.0"},
                       method="POST")
-    provenance = {"provider": "groq", "model_id": model, "endpoint": ENDPOINT}
+    provenance = {"provider": "groq", "model_id": model, "endpoint": ENDPOINT,
+                  "request_budget": request_budget}
     try:
         with models.urlopen(request, timeout=600) as response:
             if response.headers.get("Content-Type", "").split(";")[0].strip() != "text/event-stream":
@@ -74,21 +93,27 @@ def chat_turn(messages: list[dict], temperature: float, max_tokens: int | None,
             status = "context_limit"
         elif exc.code == 400 and invalid_tool_generation:
             status = "provider_tool_error"
-        raise GroqError(status, f"Groq HTTP {exc.code}", retry_after) from None
+        raise GroqError(status, f"Groq HTTP {exc.code}", retry_after,
+                        metadata={"http_status": exc.code, "request_budget": request_budget}) from None
+    except GroqError as exc:
+        exc.metadata['request_budget'] = request_budget
+        raise
     except (TimeoutError, socket.timeout):
-        raise GroqError("provider_timeout", "Groq timed out") from None
+        raise GroqError("provider_timeout", "Groq timed out", metadata={"request_budget": request_budget}) from None
     except (URLError, OSError, HTTPException):
-        raise GroqError("provider_connection_error", "Groq connection failed") from None
+        raise GroqError("provider_connection_error", "Groq connection failed", metadata={"request_budget": request_budget}) from None
     except models.ModelResponseError as exc:
         if isinstance(exc.__cause__, (TimeoutError, socket.timeout)):
-            raise GroqError("provider_timeout", "Groq stream timed out") from None
-        raise GroqError("stream_incomplete", "Groq stream incomplete or invalid") from exc
+            raise GroqError("provider_timeout", "Groq stream timed out", metadata={"request_budget": request_budget}) from None
+        raise GroqError("stream_incomplete", "Groq stream incomplete or invalid", metadata={"request_budget": request_budget}) from exc
     choice = result["choices"][0]
+    if harness_model is not None and result.get("model") != model:
+        raise GroqError("provider_model_mismatch", "Groq served a different harness model", metadata={"request_budget": request_budget})
     if choice["finish_reason"] not in {"stop", "tool_calls"}:
         status = "context_limit" if choice["finish_reason"] == "length" else "response_incomplete"
         raise GroqError(status, f"Groq finish_reason={choice['finish_reason']}", metadata={
             "usage": result.get("usage"), "finish_reason": choice["finish_reason"],
-            "served_model": model})
+            "served_model": model, "request_budget": request_budget})
     message = choice["message"]
     record = {**provenance, "served_model": model, "usage": result.get("usage"),
               "finish_reason": choice["finish_reason"], "raw_response_format": "sse"}

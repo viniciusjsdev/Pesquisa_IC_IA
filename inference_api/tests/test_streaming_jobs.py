@@ -138,7 +138,7 @@ class JobTests(unittest.TestCase):
         def reserve(_id):
             yield
 
-        with patch("inference_api.jobs.service._validate_input"), \
+        with patch("inference_api.jobs.service.prepare", return_value={}), \
              patch("inference_api.jobs.storage.create_job", side_effect=[(receipt, True), (receipt, False)]), \
              patch("inference_api.jobs.Thread", ImmediateThread), \
              patch("inference_api.jobs.limits.reserve", reserve), \
@@ -203,7 +203,7 @@ class JobDatabaseTests(unittest.TestCase):
                 thread = threading.Thread(target=http.serve_forever, daemon=True)
                 thread.start()
                 executions = []
-                def fake_run(_payload, actor):
+                def fake_run(_payload, actor, *, prepared=None):
                     executions.append(actor.id)
                     return storage.create_run(actor.username, {"status": "test"})
                 def request(path, body=None):
@@ -220,7 +220,7 @@ class JobDatabaseTests(unittest.TestCase):
                 try:
                     with patch.object(limits, "app_db_params", return_value=params), \
                          patch.object(auth, "authenticate", return_value=principal), \
-                         patch.object(jobs.service, "_validate_input"), \
+                         patch.object(jobs.service, "prepare", return_value={}), \
                          patch.object(jobs.service, "execute_run", side_effect=fake_run):
                         body = {"request_key": str(uuid4()), "question": "HTTP fixture"}
                         code, submitted = request("/api/run-jobs", body)

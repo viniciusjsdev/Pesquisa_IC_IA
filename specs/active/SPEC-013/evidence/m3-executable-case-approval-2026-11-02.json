@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "spec_id": "SPEC-013",
+  "decision": "approved_for_technical_activation",
+  "review_date_local": "2026-11-02",
+  "timezone": "America/Sao_Paulo",
+  "reviewer": "pesquisador_responsavel_nesta_conversa",
+  "preparer": "Codex_assistido_por_consultas_locais",
+  "reviewed_artifact": {
+    "path": "model_evaluation/.local/spec013-pilot-case-contracts-2026-11-02-v4.json",
+    "sha256": "27214d0acc5424f11bf9c27e3f4c5ee0be1d977dc169524fceb3a8900fa2018a"
+  },
+  "review_source": {
+    "kind": "user_reply_to_explicit_executable_case_review_question",
+    "question_item_id": "call_dde320b417a0400d9bf90d1843e27c35/0",
+    "reply_verbatim": "Aprovo a v4 dos nove casos"
+  },
+  "case_decisions": [
+    {"case_id": "I1", "decision": "approved"},
+    {"case_id": "I2", "decision": "approved"},
+    {"case_id": "I3", "decision": "approved"},
+    {"case_id": "F1", "decision": "approved"},
+    {"case_id": "F2", "decision": "approved"},
+    {"case_id": "F3", "decision": "approved"},
+    {"case_id": "X1", "decision": "approved"},
+    {"case_id": "X2", "decision": "approved"},
+    {"case_id": "X3", "decision": "approved"}
+  ],
+  "scope_note": "Aprovacao do contrato executavel exato; nao aprova nem pontua respostas futuras."
+}

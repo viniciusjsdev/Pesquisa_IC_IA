@@ -1,0 +1,58 @@
+[
+  {
+    "file": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\output\\pdf\\candidaturas_nicoli_2026-11-03\\01_OpenAI.pdf",
+    "provider": "OpenAI | Researcher Access",
+    "pages": 6,
+    "characters": 9688,
+    "status": "TEXTOS COMPLETOS PARA REVISÃO. Faltam apenas os campos pessoais e de conta indicados."
+  },
+  {
+    "file": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\output\\pdf\\candidaturas_nicoli_2026-11-03\\02_Lambda.pdf",
+    "provider": "Lambda | Research Grant",
+    "pages": 5,
+    "characters": 8836,
+    "status": "14 PERGUNTAS CONFERIDAS. Textos prontos; dados de contato e revisão das horas de GPU pendentes."
+  },
+  {
+    "file": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\output\\pdf\\candidaturas_nicoli_2026-11-03\\03_RunPod.pdf",
+    "provider": "RunPod | Academic Research",
+    "pages": 4,
+    "characters": 5725,
+    "status": "GUIA PARCIAL DO FORMULÁRIO + TEXTOS DE APOIO. Etapas 2 a 6 dependem dos contatos da candidata."
+  },
+  {
+    "file": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\output\\pdf\\candidaturas_nicoli_2026-11-03\\04_Nebius.pdf",
+    "provider": "Nebius | Research Grants",
+    "pages": 4,
+    "characters": 7333,
+    "status": "GUIA PARCIAL. Elegibilidade da titular, perfil acadêmico e etapas 2 a 3 ainda pendentes."
+  },
+  {
+    "file": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\output\\pdf\\candidaturas_nicoli_2026-11-03\\05_Anthropic.pdf",
+    "provider": "Anthropic | AI for Science",
+    "pages": 4,
+    "characters": 5771,
+    "status": "GUIA PARCIAL E CONDICIONAL. Enquadramento científico e páginas 2 a 3 ainda não confirmados."
+  },
+  {
+    "file": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\output\\pdf\\candidaturas_nicoli_2026-11-03\\06_Modal.pdf",
+    "provider": "Modal | Lista de interesse",
+    "pages": 2,
+    "characters": 2033,
+    "status": "SEM PROGRAMA GERAL DE BOLSAS ABERTO NO FORMULÁRIO CONSULTADO. Apenas dois campos cadastrais."
+  },
+  {
+    "file": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\output\\pdf\\candidaturas_nicoli_2026-11-03\\07_Hugging_Face.pdf",
+    "provider": "Hugging Face | Situação da rota",
+    "pages": 2,
+    "characters": 2662,
+    "status": "INFORMATIVO. Nenhum formulário de concessão específico confirmado."
+  },
+  {
+    "file": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\output\\pdf\\candidaturas_nicoli_2026-11-03\\08_Google_Gemini.pdf",
+    "provider": "Google / Gemini | Situação da rota",
+    "pages": 2,
+    "characters": 2925,
+    "status": "INFORMATIVO. Camada gratuita de API; não há candidatura acadêmica mapeada neste fluxo."
+  }
+]

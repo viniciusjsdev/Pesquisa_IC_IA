@@ -1,0 +1,32 @@
+{
+  "spec_id": "SPEC-012",
+  "contract_version": 1,
+  "status": "approved",
+  "thread_id": null,
+  "runtime": {"classification": "critical_review", "model": "session-selected", "reasoning": "session-selected"},
+  "review_input": [
+    "SPEC-012 contract, execution manifest, completion and historical synthetic-only review",
+    "OpenAI provider, service, jobs, DW allowlist, backend gate, frontend and tests in the working tree on 2026-10-26",
+    "Real dw_tools receipt from 2026-10-25 and local retention decision from 2026-10-26",
+    "Addendum readback of real dw_snapshot receipt and exact persisted run f7beaf30-1ff4-4ae3-a849-a38792f21c7b on 2026-10-26"
+  ],
+  "baseline_assessment": [
+    {"category": "tests", "result": "changed_as_approved", "evidence": ["inference_api/tests/test_spec012.py", "inference_api/tests/test_dw_contract.py", "inference_api/tests/test_streaming_jobs.py"], "notes": ["Independent reviewer ran 8 SPEC-012 tests, 11 DW contract tests and 3 streaming/jobs tests; one opt-in database test was skipped. Executor ran the complete Python suite: 66 tests, with 8 opt-in database skips."]},
+    {"category": "schemas", "result": "changed_as_approved", "evidence": ["inference_api/src/inference_api/service.py", "inference_api/frontend/src/features/bench/RunDetail.tsx"], "notes": ["OpenAI snapshot v5 records provenance; older snapshots remain readable."]},
+    {"category": "protected_paths", "result": "preserved", "evidence": ["inference_api/src/inference_api/openai_provider.py", "inference_api/src/inference_api/dw_tools.py"], "notes": ["Provider endpoint is fixed, key stays on the server, DW calls use the fixed read-only allowlist and bounded results."]},
+    {"category": "decisions", "result": "changed_as_approved", "evidence": ["specs/active/SPEC-012/SPEC.md", "specs/active/SPEC-012/evidence/lifecycle.json"], "notes": ["Researcher approved existing full local run snapshot retention without automatic expiry or removal, accessible to Vinicius and Nicoli, on 2026-10-26."]},
+    {"category": "persistence", "result": "preserved", "evidence": ["inference_api/src/inference_api/jobs.py", "inference_api/src/inference_api/service.py", "specs/active/SPEC-012/evidence/openai-dw-tools-real-2026-10-25.md"], "notes": ["Reviewer inspected persisted job/run trace, idempotency and the existing full-snapshot policy."]}
+  ],
+  "findings": [
+    "Independent technical review approved the OpenAI + DW scope with no outstanding P1 or P2 finding.",
+    "The initial technical verdict preceded the 2026-10-26 real dw_snapshot trial. A subsequent read-only addendum checked that trial's exact persisted run and found no material divergence. Neither review step performed new external inference or DW query.",
+    "answered_unverified is exploratory; this approval is not a scientific quality assessment or approval of the separate Groq + DW extension. Current pricing and future provider behavior remain time dependent."
+  ],
+  "evidence": [
+    "Independent reviewer checked the 2026-10-25 real dw_tools job/run: the Luna selected financial({year:2021}), the backend returned 13 lines/2069 bytes from a fixed DW read-only query, and snapshot v5 recorded the trace.",
+    "Reviewer inspected the fixed Responses endpoint, store:false, model-selected and backend-validated function arguments, result limits, credential isolation, authenticated jobs, gate enforcement and frontend modes.",
+    "Reviewer ran the targeted tests and git diff --check; only line-ending warnings occurred. No new external inference or DW read was performed in the review.",
+    "Read-only addendum confirmed the real dw_snapshot job/run link, one turn, requested/served Luna, store:false, provider IDs and usage, exact 2762 packet bytes, both hashes, DW fingerprint, empty tool trace/catalog, no secret marker, and response values grounded in the two packet items."
+  ],
+  "usage": null
+}

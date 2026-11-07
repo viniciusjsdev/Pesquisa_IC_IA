@@ -1,0 +1,187 @@
+{
+  "spec_id": "SPEC-013",
+  "contract_version": 3,
+  "status": "approved",
+  "thread_id": "01a1ae0e-a4d7-70b3-8379-e67fb4288ead",
+  "runtime": {
+    "classification": "critical_review",
+    "model": "gpt-6-astra",
+    "reasoning": "high"
+  },
+  "review_input": [
+    "specs/active/SPEC-013/SPEC.md",
+    "specs/active/SPEC-013/SPEC.execution.json",
+    "specs/active/SPEC-013/evidence/engineering-scope-2026-11-05.md",
+    "specs/active/SPEC-013/specialist-query-contract.md",
+    "specs/active/SPEC-013/engineering-closeout-contract.md",
+    "specs/active/SPEC-013/evidence/completion.json",
+    "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+    "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md",
+    "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md"
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "inference_api/tests/test_request_budget.py",
+        "inference_api/tests/test_runtime_identity.py",
+        "inference_api/tests/test_specialist_query_contract.py",
+        "inference_api/frontend/src/features/bench/benchService.test.ts",
+        "model_evaluation/tests/test_harness_score.py"
+      ],
+      "notes": [
+        "Independent audit executed 91 Python tests successfully with dotenv loading, database connections and network connections blocked; no new provider inference.",
+        "Four comparison test groups executed from the actual TypeScript sources in memory with Node assertions; no API transport. Earlier independent jsdom checks verified complete answer, writer retries, immutable snapshots and legacy rendering.",
+        "Implementation evidence reports 143 backend tests with 8 skipped, 21 evaluator tests, 16 frontend tests, typecheck/lint/build passing. Skipped tests are not treated as executed integration tests.",
+        "Independent git diff --check passed; only existing LF/CRLF warnings. All earlier findings were reconciled, including query-attempt budgets, context, rejected attempts, filter types, dependencies, full payload, writer presentation, comparison and adjudication binding."
+      ]
+    },
+    {
+      "category": "cli",
+      "result": "changed_as_approved",
+      "evidence": [
+        "model_evaluation/prepare_run_review.py",
+        "model_evaluation/tests/test_harness_score.py"
+      ],
+      "notes": [
+        "Offline review preparation produces a pending template bound to canonical run/case hashes; exclusive output creation preserves earlier packages. No reviewer decision or scientific score is invented."
+      ]
+    },
+    {
+      "category": "json_contracts",
+      "result": "changed_as_approved",
+      "evidence": [
+        "specs/active/SPEC-013/specialist-query-contract.md",
+        "specs/active/SPEC-013/engineering-closeout-contract.md",
+        "inference_api/src/inference_api/agent_harness/engine.py",
+        "inference_api/src/inference_api/request_budget.py"
+      ],
+      "notes": [
+        "Five-role contract, source-scoped schemas, typed filters, bounded feedback, current budgets and direct input dependencies independently inspected and tested.",
+        "Exact serialized HTTP body is limited before transport; local overflow and provider failure paths retain receipts, without automatic retry. Model decisions remain distinct from software and provider failures.",
+        "Canonical adjudication hash covers the complete run supplied to the evaluator; edits to answer, evidence, trace or configuration invalidate a prior adjudication."
+      ]
+    },
+    {
+      "category": "persistence",
+      "result": "preserved",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "inference_api/.local/spec013-closeout-service-replay-20261106.json",
+        "inference_api/.local/spec013-closeout-http-fixed-20261106.json",
+        "inference_api/.local/spec013-closeout-comparison-20261106.png",
+        "inference_api/.local/spec013-closeout-comparison-final-20261106.png"
+      ],
+      "notes": [
+        "Previously independently audited real UI run 769ecfc1-62a0-42a1-9fdf-95bbe9f2ea36 completed 12 model calls and 3 queries across DW, industrial and financial domains, with explicit financial-plan correction and persisted history.",
+        "Final offline replay and service replay were read and compared: answer and evidence equal the original export. Maximum replay request body is 22760 bytes under 32768. Service replay records equal before/after source manifests; all 33 recorded runtime hashes match current files.",
+        "HTTP/PostgreSQL integration, read-only three-database chain and UI activity were executed by the implementation chat; this auditor inspected their evidence without accessing databases or a provider. Screenshot shows indeterminate historical comparison and contract/map differences.",
+        "Replay is not new inference. Historical snapshots remain unchanged. Transient Windows HTTP and earlier PostgreSQL incidents are recorded without unsupported root-cause attribution.",
+        "Final rebuilt UI screenshot independently inspected: missing executable components and industrial/financial load manifests explicitly produce indeterminate compatibility; contract/map differences remain visible. No new model run was initiated."
+      ]
+    },
+    {
+      "category": "schemas",
+      "result": "preserved",
+      "evidence": [
+        ".codex/schemas/project-spec-completion.schema.json",
+        ".codex/schemas/project-spec-execution.schema.json",
+        ".codex/schemas/project-spec-review.schema.json",
+        "specs/active/SPEC-013/evidence/completion.json",
+        "specs/active/SPEC-013/SPEC.execution.json"
+      ],
+      "notes": [
+        "Completion and execution manifest independently validated against local schemas. AC-001 through AC-013 and VAL-001 through VAL-016 reconciled with engineering scope, tests and evidence. This review is schema-validated before writing and after readback."
+      ]
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "model_evaluation/.local/spec013-closeout-dw-reference-20261106.json",
+        "model_evaluation/.local/spec013-closeout-detail-reference-20261106.json"
+      ],
+      "notes": [
+        "Original UI export and reference artifact SHA-256 values match the documented values. Approved cases, receipts, source data and historical runs were not rewritten by this audit.",
+        "Route-independent canonical_source_file manifests identify registered industrial/financial loads; unavailable manifests cause indeterminate comparison and provenance contradictions prevent compatibility. These manifests do not prove absence of manual row edits.",
+        "Executable identity covers package/harness Python files, contract JSON files and fixed_queries.py; source identity is separate from candidate-selected outcomes. Audit writes only this review.json."
+      ]
+    },
+    {
+      "category": "decisions",
+      "result": "changed_as_approved",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-scope-2026-11-05.md",
+        "specs/active/SPEC-013/specialist-query-contract.md",
+        "specs/active/SPEC-013/engineering-closeout-contract.md"
+      ],
+      "notes": [
+        "Global approval is for engineering completion of SPEC-013 contract 3 as authorized on 2026-11-05/06. It permits reconciliation of lifecycle/status documentation to Done technical.",
+        "Scientific matrix, human adjudication of model responses and scientific scoring remain future work. answered_unverified, not_scored and awaiting_run_review are not scientific approval.",
+        "No unresolved blocking engineering findings remain. No new provider call, deployment, research-data mutation, secret access or unrelated checkout edit was performed by the auditor.",
+        "Auditor model and reasoning were verified from this chat session turn_context, not inferred from the planned manifest. Usage totals are unavailable and therefore null."
+      ]
+    }
+  ],
+  "findings": [],
+  "evidence": [
+    "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+    "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md",
+    "specs/active/SPEC-013/evidence/specialist-query-implementation-2026-11-06.md",
+    "inference_api/.local/spec013-contract3-openai-ui-20261106.json SHA-256 8ae24c1cd61e9b2e2ebf60ce3c9542d79f71145d2a8cc22fca2dffc4d25fe356",
+    "inference_api/.local/spec013-closeout-replay-final-20261106.json SHA-256 9b28a225ca1f802a2919c9d06c7aec578003fd3256dd4cbede0c162499f5768f",
+    "inference_api/.local/spec013-closeout-service-replay-20261106.json SHA-256 56e9047e1e67695136b5dd9de5e634c73b0aa6dd40f541922f97cf97ace5cf7f",
+    "inference_api/.local/spec013-closeout-chain-20261106.json SHA-256 ac3bc6a5ffe2da2f50271cde613b83d6386a0853fea4f6b5d7f85ae6fcf8307a",
+    "inference_api/.local/spec013-closeout-http-fixed-20261106.json SHA-256 3d6ab0689006f04398a50142a3fb161d2c3eacb77f20c1d48f408d222f33b0e8",
+    "inference_api/.local/spec013-closeout-source-manifests-20261106.json SHA-256 4c694ae004762d1704e18313c84b459328322237089ccdd29d7e97df92429f7c",
+    "inference_api/.local/spec013-closeout-comparison-20261106.png SHA-256 d56ffb4bcc51bc48da847ae877967af9da70bcfcca42969c0eb8e8c343289d87",
+    "model_evaluation/.local/spec013-closeout-dw-reference-20261106.json SHA-256 04769e61cf5095ff8372b52e91d9cecbdfa65b61a468a7d73b6628c88cd22afd",
+    "model_evaluation/.local/spec013-closeout-detail-reference-20261106.json SHA-256 33c8005b327e1209c6bc49feefff702daf9af0e49b9f85f9a3abdfb5743f69bb",
+    "inference_api/frontend/src/features/bench/benchService.ts SHA-256 6e730991305b9760fb64d911d163053ec3d10c8f6fabb81fadbaafb64f59aa09",
+    "inference_api/frontend/src/features/bench/HarnessRounds.tsx SHA-256 6bdf862d2f0a4e81226f5d76da45676b70e9e57f33fbf3b52885ae44f1ca0bad",
+    "model_evaluation/harness_score.py SHA-256 cc3e819cd63ad3aa7bbe586a167d28a28267330de597efc8fc37a2c14b8d1aa3",
+    "model_evaluation/prepare_run_review.py SHA-256 f066615f7c79c72d696bcafde7ba43a087f8a58f222b49150eeb4fd464415241",
+    "specs/active/SPEC-013/evidence/completion.json SHA-256 d658e78cf11de7d33aa93198751682986ad84ec2b2a620e6ba33c07fe44ec975",
+    "specs/active/SPEC-013/SPEC.execution.json SHA-256 bf89ad52319c80ba77c6eba191fd45780bdb6e2f3b2e8ed9412c88a9110dcc7a",
+    "BancoModeloUse/dw/fixed_queries.py SHA-256 f295a6ad1ec35455f3cfd297106748d86ef0faccd2fb2b46753ad7f2f054ddde",
+    "inference_api/src/inference_api/__init__.py SHA-256 d201ff57c3f818ac1d5465e370982493ba0cb6e524e16c185c861d0a50f6fdb2",
+    "inference_api/src/inference_api/agent_harness/__init__.py SHA-256 fa44621467029170c319719624351a72771693c37841ae290fa43d15301ae1b7",
+    "inference_api/src/inference_api/agent_harness/approved_catalog.py SHA-256 6b687cad2cad136c509e8f34093730ad034f01277d8f8fe6e435db5ce6893e79",
+    "inference_api/src/inference_api/agent_harness/catalog_runtime.py SHA-256 19ae49e42a7822dba2696891b9e69ccb4a4a75533cd8e64f28fcf3c4c368e67c",
+    "inference_api/src/inference_api/agent_harness/contracts.json SHA-256 26363f2504fb43eeb8a883eaba536a1bcb5513b9c9f4ccf0b87d9df12d491096",
+    "inference_api/src/inference_api/agent_harness/data_contracts.json SHA-256 1ef705c9a42702b451f2ea18d137626d2ec11f25422400e2d1bd9390ca4e6b3b",
+    "inference_api/src/inference_api/agent_harness/engine.py SHA-256 edc9666c10bf8b7e89d9edf8befef3a1dfa0530f294060018e93bf5e32c6b984",
+    "inference_api/src/inference_api/agent_harness/input_contracts.json SHA-256 48b9d5c5fe3a3e22fb820d5892f9996d9077dbeec0eaeffd3fc1afafba8c068b",
+    "inference_api/src/inference_api/agent_harness/local_queries.py SHA-256 2387f4c34e1ac066fe0e6f8075cc11ad9a1a96d6cb050f0cfa4d83bfeb8d6139",
+    "inference_api/src/inference_api/agent_harness/openai_audit.py SHA-256 4bc7330b40b4cc7e7078d681c1e82af4b910ba597c21936e4eb5c7dd9ebe7802",
+    "inference_api/src/inference_api/agent_harness/openai_pilot.py SHA-256 02bf4409eb5bd2b4f6511e565d97e0f6ce7df73c07fa3a0ee30ab26b1e990516",
+    "inference_api/src/inference_api/agent_harness/real_pilot.py SHA-256 7328f108842933fef4b09a7f14be9d0d63e7cf4f109bc5c24197e6cfb06ffdd1",
+    "inference_api/src/inference_api/agent_harness/runtime_identity.py SHA-256 c3dbb176fe3f2b226e775b87f7a78d4d09abfb547bd2c32ef314f75211927707",
+    "inference_api/src/inference_api/agent_harness/synthetic_demo.py SHA-256 e9ce0fc1f5c97a41bc6368b4a7f5079ac36a21f1959534bf77ca835bb1f6ed1f",
+    "inference_api/src/inference_api/agent_harness/typed_detail.py SHA-256 778869985cd0faed7e835fac46bc88d9904a00761fe913ccf05d404c5455140a",
+    "inference_api/src/inference_api/auth.py SHA-256 9ccb5f332f52764f864d3620039608a11734c101ee49222b7868a51b9bc15222",
+    "inference_api/src/inference_api/budget.py SHA-256 fb0f625833a9acccbf266db233d7f3f69261d394599233693efff5fac9096c1b",
+    "inference_api/src/inference_api/config.py SHA-256 03af3bc399eadf03beb052abe8af69fa7779b9e0e3d5fa2b6cb182ddb8068004",
+    "inference_api/src/inference_api/criteria.py SHA-256 b8ee4f7c1b2b0572efb4ef31776ca064b7ff145deebe8cee9f97d13b7fa19db6",
+    "inference_api/src/inference_api/dw_tools.py SHA-256 2b94b11646d7b94afa6dacfc1cfb663e35cfcc518b20797f31e50eb009247fc5",
+    "inference_api/src/inference_api/evidence_packets.py SHA-256 c522976ec56cae09310139a573c52029410ba86a5e0dd0c15e53cc14e0d95e9e",
+    "inference_api/src/inference_api/groq.py SHA-256 7a33185322eed461354382f4e542e9f7fa5a613fdee0e600d3a351f9baf9ef5e",
+    "inference_api/src/inference_api/jobs.py SHA-256 9b91c0c0e1f1d9b753d4af55289e45b181687c234fc3c2bf525d68bfdcf8a60e",
+    "inference_api/src/inference_api/limits.py SHA-256 15ccdca8c3ab028213c08e6efc5efe7d0940335275dbec67f9de46ad98966936",
+    "inference_api/src/inference_api/models.py SHA-256 22e102ffc0b9f5521f3571d5c141a8514253148eec292b268787c1278ea3f9ba",
+    "inference_api/src/inference_api/openai_provider.py SHA-256 6e45149d0d963a752c5b56f77778b0999d5f2f139332a0da2c20cdab5d3cd4ee",
+    "inference_api/src/inference_api/request_budget.py SHA-256 1c97d1eaf26ca97fa8c3d5388449b4881a2c77f7769789430048973aeb8e3aac",
+    "inference_api/src/inference_api/server.py SHA-256 8538f5075df04499314c0c4ef2d89014d1677f18e6ae2f65d423f945b3b01c51",
+    "inference_api/src/inference_api/service.py SHA-256 b4415d34b2df3157ab19c72fa6d809eeb42352ab987a034b02141895af0835b6",
+    "inference_api/src/inference_api/serving_catalog.py SHA-256 892d32778b95a7dd17c635c974d889efd4de842cbe22546e83a680a24d5c0fff",
+    "inference_api/src/inference_api/storage.py SHA-256 70ed47c0ea58202772a8c58d1a885eee30d42abc22de3cb717e0d1d495732886",
+    "inference_api/src/inference_api/synthetic_data.py SHA-256 e08aaf37e4170831f8d4bbf81788ac302e64a704cac6ac1fcc8d1f0b814014f3",
+    "inference_api/.local/spec013-closeout-comparison-final-20261106.png SHA-256 4c0017f090147157e53da8876259cb361a2b971853fd9cb14d999cb74b8ba2b4"
+  ],
+  "usage": null
+}

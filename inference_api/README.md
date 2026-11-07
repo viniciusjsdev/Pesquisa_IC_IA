@@ -1,4 +1,380 @@
+> **Ensaio real A/B em 06/11/2026:** [resultado pela Bancada](../specs/active/SPEC-014/evidence/openai-ab-real-ui-2026-11-06.md). B concluiu com duas consultas e resposta; A terminou em `invalid_review_gap`, sem resposta final. Houve recuperação do PostgreSQL e da trajetória A, sem reenvio. Sem pontuação científica.
+>
+> **Aceite anterior da SPEC-014 em engenharia local (06/11/2026):** preflight do catálogo e bloqueio de fonte corrigidos e aprovados em revisão independente com fixtures. Esse aceite não comprova funcionamento completo do cenário A no ensaio real acima.
+
 # Inferência compartilhada: Observatório e Bancada local
+
+
+**SPEC-013 · Done de engenharia em 06/11/2026:** [parecer global Astra aprovado](../specs/active/SPEC-013/evidence/review.json),
+[completion](../specs/active/SPEC-013/evidence/completion.json) e [validação final](../specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md).
+O harness de cinco papéis está implementado na Bancada, com leitura controlada
+na DW, industrial e financeiro. O ensaio real completo, testes locais, replays
+e histórico foram verificados. A matriz científica e a revisão humana de cada
+resposta continuam posteriores, sem score atribuído. Este estado substitui
+as descrições históricas de implementação pendente abaixo.
+
+**Controles de fechamento em 06/11/2026:** [contrato técnico](../specs/active/SPEC-013/engineering-closeout-contract.md).
+O limite de entrada mede o corpo HTTP UTF-8 completo; sucesso e falha do provedor
+registram tamanho/hash, sem credenciais nem retry automático. A comparação
+confronta contratos, mapas, configuração e componentes executáveis, além da DW
+e dos manifestos industrial/financeiro antes/depois da execução. Rotas escolhidas
+são resultados observados; dados ausentes tornam a compatibilidade indeterminada.
+A adjudicação exige o hash do run integral recebido pelo avaliador. A versão
+científica continua separada: respostas sem revisão permanecem sem score.
+[Evidências do fechamento](../specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md).
+
+**Contrato vigente em 06/11/2026:** [consulta construída pelo Especialista](../specs/active/SPEC-013/specialist-query-contract.md).
+Cinco papéis: Analista → Selecionador → Especialista → Revisor → Redator,
+com validação e leitura no backend. O Especialista recebe schema completo da
+fonte e corrige seu plano quando recusado. Substitui o Planejador separado;
+[implementação e testes locais concluídos](../specs/active/SPEC-013/evidence/specialist-query-implementation-2026-11-06.md).
+O [novo ensaio autorizado pela Bancada](../specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md)
+completou DW, industrial e financeiro com OpenAI: 12 chamadas, três consultas,
+uma correção de plano e resposta persistida `answered_unverified`.
+SPEC-013 está `done` em engenharia. Estados datados abaixo
+são históricos quando divergirem deste contrato.
+
+**Correções validadas em 06/11/2026:** [rastreabilidade e resposta completa](../specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md).
+Novas execuções usam `dependency_policy=direct_input_events_v1`: IDs dos produtores
+reais de contexto/evidências, incluindo a tentativa recusada. A Bancada mostra
+ressalvas, cálculos, fontes e todas as tentativas do Redator. Replay local e
+histórico na UI verificados, sem reescrita dos snapshots nem nova inferência externa.
+
+
+**Três repetições OpenAI em 05/11/2026:** [evidência da UI e persistência](../specs/active/SPEC-013/evidence/openai-ui-three-runs-2026-11-05.md).
+Uma resposta parcial, uma cadeia DW/industrial/financeiro completa e uma falha
+`row_limit_exceeded`, com configuração idêntica. Sem nova queda observada nessa
+bateria, sem pontuação científica e sem aprovação final da SPEC.
+
+**Tentativa real pela UI em 05/11/2026:** o [job OpenAI foi interrompido antes do modelo](../specs/active/SPEC-013/evidence/openai-ui-postgres-interruption-2026-11-05.md)
+por queda do PostgreSQL ao registrar o início. Não houve chamada OpenAI nem
+resposta final; as três repetições não foram completadas. Não houve reenvio.
+
+**Rodada OpenAI de validação em 05/11/2026:** o [adendo de saída](../specs/active/SPEC-013/evidence/output-budget-validation-2026-11-05.md)
+retira o teto de tokens e bytes de saída somente do piloto OpenAI. O POST omite
+`max_output_tokens`; os limites nativos do provedor, entrada e consultas continuam.
+O envio real continua aguardando autorização para Executar.
+
+**Bancada preparada em 05/11/2026:** [OpenAI no piloto e UI verificada](../specs/active/SPEC-013/evidence/openai-ui-prepared-2026-11-05.md).
+O usuário fez login e a pergunta integrada está preenchida. Nenhum envio real
+à OpenAI foi iniciado; aguardar comando explícito para Executar. O contador
+de tentativas foi corrigido; outros achados da auditoria continuam abertos.
+
+**Escopo vigente em 05/11/2026:** a [decisão do pesquisador](../specs/active/SPEC-013/evidence/engineering-scope-2026-11-05.md)
+separa conclusão de engenharia e avaliação científica. SPEC-013 contrato 2
+exige testes técnicos, cadeia real completa pela Bancada e auditoria Astra.
+A matriz científica e a adjudicação humana das respostas ficam posteriores;
+sem elas, não há score científico. OpenAI está autorizada para o piloto de
+engenharia. Os estados e critérios datados abaixo são históricos quando
+contrariarem essa decisão. A SPEC permanece `in_progress`.
+
+
+**Novo ensaio em 04/11/2026:** o [I3 v7 com duas consultas](../specs/active/SPEC-013/evidence/m2-i3-v7-postgres-readback-groq-limit-2026-11-04.md)
+concluiu leituras industrial e DW, persistiu o trace e confirmou o PostgreSQL
+acessível durante e após o teste. O Revisor pediu aprofundamento e depois
+julgou as evidências suficientes. A Groq respondeu HTTP 429 na chamada final
+do Redator; não houve resposta nem score, e o run não foi repetido.
+
+**Diagnóstico de 04/11/2026:** o
+[I3 v7](../specs/active/SPEC-013/evidence/m2-i3-v7-postgres-interruption-2026-11-04.md)
+foi interrompido quando o PostgreSQL isolado caiu antes da primeira consulta.
+O trace privado de emergência foi preservado e o job reconciliado, sem novo
+envio à Groq. O verificador HTTP agora trata `interrupted` como estado final
+após essa reconciliação.
+
+**Atualização de 02/11/2026:** o modo `agent_harness_pilot` usa
+`model_alias=groq_harness_pilot`. O [recibo de transmissão](../specs/active/SPEC-013/evidence/m2-groq-real-data-approval.json)
+foi aprovado para Groq/Qwen; a chave `INFERENCE_SPEC013_GROQ_REAL_DATA=1`
+continua necessária no processo. Uma [sonda real de um papel](../specs/active/SPEC-013/evidence/m2-groq-i1-one-call-probe-2026-11-02.json)
+passou, mas o [ensaio HTTP I1](../specs/active/SPEC-013/evidence/m2-groq-i1-http-interruption-2026-11-02.md)
+foi interrompido pela queda do PostgreSQL 5544 antes do readback do run. A
+persistência do piloto agora salva o snapshot em
+`inference_api/.local/spec013_failed_persistence/` se a gravação falhar; esse
+arquivo privado exige reconciliação manual e não autoriza repetição. Não há
+trajetória real persistida ou score do primeiro ensaio.
+
+Um [novo job I1](../specs/active/SPEC-013/evidence/m2-groq-i1-http-rate-limit-2026-11-02.md)
+persistiu o trace v6 após a recuperação. Quatro chamadas Groq foram registradas;
+o quarto papel recebeu `429` na correção de uma referência fora do mapa.
+`queries=0`, run `provider_rate_limited`, avaliador `not_scored`. O job
+`completed` significa que o worker registrou o resultado, não que a resposta
+foi concluída. Uma cadeia real foi completada em diagnóstico posterior; a
+matriz científica segue pendente.
+O adaptador agora espera pelo menos 20 segundos entre inícios de chamadas
+Groq no mesmo run, sem repetir uma chamada rejeitada por `429`. O script
+Historicamente, `verify_spec013_pilot_http_groq.py` (retirado do fluxo ativo pela SPEC-014) exigia `--case-id` e `--run-label` únicos;
+`--repetition 1|2|3` identifica entradas da matriz, enquanto a omissão marca
+ensaio diagnóstico. A chave de transmissão continua desligada por padrão.
+O [diagnóstico com espaçamento](../specs/active/SPEC-013/evidence/m2-specialist-contract-v3-2026-11-02.md)
+mostrou `machine.year` usado indevidamente como `map_refs`. O contrato do
+Especialista foi versionado em 3: a saída só pode citar o ID da fonte e
+colunas de `fields`, e o feedback de correção lista os IDs exatos aceitos.
+Runs com contrato 2 permanecem diagnósticos e não são comparáveis à matriz 3.
+O [primeiro ensaio v3](../specs/active/SPEC-013/evidence/m2-v3-http-readback-interruption-2026-11-02.md)
+terminou sem trace porque o GET local do job recebeu 503 e o script encerrou;
+o PostgreSQL permaneceu ativo. O script agora grava `request_key` privado antes
+do POST e tolera erros transitórios apenas nos GETs. Não há repetição do POST.
+O [diagnóstico v3b](../specs/active/SPEC-013/evidence/m2-planner-filter-context-v4-2026-11-02.md)
+revelou outra perda de contexto: o Planejador não recebia os filtros da fonte
+selecionada. O contrato de entrada v3 agora entrega `filter_specs` apenas dessa
+fonte; a tarefa v4 e o feedback exigem chaves e tipos literais. O backend ainda
+rejeita filtros inválidos. Nenhuma consulta I1 foi concluída nesse diagnóstico.
+Um [diagnóstico posterior com contrato v4](../specs/active/SPEC-013/evidence/m2-i1-complete-diagnostic-v4-2026-11-02.md)
+completou I1: dez chamadas Groq, uma consulta DW, resposta e snapshot v6
+persistido. Rota e citação passaram nos checks automáticos; cálculo e
+conclusão continuam `awaiting_run_review`.
+O [I2-r1 anterior](../specs/active/SPEC-013/evidence/m2-range-filter-contract-v5-2026-11-02.md)
+mostrou que `:range` não explicava ao Planejador o JSON `from`/`to` exigido
+pela tool. O contrato de entrada v4 e a tarefa v5 agora incluem o formato;
+a tool segue rejeitando operadores não permitidos. Os runs com protocolo
+anterior ficam preservados como ensaios de engenharia.
+
+A [projeção v6 do Revisor](../specs/active/SPEC-013/evidence/m2-reviewer-context-v6-2026-11-02.md)
+envia o resultado atual em `query_result` e somente resultados anteriores em
+`evidence_state`. O teste local passou com três bancos; a causa do erro Groq
+em I3-r1 v5 ainda é desconhecida. O adaptador registra status HTTP quando
+disponível, sem corpo bruto e sem repetição automática. A matriz comparável
+agora exige hashes v6.
+O [diagnóstico I3 v6](../specs/active/SPEC-013/evidence/m2-i3-v6-rate-limit-2026-11-02.md)
+validou o Revisor após uma consulta industrial, mas recebeu HTTP 429 na
+chamada do Redator. Para novos runs, o início de chamadas Groq está espaçado
+em pelo menos 35 segundos. O run falho foi preservado, sem repetição.
+O [ajuste v7](../specs/active/SPEC-013/evidence/m2-reviewer-question-context-v7-2026-11-02.md)
+inclui pergunta literal e domínios identificados por A1 na entrada do Revisor.
+Isso corrige a perda de contexto observada em I3-r1 v6. Os runs v6 não entram
+na matriz v7; a mudança passou em testes locais e ainda requer run real.
+Dois diagnósticos v7 pararam por HTTP 429 antes de consultar dados; o
+segundo, após aguardar o prazo do primeiro, indicou `Retry-After: 363`.
+As chamadas externas foram interrompidas. O trace privado de cada run foi
+preservado, sem repetição automática.
+
+## SPEC-013: modo sintético multiagente e preparação local (02/11/2026)
+
+O backend agora reconhece `agent_harness_pilot` com pergunta real, catálogo
+aprovado e consultas locais em camadas. A entrada exige protocolo fixo,
+`provider=groq` e `model_alias=groq_harness_pilot`; o modo é recusado antes de abrir
+job ou chamar modelo enquanto faltar o
+[recibo de transmissão específico](../specs/active/SPEC-013/evidence/m2-groq-real-data-approval.json)
+e `INFERENCE_SPEC013_GROQ_REAL_DATA=1`. O recibo foi registrado em 02/11;
+a UI mostra o piloto indisponível enquanto a chave local estiver fechada. Testes cobrem o bloqueio e o despacho com
+provedor e consulta simulados. `agent_harness` continua como modo sintético.
+Em 02/11, typecheck, lint, 9 testes de componentes e build passaram com o Node
+local. Os quatro gates também podem ser repetidos sem `npm` com
+`inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py`
+seguido de `typecheck`, `lint`, `test` ou `build`. O POST HTTP do piloto sem
+aprovação devolveu 400 antes de criar job.
+
+O [serviço local de consultas](../specs/active/SPEC-013/evidence/m0-semantic-activation-review-2026-11-02.md)
+já valida planos tipados para DW, `contributors`/`trace` e detalhe industrial/
+financeiro com a role `spec013_reader`; o contrato de dados fixa os hashes do
+catálogo candidato e do código das consultas. Uma
+[cadeia local com modelo programado](../specs/active/SPEC-013/evidence/m2-local-chain-readback-2026-11-02-v2.json)
+executou três consultas e 17 chamadas de papel; não testou decisão de LLM.
+O modo `agent_harness` da Bancada segue exclusivamente sintético, e o catálogo
+real em disco permanece desabilitado. A aprovação semântica detalhada e o gate
+de transmissão são independentes da leitura local; não houve envio de dados
+reais a provedor nessa verificação.
+
+A preparação da Bancada apresenta dois cenários de pesquisa: **A, evidência
+fixa sem tools de navegação** (`dw_snapshot`), e **B, consulta à DW com tools**
+(`dw_tools`). A escolha vem antes do caso/pergunta e do modelo; a tela mostra
+somente modelos compatíveis e resume o protocolo antes do envio. Prompt e
+critérios exploratórios continuam editáveis em uma seção avançada. Diagnósticos
+com fixture (`agent_harness`, `synthetic_snapshot`, `synthetic_tools`) ficam em
+outra seção e não são apresentados como um terceiro cenário científico.
+Snapshots v3–v5 dos cenários A/B exibem uma trajetória de leitura: pergunta,
+pacote fixo quando houver, turnos do modelo, pedidos/resultados de tools
+registrados e resposta. Esses snapshots não identificam papéis multiagentes;
+a UI não lhes atribui agentes nem rodadas formais. Um pacote fixo não é mostrado
+como consulta durante o run. O detalhe de cada etapa abre com um resumo legível;
+o payload exato fica disponível em uma área expansível. A resposta final apresenta
+negrito, código e listas simples do texto gerado. O histórico rotula A, B, diagnóstico ou fluxo
+anterior e continua separado da trajetória. Em 01/11/2026, build, TypeScript,
+lint, testes dos componentes e browser smoke com APIs simuladas passaram;
+os históricos A (`f7beaf30`) e B (`3261aca7`) foram inspecionados no navegador autenticado em
+`127.0.0.1:8765`. Nenhuma execução real foi iniciada por esta mudança.
+
+A UI da Bancada separa agora **Preparar execução**, **Trajetória da execução** e **Histórico**.
+Na Trajetória, snapshots v6 de `agent_harness` mostram os eventos registrados
+agrupados pelo campo `round`, com resumo legível, entrada projetada, saída
+validada, saída bruta, erro e metadados consultáveis por chamada. O painel informa quando uma
+chamada foi rejeitada ou corrigida e mantém o evento integral e os hashes em
+áreas expansíveis. Na trajetória, a pergunta inicial é apresentada como entrada do
+**Usuário** fora do trace; cada chamada de modelo aparece como **Assistente**
+com o nome do papel interno, e a consulta aparece como **Ferramenta** do
+backend. A identidade do modelo é mostrada uma vez para a execução: os papéis
+internos usam a mesma IA, e o serviço de consulta não é outro agente.
+Na trajetória, cada rodada pode ser expandida; a etapa escolhida mostra o que
+recebeu, devolveu e qual evento foi registrado em seguida. A resposta final
+aparece após as rodadas. Para cada especialista, a UI distingue escolha de IDs
+no índice, validação/projeção do backend e análise do detalhe. Os JSONs exatos
+permanecem acessíveis nas abas da etapa. A sequência usa só o trace salvo;
+não infere uma ação futura quando o run termina.
+O Histórico oferece uma lista pesquisável de execuções
+anteriores e abre o resultado selecionado na área de Trajetória; seleção, feedback e comparação ficam no
+Histórico. Snapshots antigos continuam legíveis e exibem um aviso de que não
+registram rodadas por papel. A interface não calcula tempos ausentes no trace,
+não inventa etapas e não atribui validade científica ao status `validated`.
+Em 01/11/2026, o TypeScript, build Vite, lint dos arquivos alterados e a
+navegação autenticada pelo Chrome passaram; o componente de trajetória foi
+verificado com fixture local, sem nova inferência paga. Ainda não há run v6 de
+inferência real preservado neste banco host para inspeção visual;
+um [ensaio direto posterior](../specs/active/SPEC-013/evidence/m1-postgres-storage-2026-11-01.md)
+confirmou a gravação e o readback de run/job sintéticos no PostgreSQL local,
+com limpeza dos registros de teste.
+Um smoke posterior em Chrome com API mockada percorreu o Histórico e conferiu
+a trajetória v6 com seleção de etapa e resposta; não exercitou persistência
+PostgreSQL nem inferência remota.
+
+`src/inference_api/agent_harness/` implementa os cinco papéis do contrato 3.
+O Selecionador recebe índice estático e escolhe fonte; `map_projection` registra
+o contrato completo entregue ao Especialista, que monta a consulta. Tipos e
+filtros não são resumidos por outra chamada. O backend valida e executa; o
+Revisor decide aprofundamento. Pergunta, evidências e tentativa recusada ficam
+explícitas no JSON. O motor não abre conexões: aceita adaptadores injetados para
+fixture ou piloto local, com protocolos e gates distintos.
+O desenho anterior em duas chamadas foi substituído em 06/11/2026; seus traces
+e evidências permanecem históricos, sem reescrita.
+O alias `groq_harness` e o modo `agent_harness`
+ligam esse núcleo aos jobs e à UI da Bancada. O modelo padrão desse modo é
+`qwen/qwen3.8-27b` via Groq; `GROQ_HARNESS_MODEL` permite outro modelo Groq
+não GPT, separado de `GROQ_MODEL`. Sem `GROQ_API_KEY`, a opção fica indisponível.
+O prompt do protocolo é fixo, a pergunta e os mapas são inventados, e cada
+papel recebe apenas sua projeção JSON. O snapshot v6 guarda o trace integral,
+hashes dos contratos e mapas, limites e resposta. Os testes locais cobrem a
+integração sem acesso à DW. Um
+[teste HTTP posterior](../specs/active/SPEC-013/evidence/m1-http-input-contracts-2026-11-01.md)
+cobriu autenticação, job idempotente e leitura do snapshot v6 usando
+transporte e armazenamento em memória. A persistência no banco da aplicação
+foi verificada separadamente, em chamada direta do serviço com transporte
+simulado. Um [ensaio integrado posterior](../specs/active/SPEC-013/evidence/m1-http-postgres-2026-11-01.md)
+uniu HTTP autenticado, job idempotente e PostgreSQL da Bancada com modelo
+simulado; falta executar a cadeia completa com provedor real pela Bancada.
+Um ensaio Groq anterior com
+`qwen/qwen3.8-27b` validou A1, mas A2a recebeu `429`; veja a
+[evidência](../specs/active/SPEC-013/evidence/groq-synthetic-m1-2026-11-01.md).
+Após autorização específica do pesquisador, uma
+[auditoria sintética direta via API OpenAI](../specs/active/SPEC-013/evidence/openai-synthetic-architecture-audit-2026-11-01.md)
+com `gpt-6-luna` completou os seis tipos de papel, duas consultas à fixture e
+o aprofundamento financeiro em 11 chamadas. Três runs diagnósticos anteriores
+revelaram ambiguidades de contrato que foram corrigidas; os quatro traces
+ficaram preservados. O adaptador OpenAI é um script de auditoria, não um modo
+novo da Bancada. Nenhum dado de pesquisa foi enviado nesse teste.
+Nenhum resultado desse núcleo é pontuação científica. Em 02/11, a SPEC passou
+a `in_progress`; o mapa foi aprovado para leitura local, mas o modo real segue
+bloqueado para transmissão e os casos ainda não estão liberados para score.
+Um [recorte candidato de 12 fontes](../specs/active/SPEC-013/evidence/m0-catalog-review-2026-11-01.md)
+foi conferido offline contra o inventário físico atualizado dos três bancos;
+todas as fontes continuam desabilitadas e o modo `agent_harness` ainda usa
+somente fixtures inventadas.
+Um [serviço de detalhe tipado local](../specs/active/SPEC-013/evidence/m2-typed-detail-local-2026-11-01.md)
+foi testado isoladamente com as cinco tabelas de origem do piloto, em transações
+somente leitura e sem provedor. Ele não está ligado à Bancada. Uma
+[role local dedicada de SELECT](../specs/active/SPEC-013/evidence/m2-reader-role-2026-11-01.md)
+foi criada e verificada nos três bancos, mas ainda não é usada pelo harness;
+faltam o contrato das fontes DW/linhagem e o gate de transmissão.
+O ensaio de leitura tipada foi repetido sob essa role nas cinco fontes, com
+[readback próprio](../specs/active/SPEC-013/evidence/m2-typed-detail-reader-readback-2026-11-01.json).
+Antes da seleção de linhas, o serviço também confere o nome do banco conectado
+e os tipos físicos de todas as colunas permitidas da fonte; divergência bloqueia
+a consulta. O ensaio local foi repetido após essa guarda nas cinco tabelas.
+
+As cinco tools exploratórias da DW agora aceitam a migração V2 apenas com o
+fingerprint canônico conferido em 31/10/2026; V1 segue aceito. A consulta
+`machine` monta as fontes de paradas a partir dos fatos efetivamente incluídos
+no filtro, inclusive `paradas_maquinas_geradas`. Isso não habilita o novo
+harness nem o exportador de pacotes na V2.
+
+## SPEC-012: OpenAI na Bancada (implementação local de 25/10/2026)
+
+O backend possui alias `openai` para `gpt-6-luna` via
+`https://api.openai.com/v1/responses`. Configure `OPENAI_API_KEY` somente no
+ambiente do servidor; sem a chave o catálogo indica indisponibilidade e o
+backend recusa o run antes de consultar dados. A chave não entra no browser,
+snapshot ou logs. A implementação local usa streaming SSE, `store: false`,
+reenvio em memória dos itens de raciocínio criptografados e retorno de tools
+por `function_call_output`. `temperature` não é aplicado ao Luna com esforço
+de raciocínio `medium`; o limite padrão é 4.096 tokens de saída por turno,
+com máximo aceito de 8.192. Não há repetição automática de geração.
+
+Modos do provedor: `synthetic_snapshot` envia pergunta, prompt fixo e fixture
+inventada; `synthetic_tools` anuncia somente `synthetic_metric` e envia seu
+resultado se a LLM solicitar; `dw_snapshot` envia a pergunta e o JSON integral
+de **um** pacote candidato selecionado por ID e SHA-256; `dw_tools` anuncia as
+cinco consultas fixas e envia somente os resultados das chamadas escolhidas
+pela LLM. Ambos os modos DW usam a autorização específica de 25/10/2026.
+Eles permanecem bloqueados por padrão. O banco da aplicação guarda o snapshot
+integral em `runs.snapshot` sem TTL automático e o histórico é acessível aos
+pesquisadores autenticados. Em 26/10/2026, o pesquisador aprovou manter a
+regra existente: cópia integral sem expiração nem remoção automática, acessível
+a Vinicius e Nicoli. A [revisão independente específica dos modos
+DW](../specs/active/SPEC-012/evidence/review_dw.json) foi aprovada em
+26/10/2026. Depois desses gates, o operador pode definir
+`INFERENCE_OPENAI_DW_ENABLED=1`
+no processo backend (ou no ambiente do Docker Compose); o catálogo e a UI
+então os anunciam. O backend confere o gate antes de criar job ou ler a DW.
+`dw_tools` consulta apenas `db_pesquisa_dw` em transação `READ ONLY`, com até
+cinco chamadas, seis turnos, 200 linhas e 16 KiB de resultados acumulados.
+Nenhum SQL livre, banco inteiro, gabarito, peso ou resultado bruto de treino é
+enviado. Snapshots OpenAI são v5 e registram provedor, destino, classe de dado,
+hash/fingerprint aplicável, bytes da evidência incluídos nas requisições
+tentadas (contando o reenvio do histórico stateless), uso e IDs
+de resposta quando disponíveis. Os v1–v4 continuam legíveis.
+
+O preço Standard publicado em 25/10/2026 para o Luna era US$ 0,10 por milhão
+de tokens de entrada e US$ 0,50 por milhão de saída. Confira preço, acesso,
+saldo e estado da recarga automática na conta antes de outros ensaios pagos.
+O pesquisador decidiu usar os créditos pré-pagos disponíveis, com recarga
+automática desligada, sem teto monetário adicional na Bancada. A aplicação
+não compra créditos nem altera limites da conta. A
+[primeira revisão independente](../specs/active/SPEC-012/evidence/review.json)
+aprovou somente o fluxo sintético local; a
+[revisão DW posterior](../specs/active/SPEC-012/evidence/review_dw.json) aprovou
+o escopo técnico dos dois modos. Isso não confirma qualidade científica.
+
+Em 25/10/2026, um [único ensaio real sintético](../specs/active/SPEC-012/evidence/openai-synthetic-real-2026-10-25.md)
+por chamada direta a `service.execute_run` confirmou `gpt-6-luna` na Responses
+API, resposta à fixture inventada e snapshot v5 persistido. O run terminou em
+`answered_unverified`; o ensaio não passou por login HTTP, jobs ou UI e não
+enviou dados da DW.
+
+Um [ensaio posterior pela Bancada com `dw_tools`](../specs/active/SPEC-012/evidence/openai-dw-tools-real-2026-10-25.md)
+na mesma data usou `INFERENCE_OPENAI_DW_ENABLED=1` apenas no processo local.
+O Luna escolheu `financial({"year":2021})`, o backend leu 13 observações da
+DW e enviou o resultado à Responses API. O job e o run ficaram no histórico;
+as 13 linhas da resposta foram conferidas contra a tool. O servidor foi
+reiniciado com o gate desligado após esse ensaio. Em 26/10, um
+[ensaio de `dw_snapshot` pela Bancada](../specs/active/SPEC-012/evidence/openai-dw-snapshot-real-2026-10-26.md)
+enviou os 2.762 bytes exatos de um pacote candidato selecionado, sem nova
+consulta à DW no run. O revisor conferiu o job e o snapshot em readback.
+Após a revisão e a decisão de retenção, o gate foi definido como `1` no
+`BancoModeloUse/.env.local` local ignorado pelo Git; um backend novo exibiu
+os modos na UI autenticada. Os ensaios são exploratórios e continuam
+`answered_unverified`.
+
+## Groq e DW real por tools (22/10/2026)
+
+Após autorização explícita do pesquisador, a Bancada passou a oferecer o modo
+`dw_tools` também para o provedor Groq. Selecione **Groq** em “Provedor e
+modelo” e **Groq consulta a DW real por tools** em “Modo de evidência”; escreva
+uma pergunta livre e execute uma vez. O prompt e os critérios da Bancada são
+usados nesse modo. A LLM escolhe entre as cinco consultas fixas; o backend
+valida nome e argumentos, executa somente leitura em `db_pesquisa_dw` e envia
+à API HTTPS da Groq o resultado da consulta escolhida. A pergunta e o prompt
+também são enviados. Não há SQL livre nem acesso aos bancos de origem. Os
+limites permanecem cinco chamadas, seis turnos, 200 linhas e 16 KiB de
+resultados cumulativos. A ausência de DW bloqueia a geração; tool inválida,
+consulta falha e limite excedido ficam como erro no run.
+
+O histórico registra provedor, modelo, fingerprint da DW, catálogo, argumentos,
+resultados, turnos e destino externo configurado. `answered_unverified` indica
+somente conclusão exploratória; a resposta e os números não receberam gabarito
+nem avaliação científica. O modo `dw_snapshot` com pacote privado continua
+disponível apenas para RunPod; os modos sintéticos da Groq continuam isolados.
+Esta extensão posterior não integra a validação sintética original da SPEC-010.
+Um [ensaio real autenticado em 22/10/2026](../specs/active/SPEC-010/evidence/groq-dw-real-2026-10-22.md)
+confirmou um job persistido: Groq escolheu `product(2020, 1000001)`, recebeu
+uma linha da DW e respondeu. Não houve revisão independente dessa extensão.
 
 ## SPEC-010: Groq sintética e sessão de navegador (19/10/2026)
 
@@ -21,12 +397,14 @@ configure as variáveis no ambiente usado para iniciar o Compose. Confirme na
 conta Groq que o ID escolhido está disponível no plano Free; modelo e cotas
 podem mudar. Não cole a chave no chat, no Git nem em logs.
 
-Groq aceita somente `synthetic_snapshot` e `synthetic_tools`. Ambos usam a
+No escopo original da SPEC-010, Groq aceitava somente `synthetic_snapshot` e
+`synthetic_tools`. Ambos usam a
 pergunta e o prompt fixos de `synthetic_data.py`; o segundo modo anuncia a
 tool local `synthetic_metric`, cuja chamada deve ser escolhida pela LLM e
 validada antes de a fixture inventada responder. A API recusa pacotes privados,
-perguntas livres e critérios editáveis nesses runs. A DW real não é consultada
-nem enviada à Groq. Runs Groq são snapshots v4 com provedor, ID configurado,
+perguntas livres e critérios editáveis nesses runs. Nesses dois modos, a DW
+real não é consultada nem enviada à Groq. Runs Groq são snapshots v4 com
+provedor, ID configurado,
 parâmetros, origem sintética, uso quando retornado, status e erro; não recebem
 hash de adapter, revisão Qwen ou recibo de sessão RunPod. Snapshots v1-v3
 continuam legíveis. `answered_unverified` só indica resposta exploratória
@@ -210,6 +588,13 @@ anteriores foram retirados do fluxo ativo após a SPEC-009.
    mais recentes; registros antigos continuam no banco. Runs v1/v2 continuam
    legíveis como fluxo anterior. Essa apresentação não pontua nem valida
    cientificamente as respostas.
+
+Em 22/10/2026, uma [conferência somente leitura das cinco tools da
+DW](../specs/active/SPEC-009/evidence/dw-tools-readonly-2026-10-22.md)
+confirmou consultas à carga local e o caminho de `service.execute_run()` com
+modelo simulado e consulta real. Dois runs anteriores da base registram uma
+escolha real de `product` pela LLM na RunPod em 17/10. Esse recibo não é
+ensaio Groq com DW nem avaliação científica.
 
 **Onde estão as perguntas:** o repositório versiona
 [`model_evaluation/examples/cases_2020.json`](../model_evaluation/examples/cases_2020.json)
@@ -616,3 +1001,4 @@ A varredura de segredos e a revisão independente estão registradas nos
 [recibos da SPEC-003](../specs/active/SPEC-003/evidence/review.json). O teste
 HTTP com os usuários efetivamente cadastrados passou em 15/10/2026, sem abrir
 túnel naquela sessão histórica.
+a

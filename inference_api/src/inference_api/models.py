@@ -42,6 +42,8 @@ def _read_chat_stream(response, endpoint: str, alias: str, provenance: dict) -> 
     finish = None
     done = False
     model = None
+    response_id = None
+    refusal = []
     try:
         for line in response:
             raw.extend(line)
@@ -58,18 +60,23 @@ def _read_chat_stream(response, endpoint: str, alias: str, provenance: dict) -> 
                 done = True
                 continue
             chunk = json.loads(data)
-            if chunk.get("model") != alias:
-                raise ValueError("Served model differs from alias")
-            model = chunk["model"]
+            model = chunk.get("model")
+            response_id = chunk.get("id") or response_id
             if chunk.get("usage") is not None:
                 usage = chunk["usage"]
             choices = chunk.get("choices") or []
+            if choices and choices[0].get("finish_reason") is not None:
+                finish = choices[0]["finish_reason"]
+            if model != alias:
+                raise ValueError("Served model differs from alias")
             for choice in choices:
                 if choice.get("index") != 0:
                     raise ValueError("Unexpected choice index")
                 if choice.get("finish_reason") is not None:
                     finish = choice["finish_reason"]
                 delta = choice.get("delta") or {}
+                if delta.get("refusal"):
+                    refusal.append(str(delta['refusal']))
                 if delta.get("content") is not None:
                     if not isinstance(delta["content"], str):
                         raise ValueError("Invalid content delta")
@@ -102,13 +109,17 @@ def _read_chat_stream(response, endpoint: str, alias: str, provenance: dict) -> 
                 not call["function"]["name"] for call in calls.values())):
             raise ValueError("Incomplete tool call")
     except (ValueError, KeyError, TypeError, IndexError, OSError, HTTPException) as exc:
-        raise ModelResponseError("Invalid or incomplete chat stream",
-                                 _serving_record(endpoint, raw.decode("utf-8", errors="replace"),
+        record = _serving_record(endpoint, raw.decode("utf-8", errors="replace"),
                                                  parsed=False, raw_body=bytes(raw),
-                                                 provenance=provenance)) from exc
+                                                 provenance=provenance)
+        record.update(served_model=model, response_id=response_id, usage=usage,
+                      finish_reason=finish, usage_complete=False,
+                      error_code="provider_model_mismatch" if model is not None and model != alias else "stream_incomplete")
+        raise ModelResponseError("Invalid or incomplete chat stream", record) from exc
     message = {"role": "assistant", "content": "".join(content),
+               **({'refusal': ''.join(refusal)} if refusal else {}),
                **({"tool_calls": [calls[i] for i in sorted(calls)]} if calls else {})}
-    return {"model": model, "choices": [{"index": 0, "finish_reason": finish,
+    return {"id": response_id, "model": model, "choices": [{"index": 0, "finish_reason": finish,
                                             "message": message}], "usage": usage}, bytes(raw)
 
 
@@ -129,11 +140,49 @@ def _serving_record(endpoint: str, response, *, parsed: bool,
 
 
 def available_models() -> dict:
-    from . import groq
+    from . import groq, openai_provider
+    from .agent_harness import openai_pilot, real_pilot
     groq_settings = groq.configuration()
     groq_entry = {"groq": {"provider": "groq", "kind": "hosted", "model_id": groq_settings["model"],
                            "available": groq_settings["available"], "reason": groq_settings["reason"],
                            "generation_confirmed": False}}
+    openai_settings = openai_provider.configuration()
+    openai_entry = {"openai": {"provider": "openai", "kind": "hosted", "model_id": openai_settings["model"],
+                               "api_surface": openai_provider.API_SURFACE,
+                               "dw_enabled": openai_settings["dw_enabled"],
+                               "available": openai_settings["available"], "reason": openai_settings["reason"],
+                               "generation_confirmed": False}}
+    harness_settings = groq.harness_configuration()
+    harness_entry = {"groq_harness": {"provider": "groq", "kind": "synthetic_agent_harness",
+                                     "model_id": harness_settings["model"],
+                                     "available": harness_settings["available"],
+                                     "reason": harness_settings["reason"],
+                                     "generation_confirmed": False}}
+    try:
+        real_pilot.require_external_approval()
+        pilot_enabled = True
+    except ValueError:
+        pilot_enabled = False
+    pilot_entry = {"groq_harness_pilot": {
+        "provider": "groq", "kind": "real_agent_harness_pilot",
+        "model_id": harness_settings["model"],
+        "available": pilot_enabled and harness_settings["available"],
+        "reason": (harness_settings["reason"] if pilot_enabled else
+                   "Aprovação de transmissão e ativação local pendentes"),
+        "generation_confirmed": False}}
+    try:
+        openai_pilot.require_external_approval()
+        openai_pilot_enabled = True
+    except ValueError:
+        openai_pilot_enabled = False
+    pilot_entry["openai_harness_pilot"] = {
+        "provider": "openai", "kind": "real_agent_harness_pilot",
+        "model_id": openai_settings["model"], "api_surface": openai_provider.API_SURFACE,
+        "available": openai_pilot_enabled and openai_settings["available"],
+        "reason": (openai_settings["reason"] if openai_pilot_enabled else
+                   "Aprovação OpenAI e ativação local do piloto pendentes"),
+        "generation_confirmed": False}
+    hosted_entries = groq_entry | harness_entry | pilot_entry | openai_entry
     try:
         endpoint = vllm_url()
     except ValueError:
@@ -141,7 +190,7 @@ def available_models() -> dict:
     if not endpoint:
         return {alias: {**details, "candidate": True, "available": False,
                         "provider": "runpod", "generation_confirmed": False,
-                        "reason": "RunPod serving session not configured"} for alias, details in MODELS.items()} | groq_entry
+                        "reason": "RunPod serving session not configured"} for alias, details in MODELS.items()} | hosted_entries
     try:
         request = Request(endpoint + "/v1/models", headers=_headers())
         with urlopen(request, timeout=8) as response:
@@ -152,18 +201,18 @@ def available_models() -> dict:
             raise
         return {alias: {**details, "candidate": True, "available": False,
                         "provider": "runpod", "generation_confirmed": False,
-                        "reason": "RunPod serving session unavailable"} for alias, details in MODELS.items()} | groq_entry
+                        "reason": "RunPod serving session unavailable"} for alias, details in MODELS.items()} | hosted_entries
     except Exception:
         return {alias: {**details, "candidate": True, "available": False,
                         "provider": "runpod", "generation_confirmed": False,
-                        "reason": "RunPod serving session unavailable"} for alias, details in MODELS.items()} | groq_entry
+                        "reason": "RunPod serving session unavailable"} for alias, details in MODELS.items()} | hosted_entries
     served = {item["id"] for item in payload["data"]}
     return {alias: {**details, "candidate": True, "provider": "runpod", "available": alias in served and identity is not None,
                     "generation_confirmed": alias in served and
                     serving_catalog.generation_confirmed(endpoint, identity, alias),
                     "session_id": identity["session_id"] if identity else None,
                     "reason": None if alias in served and identity else "RunPod serving session not attested"}
-            for alias, details in MODELS.items()} | groq_entry
+            for alias, details in MODELS.items()} | hosted_entries
 
 
 def _headers() -> dict:

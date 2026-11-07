@@ -1,0 +1,156 @@
+{
+  "run_id": "e2db7276-e24c-4d5e-9c3a-5ee315199d99",
+  "status": "answered_unverified",
+  "question": "Na linha fictícia L1 em 2020, quantos minutos de parada houve e qual foi o lucro líquido observado no mesmo ano? Isso prova que a parada causou a variação do lucro?",
+  "protocol": "synthetic_fixture_m1",
+  "case_fingerprint": "1695a88b819baca29355ea0729bd0d00fc19cf0f91bec5f0c0209cb161f18160",
+  "contract_sha256": "1834e169aebb291c2206ea9d178cdaf55d610bac639b5cfb8b122adafd24d0d6",
+  "map_sha256": {
+    "dw": "b9ff76ee0b20f6a8202a1183f640b066a4fc56322605a1417c3074b2a13580bd",
+    "financeiro": "af8ca41d43c96c20c01d4a882060bc39f9d128a3f9c2a4b220f254b33c201fe2"
+  },
+  "candidate": [
+    "openai",
+    "gpt-6-luna"
+  ],
+  "model_calls": 2,
+  "queries": 0,
+  "trace": [
+    {
+      "event_id": "call_01",
+      "role": "analista_pergunta",
+      "round": 1,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "case_fingerprint": "1695a88b819baca29355ea0729bd0d00fc19cf0f91bec5f0c0209cb161f18160",
+        "call_id": "call_01",
+        "role": "analista_pergunta",
+        "round": 1,
+        "template_version": 1,
+        "source_event_ids": [],
+        "input": {
+          "question": "Na linha fictícia L1 em 2020, quantos minutos de parada houve e qual foi o lucro líquido observado no mesmo ano? Isso prova que a parada causou a variação do lucro?",
+          "domain_index": [
+            {
+              "domain": "dw",
+              "description": "Agregados fictícios por linha e ano"
+            },
+            {
+              "domain": "financeiro",
+              "description": "Observações financeiras fictícias por data"
+            }
+          ],
+          "protocol": "synthetic_fixture_m1; no SQL; no scientific score"
+        }
+      },
+      "contract_sha256": "1834e169aebb291c2206ea9d178cdaf55d610bac639b5cfb8b122adafd24d0d6",
+      "status": "validated",
+      "model": {
+        "provider": "openai",
+        "model_id": "gpt-6-luna",
+        "api_surface": "responses/v1",
+        "usage": {
+          "input_tokens": 512,
+          "output_tokens": 447,
+          "total_tokens": 959,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 341
+          }
+        },
+        "finish_reason": "stop",
+        "request_id": "req_67b170d38890470a9319535b2b6a3296",
+        "response_id": "resp_048d17131a1fca7f016ae6be2a64e887d28b829ea869264448"
+      },
+      "raw_output": "{\"tratavel\":false,\"necessidade\":{\"entidade\":\"linha fictícia L1\",\"medida\":\"minutos de parada e lucro líquido observado\",\"periodo\":\"2020\",\"grao\":\"linha e ano\"},\"dominios\":[\"dw\",\"financeiro\"],\"lacunas\":[\"Não há informação que estabeleça uma ligação entre as observações financeiras por data e a linha L1.\",\"A coincidência no mesmo ano não permite concluir que a parada causou uma variação do lucro.\"]}",
+      "output": {
+        "tratavel": false,
+        "necessidade": {
+          "entidade": "linha fictícia L1",
+          "medida": "minutos de parada e lucro líquido observado",
+          "periodo": "2020",
+          "grao": "linha e ano"
+        },
+        "dominios": [
+          "dw",
+          "financeiro"
+        ],
+        "lacunas": [
+          "Não há informação que estabeleça uma ligação entre as observações financeiras por data e a linha L1.",
+          "A coincidência no mesmo ano não permite concluir que a parada causou uma variação do lucro."
+        ]
+      }
+    },
+    {
+      "event_id": "call_02",
+      "role": "redator_resposta",
+      "round": 1,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "case_fingerprint": "1695a88b819baca29355ea0729bd0d00fc19cf0f91bec5f0c0209cb161f18160",
+        "call_id": "call_02",
+        "role": "redator_resposta",
+        "round": 1,
+        "template_version": 1,
+        "source_event_ids": [
+          "call_01"
+        ],
+        "input": {
+          "question": "Na linha fictícia L1 em 2020, quantos minutos de parada houve e qual foi o lucro líquido observado no mesmo ano? Isso prova que a parada causou a variação do lucro?",
+          "evidence_state": [],
+          "limits_and_errors": {
+            "gap": null,
+            "queries_used": 0,
+            "queries_limit": 2
+          }
+        }
+      },
+      "contract_sha256": "1834e169aebb291c2206ea9d178cdaf55d610bac639b5cfb8b122adafd24d0d6",
+      "status": "validated",
+      "model": {
+        "provider": "openai",
+        "model_id": "gpt-6-luna",
+        "api_surface": "responses/v1",
+        "usage": {
+          "input_tokens": 427,
+          "output_tokens": 159,
+          "total_tokens": 586,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 49
+          }
+        },
+        "finish_reason": "stop",
+        "request_id": "req_8e564b6e55654d8f9fa4153b772dd414",
+        "response_id": "resp_0bf5ad294c131345016ae6be2fa74087d2bdb55b0ecb857173"
+      },
+      "raw_output": "{\"resposta\":\"Não é possível determinar quantos minutos de parada houve nem qual foi o lucro líquido observado na linha fictícia L1 em 2020 com as evidências recebidas. Isso também não permite concluir que a parada causou uma variação do lucro.\",\"evidencias_utilizadas\":[],\"calculos\":[],\"ressalvas\":[\"Nenhuma evidência sobre minutos de parada ou lucro líquido foi fornecida.\",\"Mesmo uma coincidência temporal entre parada e variação do lucro não provaria causalidade.\"]}",
+      "output": {
+        "resposta": "Não é possível determinar quantos minutos de parada houve nem qual foi o lucro líquido observado na linha fictícia L1 em 2020 com as evidências recebidas. Isso também não permite concluir que a parada causou uma variação do lucro.",
+        "evidencias_utilizadas": [],
+        "calculos": [],
+        "ressalvas": [
+          "Nenhuma evidência sobre minutos de parada ou lucro líquido foi fornecida.",
+          "Mesmo uma coincidência temporal entre parada e variação do lucro não provaria causalidade."
+        ]
+      }
+    }
+  ],
+  "evidence": [],
+  "response": {
+    "resposta": "Não é possível determinar quantos minutos de parada houve nem qual foi o lucro líquido observado na linha fictícia L1 em 2020 com as evidências recebidas. Isso também não permite concluir que a parada causou uma variação do lucro.",
+    "evidencias_utilizadas": [],
+    "calculos": [],
+    "ressalvas": [
+      "Nenhuma evidência sobre minutos de parada ou lucro líquido foi fornecida.",
+      "Mesmo uma coincidência temporal entre parada e variação do lucro não provaria causalidade."
+    ]
+  },
+  "final_state": null
+}

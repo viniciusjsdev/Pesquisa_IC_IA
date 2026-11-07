@@ -1,5 +1,33 @@
 # Arquitetura proposta para consulta e avaliacao dos modelos
 
+**SPEC-013 · Done de engenharia em 06/11/2026:** [parecer global Astra aprovado](../../specs/active/SPEC-013/evidence/review.json),
+[completion](../../specs/active/SPEC-013/evidence/completion.json) e [validação final](../../specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md).
+O harness de cinco papéis está implementado na Bancada, com leitura controlada
+na DW, industrial e financeiro. O ensaio real completo, testes locais, replays
+e histórico foram verificados. A matriz científica e a revisão humana de cada
+resposta continuam posteriores, sem score atribuído. Este estado substitui
+as descrições históricas de implementação pendente abaixo.
+
+Nota de 01/11/2026: a SPEC-013 recebeu um núcleo com papéis e fixture
+sintética, ligado localmente aos jobs e à UI da Bancada pelo modo `agent_harness`.
+Os testes dessa integração usam transporte simulado; não há avaliação científica. As cinco
+tools exploratórias aceitam a carga DW V2 conhecida; `dw/cli.py verify` e o
+exportador de pacotes ainda exigem V1. O desenho científico abaixo permanece
+proposta até fechar os contratos executáveis dos casos, limites e revisão das
+respostas. O conteúdo dos nove casos piloto recebeu
+[aprovação humana vinculada a hash](../../specs/active/SPEC-013/evidence/m3-human-case-content-approval-2026-11-01.md).
+Para novos pesquisadores, os gates e recibos estão no
+[protocolo de validação humana](../../docs/protocolo_validacao_humana_avaliacao.md).
+
+**Contrato vigente em 06/11/2026:** a SPEC-013 usa cinco papéis. O Selecionador
+recebe índice estático; o Especialista recebe contrato completo da fonte,
+monta plano e corrige rejeições. O backend valida/executa; o Revisor decide
+aprofundamento. Ver [contrato 3](../../specs/active/SPEC-013/specialist-query-contract.md)
+e [evidência local](../../specs/active/SPEC-013/evidence/specialist-query-implementation-2026-11-06.md).
+O fluxo anterior de descoberta em duas chamadas foi substituído. Catálogos e
+casos aprovados mantêm seus recibos; novo contrato não revalida resultados antigos.
+As notas datadas abaixo e acima são históricas quando divergirem deste contrato.
+
 Status em 16/10/2026, no checkout iniciado em `772ea0d`: arquitetura do harness ainda em planejamento. O [DW local v1](../dw/README.md) da SPEC-006 foi implementado, carregado e [aprovado em revisao independente local](../../specs/active/SPEC-006/evidence/review.json). A SPEC-009 o integrou à Bancada exploratória; isso não comprova avaliação científica. O [exportador local da SPEC-007](../../model_evaluation/README.md) prepara pacotes fixos candidatos e foi [aprovado em revisao independente local](../../specs/active/SPEC-007/evidence/review.json), sem implementar o harness ou a avaliacao de modelos.
 
 Em 16/10/2026, a [SPEC-009](../../specs/active/SPEC-009/SPEC.md) definiu

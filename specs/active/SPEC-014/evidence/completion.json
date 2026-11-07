@@ -1,0 +1,456 @@
+{
+  "spec_id": "SPEC-014",
+  "contract_version": 1,
+  "status": "completed",
+  "thread_id": "01a1b284-81a4-7493-9e7d-d379a3e091da",
+  "runtime": {
+    "classification": "normal_implementation",
+    "model": "gpt-6-astra; gpt-6.1-terra",
+    "reasoning": "initial high; continuation session default"
+  },
+  "changed_files": [
+    {
+      "path": "inference_api/frontend/src/features/bench/HarnessRounds.tsx",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/benchService.test.ts",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/scripts/probe_spec013_groq.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/scripts/verify_spec013_http_postgres.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/scripts/verify_spec013_pilot_http_groq.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/runtime_identity.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_agent_harness.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_spec012.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_spec013_http.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_spec013_local_queries.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_spec013_openai_pilot.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_spec013_pilot_http.py",
+      "change": "modified"
+    },
+    {
+      "path": "model_evaluation/harness_score.py",
+      "change": "modified"
+    },
+    {
+      "path": "model_evaluation/run_spec013_pilot_matrix.py",
+      "change": "modified"
+    },
+    {
+      "path": "specs/active/SPEC-014/SPEC.execution.json",
+      "change": "modified"
+    },
+    {
+      "path": "specs/active/SPEC-014/SPEC.md",
+      "change": "modified"
+    },
+    {
+      "path": "README.md",
+      "change": "modified"
+    },
+    {
+      "path": "docs/arquitetura_inferencia_compartilhada.md",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/BenchPage.tsx",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/RunDetail.tsx",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/benchService.ts",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/runPresentation.ts",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/jobs.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/models.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/server.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/service.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_contract.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_spec009_http.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_spec010.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_streaming_jobs.py",
+      "change": "modified"
+    },
+    {
+      "path": "model_evaluation/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "runpod/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "specs/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/model_service/adapters.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/model_service/registry.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/model_service/service.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/model_service/__init__.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/browser_spec014.cjs",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/spec014_fixture.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec014.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/scripts/verify_spec014_local.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/scenarios.py",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-014/evidence/implementation-baseline.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-014/evidence/implementation-notes.md",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-014/evidence/lifecycle.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-014/evidence/local-integration.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-014/evidence/local-matrix.md",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-014/evidence/migration-audit.md",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-014/evidence/retired-test-contracts.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-014/evidence/review-initial-2026-11-06.md",
+      "change": "added"
+    }
+  ],
+  "artifacts": [
+    "specs/active/SPEC-014/evidence/local-integration.json",
+    "specs/active/SPEC-014/evidence/local-matrix.md",
+    "specs/active/SPEC-014/evidence/migration-audit.md",
+    "specs/active/SPEC-014/evidence/review.json",
+    "specs/active/SPEC-014/evidence/json-feedback-adjustment-2026-11-06.md",
+    "specs/active/SPEC-014/evidence/catalog-policy-correction-2026-11-06.md"
+  ],
+  "acceptance_evidence": [
+    {
+      "id": "AC-001",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md",
+        "specs/active/SPEC-014/evidence/review.json",
+        "specs/active/SPEC-014/evidence/catalog-policy-correction-2026-11-06.md"
+      ],
+      "notes": [
+        "Aceite técnico local com fixtures; não é validação científica."
+      ]
+    },
+    {
+      "id": "AC-002",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md",
+        "specs/active/SPEC-014/evidence/review.json"
+      ],
+      "notes": [
+        "Aceite técnico local com fixtures; não é validação científica."
+      ]
+    },
+    {
+      "id": "AC-003",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md",
+        "specs/active/SPEC-014/evidence/review.json",
+        "specs/active/SPEC-014/evidence/catalog-policy-correction-2026-11-06.md"
+      ],
+      "notes": [
+        "Aceite técnico local com fixtures; não é validação científica."
+      ]
+    },
+    {
+      "id": "AC-004",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md",
+        "specs/active/SPEC-014/evidence/review.json",
+        "specs/active/SPEC-014/evidence/catalog-policy-correction-2026-11-06.md"
+      ],
+      "notes": [
+        "Aceite técnico local com fixtures; não é validação científica."
+      ]
+    },
+    {
+      "id": "AC-005",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md",
+        "specs/active/SPEC-014/evidence/review.json",
+        "specs/active/SPEC-014/evidence/json-feedback-adjustment-2026-11-06.md",
+        "specs/active/SPEC-014/evidence/catalog-policy-correction-2026-11-06.md"
+      ],
+      "notes": [
+        "Aceite técnico local com fixtures; não é validação científica."
+      ]
+    },
+    {
+      "id": "AC-006",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md",
+        "specs/active/SPEC-014/evidence/review.json"
+      ],
+      "notes": [
+        "Aceite técnico local com fixtures; não é validação científica."
+      ]
+    },
+    {
+      "id": "AC-007",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md",
+        "specs/active/SPEC-014/evidence/review.json",
+        "specs/active/SPEC-014/evidence/catalog-policy-correction-2026-11-06.md"
+      ],
+      "notes": [
+        "Aceite técnico local com fixtures; não é validação científica."
+      ]
+    },
+    {
+      "id": "AC-008",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md",
+        "specs/active/SPEC-014/evidence/review.json",
+        "specs/active/SPEC-014/evidence/json-feedback-adjustment-2026-11-06.md",
+        "specs/active/SPEC-014/evidence/catalog-policy-correction-2026-11-06.md"
+      ],
+      "notes": [
+        "Aceite técnico local com fixtures; não é validação científica."
+      ]
+    }
+  ],
+  "validation_evidence": [
+    {
+      "validation_id": "VAL-001",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe C:/Users/vinic/.codex/skills/project-spec-architect/scripts/validate_spec.py specs/active/SPEC-014/SPEC.md specs/active/SPEC-014/SPEC.execution.json --project-root .",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md"
+      ],
+      "notes": [
+        "Escopo local; sem inferência remota."
+      ]
+    },
+    {
+      "validation_id": "VAL-002",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_*.py",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md"
+      ],
+      "notes": [
+        "132 testes backend, 8 skips; teste do catálogo aprovado e política de fonte."
+      ]
+    },
+    {
+      "validation_id": "VAL-003",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py test",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md"
+      ],
+      "notes": [
+        "Escopo local; sem inferência remota."
+      ]
+    },
+    {
+      "validation_id": "VAL-004",
+      "canonical_command": "Verificar matriz local e navegacao A/B conforme implementation-handoff.md com evidence/local-matrix.md",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md"
+      ],
+      "notes": [
+        "Escopo local; sem inferência remota."
+      ]
+    },
+    {
+      "validation_id": "VAL-005",
+      "canonical_command": "Verificar baseline e consumidores conforme implementation-handoff.md com evidence/migration-audit.md",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md"
+      ],
+      "notes": [
+        "Escopo local; sem inferência remota."
+      ]
+    },
+    {
+      "validation_id": "VAL-006",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s model_evaluation/tests -p test_*.py",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md"
+      ],
+      "notes": [
+        "Escopo local; sem inferência remota."
+      ]
+    },
+    {
+      "validation_id": "VAL-007",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py typecheck",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md"
+      ],
+      "notes": [
+        "Escopo local; sem inferência remota."
+      ]
+    },
+    {
+      "validation_id": "VAL-008",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py lint",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md"
+      ],
+      "notes": [
+        "Escopo local; sem inferência remota."
+      ]
+    },
+    {
+      "validation_id": "VAL-009",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py build",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-014/evidence/local-matrix.md"
+      ],
+      "notes": [
+        "Escopo local; sem inferência remota."
+      ]
+    }
+  ],
+  "deviations": [
+    "Runtimes atuais reais divergiram da política documental legada; registrados em lifecycle.",
+    "Testes integrados de consulta usam adaptador e dados fixture; não validam carga científica.",
+    "27 expectativas de criação legada foram arquivadas e substituídas por cobertura A/B, sem presumir equivalência automática.",
+    "A SPEC foi reaberta para fornecer schema/path/tentativa/saldo no reparo de JSON; ajuste aprovado em revisão independente.",
+    "Reaberta e corrigida por incompatibilidade de tipo da versão do catálogo e precedência da negação de fonte; revisão independente aprovou."
+  ],
+  "unresolved_items": [
+    "Avaliação científica e adjudicação humana futuras permanecem not_scored.",
+    "Disponibilidade e comportamento remoto dos provedores não verificados nesta SPEC.",
+    "POSTs recusados com corpo não consumido podem resultar em reset de conexão no Windows; proteção CSRF emitiu 403 nos ensaios, comportamento de transporte não foi alterado."
+  ],
+  "needs_design": null,
+  "usage": null
+}

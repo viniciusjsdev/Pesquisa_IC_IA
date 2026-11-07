@@ -4,6 +4,13 @@ Este diretório contém os conjuntos de dados em formato CSV desenvolvidos para 
 
 Para preservar a integridade estrita e o fingerprint SHA-256 dos 75 CSVs congelados originais de `BancoModeloUse/dados_simulados/`, estes arquivos foram estruturados em pastas correspondentes aos três períodos do projeto:
 
+Estes 48 arquivos estão neste checkout. O worktree separado `datamind-dw-rebuild`
+contém o conjunto canônico de 166 CSVs, incluindo as 90 paradas geradas; seu
+carregador foi corrigido e uma leitura posterior confirmou a carga V2 no
+cluster local; o importador e a DW v1 históricos continuam restritos aos 75
+originais. Veja a
+[reconciliação com o DER de 31/10/2026](../docs/reconciliacao_der_2026-10-31.md).
+
 - `periodo_2015_2016/` (Período 0 - Linha de Base / Início da Operação)
 - `periodo_2017_2020/` (Período 1 - Modernização e Transição Digital)
 - `periodo_2021_2025/` (Período 2 - Indústria 4.0 Plena e Expansão com Robô Cobot)

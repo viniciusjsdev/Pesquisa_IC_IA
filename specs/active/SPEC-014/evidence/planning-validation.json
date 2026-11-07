@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-06",
+  "spec_status": "ready",
+  "implementation_started": false,
+  "spec_validator": {
+    "valid": true,
+    "spec": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\specs\\active\\SPEC-014\\SPEC.md",
+    "manifest": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\specs\\active\\SPEC-014\\SPEC.execution.json",
+    "errors": []
+  },
+  "baseline_source_config_test_changes": [],
+  "diagram_readback_matches_cells": true,
+  "diagram_different_cells": [],
+  "diagram_dangling_edges": [],
+  "broken_spec_local_links": [],
+  "diagram_cells": 149,
+  "evidence_hashes": {
+    "baseline-snapshot.json": "35d06198e190da1a756795d579585415b5adbaf11df8ae6fd138bdd7de39c956",
+    "diagram-before-2026-11-06.xml": "65e49f098fe719fca4e0cf28b1eb0efeb338fe82f670cb30dad44412587b42ed",
+    "diagram-readback.xml": "c5765d118c293f806e33895bcb9671a01205cc1147abcc5d21abf511affdd488",
+    "diagram-spec014.drawio": "8cacc23547a6ffb07679c5d835a08e5afad5044fd379f1b012b6822185bffb29",
+    "diagram-spec014.xml": "eaa0cf3bf6397e068c0451950c281c89ebf66f26bcd47db2b47baf643157e95f",
+    "diagram-updated-2026-11-06.png": "dcff54352c5a8a31bb23f8749bc2de7dbc6fe0ca8149b6e4da72fd72ade98785",
+    "structural-baseline.json": "1b318b73d01d970580ebe3c856f5f5daced691cc952bcf1d66934b92b248fdbb"
+  },
+  "notes": [
+    "Diagram editor showed all changes saved in Drive before final cosmetic cleanup and last modification timestamp after cleanup. Same page id retained.",
+    "No provider calls, deployments or implementation suites executed in this planning task.",
+    "Baseline count is file inventory and not passed test cases."
+  ],
+  "document_hashes": {
+    "architecture-contract.md": "e6a7cf0f96234b2746effe26dfa197d8f522784e3502facf6b8947c1e17c3b9b",
+    "implementation-handoff.md": "08ce7dfb5bdbb35feb30837b5b67d956e6c45e9d063d42140b6e4d855de0cb5a",
+    "SPEC.execution.json": "123c5dd6c802072993835d1e28fddb796a2d5517d7578ea4ce5b2fadc8346e74",
+    "SPEC.md": "3b9bde68c11dce153430d129aa2fc54117fa2e7c8222952967b2f4a891c10d34"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "case_id": "I2",
+  "run_label": "v5-i2-r1",
+  "matrix_repetition": 1,
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "destination": "https://api.groq.com/openai/v1/chat/completions",
+  "question_sha256": "486d4eadea2b82b23cd5c7e1a004ef31a8b8771d3aebb5963e1aa578809695a0",
+  "approved_case_manifest_sha256": "dc8b691165da7c0be071623cf5bfc195284a676c872c93b1b05a8a505b9364c3",
+  "private_run_sha256": "5bac2609c9022528c3c613cfbd5ec7d7c5fc54a6c5d93056f017d55e80c3591d",
+  "job_id": "d05cdb75-6171-43bc-94b4-864be5cc6c49",
+  "transient_readbacks": 0,
+  "job_status": "completed",
+  "run_id": "556b2050-115a-47d5-8762-298ab8c01994",
+  "run_status": "insufficient_evidence",
+  "model_calls": 8,
+  "queries": 1,
+  "source_ids": [
+    "registros_operacao"
+  ],
+  "role_statuses": [
+    {
+      "role": "analista_pergunta",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "especialista_indice",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "especialista_dados",
+      "status": "rejected",
+      "error": "specialist_missing_source_ref"
+    },
+    {
+      "role": "especialista_dados",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "selecionador_fontes",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "planejador_consulta",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "revisor_evidencias",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "redator_resposta",
+      "status": "validated",
+      "error": null
+    }
+  ],
+  "scientific_score": null,
+  "automatic_retry": false,
+  "authentication_note": "local bearer fixture mapped to existing researcher"
+}

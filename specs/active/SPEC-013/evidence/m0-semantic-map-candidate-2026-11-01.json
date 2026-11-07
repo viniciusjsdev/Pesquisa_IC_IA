@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "status": "candidate_not_enabled",
+  "physical_inventory_sha256": "ca7f44f371fe5403b203d11bbc82a0d01553b5d4783d34cc6f9ebdd750343b62",
+  "dw_source_fingerprint": "66f8808cf83902ff6c7fd277937bf8e0671482058f540f3ea9c1ec8c5a182800",
+  "domains": {
+    "dw": {
+      "database": "db_pesquisa_dw",
+      "schema": "dw",
+      "overview": "Agregados rastreáveis e observações datadas; não atribui lucro a máquina ou produto.",
+      "sources": {
+        "machine": {
+          "kind": "existing_fixed_query",
+          "enabled": false,
+          "grain": "machine_id/year",
+          "filters": ["year:integer:2015..2026", "id:positive_integer"],
+          "fields": ["machine_id", "operation_rows", "reported_operation_quantity", "downtime_rows", "downtime_minutes"],
+          "units": {"downtime_minutes": "minute"},
+          "physical_tables": ["dim_machine", "fact_operation", "fact_downtime", "source_file"],
+          "caveat": "Contagem e minutos de parada por máquina e ano; operação e parada não têm vínculo direto. Fontes originais e geradas dependem das linhas incluídas."
+        },
+        "product": {
+          "kind": "existing_fixed_query",
+          "enabled": false,
+          "grain": "product_id/year",
+          "filters": ["year:integer:2015..2026", "id:positive_integer"],
+          "fields": ["product_id", "operation_rows", "reported_operation_quantity", "sale_rows", "observed_sales_value"],
+          "units": {"reported_operation_quantity": "reported units", "observed_sales_value": "source monetary units"},
+          "physical_tables": ["dim_product", "fact_operation", "fact_sale", "source_file"],
+          "caveat": "Valor de vendas observadas não é receita contábil; quantidades de operação podem repetir etapas. Associação por produto, sem causalidade."
+        },
+        "financial": {
+          "kind": "existing_fixed_query",
+          "enabled": false,
+          "grain": "observation_id/date",
+          "filters": ["year:integer:2015..2026"],
+          "fields": ["observation_id", "observed_day", "reported_revenue", "reported_net_profit"],
+          "units": {"reported_revenue": "source_currency_unspecified", "reported_net_profit": "source_currency_unspecified"},
+          "physical_tables": ["fact_financial_observation", "source_file"],
+          "caveat": "Observações datadas, sem soma anual publicada ou chave para máquina/produto. Sem observação em 2019 e 2020."
+        },
+        "quality": {
+          "kind": "existing_fixed_query",
+          "enabled": false,
+          "grain": "product_id/year",
+          "filters": ["year:integer:2015..2026", "id:positive_integer"],
+          "fields": ["product_id", "inspection_rows", "approved_reported", "rejected_reported", "exceeds_lot_rows"],
+          "units": {"approved_reported": "inspected units", "rejected_reported": "inspected units"},
+          "physical_tables": ["fact_quality_inspection", "source_file"],
+          "caveat": "Inspeções podem repetir lotes; aprovados e rejeitados são unidades informadas, não produção única."
+        },
+        "material": {
+          "kind": "existing_fixed_query",
+          "enabled": false,
+          "grain": "material_id/year",
+          "filters": ["year:integer:2015..2026", "id:positive_integer"],
+          "fields": ["material_id", "consumption_rows", "quantity_consumed", "price_observation_rows", "min_observed_unit_price", "max_observed_unit_price"],
+          "units": {"quantity_consumed": "material source unit", "min_observed_unit_price": "source monetary unit per material unit", "max_observed_unit_price": "source monetary unit per material unit"},
+          "physical_tables": ["dim_material", "fact_material_consumption", "fact_material_price_observation", "source_file"],
+          "caveat": "Preços são observações por material/lote; não há regra para atribuir preço a cada consumo nem para calcular custo realizado."
+        },
+        "contributors": {
+          "kind": "existing_lineage_command",
+          "enabled": false,
+          "grain": "aggregate_row/fact_id",
+          "filters": ["kind:approved_fixed_query", "year:integer:2015..2026", "id:positive_integer", "fact:approved_fact", "after:nonnegative_integer", "limit:positive_integer"],
+          "caveat": "Paginação de IDs de fatos contribuidores; exige agregado de origem."
+        },
+        "trace": {
+          "kind": "existing_lineage_command",
+          "enabled": false,
+          "grain": "fact_id/source_row",
+          "filters": ["fact:approved_fact", "id:positive_integer"],
+          "caveat": "Rastreia fato DW para partição, raw e linha tipada; não cria vínculo econômico entre domínios."
+        }
+      }
+    },
+    "industrial": {
+      "database": "db_industrial",
+      "schema": "public",
+      "overview": "Eventos de parada originais e gerados, com ID, máquina e horários; gerados não possuem FK física para máquinas.",
+      "sources": {
+        "paradas_maquinas": {
+          "kind": "typed_table_detail",
+          "enabled": false,
+          "grain": "parada_id/source_period",
+          "primary_key": ["parada_id"],
+          "fields": ["parada_id", "maquina_id", "hora_inicio_parada", "hora_fim_parada", "motivo_parada", "data_registro"],
+          "field_types": {"parada_id": "integer", "maquina_id": "integer", "hora_inicio_parada": "timestamp without time zone", "hora_fim_parada": "timestamp without time zone", "motivo_parada": "text", "data_registro": "timestamp without time zone"},
+          "units": {"hora_inicio_parada": "datetime", "hora_fim_parada": "datetime"},
+          "physical_relations": ["maquina_id -> maquinas.maquina_id"],
+          "filter_candidates": ["parada_id", "maquina_id", "hora_inicio_parada:range"],
+          "caveat": "Há 1.200 eventos originais na DW V2. Duração depende dos horários e dos flags da projeção DW."
+        },
+        "paradas_maquinas_geradas": {
+          "kind": "typed_table_detail",
+          "enabled": false,
+          "grain": "parada_id/source_period",
+          "primary_key": ["parada_id"],
+          "fields": ["parada_id", "maquina_id", "hora_inicio_parada", "hora_fim_parada", "motivo_parada", "data_registro", "origem"],
+          "field_types": {"parada_id": "integer", "maquina_id": "integer", "hora_inicio_parada": "timestamp without time zone", "hora_fim_parada": "timestamp without time zone", "motivo_parada": "text", "data_registro": "timestamp without time zone", "origem": "text"},
+          "units": {"hora_inicio_parada": "datetime", "hora_fim_parada": "datetime"},
+          "physical_relations": [],
+          "filter_candidates": ["parada_id", "maquina_id", "hora_inicio_parada:range"],
+          "caveat": "90 eventos gerados na carga V2; não assumir FK física ou causalidade."
+        },
+        "registros_operacao": {
+          "kind": "typed_table_detail",
+          "enabled": false,
+          "grain": "registro_id/source_period",
+          "primary_key": ["registro_id"],
+          "fields": ["registro_id", "ordem_producao_id", "maquina_id", "hora_inicio", "hora_fim", "tempo_setup_real_min", "quantidade_produzida_real", "consumo_energia_kwh", "data_registro"],
+          "field_types": {"registro_id": "integer", "ordem_producao_id": "integer", "maquina_id": "integer", "hora_inicio": "timestamp without time zone", "hora_fim": "timestamp without time zone", "tempo_setup_real_min": "numeric", "quantidade_produzida_real": "integer", "consumo_energia_kwh": "numeric", "data_registro": "timestamp without time zone"},
+          "units": {"tempo_setup_real_min": "minute", "quantidade_produzida_real": "reported units", "consumo_energia_kwh": "kWh"},
+          "physical_relations": ["maquina_id -> maquinas.maquina_id", "ordem_producao_id -> ordens_producao.ordem_producao_id"],
+          "filter_candidates": ["registro_id", "maquina_id", "ordem_producao_id", "hora_inicio:range"],
+          "caveat": "Registros de operação podem repetir etapas da produção; soma de quantidade informada não equivale automaticamente a produção única."
+        }
+      }
+    },
+    "financeiro": {
+      "database": "db_financeiro",
+      "schema": "public",
+      "overview": "Observações financeiras tipadas por ID e data, sem chave de produto ou máquina.",
+      "sources": {
+        "resultados_financeiros": {
+          "kind": "typed_table_detail",
+          "enabled": false,
+          "grain": "id/observation_date/source_period",
+          "primary_key": ["id"],
+          "fields": ["id", "data_registro", "receita_total", "lucro_liquido"],
+          "field_types": {"id": "integer", "data_registro": "date", "receita_total": "numeric", "lucro_liquido": "numeric"},
+          "units": {"receita_total": "source monetary unit unspecified", "lucro_liquido": "source monetary unit unspecified"},
+          "physical_relations": [],
+          "filter_candidates": ["id", "data_registro:range"],
+          "caveat": "72 linhas; cobertura temporal esparsa. Valores numéricos da carga não estabelecem receita ou lucro anual e não se atribuem a máquina ou produto."
+        },
+        "vendas": {
+          "kind": "typed_table_detail",
+          "enabled": false,
+          "grain": "venda_id/source_period",
+          "primary_key": ["venda_id"],
+          "fields": ["venda_id", "produto_id", "quantidade_vendida", "preco_unitario_venda", "data_venda", "cliente_id"],
+          "field_types": {"venda_id": "integer", "produto_id": "integer", "quantidade_vendida": "integer", "preco_unitario_venda": "numeric", "data_venda": "date", "cliente_id": "integer"},
+          "units": {"quantidade_vendida": "reported units", "preco_unitario_venda": "source monetary unit per reported unit"},
+          "physical_relations": [],
+          "filter_candidates": ["venda_id", "produto_id", "data_venda:range"],
+          "caveat": "Venda observada por registro; quantidade vezes preço é valor observado da venda, não receita contábil. produto_id não tem FK física nesta tabela."
+        }
+      }
+    }
+  },
+  "cross_domain_relations": [],
+  "review_required": ["source_and_column_allowlist", "grain_and_units", "filter_types_and_limits", "coverage", "lineage_to_origin", "case_protocol"]
+}

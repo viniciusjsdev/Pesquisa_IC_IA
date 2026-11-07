@@ -1,0 +1,102 @@
+{
+  "spec_id": "SPEC-014",
+  "contract_version": 1,
+  "status": "approved",
+  "thread_id": "01a1b28c-fc61-71f3-8e0a-bcb77b684bcd",
+  "runtime": {
+    "classification": "critical_review",
+    "model": "gpt-6-astra",
+    "reasoning": "high"
+  },
+  "review_input": [
+    "specs/active/SPEC-014/SPEC.md",
+    "specs/active/SPEC-014/architecture-contract.md",
+    "specs/active/SPEC-014/evidence/implementation-baseline.json",
+    "specs/active/SPEC-014/evidence/local-matrix.md",
+    "specs/active/SPEC-014/evidence/local-integration.json",
+    "specs/active/SPEC-014/evidence/migration-audit.md",
+    "specs/active/SPEC-014/evidence/json-feedback-adjustment-2026-11-06.md"
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/migration-audit.md"
+      ],
+      "notes": [
+        "Conferência independente; 126 hashes protegidos iguais ao baseline."
+      ]
+    },
+    {
+      "category": "cli",
+      "result": "changed_as_approved",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/migration-audit.md"
+      ],
+      "notes": [
+        "Conferência independente; 126 hashes protegidos iguais ao baseline."
+      ]
+    },
+    {
+      "category": "json_contracts",
+      "result": "changed_as_approved",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/migration-audit.md"
+      ],
+      "notes": [
+        "Conferência independente; 126 hashes protegidos iguais ao baseline."
+      ]
+    },
+    {
+      "category": "persistence",
+      "result": "changed_as_approved",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/migration-audit.md"
+      ],
+      "notes": [
+        "Conferência independente; 126 hashes protegidos iguais ao baseline."
+      ]
+    },
+    {
+      "category": "schemas",
+      "result": "changed_as_approved",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/migration-audit.md"
+      ],
+      "notes": [
+        "Conferência independente; 126 hashes protegidos iguais ao baseline."
+      ]
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/migration-audit.md"
+      ],
+      "notes": [
+        "Conferência independente; 126 hashes protegidos iguais ao baseline."
+      ]
+    },
+    {
+      "category": "decisions",
+      "result": "preserved",
+      "evidence": [
+        "specs/active/SPEC-014/evidence/migration-audit.md"
+      ],
+      "notes": [
+        "Conferência independente; 126 hashes protegidos iguais ao baseline."
+      ]
+    }
+  ],
+  "findings": [],
+  "evidence": [
+    "AC-001–008 aprovados na revisão independente local.",
+    "Regressão independente: 128 testes, 8 skips.",
+    "Matriz fake 2×3 e PostgreSQL descartável; não valida disponibilidade remota nem carga científica.",
+    "Resultados sem pontuação científica.",
+    "Ajuste de feedback JSON aprovado em revisão independente: teste aninhado, schema/path, tentativa, saldo, proteção contra nomes arbitrários e limites A/B.",
+    "Backend após ajuste: 129 testes, 8 skips; seis verificações em memória."
+  ],
+  "usage": null
+}

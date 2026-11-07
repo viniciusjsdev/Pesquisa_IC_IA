@@ -1,0 +1,31 @@
+{
+  "cluster": "127.0.0.1:5544",
+  "role": "spec013_reader",
+  "credential_file_ignored": true,
+  "catalog_file_unchanged": true,
+  "outside_database_connection_rejected": true,
+  "databases": {
+    "db_pesquisa_dw": {
+      "approved_tables_selectable": 12,
+      "outside_tables_selectable": 0,
+      "write_privileges": 0,
+      "default_read_only": true,
+      "schema_create": false
+    },
+    "db_industrial": {
+      "approved_tables_selectable": 4,
+      "outside_tables_selectable": 0,
+      "write_privileges": 0,
+      "default_read_only": true,
+      "schema_create": false
+    },
+    "db_financeiro": {
+      "approved_tables_selectable": 3,
+      "outside_tables_selectable": 0,
+      "write_privileges": 0,
+      "default_read_only": true,
+      "schema_create": false
+    }
+  },
+  "provider_called": false
+}

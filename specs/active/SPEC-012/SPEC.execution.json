@@ -1,0 +1,76 @@
+{
+  "$schema": "../../../.codex/schemas/project-spec-execution.schema.json",
+  "schema_version": "2.0",
+  "spec_id": "SPEC-012",
+  "contract_version": 1,
+  "status": "done",
+  "automatic_handoff": false,
+  "execution": {
+    "classification": "normal_implementation",
+    "role": "developer",
+    "model": "gpt-5.6-terra",
+    "reasoning": "medium",
+    "routing_rationale": "Decisões de modelo, orçamento e classes de dados resolvidas; implementação local da Responses API e validação sintética antes de qualquer ensaio externo.",
+    "runtime_override": null,
+    "working_directory": ".",
+    "sandbox_mode": "workspace-write",
+    "approval_mode": "auto_review",
+    "thread": { "mode": "new", "purpose": "implementation", "thread_id": null },
+    "handoff_prompt": "Implemente SPEC-012 preservando o diff local de Groq + DW. Comece com transporte e fixture sintéticos; execute as validações locais e prepare completion para revisão independente. Não chame serviços externos neste estágio."
+  },
+  "skills": [],
+  "references": [
+    { "path": "AGENTS.md", "purpose": "Regras do checkout, dados protegidos e efeitos externos", "required": true },
+    { "path": "README.md", "purpose": "Mapa e estados das frentes", "required": true },
+    { "path": "specs/README.md", "purpose": "Ordem e fronteira das SPECs", "required": true },
+    { "path": "specs/active/SPEC-003/SPEC.md", "purpose": "Identidade e limite global de inferência", "required": true },
+    { "path": "specs/active/SPEC-009/SPEC.md", "purpose": "Modos de evidência e contrato da allowlist", "required": true },
+    { "path": "specs/active/SPEC-010/SPEC.md", "purpose": "Contrato original da integração Groq sintética", "required": true },
+    { "path": "specs/active/SPEC-010/evidence/groq-dw-real-2026-10-22.md", "purpose": "Recibo de extensão posterior ainda sem revisão independente", "required": true },
+    { "path": "inference_api/README.md", "purpose": "Fluxo vigente da Bancada e modos", "required": true },
+    { "path": "docs/arquitetura_inferencia_compartilhada.md", "purpose": "Topologia, destino dos dados e limite científico", "required": true },
+    { "path": "BancoModeloUse/docs/arquitetura_avaliacao_modelos.md", "purpose": "Separação dos cenários exploratórios e harness formal", "required": true },
+    { "path": "inference_api/src/inference_api/config.py", "purpose": "Configuração de banco e endpoint", "required": true },
+    { "path": "inference_api/src/inference_api/models.py", "purpose": "Catálogo e parser de streaming existentes", "required": true },
+    { "path": "inference_api/src/inference_api/groq.py", "purpose": "Adaptador externo existente sem presumir compatibilidade OpenAI", "required": true },
+    { "path": "inference_api/src/inference_api/service.py", "purpose": "Matriz de provedores, modos, tools e snapshots", "required": true },
+    { "path": "inference_api/src/inference_api/server.py", "purpose": "API autenticada e erros HTTP", "required": true },
+    { "path": "inference_api/src/inference_api/jobs.py", "purpose": "Jobs e idempotência", "required": true },
+    { "path": "inference_api/src/inference_api/dw_tools.py", "purpose": "Allowlist, limites e leitura somente da DW", "required": true },
+    { "path": "inference_api/frontend/src/features/bench/BenchPage.tsx", "purpose": "Seleção de provedor, modo e aviso de destino", "required": true },
+    { "path": "inference_api/frontend/src/features/bench/RunDetail.tsx", "purpose": "Leitura de snapshots históricos e proveniência", "required": true }
+  ],
+  "validation": [
+    { "id": "VAL-001", "kind": "check", "command": "git diff --check", "required": true },
+    { "id": "VAL-002", "kind": "test", "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v", "required": true },
+    { "id": "VAL-003", "kind": "test", "command": "npm --prefix inference_api/frontend run typecheck", "required": true },
+    { "id": "VAL-004", "kind": "lint", "command": "npm --prefix inference_api/frontend run lint", "required": true },
+    { "id": "VAL-005", "kind": "test", "command": "npm --prefix inference_api/frontend run test -- --run", "required": true },
+    { "id": "VAL-006", "kind": "build", "command": "npm --prefix inference_api/frontend run build", "required": true },
+    { "id": "VAL-007", "kind": "browser", "command": "Ensaio HTTP/browser local autenticado com transporte OpenAI simulado e fixture sintética cobrindo resposta, escolha de tool, falhas, refresh, logout e idempotência, sem rede externa ou DW real", "required": true },
+    { "id": "VAL-008", "kind": "scan", "command": "Inspecionar diff, bundle, logs e snapshots sintéticos para segredos, dados reais, fallback indevido e compatibilidade v1-v4, reconciliando README, arquitetura e matriz de dados", "required": true },
+    { "id": "VAL-009", "kind": "evidence", "command": "Preparar completion, diff, validações locais e evidências sanitizadas para revisão independente, mantendo qualquer ensaio externo posterior em recibo separado dentro da autorização de 25/10/2026", "required": true }
+  ],
+  "review": {
+    "required": true,
+    "independence": "independent",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high",
+    "rationale": "Novo destino externo envolve credencial, possível saída de dados privados, custo, contrato público, tools e proveniência científica.",
+    "schema_path": ".codex/schemas/project-spec-review.schema.json",
+    "output_path": "specs/active/SPEC-012/evidence/review_dw.json",
+    "handoff_prompt": "Revise independentemente a SPEC-012, o diff, os testes e a completion. Verifique matriz de dados por provedor, segredo, escolha da tool pela LLM, limites, erros, custo, proveniência e snapshots antigos. Não trate mock como ensaio OpenAI real nem aprove a extensão Groq por associação."
+  },
+  "escalation": { "policy_version": "1.0", "allowed": ["needs_design", "sol_high", "terra_medium", "terra_high"] },
+  "completion": {
+    "schema_path": ".codex/schemas/project-spec-completion.schema.json",
+    "output_path": "specs/active/SPEC-012/evidence/completion.json"
+  },
+  "baseline": {
+    "required": false,
+    "path": null,
+    "snapshot_path": null,
+    "rationale": "Inclusão aditiva de provedor sem migração estrutural ou reescrita de snapshots históricos."
+  },
+  "lifecycle": { "output_path": "specs/active/SPEC-012/evidence/lifecycle.json" }
+}

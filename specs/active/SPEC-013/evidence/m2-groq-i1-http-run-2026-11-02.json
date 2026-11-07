@@ -1,0 +1,41 @@
+{
+  "case_id": "I1",
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "destination": "https://api.groq.com/openai/v1/chat/completions",
+  "question_sha256": "922cd752c90a8e026ec3607b9818f65a257299b3c8aa163e9de89218ba1860cf",
+  "approved_case_manifest_sha256": "dc8b691165da7c0be071623cf5bfc195284a676c872c93b1b05a8a505b9364c3",
+  "private_run_sha256": "0e13304be09c02c41ac8bec43a2adfb3d4f4ae66883133350334e778c4949be4",
+  "job_id": "b4a4b86d-1d9a-4c32-83f7-f08e68ce5b87",
+  "job_status": "completed",
+  "run_id": "4d286acf-2f33-4d3f-9b65-7396f39db8d4",
+  "run_status": "provider_rate_limited",
+  "model_calls": 4,
+  "queries": 0,
+  "source_ids": [],
+  "role_statuses": [
+    {
+      "role": "analista_pergunta",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "especialista_indice",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "especialista_dados",
+      "status": "rejected",
+      "error": "specialist_ref_outside_domain_map"
+    },
+    {
+      "role": "especialista_dados",
+      "status": "provider_error",
+      "error": "provider_rate_limited"
+    }
+  ],
+  "scientific_score": null,
+  "automatic_retry": false,
+  "authentication_note": "local bearer fixture mapped to existing researcher"
+}

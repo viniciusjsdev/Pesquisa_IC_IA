@@ -1,0 +1,39 @@
+{
+  "mode": "local_read_only_with_in_memory_catalog_override",
+  "catalog_file_unchanged": true,
+  "provider_called": false,
+  "reader_role": "spec013_reader",
+  "catalog_file_sha256": "d2a4a30815f97a7065b9df46fcf36c9e70966cbe3e8c9f0cdd410ba7c8b0f1fb",
+  "sources": [
+    {
+      "source_id": "machine",
+      "rows": 1,
+      "result_bytes": 782
+    },
+    {
+      "source_id": "financial",
+      "rows": 13,
+      "result_bytes": 1797
+    },
+    {
+      "source_id": "contributors",
+      "rows": 1,
+      "result_bytes": 590
+    },
+    {
+      "source_id": "trace",
+      "rows": 1,
+      "result_bytes": 660
+    },
+    {
+      "source_id": "paradas_maquinas_geradas",
+      "rows": 13,
+      "result_bytes": 7260
+    },
+    {
+      "source_id": "vendas",
+      "rows": 11,
+      "result_bytes": 4978
+    }
+  ]
+}

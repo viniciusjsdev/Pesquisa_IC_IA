@@ -1,0 +1,1400 @@
+{
+  "run_id": "ae342d6a-2d1f-41d5-b896-47126e196beb",
+  "status": "answered_unverified",
+  "question": "Na linha fictícia L1 em 2020, quantos minutos de parada houve e qual foi o lucro líquido observado no mesmo ano? Isso prova que a parada causou a variação do lucro?",
+  "protocol": "synthetic_fixture_m1",
+  "case_fingerprint": "62bfff870f650dd4f1b6912eebb1b1f2b49c09d730bcc7cd152913cd43ef19d7",
+  "contract_sha256": "03a2d57acc57ac6036917f5ec5036d2c6dbee40804e1003932cafd191098cb1c",
+  "map_sha256": {
+    "dw": "b9ff76ee0b20f6a8202a1183f640b066a4fc56322605a1417c3074b2a13580bd",
+    "financeiro": "af8ca41d43c96c20c01d4a882060bc39f9d128a3f9c2a4b220f254b33c201fe2"
+  },
+  "candidate": [
+    "openai",
+    "gpt-6-luna"
+  ],
+  "model_calls": 11,
+  "queries": 2,
+  "trace": [
+    {
+      "event_id": "call_01",
+      "role": "analista_pergunta",
+      "round": 1,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "case_fingerprint": "62bfff870f650dd4f1b6912eebb1b1f2b49c09d730bcc7cd152913cd43ef19d7",
+        "call_id": "call_01",
+        "role": "analista_pergunta",
+        "round": 1,
+        "template_version": 1,
+        "source_event_ids": [],
+        "input": {
+          "question": "Na linha fictícia L1 em 2020, quantos minutos de parada houve e qual foi o lucro líquido observado no mesmo ano? Isso prova que a parada causou a variação do lucro?",
+          "domain_index": [
+            {
+              "domain": "dw",
+              "description": "Agregados fictícios por linha e ano"
+            },
+            {
+              "domain": "financeiro",
+              "description": "Observações financeiras fictícias por data"
+            }
+          ],
+          "protocol": "synthetic_fixture_m1; partial measurable answers allowed; causal claims require separate evidence; no SQL; no scientific score"
+        }
+      },
+      "contract_sha256": "03a2d57acc57ac6036917f5ec5036d2c6dbee40804e1003932cafd191098cb1c",
+      "status": "validated",
+      "model": {
+        "provider": "openai",
+        "model_id": "gpt-6-luna",
+        "api_surface": "responses/v1",
+        "usage": {
+          "input_tokens": 591,
+          "output_tokens": 414,
+          "total_tokens": 1005,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 293
+          }
+        },
+        "finish_reason": "stop",
+        "request_id": "req_7abc51aa48d0440495cca35b5a2ff022",
+        "response_id": "resp_0c743a659ea696ac016ae6bebddad487d2a39c30a9a0e5f2aa"
+      },
+      "raw_output": "{\"tratavel\":true,\"necessidade\":{\"entidade\":\"Linha fictícia L1 para paradas; observações financeiras para lucro líquido\",\"medida\":\"Minutos de parada e lucro líquido observado\",\"periodo\":\"2020\",\"grao\":\"Linha e ano para paradas; data para observações financeiras\"},\"dominios\":[\"dw\",\"financeiro\"],\"lacunas\":[\"Os dados descritos não comprovam que a parada causou uma variação do lucro.\",\"O índice financeiro descreve observações por data, sem indicar vínculo com a linha L1.\"]}",
+      "output": {
+        "tratavel": true,
+        "necessidade": {
+          "entidade": "Linha fictícia L1 para paradas; observações financeiras para lucro líquido",
+          "medida": "Minutos de parada e lucro líquido observado",
+          "periodo": "2020",
+          "grao": "Linha e ano para paradas; data para observações financeiras"
+        },
+        "dominios": [
+          "dw",
+          "financeiro"
+        ],
+        "lacunas": [
+          "Os dados descritos não comprovam que a parada causou uma variação do lucro.",
+          "O índice financeiro descreve observações por data, sem indicar vínculo com a linha L1."
+        ]
+      }
+    },
+    {
+      "event_id": "call_02",
+      "role": "especialista_dados",
+      "round": 1,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "case_fingerprint": "62bfff870f650dd4f1b6912eebb1b1f2b49c09d730bcc7cd152913cd43ef19d7",
+        "call_id": "call_02",
+        "role": "especialista_dados",
+        "round": 1,
+        "template_version": 1,
+        "source_event_ids": [
+          "call_01"
+        ],
+        "input": {
+          "necessidade": {
+            "entidade": "Linha fictícia L1 para paradas; observações financeiras para lucro líquido",
+            "medida": "Minutos de parada e lucro líquido observado",
+            "periodo": "2020",
+            "grao": "Linha e ano para paradas; data para observações financeiras"
+          },
+          "domain_map": {
+            "domain": "dw",
+            "version": "fixture-1",
+            "synthetic": true,
+            "description": "Agregados fictícios por linha e ano",
+            "sources": {
+              "dw_paradas": {
+                "fields": [
+                  "linha",
+                  "ano",
+                  "minutos_parada"
+                ],
+                "grain": "linha/ano",
+                "coverage": "2020"
+              }
+            }
+          },
+          "gap": null,
+          "evidence_refs": []
+        }
+      },
+      "contract_sha256": "03a2d57acc57ac6036917f5ec5036d2c6dbee40804e1003932cafd191098cb1c",
+      "status": "validated",
+      "model": {
+        "provider": "openai",
+        "model_id": "gpt-6-luna",
+        "api_surface": "responses/v1",
+        "usage": {
+          "input_tokens": 515,
+          "output_tokens": 180,
+          "total_tokens": 695,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 85
+          }
+        },
+        "finish_reason": "stop",
+        "request_id": "req_73b5858db26143b3a7aa2a1cc53d0c7d",
+        "response_id": "resp_04c045a7c910aa2e016ae6bec26d6087d298db79cafb69f4d5"
+      },
+      "raw_output": "{\"map_refs\":[\"dw_paradas\",\"dw_paradas.linha\",\"dw_paradas.ano\",\"dw_paradas.minutos_parada\"],\"granularidade\":\"Linha e ano para minutos de parada; não há granularidade disponível para observações financeiras.\",\"cobertura\":\"Paradas: 2020. Não há cobertura de dados financeiros informada.\",\"lacunas\":[\"Não há fonte mapeada para lucro líquido observado por data.\"]}",
+      "output": {
+        "map_refs": [
+          "dw_paradas",
+          "dw_paradas.linha",
+          "dw_paradas.ano",
+          "dw_paradas.minutos_parada"
+        ],
+        "granularidade": "Linha e ano para minutos de parada; não há granularidade disponível para observações financeiras.",
+        "cobertura": "Paradas: 2020. Não há cobertura de dados financeiros informada.",
+        "lacunas": [
+          "Não há fonte mapeada para lucro líquido observado por data."
+        ]
+      }
+    },
+    {
+      "event_id": "call_03",
+      "role": "especialista_dados",
+      "round": 1,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "case_fingerprint": "62bfff870f650dd4f1b6912eebb1b1f2b49c09d730bcc7cd152913cd43ef19d7",
+        "call_id": "call_03",
+        "role": "especialista_dados",
+        "round": 1,
+        "template_version": 1,
+        "source_event_ids": [
+          "call_01",
+          "call_02"
+        ],
+        "input": {
+          "necessidade": {
+            "entidade": "Linha fictícia L1 para paradas; observações financeiras para lucro líquido",
+            "medida": "Minutos de parada e lucro líquido observado",
+            "periodo": "2020",
+            "grao": "Linha e ano para paradas; data para observações financeiras"
+          },
+          "domain_map": {
+            "domain": "financeiro",
+            "version": "fixture-1",
+            "synthetic": true,
+            "description": "Observações financeiras fictícias por data",
+            "sources": {
+              "fin_resultado": {
+                "fields": [
+                  "data",
+                  "lucro_liquido"
+                ],
+                "grain": "observacao/data",
+                "coverage": "2020"
+              }
+            }
+          },
+          "gap": null,
+          "evidence_refs": []
+        }
+      },
+      "contract_sha256": "03a2d57acc57ac6036917f5ec5036d2c6dbee40804e1003932cafd191098cb1c",
+      "status": "validated",
+      "model": {
+        "provider": "openai",
+        "model_id": "gpt-6-luna",
+        "api_surface": "responses/v1",
+        "usage": {
+          "input_tokens": 517,
+          "output_tokens": 195,
+          "total_tokens": 712,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 94
+          }
+        },
+        "finish_reason": "stop",
+        "request_id": "req_e39060d824e84371929afae3c470d926",
+        "response_id": "resp_035c092b95763e46016ae6bec4959c87d29fb07b5ef6864bdf"
+      },
+      "raw_output": "{\"map_refs\":[\"fin_resultado\",\"fin_resultado.data\",\"fin_resultado.lucro_liquido\"],\"granularidade\":\"Observação por data para lucro líquido; não há granularidade de linha e ano para paradas neste mapa.\",\"cobertura\":\"Observações financeiras de 2020.\",\"lacunas\":[\"Minutos de parada da linha fictícia L1 não estão disponíveis neste mapa.\",\"Não há informação para relacionar paradas ao lucro líquido.\"]}",
+      "output": {
+        "map_refs": [
+          "fin_resultado",
+          "fin_resultado.data",
+          "fin_resultado.lucro_liquido"
+        ],
+        "granularidade": "Observação por data para lucro líquido; não há granularidade de linha e ano para paradas neste mapa.",
+        "cobertura": "Observações financeiras de 2020.",
+        "lacunas": [
+          "Minutos de parada da linha fictícia L1 não estão disponíveis neste mapa.",
+          "Não há informação para relacionar paradas ao lucro líquido."
+        ]
+      }
+    },
+    {
+      "event_id": "call_04",
+      "role": "selecionador_fontes",
+      "round": 1,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "case_fingerprint": "62bfff870f650dd4f1b6912eebb1b1f2b49c09d730bcc7cd152913cd43ef19d7",
+        "call_id": "call_04",
+        "role": "selecionador_fontes",
+        "round": 1,
+        "template_version": 1,
+        "source_event_ids": [
+          "call_01",
+          "call_02",
+          "call_03"
+        ],
+        "input": {
+          "necessidade": {
+            "entidade": "Linha fictícia L1 para paradas; observações financeiras para lucro líquido",
+            "medida": "Minutos de parada e lucro líquido observado",
+            "periodo": "2020",
+            "grao": "Linha e ano para paradas; data para observações financeiras"
+          },
+          "map_snippets": [
+            {
+              "domain": "dw",
+              "map_refs": [
+                "dw_paradas",
+                "dw_paradas.linha",
+                "dw_paradas.ano",
+                "dw_paradas.minutos_parada"
+              ],
+              "granularidade": "Linha e ano para minutos de parada; não há granularidade disponível para observações financeiras.",
+              "cobertura": "Paradas: 2020. Não há cobertura de dados financeiros informada.",
+              "lacunas": [
+                "Não há fonte mapeada para lucro líquido observado por data."
+              ]
+            },
+            {
+              "domain": "financeiro",
+              "map_refs": [
+                "fin_resultado",
+                "fin_resultado.data",
+                "fin_resultado.lucro_liquido"
+              ],
+              "granularidade": "Observação por data para lucro líquido; não há granularidade de linha e ano para paradas neste mapa.",
+              "cobertura": "Observações financeiras de 2020.",
+              "lacunas": [
+                "Minutos de parada da linha fictícia L1 não estão disponíveis neste mapa.",
+                "Não há informação para relacionar paradas ao lucro líquido."
+              ]
+            }
+          ],
+          "available_source_ids": [
+            "dw_paradas",
+            "fin_resultado"
+          ],
+          "query_state": {
+            "evidence_refs": [],
+            "gap": null
+          }
+        }
+      },
+      "contract_sha256": "03a2d57acc57ac6036917f5ec5036d2c6dbee40804e1003932cafd191098cb1c",
+      "status": "validated",
+      "model": {
+        "provider": "openai",
+        "model_id": "gpt-6-luna",
+        "api_surface": "responses/v1",
+        "usage": {
+          "input_tokens": 759,
+          "output_tokens": 342,
+          "total_tokens": 1101,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 225
+          }
+        },
+        "finish_reason": "stop",
+        "request_id": "req_2bf0b17be5a3467c82fbabd797b01e2e",
+        "response_id": "resp_03c39b862a24c051016ae6bec6b31887d284554a0252b2d72e"
+      },
+      "raw_output": "{\"decisao\":\"consultar\",\"justificativa\":\"O mapa DW cobre minutos de parada em 2020 no grão linha e ano, correspondendo à parte da necessidade para a linha L1. Não contém lucro líquido observado; essa fonte poderá ser solicitada em outra rodada. Não se infere relação causal entre as medidas.\",\"fonte_id\":\"dw_paradas\",\"dominio_adicional\":null,\"map_refs\":[\"dw_paradas\",\"dw_paradas.linha\",\"dw_paradas.ano\",\"dw_paradas.minutos_parada\"]}",
+      "output": {
+        "decisao": "consultar",
+        "justificativa": "O mapa DW cobre minutos de parada em 2020 no grão linha e ano, correspondendo à parte da necessidade para a linha L1. Não contém lucro líquido observado; essa fonte poderá ser solicitada em outra rodada. Não se infere relação causal entre as medidas.",
+        "fonte_id": "dw_paradas",
+        "dominio_adicional": null,
+        "map_refs": [
+          "dw_paradas",
+          "dw_paradas.linha",
+          "dw_paradas.ano",
+          "dw_paradas.minutos_parada"
+        ]
+      }
+    },
+    {
+      "event_id": "call_05",
+      "role": "planejador_consulta",
+      "round": 1,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "case_fingerprint": "62bfff870f650dd4f1b6912eebb1b1f2b49c09d730bcc7cd152913cd43ef19d7",
+        "call_id": "call_05",
+        "role": "planejador_consulta",
+        "round": 1,
+        "template_version": 1,
+        "source_event_ids": [
+          "call_02",
+          "call_03",
+          "call_04"
+        ],
+        "input": {
+          "necessidade": {
+            "entidade": "Linha fictícia L1 para paradas; observações financeiras para lucro líquido",
+            "medida": "Minutos de parada e lucro líquido observado",
+            "periodo": "2020",
+            "grao": "Linha e ano para paradas; data para observações financeiras"
+          },
+          "rota": {
+            "decisao": "consultar",
+            "justificativa": "O mapa DW cobre minutos de parada em 2020 no grão linha e ano, correspondendo à parte da necessidade para a linha L1. Não contém lucro líquido observado; essa fonte poderá ser solicitada em outra rodada. Não se infere relação causal entre as medidas.",
+            "fonte_id": "dw_paradas",
+            "dominio_adicional": null,
+            "map_refs": [
+              "dw_paradas",
+              "dw_paradas.linha",
+              "dw_paradas.ano",
+              "dw_paradas.minutos_parada"
+            ]
+          },
+          "map_snippet": {
+            "source_id": "dw_paradas",
+            "fields": [
+              "ano",
+              "linha",
+              "minutos_parada"
+            ],
+            "grain": "linha/ano"
+          },
+          "available_evidence_ids": [],
+          "limits": {
+            "rows": 20,
+            "remaining_queries": 2
+          }
+        }
+      },
+      "contract_sha256": "03a2d57acc57ac6036917f5ec5036d2c6dbee40804e1003932cafd191098cb1c",
+      "status": "validated",
+      "model": {
+        "provider": "openai",
+        "model_id": "gpt-6-luna",
+        "api_surface": "responses/v1",
+        "usage": {
+          "input_tokens": 743,
+          "output_tokens": 226,
+          "total_tokens": 969,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 106
+          }
+        },
+        "finish_reason": "stop",
+        "request_id": "req_24e63fae47ee47c8be5e68b384ada4a4",
+        "response_id": "resp_07eedfdf2627bae1016ae6beca855487d2881d934c7cc4b744"
+      },
+      "raw_output": "{\"plano\":{\"fonte_id\":\"dw_paradas\",\"campos\":[\"linha\",\"ano\",\"minutos_parada\"],\"filtros\":{\"linha\":\"L1\",\"ano\":2020},\"limite\":20,\"grao\":\"linha/ano\"},\"justificativa\":\"A fonte contém minutos de parada no grão linha/ano; o filtro seleciona a linha L1 em 2020. Não inclui lucro líquido observado, portanto o plano cobre apenas a parte de paradas da necessidade e não presume relação causal entre as medidas.\",\"evidence_refs\":[]}",
+      "output": {
+        "plano": {
+          "fonte_id": "dw_paradas",
+          "campos": [
+            "linha",
+            "ano",
+            "minutos_parada"
+          ],
+          "filtros": {
+            "linha": "L1",
+            "ano": 2020
+          },
+          "limite": 20,
+          "grao": "linha/ano"
+        },
+        "justificativa": "A fonte contém minutos de parada no grão linha/ano; o filtro seleciona a linha L1 em 2020. Não inclui lucro líquido observado, portanto o plano cobre apenas a parte de paradas da necessidade e não presume relação causal entre as medidas.",
+        "evidence_refs": []
+      }
+    },
+    {
+      "event_id": "tool_01",
+      "role": "synthetic_query",
+      "round": 1,
+      "status": "validated",
+      "input": {
+        "fonte_id": "dw_paradas",
+        "campos": [
+          "linha",
+          "ano",
+          "minutos_parada"
+        ],
+        "filtros": {
+          "linha": "L1",
+          "ano": 2020
+        },
+        "limite": 20,
+        "grao": "linha/ano"
+      },
+      "output": {
+        "result_id": "result_01",
+        "source_id": "dw_paradas",
+        "grain": "linha/ano",
+        "plan": {
+          "fonte_id": "dw_paradas",
+          "campos": [
+            "linha",
+            "ano",
+            "minutos_parada"
+          ],
+          "filtros": {
+            "linha": "L1",
+            "ano": 2020
+          },
+          "limite": 20,
+          "grao": "linha/ano"
+        },
+        "rows": [
+          {
+            "linha": "L1",
+            "ano": 2020,
+            "minutos_parada": 45
+          }
+        ],
+        "coverage": {
+          "state": "observed",
+          "rows": 1,
+          "synthetic": true
+        },
+        "units": {
+          "minutos_parada": "min"
+        }
+      }
+    },
+    {
+      "event_id": "call_06",
+      "role": "revisor_evidencias",
+      "round": 1,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "case_fingerprint": "62bfff870f650dd4f1b6912eebb1b1f2b49c09d730bcc7cd152913cd43ef19d7",
+        "call_id": "call_06",
+        "role": "revisor_evidencias",
+        "round": 1,
+        "template_version": 1,
+        "source_event_ids": [
+          "call_04",
+          "call_05",
+          "tool_01"
+        ],
+        "input": {
+          "necessidade": {
+            "entidade": "Linha fictícia L1 para paradas; observações financeiras para lucro líquido",
+            "medida": "Minutos de parada e lucro líquido observado",
+            "periodo": "2020",
+            "grao": "Linha e ano para paradas; data para observações financeiras"
+          },
+          "query_result": {
+            "result_id": "result_01",
+            "source_id": "dw_paradas",
+            "grain": "linha/ano",
+            "plan": {
+              "fonte_id": "dw_paradas",
+              "campos": [
+                "linha",
+                "ano",
+                "minutos_parada"
+              ],
+              "filtros": {
+                "linha": "L1",
+                "ano": 2020
+              },
+              "limite": 20,
+              "grao": "linha/ano"
+            },
+            "rows": [
+              {
+                "linha": "L1",
+                "ano": 2020,
+                "minutos_parada": 45
+              }
+            ],
+            "coverage": {
+              "state": "observed",
+              "rows": 1,
+              "synthetic": true
+            },
+            "units": {
+              "minutos_parada": "min"
+            }
+          },
+          "evidence_state": [
+            {
+              "result_id": "result_01",
+              "source_id": "dw_paradas",
+              "grain": "linha/ano",
+              "plan": {
+                "fonte_id": "dw_paradas",
+                "campos": [
+                  "linha",
+                  "ano",
+                  "minutos_parada"
+                ],
+                "filtros": {
+                  "linha": "L1",
+                  "ano": 2020
+                },
+                "limite": 20,
+                "grao": "linha/ano"
+              },
+              "rows": [
+                {
+                  "linha": "L1",
+                  "ano": 2020,
+                  "minutos_parada": 45
+                }
+              ],
+              "coverage": {
+                "state": "observed",
+                "rows": 1,
+                "synthetic": true
+              },
+              "units": {
+                "minutos_parada": "min"
+              }
+            },
+            {
+              "result_id": "result_02",
+              "source_id": "fin_resultado",
+              "grain": "observacao/data",
+              "plan": {
+                "fonte_id": "fin_resultado",
+                "campos": [
+                  "data",
+                  "lucro_liquido"
+                ],
+                "filtros": {
+                  "data": {
+                    "gte": "2020-01-01",
+                    "lt": "2021-01-01"
+                  }
+                },
+                "limite": 20,
+                "grao": "observacao/data"
+              },
+              "rows": [
+                {
+                  "data": "2020-12-31",
+                  "lucro_liquido": 1200
+                }
+              ],
+              "coverage": {
+                "state": "observed",
+                "rows": 1,
+                "synthetic": true
+              },
+              "units": {
+                "lucro_liquido": "unidade monetaria ficticia"
+              }
+            }
+          ],
+          "available_evidence_ids": [
+            "result_01"
+          ],
+          "limits": {
+            "remaining_queries": 1
+          }
+        }
+      },
+      "contract_sha256": "03a2d57acc57ac6036917f5ec5036d2c6dbee40804e1003932cafd191098cb1c",
+      "status": "validated",
+      "model": {
+        "provider": "openai",
+        "model_id": "gpt-6-luna",
+        "api_surface": "responses/v1",
+        "usage": {
+          "input_tokens": 863,
+          "output_tokens": 179,
+          "total_tokens": 1042,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 64
+          }
+        },
+        "finish_reason": "stop",
+        "request_id": "req_b3233784094e4f78a2496bee7d00b744",
+        "response_id": "resp_05f6ec6d5d947ac3016ae6becd55a487d28230398c468f22f4"
+      },
+      "raw_output": "{\"decisao\":\"precisa_aprofundar\",\"evidencias_utilizadas\":[\"result_01\"],\"justificativa\":\"O resultado informa 45 minutos de parada para L1 em 2020, mas não apresenta o lucro líquido observado solicitado.\",\"lacuna\":\"Faltam observações de lucro líquido com granularidade por data no período de 2020.\",\"proximo_dado_necessario\":\"Consultar a fonte financeira por observações de lucro líquido datadas em 2020.\",\"dominio_sugerido\":\"financeiro\"}",
+      "output": {
+        "decisao": "precisa_aprofundar",
+        "evidencias_utilizadas": [
+          "result_01"
+        ],
+        "justificativa": "O resultado informa 45 minutos de parada para L1 em 2020, mas não apresenta o lucro líquido observado solicitado.",
+        "lacuna": "Faltam observações de lucro líquido com granularidade por data no período de 2020.",
+        "proximo_dado_necessario": "Consultar a fonte financeira por observações de lucro líquido datadas em 2020.",
+        "dominio_sugerido": "financeiro"
+      }
+    },
+    {
+      "event_id": "call_07",
+      "role": "especialista_dados",
+      "round": 2,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "case_fingerprint": "62bfff870f650dd4f1b6912eebb1b1f2b49c09d730bcc7cd152913cd43ef19d7",
+        "call_id": "call_07",
+        "role": "especialista_dados",
+        "round": 2,
+        "template_version": 1,
+        "source_event_ids": [
+          "call_05",
+          "tool_01",
+          "call_06"
+        ],
+        "input": {
+          "necessidade": {
+            "entidade": "Linha fictícia L1 para paradas; observações financeiras para lucro líquido",
+            "medida": "Minutos de parada e lucro líquido observado",
+            "periodo": "2020",
+            "grao": "Linha e ano para paradas; data para observações financeiras"
+          },
+          "domain_map": {
+            "domain": "financeiro",
+            "version": "fixture-1",
+            "synthetic": true,
+            "description": "Observações financeiras fictícias por data",
+            "sources": {
+              "fin_resultado": {
+                "fields": [
+                  "data",
+                  "lucro_liquido"
+                ],
+                "grain": "observacao/data",
+                "coverage": "2020"
+              }
+            }
+          },
+          "gap": {
+            "reason": "Faltam observações de lucro líquido com granularidade por data no período de 2020.",
+            "need": "Consultar a fonte financeira por observações de lucro líquido datadas em 2020.",
+            "dominio": "financeiro"
+          },
+          "evidence_refs": [
+            "result_01"
+          ]
+        }
+      },
+      "contract_sha256": "03a2d57acc57ac6036917f5ec5036d2c6dbee40804e1003932cafd191098cb1c",
+      "status": "validated",
+      "model": {
+        "provider": "openai",
+        "model_id": "gpt-6-luna",
+        "api_surface": "responses/v1",
+        "usage": {
+          "input_tokens": 577,
+          "output_tokens": 252,
+          "total_tokens": 829,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 162
+          }
+        },
+        "finish_reason": "stop",
+        "request_id": "req_688a2a6fbf0640b2a10eb97a6807d51c",
+        "response_id": "resp_0302ef8f7fef20f9016ae6becfaa4887d2bcee5b6387a547a3"
+      },
+      "raw_output": "{\"map_refs\":[\"fin_resultado\",\"fin_resultado.data\",\"fin_resultado.lucro_liquido\"],\"granularidade\":\"Observação financeira por data.\",\"cobertura\":\"2020, conforme declarado no mapa da fonte.\",\"lacunas\":[\"Não foram consultados nem fornecidos valores observados de lucro líquido para 2020.\",\"A fonte financeira não cobre minutos de parada por linha e ano.\"]}",
+      "output": {
+        "map_refs": [
+          "fin_resultado",
+          "fin_resultado.data",
+          "fin_resultado.lucro_liquido"
+        ],
+        "granularidade": "Observação financeira por data.",
+        "cobertura": "2020, conforme declarado no mapa da fonte.",
+        "lacunas": [
+          "Não foram consultados nem fornecidos valores observados de lucro líquido para 2020.",
+          "A fonte financeira não cobre minutos de parada por linha e ano."
+        ]
+      }
+    },
+    {
+      "event_id": "call_08",
+      "role": "selecionador_fontes",
+      "round": 2,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "case_fingerprint": "62bfff870f650dd4f1b6912eebb1b1f2b49c09d730bcc7cd152913cd43ef19d7",
+        "call_id": "call_08",
+        "role": "selecionador_fontes",
+        "round": 2,
+        "template_version": 1,
+        "source_event_ids": [
+          "tool_01",
+          "call_06",
+          "call_07"
+        ],
+        "input": {
+          "necessidade": {
+            "entidade": "Linha fictícia L1 para paradas; observações financeiras para lucro líquido",
+            "medida": "Minutos de parada e lucro líquido observado",
+            "periodo": "2020",
+            "grao": "Linha e ano para paradas; data para observações financeiras"
+          },
+          "map_snippets": [
+            {
+              "domain": "financeiro",
+              "map_refs": [
+                "fin_resultado",
+                "fin_resultado.data",
+                "fin_resultado.lucro_liquido"
+              ],
+              "granularidade": "Observação financeira por data.",
+              "cobertura": "2020, conforme declarado no mapa da fonte.",
+              "lacunas": [
+                "Não foram consultados nem fornecidos valores observados de lucro líquido para 2020.",
+                "A fonte financeira não cobre minutos de parada por linha e ano."
+              ]
+            }
+          ],
+          "available_source_ids": [
+            "fin_resultado"
+          ],
+          "query_state": {
+            "evidence_refs": [
+              "result_01"
+            ],
+            "gap": {
+              "reason": "Faltam observações de lucro líquido com granularidade por data no período de 2020.",
+              "need": "Consultar a fonte financeira por observações de lucro líquido datadas em 2020.",
+              "dominio": "financeiro"
+            }
+          }
+        }
+      },
+      "contract_sha256": "03a2d57acc57ac6036917f5ec5036d2c6dbee40804e1003932cafd191098cb1c",
+      "status": "validated",
+      "model": {
+        "provider": "openai",
+        "model_id": "gpt-6-luna",
+        "api_surface": "responses/v1",
+        "usage": {
+          "input_tokens": 694,
+          "output_tokens": 145,
+          "total_tokens": 839,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 61
+          }
+        },
+        "finish_reason": "stop",
+        "request_id": "req_e0c7209b53fd43c5827c3bcf9a642a2a",
+        "response_id": "resp_060c84ad3f36db4d016ae6bed29c7087d294307bdebe0e02c5"
+      },
+      "raw_output": "{\"decisao\":\"consultar\",\"justificativa\":\"A fonte financeira disponível cobre 2020 e contém lucro líquido por data; faltam os valores observados necessários para atender à solicitação.\",\"fonte_id\":\"fin_resultado\",\"dominio_adicional\":null,\"map_refs\":[\"fin_resultado\",\"fin_resultado.data\",\"fin_resultado.lucro_liquido\"]}",
+      "output": {
+        "decisao": "consultar",
+        "justificativa": "A fonte financeira disponível cobre 2020 e contém lucro líquido por data; faltam os valores observados necessários para atender à solicitação.",
+        "fonte_id": "fin_resultado",
+        "dominio_adicional": null,
+        "map_refs": [
+          "fin_resultado",
+          "fin_resultado.data",
+          "fin_resultado.lucro_liquido"
+        ]
+      }
+    },
+    {
+      "event_id": "call_09",
+      "role": "planejador_consulta",
+      "round": 2,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "case_fingerprint": "62bfff870f650dd4f1b6912eebb1b1f2b49c09d730bcc7cd152913cd43ef19d7",
+        "call_id": "call_09",
+        "role": "planejador_consulta",
+        "round": 2,
+        "template_version": 1,
+        "source_event_ids": [
+          "call_06",
+          "call_07",
+          "call_08"
+        ],
+        "input": {
+          "necessidade": {
+            "entidade": "Linha fictícia L1 para paradas; observações financeiras para lucro líquido",
+            "medida": "Minutos de parada e lucro líquido observado",
+            "periodo": "2020",
+            "grao": "Linha e ano para paradas; data para observações financeiras"
+          },
+          "rota": {
+            "decisao": "consultar",
+            "justificativa": "A fonte financeira disponível cobre 2020 e contém lucro líquido por data; faltam os valores observados necessários para atender à solicitação.",
+            "fonte_id": "fin_resultado",
+            "dominio_adicional": null,
+            "map_refs": [
+              "fin_resultado",
+              "fin_resultado.data",
+              "fin_resultado.lucro_liquido"
+            ]
+          },
+          "map_snippet": {
+            "source_id": "fin_resultado",
+            "fields": [
+              "data",
+              "lucro_liquido"
+            ],
+            "grain": "observacao/data"
+          },
+          "available_evidence_ids": [
+            "result_01"
+          ],
+          "limits": {
+            "rows": 20,
+            "remaining_queries": 1
+          }
+        }
+      },
+      "contract_sha256": "03a2d57acc57ac6036917f5ec5036d2c6dbee40804e1003932cafd191098cb1c",
+      "status": "validated",
+      "model": {
+        "provider": "openai",
+        "model_id": "gpt-6-luna",
+        "api_surface": "responses/v1",
+        "usage": {
+          "input_tokens": 711,
+          "output_tokens": 446,
+          "total_tokens": 1157,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 318
+          }
+        },
+        "finish_reason": "stop",
+        "request_id": "req_c0353a165f7343e7bedd02be4950913b",
+        "response_id": "resp_0be8374b0c464a2a016ae6bed485fc87d2bb427816c61e586b"
+      },
+      "raw_output": "{\"plano\":{\"fonte_id\":\"fin_resultado\",\"campos\":[\"data\",\"lucro_liquido\"],\"filtros\":{\"data\":{\"gte\":\"2020-01-01\",\"lt\":\"2021-01-01\"}},\"limite\":20,\"grao\":\"observacao/data\"},\"justificativa\":\"A fonte fin_resultado contém data e lucro_liquido, permitindo consultar observações financeiras de 2020 no grão de observação por data. Não inclui minutos de parada, pois esses campos não estão no trecho da fonte.\",\"evidence_refs\":[\"result_01\"]}",
+      "output": {
+        "plano": {
+          "fonte_id": "fin_resultado",
+          "campos": [
+            "data",
+            "lucro_liquido"
+          ],
+          "filtros": {
+            "data": {
+              "gte": "2020-01-01",
+              "lt": "2021-01-01"
+            }
+          },
+          "limite": 20,
+          "grao": "observacao/data"
+        },
+        "justificativa": "A fonte fin_resultado contém data e lucro_liquido, permitindo consultar observações financeiras de 2020 no grão de observação por data. Não inclui minutos de parada, pois esses campos não estão no trecho da fonte.",
+        "evidence_refs": [
+          "result_01"
+        ]
+      }
+    },
+    {
+      "event_id": "tool_02",
+      "role": "synthetic_query",
+      "round": 2,
+      "status": "validated",
+      "input": {
+        "fonte_id": "fin_resultado",
+        "campos": [
+          "data",
+          "lucro_liquido"
+        ],
+        "filtros": {
+          "data": {
+            "gte": "2020-01-01",
+            "lt": "2021-01-01"
+          }
+        },
+        "limite": 20,
+        "grao": "observacao/data"
+      },
+      "output": {
+        "result_id": "result_02",
+        "source_id": "fin_resultado",
+        "grain": "observacao/data",
+        "plan": {
+          "fonte_id": "fin_resultado",
+          "campos": [
+            "data",
+            "lucro_liquido"
+          ],
+          "filtros": {
+            "data": {
+              "gte": "2020-01-01",
+              "lt": "2021-01-01"
+            }
+          },
+          "limite": 20,
+          "grao": "observacao/data"
+        },
+        "rows": [
+          {
+            "data": "2020-12-31",
+            "lucro_liquido": 1200
+          }
+        ],
+        "coverage": {
+          "state": "observed",
+          "rows": 1,
+          "synthetic": true
+        },
+        "units": {
+          "lucro_liquido": "unidade monetaria ficticia"
+        }
+      }
+    },
+    {
+      "event_id": "call_10",
+      "role": "revisor_evidencias",
+      "round": 2,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "case_fingerprint": "62bfff870f650dd4f1b6912eebb1b1f2b49c09d730bcc7cd152913cd43ef19d7",
+        "call_id": "call_10",
+        "role": "revisor_evidencias",
+        "round": 2,
+        "template_version": 1,
+        "source_event_ids": [
+          "call_08",
+          "call_09",
+          "tool_02"
+        ],
+        "input": {
+          "necessidade": {
+            "entidade": "Linha fictícia L1 para paradas; observações financeiras para lucro líquido",
+            "medida": "Minutos de parada e lucro líquido observado",
+            "periodo": "2020",
+            "grao": "Linha e ano para paradas; data para observações financeiras"
+          },
+          "query_result": {
+            "result_id": "result_02",
+            "source_id": "fin_resultado",
+            "grain": "observacao/data",
+            "plan": {
+              "fonte_id": "fin_resultado",
+              "campos": [
+                "data",
+                "lucro_liquido"
+              ],
+              "filtros": {
+                "data": {
+                  "gte": "2020-01-01",
+                  "lt": "2021-01-01"
+                }
+              },
+              "limite": 20,
+              "grao": "observacao/data"
+            },
+            "rows": [
+              {
+                "data": "2020-12-31",
+                "lucro_liquido": 1200
+              }
+            ],
+            "coverage": {
+              "state": "observed",
+              "rows": 1,
+              "synthetic": true
+            },
+            "units": {
+              "lucro_liquido": "unidade monetaria ficticia"
+            }
+          },
+          "evidence_state": [
+            {
+              "result_id": "result_01",
+              "source_id": "dw_paradas",
+              "grain": "linha/ano",
+              "plan": {
+                "fonte_id": "dw_paradas",
+                "campos": [
+                  "linha",
+                  "ano",
+                  "minutos_parada"
+                ],
+                "filtros": {
+                  "linha": "L1",
+                  "ano": 2020
+                },
+                "limite": 20,
+                "grao": "linha/ano"
+              },
+              "rows": [
+                {
+                  "linha": "L1",
+                  "ano": 2020,
+                  "minutos_parada": 45
+                }
+              ],
+              "coverage": {
+                "state": "observed",
+                "rows": 1,
+                "synthetic": true
+              },
+              "units": {
+                "minutos_parada": "min"
+              }
+            },
+            {
+              "result_id": "result_02",
+              "source_id": "fin_resultado",
+              "grain": "observacao/data",
+              "plan": {
+                "fonte_id": "fin_resultado",
+                "campos": [
+                  "data",
+                  "lucro_liquido"
+                ],
+                "filtros": {
+                  "data": {
+                    "gte": "2020-01-01",
+                    "lt": "2021-01-01"
+                  }
+                },
+                "limite": 20,
+                "grao": "observacao/data"
+              },
+              "rows": [
+                {
+                  "data": "2020-12-31",
+                  "lucro_liquido": 1200
+                }
+              ],
+              "coverage": {
+                "state": "observed",
+                "rows": 1,
+                "synthetic": true
+              },
+              "units": {
+                "lucro_liquido": "unidade monetaria ficticia"
+              }
+            }
+          ],
+          "available_evidence_ids": [
+            "result_01",
+            "result_02"
+          ],
+          "limits": {
+            "remaining_queries": 0
+          }
+        }
+      },
+      "contract_sha256": "03a2d57acc57ac6036917f5ec5036d2c6dbee40804e1003932cafd191098cb1c",
+      "status": "validated",
+      "model": {
+        "provider": "openai",
+        "model_id": "gpt-6-luna",
+        "api_surface": "responses/v1",
+        "usage": {
+          "input_tokens": 1049,
+          "output_tokens": 642,
+          "total_tokens": 1691,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 516
+          }
+        },
+        "finish_reason": "stop",
+        "request_id": "req_bbfb08cd9b6c45b29ca21decf0d1b1b1",
+        "response_id": "resp_08c4468728aac920016ae6bed91f6487d2b70210fa76d41457"
+      },
+      "raw_output": "{\"decisao\":\"suficiente\",\"evidencias_utilizadas\":[\"result_01\",\"result_02\"],\"justificativa\":\"Os resultados informam 45 minutos de parada para a linha L1 em 2020 e lucro líquido observado de 1.200 unidades monetárias fictícias em 2020-12-31. Eles respondem nos grãos solicitados, sem justificar inferências causais ou a generalização da observação financeira para o ano inteiro.\",\"lacuna\":null,\"proximo_dado_necessario\":null,\"dominio_sugerido\":null}",
+      "output": {
+        "decisao": "suficiente",
+        "evidencias_utilizadas": [
+          "result_01",
+          "result_02"
+        ],
+        "justificativa": "Os resultados informam 45 minutos de parada para a linha L1 em 2020 e lucro líquido observado de 1.200 unidades monetárias fictícias em 2020-12-31. Eles respondem nos grãos solicitados, sem justificar inferências causais ou a generalização da observação financeira para o ano inteiro.",
+        "lacuna": null,
+        "proximo_dado_necessario": null,
+        "dominio_sugerido": null
+      }
+    },
+    {
+      "event_id": "call_11",
+      "role": "redator_resposta",
+      "round": 3,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "case_fingerprint": "62bfff870f650dd4f1b6912eebb1b1f2b49c09d730bcc7cd152913cd43ef19d7",
+        "call_id": "call_11",
+        "role": "redator_resposta",
+        "round": 3,
+        "template_version": 1,
+        "source_event_ids": [
+          "call_09",
+          "tool_02",
+          "call_10"
+        ],
+        "input": {
+          "question": "Na linha fictícia L1 em 2020, quantos minutos de parada houve e qual foi o lucro líquido observado no mesmo ano? Isso prova que a parada causou a variação do lucro?",
+          "evidence_state": [
+            {
+              "result_id": "result_01",
+              "source_id": "dw_paradas",
+              "grain": "linha/ano",
+              "plan": {
+                "fonte_id": "dw_paradas",
+                "campos": [
+                  "linha",
+                  "ano",
+                  "minutos_parada"
+                ],
+                "filtros": {
+                  "linha": "L1",
+                  "ano": 2020
+                },
+                "limite": 20,
+                "grao": "linha/ano"
+              },
+              "rows": [
+                {
+                  "linha": "L1",
+                  "ano": 2020,
+                  "minutos_parada": 45
+                }
+              ],
+              "coverage": {
+                "state": "observed",
+                "rows": 1,
+                "synthetic": true
+              },
+              "units": {
+                "minutos_parada": "min"
+              }
+            },
+            {
+              "result_id": "result_02",
+              "source_id": "fin_resultado",
+              "grain": "observacao/data",
+              "plan": {
+                "fonte_id": "fin_resultado",
+                "campos": [
+                  "data",
+                  "lucro_liquido"
+                ],
+                "filtros": {
+                  "data": {
+                    "gte": "2020-01-01",
+                    "lt": "2021-01-01"
+                  }
+                },
+                "limite": 20,
+                "grao": "observacao/data"
+              },
+              "rows": [
+                {
+                  "data": "2020-12-31",
+                  "lucro_liquido": 1200
+                }
+              ],
+              "coverage": {
+                "state": "observed",
+                "rows": 1,
+                "synthetic": true
+              },
+              "units": {
+                "lucro_liquido": "unidade monetaria ficticia"
+              }
+            }
+          ],
+          "available_evidence_ids": [
+            "result_01",
+            "result_02"
+          ],
+          "limits_and_errors": {
+            "gap": {
+              "review": {
+                "decisao": "suficiente",
+                "evidencias_utilizadas": [
+                  "result_01",
+                  "result_02"
+                ],
+                "justificativa": "Os resultados informam 45 minutos de parada para a linha L1 em 2020 e lucro líquido observado de 1.200 unidades monetárias fictícias em 2020-12-31. Eles respondem nos grãos solicitados, sem justificar inferências causais ou a generalização da observação financeira para o ano inteiro.",
+                "lacuna": null,
+                "proximo_dado_necessario": null,
+                "dominio_sugerido": null
+              }
+            },
+            "queries_used": 2,
+            "queries_limit": 2
+          }
+        }
+      },
+      "contract_sha256": "03a2d57acc57ac6036917f5ec5036d2c6dbee40804e1003932cafd191098cb1c",
+      "status": "validated",
+      "model": {
+        "provider": "openai",
+        "model_id": "gpt-6-luna",
+        "api_surface": "responses/v1",
+        "usage": {
+          "input_tokens": 944,
+          "output_tokens": 191,
+          "total_tokens": 1135,
+          "input_tokens_details": {
+            "cached_tokens": 0
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 61
+          }
+        },
+        "finish_reason": "stop",
+        "request_id": "req_8ce06cbc3615429fa92c0c3f80f1c680",
+        "response_id": "resp_0924f30547ada342016ae6bedfb6ec87d283171d392526f3a7"
+      },
+      "raw_output": "{\"resposta\":\"Na linha fictícia L1, foram observados 45 minutos de parada em 2020. O lucro líquido observado foi de 1.200 unidades monetárias fictícias em 31/12/2020. Esses dados não provam que a parada causou uma variação do lucro.\",\"evidencias_utilizadas\":[\"result_01\",\"result_02\"],\"calculos\":[],\"ressalvas\":[\"O resultado financeiro é uma observação em 31/12/2020, não necessariamente o lucro agregado de todo o ano.\",\"A coincidência temporal não demonstra causalidade.\"]}",
+      "output": {
+        "resposta": "Na linha fictícia L1, foram observados 45 minutos de parada em 2020. O lucro líquido observado foi de 1.200 unidades monetárias fictícias em 31/12/2020. Esses dados não provam que a parada causou uma variação do lucro.",
+        "evidencias_utilizadas": [
+          "result_01",
+          "result_02"
+        ],
+        "calculos": [],
+        "ressalvas": [
+          "O resultado financeiro é uma observação em 31/12/2020, não necessariamente o lucro agregado de todo o ano.",
+          "A coincidência temporal não demonstra causalidade."
+        ]
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "result_id": "result_01",
+      "source_id": "dw_paradas",
+      "grain": "linha/ano",
+      "plan": {
+        "fonte_id": "dw_paradas",
+        "campos": [
+          "linha",
+          "ano",
+          "minutos_parada"
+        ],
+        "filtros": {
+          "linha": "L1",
+          "ano": 2020
+        },
+        "limite": 20,
+        "grao": "linha/ano"
+      },
+      "rows": [
+        {
+          "linha": "L1",
+          "ano": 2020,
+          "minutos_parada": 45
+        }
+      ],
+      "coverage": {
+        "state": "observed",
+        "rows": 1,
+        "synthetic": true
+      },
+      "units": {
+        "minutos_parada": "min"
+      }
+    },
+    {
+      "result_id": "result_02",
+      "source_id": "fin_resultado",
+      "grain": "observacao/data",
+      "plan": {
+        "fonte_id": "fin_resultado",
+        "campos": [
+          "data",
+          "lucro_liquido"
+        ],
+        "filtros": {
+          "data": {
+            "gte": "2020-01-01",
+            "lt": "2021-01-01"
+          }
+        },
+        "limite": 20,
+        "grao": "observacao/data"
+      },
+      "rows": [
+        {
+          "data": "2020-12-31",
+          "lucro_liquido": 1200
+        }
+      ],
+      "coverage": {
+        "state": "observed",
+        "rows": 1,
+        "synthetic": true
+      },
+      "units": {
+        "lucro_liquido": "unidade monetaria ficticia"
+      }
+    }
+  ],
+  "response": {
+    "resposta": "Na linha fictícia L1, foram observados 45 minutos de parada em 2020. O lucro líquido observado foi de 1.200 unidades monetárias fictícias em 31/12/2020. Esses dados não provam que a parada causou uma variação do lucro.",
+    "evidencias_utilizadas": [
+      "result_01",
+      "result_02"
+    ],
+    "calculos": [],
+    "ressalvas": [
+      "O resultado financeiro é uma observação em 31/12/2020, não necessariamente o lucro agregado de todo o ano.",
+      "A coincidência temporal não demonstra causalidade."
+    ]
+  },
+  "final_state": {
+    "review": {
+      "decisao": "suficiente",
+      "evidencias_utilizadas": [
+        "result_01",
+        "result_02"
+      ],
+      "justificativa": "Os resultados informam 45 minutos de parada para a linha L1 em 2020 e lucro líquido observado de 1.200 unidades monetárias fictícias em 2020-12-31. Eles respondem nos grãos solicitados, sem justificar inferências causais ou a generalização da observação financeira para o ano inteiro.",
+      "lacuna": null,
+      "proximo_dado_necessario": null,
+      "dominio_sugerido": null
+    }
+  }
+}

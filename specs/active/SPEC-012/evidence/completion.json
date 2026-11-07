@@ -1,0 +1,72 @@
+{
+  "spec_id": "SPEC-012",
+  "contract_version": 1,
+  "status": "completed",
+  "thread_id": null,
+  "runtime": {"classification": "normal_implementation", "model": "session-selected", "reasoning": "session-selected"},
+  "changed_files": [
+    {"path": "README.md", "change": "modified"},
+    {"path": "docs/arquitetura_inferencia_compartilhada.md", "change": "modified"},
+    {"path": "inference_api/README.md", "change": "modified"},
+    {"path": "inference_api/compose.yaml", "change": "modified"},
+    {"path": "inference_api/frontend/src/features/bench/BenchPage.tsx", "change": "modified"},
+    {"path": "inference_api/frontend/src/features/bench/RunDetail.tsx", "change": "modified"},
+    {"path": "inference_api/frontend/src/features/bench/benchService.ts", "change": "modified"},
+    {"path": "inference_api/frontend/src/features/bench/runPresentation.ts", "change": "modified"},
+    {"path": "inference_api/src/inference_api/jobs.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/models.py", "change": "modified"},
+    {"path": "inference_api/src/inference_api/openai_provider.py", "change": "added"},
+    {"path": "inference_api/src/inference_api/service.py", "change": "modified"},
+    {"path": "inference_api/tests/browser_spec009.cjs", "change": "modified"},
+    {"path": "inference_api/tests/test_spec012.py", "change": "added"},
+    {"path": "specs/README.md", "change": "modified"},
+    {"path": "specs/active/SPEC-012/SPEC.md", "change": "modified"},
+    {"path": "specs/active/SPEC-012/SPEC.execution.json", "change": "modified"},
+    {"path": "specs/active/SPEC-012/evidence/local-2026-10-25.md", "change": "added"},
+    {"path": "specs/active/SPEC-012/evidence/review.json", "change": "added"},
+    {"path": "specs/active/SPEC-012/evidence/review_dw.json", "change": "added"},
+    {"path": "specs/active/SPEC-012/evidence/openai-dw-snapshot-real-2026-10-26.md", "change": "added"},
+    {"path": "specs/active/SPEC-012/evidence/lifecycle.json", "change": "added"},
+    {"path": "specs/active/SPEC-012/evidence/completion.json", "change": "added"}
+  ],
+  "artifacts": [
+    "specs/active/SPEC-012/evidence/local-2026-10-25.md",
+    "specs/active/SPEC-012/evidence/review.json",
+    "specs/active/SPEC-012/evidence/lifecycle.json",
+    "specs/active/SPEC-012/evidence/openai-synthetic-real-2026-10-25.md",
+    "specs/active/SPEC-012/evidence/openai-dw-tools-real-2026-10-25.md",
+    "specs/active/SPEC-012/evidence/openai-dw-snapshot-real-2026-10-26.md",
+    "specs/active/SPEC-012/evidence/review_dw.json"
+  ],
+  "acceptance_evidence": [
+    {"id": "AC-001", "result": "passed", "evidence": ["test_spec012.py", "browser_spec009.cjs"], "notes": ["OpenAI alias, unavailable configuration and DW gate verified locally; RunPod and Groq regression tests passed."]},
+    {"id": "AC-002", "result": "passed", "evidence": ["test_spec012.py"], "notes": ["Simulated Responses output selected the synthetic tool; invalid tool was rejected without query."]},
+    {"id": "AC-003", "result": "passed", "evidence": ["test_spec012.py", "browser_spec009.cjs", "test_streaming_jobs.py"], "notes": ["Snapshot v5, authenticated HTTP, UI history, refresh and existing job idempotency covered locally; no real persistence migration was needed."]},
+    {"id": "AC-004", "result": "passed", "evidence": ["test_spec012.py", "test_spec010.py"], "notes": ["Provider HTTP, quota, context and partial SSE errors and tool rejection covered with simulated transport; no automatic retry."]},
+    {"id": "AC-005", "result": "passed", "evidence": ["specs/active/SPEC-012/evidence/review.json", "specs/active/SPEC-012/evidence/review_dw.json", "specs/active/SPEC-012/evidence/openai-synthetic-real-2026-10-25.md", "specs/active/SPEC-012/evidence/openai-dw-tools-real-2026-10-25.md", "specs/active/SPEC-012/evidence/openai-dw-snapshot-real-2026-10-26.md"], "notes": ["Independent review approved the OpenAI + DW technical scope with no P1/P2 findings; a read-only addendum confirmed the later real dw_snapshot run. The researcher approved existing full local retention on 2026-10-26. A fresh backend process exposed the enabled modes in the authenticated UI. All real answers remain exploratory and unverified scientifically."]}
+  ],
+  "validation_evidence": [
+    {"validation_id": "VAL-001", "canonical_command": "git diff --check", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Diff check on 2026-10-25"], "notes": ["LF/CRLF conversion warnings only; preexisting Groq and DW changes preserved."]},
+    {"validation_id": "VAL-002", "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["66 tests OK; 8 opt-in PostgreSQL integrations skipped"], "notes": []},
+    {"validation_id": "VAL-003", "canonical_command": "npm --prefix inference_api/frontend run typecheck", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Local TypeScript binary tsc -b --pretty false passed"], "notes": ["npm absent on PATH; equivalent project binary used."]},
+    {"validation_id": "VAL-004", "canonical_command": "npm --prefix inference_api/frontend run lint", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Local ESLint binary passed"], "notes": ["npm absent on PATH."]},
+    {"validation_id": "VAL-005", "canonical_command": "npm --prefix inference_api/frontend run test -- --run", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Vitest: 1 file, 2 tests passed"], "notes": ["Local Vitest binary used."]},
+    {"validation_id": "VAL-006", "canonical_command": "npm --prefix inference_api/frontend run build", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Vite build passed; 130 modules transformed"], "notes": ["TypeScript and Vite project binaries used."]},
+    {"validation_id": "VAL-007", "canonical_command": "Authenticated local HTTP/browser with simulated OpenAI transport and synthetic fixture", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["test_spec012.py", "browser_spec009.cjs"], "notes": ["This validation used mocked browser API and no external OpenAI or real DW access; later real trials are recorded separately."]},
+    {"validation_id": "VAL-008", "canonical_command": "Inspect diff, bundle, logs and synthetic snapshots for secrets and compatibility", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["Diff and source inspection; frontend bundle has no OPENAI_API_KEY or fixture secret marker"], "notes": ["At the time of local validation there was no real key or external call; later real runs have separate receipts."]},
+    {"validation_id": "VAL-009", "canonical_command": "Prepare completion and sanitized evidence for independent review", "verification": "reported", "result": "passed", "exit_code": 0, "evidence": ["specs/active/SPEC-012/evidence/completion.json", "specs/active/SPEC-012/evidence/local-2026-10-25.md", "specs/active/SPEC-012/evidence/review.json"], "notes": ["Independent review approved local synthetic scope only."]}
+  ],
+  "deviations": [
+    "Work continued in the current user chat; no separate SDK implementation thread was created.",
+    "Host npm absent; equivalent project-local Node tools used.",
+    "OpenAI DW modes are additionally gated by INFERENCE_OPENAI_DW_ENABLED, default off in code. After the retention decision and independent DW review, the local ignored .env.local was set to 1 and a fresh backend/browser confirmed availability."
+  ],
+  "unresolved_items": [
+    "The historical first review approved only the synthetic scope; the separate DW review was approved on 2026-10-26. The researcher approved existing runs.snapshot retention on 2026-10-26: complete evidence JSON without automatic TTL or removal, accessible to Vinicius and Nicoli.",
+    "Real OpenAI receipts cover direct synthetic_snapshot and authenticated Bancada dw_tools on 2026-10-25, and authenticated Bancada dw_snapshot on 2026-10-26. The latter sent one selected 2762-byte packet and has an exact persisted job/run readback.",
+    "Eight opt-in PostgreSQL integration tests were skipped; mock tests covered OpenAI data paths.",
+    "Scientific comparison requires the separate formal harness."
+  ],
+  "needs_design": null,
+  "usage": null
+}

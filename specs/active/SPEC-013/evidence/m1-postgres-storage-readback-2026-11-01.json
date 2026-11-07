@@ -1,0 +1,9 @@
+{
+  "provider_called": false,
+  "research_database_queried": false,
+  "run_readback": true,
+  "job_readback": true,
+  "idempotency_preserved": true,
+  "cleanup_verified": true,
+  "model_calls": 12
+}

@@ -1,0 +1,501 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net"><diagram id="rC3Onoxkcgc0oOyFh0Ck" name="Fluxo da Bancada e harness (proposta)"><mxGraphModel dx="2500" dy="1800" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="title" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=28;fontColor=#283446;spacing=0;" value="Como a Bancada consulta os dados e compara modelos" vertex="1">
+      <mxGeometry height="45" width="2190" as="geometry" x="0" y="0" />
+    </mxCell>
+    <mxCell id="status" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=17;fontColor=#283446;spacing=0;" value="SPEC-014 · arquitetura proposta · dois cenários com os mesmos agentes&lt;br&gt;SPEC-013 concluída em engenharia. A evolução da SPEC-014 será implementada em outra thread." vertex="1">
+      <mxGeometry height="65" width="2190" y="55" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="bancada" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECF4FE;strokeColor=#5B80AD;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;rounded=1;fontSize=16;spacing=8;" value="Bancada&lt;br&gt;pergunta + cenário A/B + modelo" vertex="1">
+      <mxGeometry height="105" width="222" y="150" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="harness" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF8F4;strokeColor=#4E9B90;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;rounded=1;fontSize=16;spacing=8;" value="Harness&lt;br&gt;contexto + contratos + limites" vertex="1">
+      <mxGeometry height="105" width="222" x="276" y="150" as="geometry" />
+    </mxCell>
+    <mxCell id="s1" edge="1" parent="1" source="bancada" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="harness" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="analista" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;rounded=1;fontSize=16;spacing=8;" value="Analista&lt;br&gt;necessidades e domínios" vertex="1">
+      <mxGeometry height="105" width="222" x="552" y="150" as="geometry" />
+    </mxCell>
+    <mxCell id="s2" edge="1" parent="1" source="harness" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="analista" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="selecionador" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;rounded=1;fontSize=16;spacing=8;" value="Selecionador&lt;br&gt;fonte ou trecho do pacote" vertex="1">
+      <mxGeometry height="105" width="222" x="828" y="150" as="geometry" />
+    </mxCell>
+    <mxCell id="s3" edge="1" parent="1" source="analista" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="selecionador" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="especialista" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;rounded=1;fontSize=16;spacing=8;" value="Especialista do domínio&lt;br&gt;A: analisa · B: planeja consulta" vertex="1">
+      <mxGeometry height="105" width="222" x="1104" y="150" as="geometry" />
+    </mxCell>
+    <mxCell id="s4" edge="1" parent="1" source="selecionador" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="especialista" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="consulta" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF8F4;strokeColor=#4E9B90;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;rounded=1;fontSize=16;spacing=8;" value="Backend&lt;br&gt;A: valida análise · B: consulta" vertex="1">
+      <mxGeometry height="105" width="222" x="1380" y="150" as="geometry" />
+    </mxCell>
+    <mxCell id="s5" edge="1" parent="1" source="especialista" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="consulta" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="revisor" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;rounded=1;fontSize=16;spacing=8;" value="Revisor&lt;br&gt;evidência suficiente?" vertex="1">
+      <mxGeometry height="105" width="222" x="1656" y="150" as="geometry" />
+    </mxCell>
+    <mxCell id="s6" edge="1" parent="1" source="consulta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="revisor" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="redator" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;rounded=1;fontSize=16;spacing=8;" value="Redator&lt;br&gt;resposta + referências + ressalvas" vertex="1">
+      <mxGeometry height="105" width="222" x="1932" y="150" as="geometry" />
+    </mxCell>
+    <mxCell id="s7" edge="1" parent="1" source="revisor" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="redator" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="s_loop" edge="1" parent="1" source="revisor" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="selecionador" value="falta evidência + há orçamento">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1767.0" y="278" />
+          <mxPoint x="939.0" y="278" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="s_audit" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;fontColor=#283446;spacing=0;" value="Cada papel usa uma chamada separada do MESMO modelo via serviço comum. A: pacote fixo, sem consulta. B: fontes aprovadas.&lt;br&gt;JSON, evidências e erros registrados. Avaliação científica e gabaritos ficam fora dos agentes." vertex="1">
+      <mxGeometry height="65" width="2190" y="295" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="dtitle" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=23;fontColor=#283446;spacing=0;" value="CENÁRIO B · CONSULTAS, DECISÕES E RETORNOS" vertex="1">
+      <mxGeometry height="45" width="2190" y="400" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="d_prompt" parent="1" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ECF4FE;strokeColor=#5B80AD;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=parallelogram;fontSize=16;spacing=8;" value="Pergunta entra aqui" vertex="1">
+      <mxGeometry height="110" width="171" y="600" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="d_analysis" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Analista&lt;br&gt;extrai necessidade" vertex="1">
+      <mxGeometry height="110" width="171" x="222" y="600" as="geometry" />
+    </mxCell>
+    <mxCell id="d1" edge="1" parent="1" source="d_prompt" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_analysis" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="d_select" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Selecionador&lt;br&gt;escolhe fonte pelo índice" vertex="1">
+      <mxGeometry height="110" width="171" x="444" y="600" as="geometry" />
+    </mxCell>
+    <mxCell id="d2" edge="1" parent="1" source="d_analysis" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_select" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="d_map" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#EAF8F4;strokeColor=#4E9B90;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Backend&lt;br&gt;valida ID e entrega contrato completo" vertex="1">
+      <mxGeometry height="110" width="171" x="666" y="600" as="geometry" />
+    </mxCell>
+    <mxCell id="d3" edge="1" parent="1" source="d_select" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_map" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="d_special" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Especialista escolhido&lt;br&gt;monta plano JSON" vertex="1">
+      <mxGeometry height="110" width="171" x="888" y="600" as="geometry" />
+    </mxCell>
+    <mxCell id="d4" edge="1" parent="1" source="d_map" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_special" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="d_valid" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#EAF8F4;strokeColor=#4E9B90;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;rhombus;fontSize=16;spacing=8;" value="Plano permitido?" vertex="1">
+      <mxGeometry height="110" width="171" x="1110" y="600" as="geometry" />
+    </mxCell>
+    <mxCell id="d5" edge="1" parent="1" source="d_special" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_valid" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="d_tool" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#EAF8F4;strokeColor=#4E9B90;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Tool de leitura&lt;br&gt;SQL compilada pelo backend" vertex="1">
+      <mxGeometry height="110" width="171" x="1332" y="600" as="geometry" />
+    </mxCell>
+    <mxCell id="d6" edge="1" parent="1" source="d_valid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_tool" value="sim">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="d_review" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Revisor&lt;br&gt;confronta pergunta e evidências" vertex="1">
+      <mxGeometry height="110" width="171" x="1554" y="600" as="geometry" />
+    </mxCell>
+    <mxCell id="d_enough" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;rhombus;fontSize=16;spacing=8;" value="Evidência suficiente?" vertex="1">
+      <mxGeometry height="110" width="171" x="1776" y="600" as="geometry" />
+    </mxCell>
+    <mxCell id="d8" edge="1" parent="1" source="d_review" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_enough" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="d_write" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Redator&lt;br&gt;resposta ou lacunas" vertex="1">
+      <mxGeometry height="110" width="171" x="1998" y="600" as="geometry" />
+    </mxCell>
+    <mxCell id="d9" edge="1" parent="1" source="d_enough" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_write" value="sim">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="d_index" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#ECF4FE;strokeColor=#5B80AD;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=cylinder3;fontSize=16;spacing=8;" value="Índice das fontes&lt;br&gt;ID · domínio · grão&lt;br&gt;cobertura" vertex="1">
+      <mxGeometry height="120" width="171" x="444" y="450" as="geometry" />
+    </mxCell>
+    <mxCell id="d_idx" edge="1" parent="1" source="d_index" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_select" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="d_schema" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#ECF4FE;strokeColor=#5B80AD;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=cylinder3;fontSize=16;spacing=8;" value="Contrato da fonte&lt;br&gt;campos · tipos · filtros&lt;br&gt;relações · unidades" vertex="1">
+      <mxGeometry height="120" width="171" x="666" y="450" as="geometry" />
+    </mxCell>
+    <mxCell id="d_sch" edge="1" parent="1" source="d_schema" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_map" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="d_dbs" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#ECF4FE;strokeColor=#5B80AD;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=cylinder3;fontSize=16;spacing=8;" value="DW · Industrial&lt;br&gt;Financeiro&lt;br&gt;Somente leitura" vertex="1">
+      <mxGeometry height="110" width="171" x="1332" y="775" as="geometry" />
+    </mxCell>
+    <mxCell id="d_db" edge="1" parent="1" source="d_tool" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_dbs" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="d_result" edge="1" parent="1" source="d_dbs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_review" value="">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1554" y="820" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="d_fix" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E5;strokeColor=#C18A4B;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;rounded=1;fontSize=16;spacing=8;" value="Erro corrigível&lt;br&gt;JSON/plano recusado + erro + saldo atualizado" vertex="1">
+      <mxGeometry height="95" width="215" x="885" y="850" as="geometry" />
+    </mxCell>
+    <mxCell id="d_refuse" edge="1" parent="1" source="d_valid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_fix" value="corrigível">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1194" y="800" />
+          <mxPoint x="990" y="800" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="d_correct" edge="1" parent="1" source="d_fix" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_special" value="mesmo Especialista corrige">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="858" y="898" />
+          <mxPoint x="858" y="745" />
+          <mxPoint x="974" y="745" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="d_stop" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E5;strokeColor=#C18A4B;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;rounded=1;fontSize=16;spacing=8;" value="Bloqueio de acesso, provedor ou limite&lt;br&gt;registrar erro; não reenviar automaticamente" vertex="1">
+      <mxGeometry height="95" width="240" x="1125" y="1020" as="geometry" />
+    </mxCell>
+    <mxCell id="d_block" edge="1" parent="1" source="d_valid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_stop" value="terminal">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1239" y="980" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="d_budget" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#EAF8F4;strokeColor=#4E9B90;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;rhombus;fontSize=16;spacing=8;" value="Há orçamento&lt;br&gt;para nova busca?" vertex="1">
+      <mxGeometry height="110" width="240" x="1653" y="930" as="geometry" />
+    </mxCell>
+    <mxCell id="d_more" edge="1" parent="1" source="d_enough" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_budget" value="não">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1860" y="830" />
+          <mxPoint x="1770" y="830" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="d_again" edge="1" parent="1" source="d_budget" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_select" value="há saldo → lacuna + evidências">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1770" y="1150" />
+          <mxPoint x="530" y="1150" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="d_end" edge="1" parent="1" source="d_budget" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="d_write" value="sem saldo">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="2080" y="985" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="d_notes" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;fontColor=#283446;spacing=0;" value="Pergunta não tratável ou sem fonte: Redator declara a lacuna. Rota recusada: retorno ao Selecionador.&lt;br&gt;Saídas inválidas não avançam. Correção recebe a tentativa recusada, referência do evento e orçamento atual." vertex="1">
+      <mxGeometry height="65" width="2190" y="1200" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="ctitle" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=24;fontColor=#283446;spacing=0;" value="CONTRATOS DOS AGENTES · INPUT, CONTEXTO, FERRAMENTAS, TAREFA E OUTPUT" vertex="1">
+      <mxGeometry height="50" width="2190" y="1320" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="clegend" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;fontColor=#283446;spacing=0;" value="Cada chamada usa JSON validado e o MESMO perfil de modelo. Exemplos B preservados; extensão A explícita nos quadros.&lt;br&gt;Contexto montado por papel, IDs e hashes; sem resumo semântico oculto pelo backend. Sem gabarito." vertex="1">
+      <mxGeometry height="70" width="2190" y="1380" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="card0" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#EEE8F5;strokeColor=#9673A6;align=left;verticalAlign=top;spacing=16;fontSize=20;fontStyle=1;" value="ANALISTA DA PERGUNTA" vertex="1">
+      <mxGeometry height="760" width="2190" y="1490" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="c0_0" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;ENVELOPE COMUM&lt;/b&gt;&lt;br&gt;scenario: fixed_evidence | data_access&lt;br&gt;run_id · call_id · role · round · contract_version · model_profile_id&lt;br&gt;&lt;b&gt;ENTRADA · JSON&lt;/b&gt;&lt;br&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;question&amp;quot;: &amp;quot;Paradas da máquina 2000002 em 2021?&amp;quot;,&#10;  &amp;quot;domain_index&amp;quot;: [&#10;    {&amp;quot;domain&amp;quot;: &amp;quot;dw&amp;quot;},&#10;    {&amp;quot;domain&amp;quot;: &amp;quot;industrial&amp;quot;},&#10;    {&amp;quot;domain&amp;quot;: &amp;quot;financeiro&amp;quot;}&#10;  ]&#10;}&lt;/pre&gt;" vertex="1">
+      <mxGeometry height="680" width="580" x="12" y="1550" as="geometry" />
+    </mxCell>
+    <mxCell id="c0_1" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;CONTEXTO&lt;/b&gt;&lt;br&gt;Pergunta literal + protocolo fixo. Sem gabarito." vertex="1">
+      <mxGeometry height="680" width="300" x="608" y="1550" as="geometry" />
+    </mxCell>
+    <mxCell id="c0_2" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;FERRAMENTAS&lt;/b&gt;&lt;br&gt;Nenhuma consulta." vertex="1">
+      <mxGeometry height="680" width="260" x="924" y="1550" as="geometry" />
+    </mxCell>
+    <mxCell id="c0_3" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;TAREFA&lt;/b&gt;&lt;br&gt;Extrair entidade, medida, período e grão; identificar domínios e ambiguidades." vertex="1">
+      <mxGeometry height="680" width="300" x="1200" y="1550" as="geometry" />
+    </mxCell>
+    <mxCell id="c0_4" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;SAÍDA · JSON&lt;/b&gt;&lt;br&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;tratavel&amp;quot;: true,&#10;  &amp;quot;necessidade&amp;quot;: {&#10;    &amp;quot;entidade&amp;quot;: &amp;quot;máquina 2000002&amp;quot;,&#10;    &amp;quot;medida&amp;quot;: &amp;quot;paradas&amp;quot;,&#10;    &amp;quot;periodo&amp;quot;: &amp;quot;2021&amp;quot;,&#10;    &amp;quot;grao&amp;quot;: &amp;quot;máquina/ano e evento&amp;quot;&#10;  },&#10;  &amp;quot;dominios&amp;quot;: [&amp;quot;dw&amp;quot;, &amp;quot;industrial&amp;quot;],&#10;  &amp;quot;lacunas&amp;quot;: []&#10;}&lt;/pre&gt;" vertex="1">
+      <mxGeometry height="680" width="662" x="1516" y="1550" as="geometry" />
+    </mxCell>
+    <mxCell id="card1" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#EEE8F5;strokeColor=#9673A6;align=left;verticalAlign=top;spacing=16;fontSize=20;fontStyle=1;" value="SELECIONADOR DE FONTES" vertex="1">
+      <mxGeometry height="760" width="2190" y="2290" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="c1_0" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;ENVELOPE COMUM&lt;/b&gt;&lt;br&gt;scenario: fixed_evidence | data_access&lt;br&gt;run_id · call_id · role · round · contract_version · model_profile_id&lt;br&gt;&lt;b&gt;ENTRADA · JSON&lt;/b&gt;&lt;br&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;question&amp;quot;: &amp;quot;Paradas da máquina 2000002 em 2021?&amp;quot;,&#10;  &amp;quot;source_index&amp;quot;: [&#10;    {&#10;      &amp;quot;domain&amp;quot;: &amp;quot;dw&amp;quot;,&#10;      &amp;quot;sources&amp;quot;: [{&amp;quot;id&amp;quot;: &amp;quot;machine&amp;quot;, &amp;quot;grain&amp;quot;: &amp;quot;machine_id/year&amp;quot;}]&#10;    }&#10;  ],&#10;  &amp;quot;gap&amp;quot;: null,&#10;  &amp;quot;evidence_state&amp;quot;: []&#10;}&lt;/pre&gt;" vertex="1">
+      <mxGeometry height="680" width="580" x="12" y="2350" as="geometry" />
+    </mxCell>
+    <mxCell id="c1_1" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;CONTEXTO&lt;/b&gt;&lt;br&gt;A: índice das fontes/evidências presentes no pacote fixo.&lt;br&gt;&lt;br&gt;B: índice estático aprovado das fontes consultáveis.&lt;br&gt;&lt;br&gt;Pergunta interpretada, evidências, lacunas, tentativas e orçamento." vertex="1">
+      <mxGeometry height="680" width="300" x="608" y="2350" as="geometry" />
+    </mxCell>
+    <mxCell id="c1_2" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;FERRAMENTAS&lt;/b&gt;&lt;br&gt;Nenhuma consulta. Backend fornece índice estático." vertex="1">
+      <mxGeometry height="680" width="260" x="924" y="2350" as="geometry" />
+    </mxCell>
+    <mxCell id="c1_3" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;TAREFA&lt;/b&gt;&lt;br&gt;A: selecionar trecho/domínio do pacote recebido.&lt;br&gt;B: selecionar primeira ou próxima fonte consultável.&lt;br&gt;&lt;br&gt;Não habilita acesso; backend aplica o cenário congelado." vertex="1">
+      <mxGeometry height="680" width="300" x="1200" y="2350" as="geometry" />
+    </mxCell>
+    <mxCell id="c1_4" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;SAÍDA · JSON&lt;/b&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;source_id&amp;quot;: &amp;quot;machine&amp;quot;,&#10;  &amp;quot;domain&amp;quot;: &amp;quot;dw&amp;quot;,&#10;  &amp;quot;need&amp;quot;: &amp;quot;agregado de paradas&amp;quot;,&#10;  &amp;quot;selection_kind&amp;quot;: &amp;quot;query_source&amp;quot;&#10;}&lt;/pre&gt;&lt;br&gt;No A:&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;source_id&amp;quot;: &amp;quot;packet:p1:dw&amp;quot;,&#10;  &amp;quot;domain&amp;quot;: &amp;quot;dw&amp;quot;,&#10;  &amp;quot;need&amp;quot;: &amp;quot;agregado de paradas&amp;quot;,&#10;  &amp;quot;selection_kind&amp;quot;: &amp;quot;packet_source&amp;quot;&#10;}&lt;/pre&gt;" vertex="1">
+      <mxGeometry height="680" width="662" x="1516" y="2350" as="geometry" />
+    </mxCell>
+    <mxCell id="card2" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#EEE8F5;strokeColor=#9673A6;align=left;verticalAlign=top;spacing=16;fontSize=20;fontStyle=1;" value="ESPECIALISTA DOS DADOS CONSOLIDADOS · A: ANALISA PACOTE / B: MONTA CONSULTA" vertex="1">
+      <mxGeometry height="760" width="2190" y="3090" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="c2_0" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;ENVELOPE COMUM&lt;/b&gt;&lt;br&gt;scenario: fixed_evidence | data_access&lt;br&gt;run_id · call_id · role · round · contract_version · model_profile_id&lt;br&gt;&lt;b&gt;ENTRADA · JSON&lt;/b&gt;&lt;br&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;question&amp;quot;: &amp;quot;Recorte de 2021 solicitado&amp;quot;,&#10;  &amp;quot;domain&amp;quot;: &amp;quot;dw&amp;quot;,&#10;  &amp;quot;source_contract&amp;quot;: {&#10;    &amp;quot;source_id&amp;quot;: &amp;quot;machine&amp;quot;,&#10;    &amp;quot;filter_contracts&amp;quot;: {&#10;      &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,&#10;      &amp;quot;additionalProperties&amp;quot;: false,&#10;      &amp;quot;properties&amp;quot;: {&#10;        &amp;quot;id&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;, &amp;quot;minimum&amp;quot;: 1},&#10;        &amp;quot;year&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;, &amp;quot;minimum&amp;quot;: 2015, &amp;quot;maximum&amp;quot;: 2026}&#10;      },&#10;      &amp;quot;required&amp;quot;: [&amp;quot;id&amp;quot;, &amp;quot;year&amp;quot;]&#10;    }&#10;  },&#10;  &amp;quot;evidence_state&amp;quot;: [],&#10;  &amp;quot;gap&amp;quot;: null&#10;}&lt;/pre&gt;" vertex="1">
+      <mxGeometry height="680" width="580" x="12" y="3150" as="geometry" />
+    </mxCell>
+    <mxCell id="c2_1" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;CONTEXTO&lt;/b&gt;&lt;br&gt;A: dados e metadados da fonte já presentes no pacote congelado.&lt;br&gt;&lt;br&gt;B: contrato completo da fonte selecionada — campos, tipos, filtros, relações, unidades, grão e cobertura.&lt;br&gt;&lt;br&gt;A e B: pergunta, necessidade, evidências aceitas e feedback tipado; sem gabarito." vertex="1">
+      <mxGeometry height="680" width="300" x="608" y="3150" as="geometry" />
+    </mxCell>
+    <mxCell id="c2_2" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;FERRAMENTAS&lt;/b&gt;&lt;br&gt;A: nenhuma leitura dos bancos de pesquisa.&lt;br&gt;&lt;br&gt;B: plano JSON solicita leitura. Backend valida, compila e executa.&lt;br&gt;&lt;br&gt;Modelo usa API via serviço comum; não recebe credenciais dos bancos." vertex="1">
+      <mxGeometry height="680" width="260" x="924" y="3150" as="geometry" />
+    </mxCell>
+    <mxCell id="c2_3" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;TAREFA&lt;/b&gt;&lt;br&gt;A: interpretar dados recebidos, citar referências e explicitar lacunas.&lt;br&gt;&lt;br&gt;B: construir plano tipado; em erro corrigível receber tentativa recusada + erro + saldo e corrigir.&lt;br&gt;&lt;br&gt;Não inventar dados nem fazer SQL livre." vertex="1">
+      <mxGeometry height="680" width="300" x="1200" y="3150" as="geometry" />
+    </mxCell>
+    <mxCell id="c2_4" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;SAÍDA A · JSON&lt;/b&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;action&amp;quot;: &amp;quot;analyze_packet&amp;quot;,&#10;  &amp;quot;evidence_refs&amp;quot;: [&amp;quot;packet:p1:e1&amp;quot;],&#10;  &amp;quot;findings&amp;quot;: [&amp;quot;Achado sustentado&amp;quot;],&#10;  &amp;quot;gaps&amp;quot;: []&#10;}&lt;/pre&gt;&lt;br&gt;&lt;b&gt;SAÍDA B&lt;/b&gt;&lt;br&gt;&lt;b&gt;SAÍDA · JSON&lt;/b&gt;&lt;br&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;plano&amp;quot;: {&#10;    &amp;quot;fonte_id&amp;quot;: &amp;quot;machine&amp;quot;,&#10;    &amp;quot;campos&amp;quot;: [&amp;quot;machine_id&amp;quot;, &amp;quot;downtime_rows&amp;quot;, &amp;quot;downtime_minutes&amp;quot;],&#10;    &amp;quot;filtros&amp;quot;: {&amp;quot;id&amp;quot;: 2000002, &amp;quot;year&amp;quot;: 2021},&#10;    &amp;quot;limite&amp;quot;: 20,&#10;    &amp;quot;grao&amp;quot;: &amp;quot;machine_id/year&amp;quot;&#10;  },&#10;  &amp;quot;justificativa&amp;quot;: &amp;quot;Recorte solicitado.&amp;quot;,&#10;  &amp;quot;evidence_refs&amp;quot;: []&#10;}&lt;/pre&gt;" vertex="1">
+      <mxGeometry height="680" width="662" x="1516" y="3150" as="geometry" />
+    </mxCell>
+    <mxCell id="card3" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#EEE8F5;strokeColor=#9673A6;align=left;verticalAlign=top;spacing=16;fontSize=20;fontStyle=1;" value="ESPECIALISTA DOS DADOS INDUSTRIAIS · A: ANALISA PACOTE / B: MONTA CONSULTA" vertex="1">
+      <mxGeometry height="760" width="2190" y="3890" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="c3_0" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;ENVELOPE COMUM&lt;/b&gt;&lt;br&gt;scenario: fixed_evidence | data_access&lt;br&gt;run_id · call_id · role · round · contract_version · model_profile_id&lt;br&gt;&lt;b&gt;ENTRADA · JSON&lt;/b&gt;&lt;br&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;question&amp;quot;: &amp;quot;Recorte de 2021 solicitado&amp;quot;,&#10;  &amp;quot;domain&amp;quot;: &amp;quot;industrial&amp;quot;,&#10;  &amp;quot;source_contract&amp;quot;: {&#10;    &amp;quot;source_id&amp;quot;: &amp;quot;paradas_maquinas_geradas&amp;quot;,&#10;    &amp;quot;filter_contracts&amp;quot;: {&#10;      &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,&#10;      &amp;quot;additionalProperties&amp;quot;: false,&#10;      &amp;quot;properties&amp;quot;: {&#10;        &amp;quot;maquina_id&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;, &amp;quot;minimum&amp;quot;: 1},&#10;        &amp;quot;hora_inicio_parada&amp;quot;: {&#10;          &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,&#10;          &amp;quot;required&amp;quot;: [&amp;quot;from&amp;quot;, &amp;quot;to&amp;quot;],&#10;          &amp;quot;additionalProperties&amp;quot;: false,&#10;          &amp;quot;properties&amp;quot;: {&amp;quot;from&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;}, &amp;quot;to&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;}}&#10;        }&#10;      },&#10;      &amp;quot;minProperties&amp;quot;: 1&#10;    }&#10;  },&#10;  &amp;quot;evidence_state&amp;quot;: [],&#10;  &amp;quot;gap&amp;quot;: null&#10;}&lt;/pre&gt;" vertex="1">
+      <mxGeometry height="680" width="580" x="12" y="3950" as="geometry" />
+    </mxCell>
+    <mxCell id="c3_1" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;CONTEXTO&lt;/b&gt;&lt;br&gt;A: dados e metadados da fonte já presentes no pacote congelado.&lt;br&gt;&lt;br&gt;B: contrato completo da fonte selecionada — campos, tipos, filtros, relações, unidades, grão e cobertura.&lt;br&gt;&lt;br&gt;A e B: pergunta, necessidade, evidências aceitas e feedback tipado; sem gabarito." vertex="1">
+      <mxGeometry height="680" width="300" x="608" y="3950" as="geometry" />
+    </mxCell>
+    <mxCell id="c3_2" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;FERRAMENTAS&lt;/b&gt;&lt;br&gt;A: nenhuma leitura dos bancos de pesquisa.&lt;br&gt;&lt;br&gt;B: plano JSON solicita leitura. Backend valida, compila e executa.&lt;br&gt;&lt;br&gt;Modelo usa API via serviço comum; não recebe credenciais dos bancos." vertex="1">
+      <mxGeometry height="680" width="260" x="924" y="3950" as="geometry" />
+    </mxCell>
+    <mxCell id="c3_3" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;TAREFA&lt;/b&gt;&lt;br&gt;A: interpretar dados recebidos, citar referências e explicitar lacunas.&lt;br&gt;&lt;br&gt;B: construir plano tipado; em erro corrigível receber tentativa recusada + erro + saldo e corrigir.&lt;br&gt;&lt;br&gt;Não inventar dados nem fazer SQL livre." vertex="1">
+      <mxGeometry height="680" width="300" x="1200" y="3950" as="geometry" />
+    </mxCell>
+    <mxCell id="c3_4" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;SAÍDA A · JSON&lt;/b&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;action&amp;quot;: &amp;quot;analyze_packet&amp;quot;,&#10;  &amp;quot;evidence_refs&amp;quot;: [&amp;quot;packet:p1:e1&amp;quot;],&#10;  &amp;quot;findings&amp;quot;: [&amp;quot;Achado sustentado&amp;quot;],&#10;  &amp;quot;gaps&amp;quot;: []&#10;}&lt;/pre&gt;&lt;br&gt;&lt;b&gt;SAÍDA B&lt;/b&gt;&lt;br&gt;&lt;b&gt;SAÍDA · JSON&lt;/b&gt;&lt;br&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;plano&amp;quot;: {&#10;    &amp;quot;fonte_id&amp;quot;: &amp;quot;paradas_maquinas_geradas&amp;quot;,&#10;    &amp;quot;campos&amp;quot;: [&amp;quot;parada_id&amp;quot;, &amp;quot;maquina_id&amp;quot;, &amp;quot;hora_inicio_parada&amp;quot;],&#10;    &amp;quot;filtros&amp;quot;: {&#10;      &amp;quot;maquina_id&amp;quot;: 2000002,&#10;      &amp;quot;hora_inicio_parada&amp;quot;: {&amp;quot;from&amp;quot;: &amp;quot;2021-01-01&amp;quot;, &amp;quot;to&amp;quot;: &amp;quot;2022-01-01&amp;quot;}&#10;    },&#10;    &amp;quot;limite&amp;quot;: 20,&#10;    &amp;quot;grao&amp;quot;: &amp;quot;parada_id/source_period&amp;quot;&#10;  },&#10;  &amp;quot;justificativa&amp;quot;: &amp;quot;Recorte solicitado.&amp;quot;,&#10;  &amp;quot;evidence_refs&amp;quot;: []&#10;}&lt;/pre&gt;" vertex="1">
+      <mxGeometry height="680" width="662" x="1516" y="3950" as="geometry" />
+    </mxCell>
+    <mxCell id="card4" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#EEE8F5;strokeColor=#9673A6;align=left;verticalAlign=top;spacing=16;fontSize=20;fontStyle=1;" value="ESPECIALISTA DOS DADOS FINANCEIROS · A: ANALISA PACOTE / B: MONTA CONSULTA" vertex="1">
+      <mxGeometry height="760" width="2190" y="4690" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="c4_0" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;ENVELOPE COMUM&lt;/b&gt;&lt;br&gt;scenario: fixed_evidence | data_access&lt;br&gt;run_id · call_id · role · round · contract_version · model_profile_id&lt;br&gt;&lt;b&gt;ENTRADA · JSON&lt;/b&gt;&lt;br&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;question&amp;quot;: &amp;quot;Recorte de 2021 solicitado&amp;quot;,&#10;  &amp;quot;domain&amp;quot;: &amp;quot;financeiro&amp;quot;,&#10;  &amp;quot;source_contract&amp;quot;: {&#10;    &amp;quot;source_id&amp;quot;: &amp;quot;resultados_financeiros&amp;quot;,&#10;    &amp;quot;filter_contracts&amp;quot;: {&#10;      &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,&#10;      &amp;quot;additionalProperties&amp;quot;: false,&#10;      &amp;quot;properties&amp;quot;: {&#10;        &amp;quot;data_registro&amp;quot;: {&#10;          &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,&#10;          &amp;quot;required&amp;quot;: [&amp;quot;from&amp;quot;, &amp;quot;to&amp;quot;],&#10;          &amp;quot;additionalProperties&amp;quot;: false,&#10;          &amp;quot;properties&amp;quot;: {&amp;quot;from&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;}, &amp;quot;to&amp;quot;: {&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;}}&#10;        }&#10;      },&#10;      &amp;quot;minProperties&amp;quot;: 1&#10;    }&#10;  },&#10;  &amp;quot;evidence_state&amp;quot;: [],&#10;  &amp;quot;gap&amp;quot;: null&#10;}&lt;/pre&gt;" vertex="1">
+      <mxGeometry height="680" width="580" x="12" y="4750" as="geometry" />
+    </mxCell>
+    <mxCell id="c4_1" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;CONTEXTO&lt;/b&gt;&lt;br&gt;A: dados e metadados da fonte já presentes no pacote congelado.&lt;br&gt;&lt;br&gt;B: contrato completo da fonte selecionada — campos, tipos, filtros, relações, unidades, grão e cobertura.&lt;br&gt;&lt;br&gt;A e B: pergunta, necessidade, evidências aceitas e feedback tipado; sem gabarito." vertex="1">
+      <mxGeometry height="680" width="300" x="608" y="4750" as="geometry" />
+    </mxCell>
+    <mxCell id="c4_2" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;FERRAMENTAS&lt;/b&gt;&lt;br&gt;A: nenhuma leitura dos bancos de pesquisa.&lt;br&gt;&lt;br&gt;B: plano JSON solicita leitura. Backend valida, compila e executa.&lt;br&gt;&lt;br&gt;Modelo usa API via serviço comum; não recebe credenciais dos bancos." vertex="1">
+      <mxGeometry height="680" width="260" x="924" y="4750" as="geometry" />
+    </mxCell>
+    <mxCell id="c4_3" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;TAREFA&lt;/b&gt;&lt;br&gt;A: interpretar dados recebidos, citar referências e explicitar lacunas.&lt;br&gt;&lt;br&gt;B: construir plano tipado; em erro corrigível receber tentativa recusada + erro + saldo e corrigir.&lt;br&gt;&lt;br&gt;Não inventar dados nem fazer SQL livre." vertex="1">
+      <mxGeometry height="680" width="300" x="1200" y="4750" as="geometry" />
+    </mxCell>
+    <mxCell id="c4_4" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;SAÍDA A · JSON&lt;/b&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;action&amp;quot;: &amp;quot;analyze_packet&amp;quot;,&#10;  &amp;quot;evidence_refs&amp;quot;: [&amp;quot;packet:p1:e1&amp;quot;],&#10;  &amp;quot;findings&amp;quot;: [&amp;quot;Achado sustentado&amp;quot;],&#10;  &amp;quot;gaps&amp;quot;: []&#10;}&lt;/pre&gt;&lt;br&gt;&lt;b&gt;SAÍDA B&lt;/b&gt;&lt;br&gt;&lt;b&gt;SAÍDA · JSON&lt;/b&gt;&lt;br&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;plano&amp;quot;: {&#10;    &amp;quot;fonte_id&amp;quot;: &amp;quot;resultados_financeiros&amp;quot;,&#10;    &amp;quot;campos&amp;quot;: [&amp;quot;id&amp;quot;, &amp;quot;data_registro&amp;quot;, &amp;quot;lucro_liquido&amp;quot;],&#10;    &amp;quot;filtros&amp;quot;: {&#10;      &amp;quot;data_registro&amp;quot;: {&amp;quot;from&amp;quot;: &amp;quot;2021-01-01&amp;quot;, &amp;quot;to&amp;quot;: &amp;quot;2022-01-01&amp;quot;}&#10;    },&#10;    &amp;quot;limite&amp;quot;: 20,&#10;    &amp;quot;grao&amp;quot;: &amp;quot;id/observation_date/source_period&amp;quot;&#10;  },&#10;  &amp;quot;justificativa&amp;quot;: &amp;quot;Recorte solicitado.&amp;quot;,&#10;  &amp;quot;evidence_refs&amp;quot;: []&#10;}&lt;/pre&gt;" vertex="1">
+      <mxGeometry height="680" width="662" x="1516" y="4750" as="geometry" />
+    </mxCell>
+    <mxCell id="card5" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#EEE8F5;strokeColor=#9673A6;align=left;verticalAlign=top;spacing=16;fontSize=20;fontStyle=1;" value="REVISOR DAS EVIDÊNCIAS" vertex="1">
+      <mxGeometry height="760" width="2190" y="5490" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="c5_0" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;ENVELOPE COMUM&lt;/b&gt;&lt;br&gt;scenario: fixed_evidence | data_access&lt;br&gt;run_id · call_id · role · round · contract_version · model_profile_id&lt;br&gt;&lt;b&gt;ENTRADA · JSON&lt;/b&gt;&lt;br&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;question&amp;quot;: &amp;quot;DW + industrial + financeiro?&amp;quot;,&#10;  &amp;quot;query_result&amp;quot;: {&amp;quot;result_id&amp;quot;: &amp;quot;result_01&amp;quot;, &amp;quot;source_id&amp;quot;: &amp;quot;machine&amp;quot;},&#10;  &amp;quot;evidence_state&amp;quot;: [],&#10;  &amp;quot;limits&amp;quot;: {&amp;quot;remaining_queries&amp;quot;: 2}&#10;}&lt;/pre&gt;" vertex="1">
+      <mxGeometry height="680" width="580" x="12" y="5550" as="geometry" />
+    </mxCell>
+    <mxCell id="c5_1" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;CONTEXTO&lt;/b&gt;&lt;br&gt;Pergunta original, resultados integrais aceitos, origem, cobertura, grão e orçamento." vertex="1">
+      <mxGeometry height="680" width="300" x="608" y="5550" as="geometry" />
+    </mxCell>
+    <mxCell id="c5_2" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;FERRAMENTAS&lt;/b&gt;&lt;br&gt;Nenhuma consulta direta." vertex="1">
+      <mxGeometry height="680" width="260" x="924" y="5550" as="geometry" />
+    </mxCell>
+    <mxCell id="c5_3" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;TAREFA&lt;/b&gt;&lt;br&gt;Confrontar todas as partes da pergunta com evidências e contradições.&lt;br&gt;A: revisar outro trecho já recebido ou declarar lacuna.&lt;br&gt;B: pedir nova busca dentro do orçamento.&lt;br&gt;&lt;br&gt;Ao esgotar: resposta parcial; erro técnico terminal é registrado separadamente." vertex="1">
+      <mxGeometry height="680" width="300" x="1200" y="5550" as="geometry" />
+    </mxCell>
+    <mxCell id="c5_4" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;SAÍDA · JSON&lt;/b&gt;&lt;br&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;decisao&amp;quot;: &amp;quot;precisa_aprofundar&amp;quot;,&#10;  &amp;quot;evidencias_utilizadas&amp;quot;: [&amp;quot;result_01&amp;quot;],&#10;  &amp;quot;justificativa&amp;quot;: &amp;quot;Só há agregado DW.&amp;quot;,&#10;  &amp;quot;lacuna&amp;quot;: &amp;quot;Faltam eventos e financeiro.&amp;quot;,&#10;  &amp;quot;proximo_dado_necessario&amp;quot;: &amp;quot;Eventos da máquina em 2021.&amp;quot;,&#10;  &amp;quot;dominio_sugerido&amp;quot;: &amp;quot;industrial&amp;quot;&#10;}&lt;/pre&gt;" vertex="1">
+      <mxGeometry height="680" width="662" x="1516" y="5550" as="geometry" />
+    </mxCell>
+    <mxCell id="card6" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#EEE8F5;strokeColor=#9673A6;align=left;verticalAlign=top;spacing=16;fontSize=20;fontStyle=1;" value="REDATOR DA RESPOSTA" vertex="1">
+      <mxGeometry height="760" width="2190" y="6290" as="geometry" x="0" />
+    </mxCell>
+    <mxCell id="c6_0" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;ENVELOPE COMUM&lt;/b&gt;&lt;br&gt;scenario: fixed_evidence | data_access&lt;br&gt;run_id · call_id · role · round · contract_version · model_profile_id&lt;br&gt;&lt;b&gt;ENTRADA · JSON&lt;/b&gt;&lt;br&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;question&amp;quot;: &amp;quot;DW + industrial + financeiro?&amp;quot;,&#10;  &amp;quot;evidence_state&amp;quot;: [&#10;    {&amp;quot;result_id&amp;quot;: &amp;quot;result_01&amp;quot;},&#10;    {&amp;quot;result_id&amp;quot;: &amp;quot;result_02&amp;quot;},&#10;    {&amp;quot;result_id&amp;quot;: &amp;quot;result_03&amp;quot;}&#10;  ],&#10;  &amp;quot;limits_and_errors&amp;quot;: {&amp;quot;gap&amp;quot;: null}&#10;}&lt;/pre&gt;" vertex="1">
+      <mxGeometry height="680" width="580" x="12" y="6350" as="geometry" />
+    </mxCell>
+    <mxCell id="c6_1" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;CONTEXTO&lt;/b&gt;&lt;br&gt;Somente evidências aceitas, erros e limites. Sem gabarito." vertex="1">
+      <mxGeometry height="680" width="300" x="608" y="6350" as="geometry" />
+    </mxCell>
+    <mxCell id="c6_2" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;FERRAMENTAS&lt;/b&gt;&lt;br&gt;Nenhuma consulta." vertex="1">
+      <mxGeometry height="680" width="260" x="924" y="6350" as="geometry" />
+    </mxCell>
+    <mxCell id="c6_3" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;TAREFA&lt;/b&gt;&lt;br&gt;Responder, citar evidências e declarar ressalvas; não inferir causalidade." vertex="1">
+      <mxGeometry height="680" width="300" x="1200" y="6350" as="geometry" />
+    </mxCell>
+    <mxCell id="c6_4" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B8AEC9;align=left;verticalAlign=top;spacing=14;fontSize=16;" value="&lt;b&gt;SAÍDA · JSON&lt;/b&gt;&lt;br&gt;&lt;pre style=&quot;font-size:14px;white-space:pre-wrap;text-align:left&quot;&gt;{&#10;  &amp;quot;resposta&amp;quot;: &amp;quot;Agregado DW, eventos industriais e observações financeiras.&amp;quot;,&#10;  &amp;quot;evidencias_utilizadas&amp;quot;: [&amp;quot;result_01&amp;quot;, &amp;quot;result_02&amp;quot;, &amp;quot;result_03&amp;quot;],&#10;  &amp;quot;calculos&amp;quot;: [],&#10;  &amp;quot;ressalvas&amp;quot;: [&amp;quot;Sem vínculo causal entre paradas e resultado financeiro.&amp;quot;]&#10;}&lt;/pre&gt;" vertex="1">
+      <mxGeometry height="680" width="662" x="1516" y="6350" as="geometry" />
+    </mxCell>
+    <mxCell id="etitle" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=24;fontColor=#283446;spacing=0;" value="EXEMPLO · UMA PERGUNTA, TRÊS FONTES" vertex="1">
+      <mxGeometry height="50" width="2900" x="2400" as="geometry" y="0" />
+    </mxCell>
+    <mxCell id="eq" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=20;fontColor=#283446;spacing=0;" value="“Em 2021, qual agregado de parada da máquina 2000002 está na DW, quais paradas geradas da mesma máquina/período aparecem no industrial e quais observações financeiras existem, sem atribuir relação causal?”" vertex="1">
+      <mxGeometry height="115" width="2600" x="2400" y="80" as="geometry" />
+    </mxCell>
+    <mxCell id="enote" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;fontColor=#283446;spacing=0;" value="Exemplo B com valores observados na SPEC-013. A SPEC-014 ainda é proposta.&lt;br&gt;No A, a resposta depende exclusivamente do pacote congelado; lacunas não habilitam consultas." vertex="1">
+      <mxGeometry height="90" width="2600" x="2400" y="225" as="geometry" />
+    </mxCell>
+    <mxCell id="e1" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Analista&lt;br&gt;3 necessidades: agregado, eventos, financeiro" vertex="1">
+      <mxGeometry height="120" width="185" x="2400" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="e2" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Selecionador&lt;br&gt;escolhe machine" vertex="1">
+      <mxGeometry height="120" width="185" x="2625" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="ee1" edge="1" parent="1" source="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="e2" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e3" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Especialista DW&lt;br&gt;id=2000002; year=2021" vertex="1">
+      <mxGeometry height="120" width="185" x="2850" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="ee2" edge="1" parent="1" source="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="e3" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e4" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#EAF8F4;strokeColor=#4E9B90;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Backend → DW&lt;br&gt;38 registros; 3421 min" vertex="1">
+      <mxGeometry height="120" width="185" x="3075" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="ee3" edge="1" parent="1" source="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="e4" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e5" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Revisor&lt;br&gt;faltam eventos e financeiro" vertex="1">
+      <mxGeometry height="120" width="185" x="3300" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="ee4" edge="1" parent="1" source="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="e5" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e6" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Selecionador&lt;br&gt;escolhe paradas geradas" vertex="1">
+      <mxGeometry height="120" width="185" x="3525" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="ee5" edge="1" parent="1" source="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="e6" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e7" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Especialista Industrial&lt;br&gt;maquina_id inteiro + intervalo2021" vertex="1">
+      <mxGeometry height="120" width="185" x="3750" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="ee6" edge="1" parent="1" source="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="e7" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e8" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#EAF8F4;strokeColor=#4E9B90;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Backend → Industrial&lt;br&gt;13 eventos observados" vertex="1">
+      <mxGeometry height="120" width="185" x="3975" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="ee7" edge="1" parent="1" source="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="e8" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e9" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Revisor&lt;br&gt;falta financeiro" vertex="1">
+      <mxGeometry height="120" width="185" x="4200" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="ee8" edge="1" parent="1" source="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="e9" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e10" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Selecionador&lt;br&gt;escolhe resultados financeiros" vertex="1">
+      <mxGeometry height="120" width="185" x="4425" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="ee9" edge="1" parent="1" source="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="e10" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e11" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Especialista Financeiro&lt;br&gt;data em 2021; sem vínculo com máquina" vertex="1">
+      <mxGeometry height="120" width="185" x="4650" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="ee10" edge="1" parent="1" source="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="e11" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e12" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#EAF8F4;strokeColor=#4E9B90;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Backend → Financeiro&lt;br&gt;13 observações datadas" vertex="1">
+      <mxGeometry height="120" width="185" x="4875" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="ee11" edge="1" parent="1" source="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="e12" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e13" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Revisor&lt;br&gt;evidência suficiente com ressalvas" vertex="1">
+      <mxGeometry height="120" width="185" x="5100" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="ee12" edge="1" parent="1" source="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="e13" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e14" parent="1" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" value="Redator&lt;br&gt;resposta + evidências + limites" vertex="1">
+      <mxGeometry height="120" width="185" x="5325" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="ee13" edge="1" parent="1" source="e13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" target="e14" value="">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="efix" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;fontColor=#283446;spacing=0;" value="Se o plano for recusado: backend devolve erro + plano recusado → MESMO Especialista corrige sob orçamento.&lt;br&gt;Se faltar evidência: Revisor → Selecionador → Especialista da fonte escolhida. Nenhum agente inventa tipos ausentes." vertex="1">
+      <mxGeometry height="100" width="2600" x="2400" y="500" as="geometry" />
+    </mxCell>
+    <mxCell id="a_title" value="CENÁRIO A · MESMOS PAPÉIS, SEM CONSULTA" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=24;fontColor=#283446;spacing=0;" vertex="1" parent="1">
+      <mxGeometry x="2400" y="740" width="1800" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="a1" value="Pacote fixo&lt;br&gt;dados + origem + hash" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" vertex="1" parent="1">
+      <mxGeometry x="2400" y="840" width="245" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="a2" value="Analista&lt;br&gt;interpreta a pergunta" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" vertex="1" parent="1">
+      <mxGeometry x="2700" y="840" width="245" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="a3" value="Selecionador&lt;br&gt;escolhe trecho recebido" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" vertex="1" parent="1">
+      <mxGeometry x="3000" y="840" width="245" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="a4" value="Especialista&lt;br&gt;analisa evidência" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" vertex="1" parent="1">
+      <mxGeometry x="3300" y="840" width="245" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="a5" value="Revisor&lt;br&gt;verifica suficiência" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" vertex="1" parent="1">
+      <mxGeometry x="3600" y="840" width="245" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="a6" value="Redator&lt;br&gt;resposta + lacunas" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" vertex="1" parent="1">
+      <mxGeometry x="3900" y="840" width="245" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="ae0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" edge="1" source="a1" target="a2" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="ae1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" edge="1" source="a2" target="a3" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="ae2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" edge="1" source="a3" target="a4" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="ae3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" edge="1" source="a4" target="a5" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="ae4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" edge="1" source="a5" target="a6" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="a_note" value="Se faltar evidência: revisar outro trecho do mesmo pacote, se houver saldo; caso contrário, declarar a lacuna.&lt;br&gt;O cenário A não habilita leitura da DW, industrial ou financeiro." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=17;fontColor=#283446;spacing=0;" vertex="1" parent="1">
+      <mxGeometry x="2400" y="1010" width="1800" height="100" as="geometry" />
+    </mxCell>
+    <mxCell id="p_title" value="SERVIÇO DE MODELOS · USADO POR TODOS OS PAPÉIS" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=24;fontColor=#283446;spacing=0;" vertex="1" parent="1">
+      <mxGeometry x="2400" y="1250" width="1800" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="p1" value="Agente&lt;br&gt;contexto + contrato JSON" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" vertex="1" parent="1">
+      <mxGeometry x="2400" y="1360" width="370" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="p2" value="Serviço comum&lt;br&gt;capacidades + parâmetros" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" vertex="1" parent="1">
+      <mxGeometry x="2850" y="1360" width="370" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="p3" value="Adaptador&lt;br&gt;OpenAI / Groq / compatível" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" vertex="1" parent="1">
+      <mxGeometry x="3300" y="1360" width="370" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="p4" value="Endpoint do modelo&lt;br&gt;RunPod ou outro destino" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F3EEFA;strokeColor=#8065A8;strokeWidth=2;fontColor=#283446;align=center;verticalAlign=middle;shape=process;fontSize=16;spacing=8;" vertex="1" parent="1">
+      <mxGeometry x="3750" y="1360" width="370" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="pe0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" edge="1" source="p1" target="p2" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="pe1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" edge="1" source="p2" target="p3" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="pe2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#526178;strokeWidth=2;fontColor=#283446;labelBackgroundColor=#FFFFFF;fontSize=16;spacing=8;labelBackgroundColor=#FFFFFF;fontSize=14;" edge="1" source="p3" target="p4" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="p_return" value="Retorno ao harness: conteúdo ou erro + uso + identidade → validação JSON → próxima chamada.&lt;br&gt;RunPod é hospedagem. Sem troca automática de modelo nem repetição oculta." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=17;fontColor=#283446;spacing=0;" vertex="1" parent="1">
+      <mxGeometry x="2400" y="1530" width="1800" height="100" as="geometry" />
+    </mxCell>
+  </root>
+</mxGraphModel></diagram></mxfile>

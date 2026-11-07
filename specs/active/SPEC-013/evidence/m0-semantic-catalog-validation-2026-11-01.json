@@ -1,0 +1,37 @@
+{
+  "valid_structurally": true,
+  "eligible_for_activation": false,
+  "activation_blockers": [
+    "semantic meaning, grain, units and temporal coverage require research review",
+    "fixed-query output types and lineage output shapes need a versioned contract",
+    "query filters, relations and budgets require DEC-001/002 approval",
+    "local read-only access and external transmission gates require DEC-004"
+  ],
+  "errors": [],
+  "warnings": [],
+  "checks": {
+    "sources": 12,
+    "typed_fields": 32,
+    "fixed_outputs": 25,
+    "physical_tables": 16,
+    "foreign_keys": 3
+  },
+  "physical_table_counts": {
+    "dw": 35,
+    "financeiro": 19,
+    "industrial": 39
+  },
+  "index_bytes_by_domain": {
+    "dw": 1221,
+    "financeiro": 449,
+    "industrial": 538
+  },
+  "largest_source_detail_bytes_by_domain": {
+    "dw": 716,
+    "financeiro": 741,
+    "industrial": 1081
+  },
+  "catalog_sha256": "51543621d7643050cb7796342e60da33bbef708e667f310a9d856e5ee9edd032",
+  "inventory_sha256": "ca7f44f371fe5403b203d11bbc82a0d01553b5d4783d34cc6f9ebdd750343b62",
+  "fixed_query_source_sha256": "20bafcde4ebc528cb3c62c9d6d7e41b5ac617a48e65e7391cff9eb16eff788da"
+}

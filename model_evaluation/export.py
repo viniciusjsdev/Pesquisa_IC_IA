@@ -28,6 +28,7 @@ DOMAINS = frozenset(("financeiro", "industrial", "integrado"))
 MAX_QUERIES = 5
 MAX_ROWS = 200
 MAX_BYTES = 512 * 1024
+KNOWN_V2_FINGERPRINT = "66f8808cf83902ff6c7fd277937bf8e0671482058f540f3ea9c1ec8c5a182800"
 
 
 class ExportError(ValueError):
@@ -123,14 +124,19 @@ def load_manifest(path: Path) -> list[dict]:
     return validate_manifest(value)
 
 
-def _verified_snapshot(report: dict) -> dict:
+def _verified_snapshot(report: dict, *, expected_version: int | None = None) -> dict:
     if (not isinstance(report, dict) or report.get("database") != "db_pesquisa_dw" or
-            type(report.get("schema_version")) is not int or report["schema_version"] != 1 or
+            type(report.get("schema_version")) is not int or report["schema_version"] not in (1, 2) or
             not isinstance(report.get("source_fingerprint"), str) or
             re.fullmatch(r"[0-9a-f]{64}", report["source_fingerprint"]) is None or
             type(report.get("source_files")) is not int or report["source_files"] < 1 or
             not isinstance(report.get("quality_flags"), dict)):
         raise ExportError("verify da DW não retornou snapshot válido")
+    if ((expected_version is not None and report["schema_version"] != expected_version) or
+            (report["schema_version"] == 2 and
+             (report["source_fingerprint"] != KNOWN_V2_FINGERPRINT or
+              report["source_files"] != 167 or report["quality_flags"] != {}))):
+        raise ExportError("Versão ou fingerprint da DW fora do contrato explícito")
     return {"database": report["database"],
             "schema_version": report["schema_version"],
             "source_fingerprint": report["source_fingerprint"],
@@ -154,17 +160,24 @@ def _item_result(request: dict, result: dict) -> dict:
 
 
 def build_packets(cases: list[dict], *, verify_fn=None, query_fn=None,
-                  query_code_path: Path | None = None) -> dict[str, bytes]:
+                  query_code_path: Path | None = None, dw_version: int = 1) -> dict[str, bytes]:
     """Prepara todo o lote em memória; nenhuma saída é publicada em erro."""
     validate_manifest({"schema_version": SCHEMA_VERSION, "cases": cases})
+    if dw_version not in (1, 2):
+        raise ExportError("Versão DW não suportada")
     if verify_fn is None or query_fn is None:
-        from BancoModeloUse.dw import cli as dw
-        verify_fn = verify_fn or dw.verify
-        query_fn = query_fn or dw.query
+        if dw_version == 1:
+            from BancoModeloUse.dw import cli as dw
+            verify_fn = verify_fn or dw.verify
+            query_fn = query_fn or dw.query
+        else:
+            from model_evaluation import dw_v2
+            verify_fn = verify_fn or dw_v2.verify
+            query_fn = query_fn or dw_v2.query
     query_code_path = query_code_path or Path(fixed_queries.__file__)
     query_code_sha256 = hashlib.sha256(query_code_path.read_bytes()).hexdigest()
     report = verify_fn()
-    snapshot = _verified_snapshot(report)
+    snapshot = _verified_snapshot(report, expected_version=dw_version)
     global_flags = report["quality_flags"]
     if any(type(value) is not int or value < 0 for value in global_flags.values()):
         raise ExportError("Flags globais de qualidade inválidas")
@@ -184,7 +197,8 @@ def build_packets(cases: list[dict], *, verify_fn=None, query_fn=None,
                 "domain": case["domain"], "source_snapshot": snapshot,
                 "query_contract_version": QUERY_CONTRACT_VERSION,
                 "query_code_sha256": query_code_sha256,
-                "quality_summary": {"scope": "global_dw_load", "flags": global_flags},
+                "quality_summary": {"scope": ("global_dw_load" if dw_version == 1 else
+                                               "local_dw_v2_readback"), "flags": global_flags},
                 "limits": {"queries": MAX_QUERIES, "rows": MAX_ROWS, "bytes": MAX_BYTES},
                 "evidence_items": items}
         body_bytes = canonical(body)
@@ -237,7 +251,9 @@ def verify_packet_bytes(payload: bytes, *, expected_case_id: str | None = None) 
             r"[0-9a-f]{64}", body["query_code_sha256"]) is None:
         raise ExportError("query_code_sha256 inválido")
     quality = _keys(body["quality_summary"], {"scope", "flags"}, set(), "quality_summary")
-    if quality["scope"] != "global_dw_load" or not isinstance(quality["flags"], dict):
+    expected_scope = ("global_dw_load" if snapshot["schema_version"] == 1 else
+                      "local_dw_v2_readback")
+    if quality["scope"] != expected_scope or not isinstance(quality["flags"], dict):
         raise ExportError("Resumo global de qualidade inválido")
     if any(type(value) is not int or value < 0 for value in quality["flags"].values()):
         raise ExportError("Flags globais de qualidade inválidas")
@@ -317,9 +333,10 @@ def publish_packets(packets: dict[str, bytes], output_dir: Path) -> list[dict]:
     return actions
 
 
-def export(manifest_path: Path, output_dir: Path = DEFAULT_OUTPUT) -> list[dict]:
+def export(manifest_path: Path, output_dir: Path = DEFAULT_OUTPUT, *,
+           dw_version: int = 1) -> list[dict]:
     cases = load_manifest(manifest_path)
-    packets = build_packets(cases)
+    packets = build_packets(cases, dw_version=dw_version)
     return publish_packets(packets, output_dir)
 
 
@@ -327,9 +344,12 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("manifest", type=Path, help="Manifesto JSON v1 de casos candidatos")
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--dw-v2", action="store_true",
+                        help="Verificação local explícita da carga V2 conhecida")
     args = parser.parse_args(argv)
     try:
-        actions = export(args.manifest, args.output_dir)
+        actions = export(args.manifest, args.output_dir,
+                         dw_version=2 if args.dw_v2 else 1)
     except (ExportError, OSError, TypeError, ValueError) as exc:
         parser.exit(1, f"export failed: {exc}\n")
     print(json.dumps(actions, ensure_ascii=False, sort_keys=True))

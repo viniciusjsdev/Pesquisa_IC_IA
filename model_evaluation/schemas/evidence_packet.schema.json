@@ -87,6 +87,21 @@
                    "source_snapshot", "query_contract_version", "query_code_sha256",
                    "quality_summary", "limits", "evidence_items"],
       "additionalProperties": false,
+      "allOf": [{
+        "if": {"properties": {"source_snapshot": {"properties": {"schema_version": {"const": 2}}}}},
+        "then": {"properties": {
+          "source_snapshot": {"properties": {
+            "source_fingerprint": {"const": "66f8808cf83902ff6c7fd277937bf8e0671482058f540f3ea9c1ec8c5a182800"},
+            "source_files": {"const": 167}
+          }},
+          "quality_summary": {"properties": {
+            "scope": {"const": "local_dw_v2_readback"}, "flags": {"maxProperties": 0}
+          }}
+        }},
+        "else": {"properties": {"quality_summary": {"properties": {
+          "scope": {"const": "global_dw_load"}
+        }}}}
+      }],
       "properties": {
         "schema_version": {"const": 1},
         "schema_path": {"const": "model_evaluation/schemas/evidence_packet.schema.json"},
@@ -98,7 +113,7 @@
           "required": ["database", "schema_version", "source_fingerprint", "source_files"],
           "properties": {
             "database": {"const": "db_pesquisa_dw"},
-            "schema_version": {"const": 1},
+            "schema_version": {"enum": [1, 2]},
             "source_fingerprint": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
             "source_files": {"type": "integer", "minimum": 1}
           }
@@ -109,7 +124,7 @@
           "type": "object", "additionalProperties": false,
           "required": ["scope", "flags"],
           "properties": {
-            "scope": {"const": "global_dw_load"},
+            "scope": {"enum": ["global_dw_load", "local_dw_v2_readback"]},
             "flags": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}}
           }
         },

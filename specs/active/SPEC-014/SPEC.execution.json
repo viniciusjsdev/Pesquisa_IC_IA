@@ -1,0 +1,189 @@
+{
+  "$schema": "../../../.codex/schemas/project-spec-execution.schema.json",
+  "schema_version": "2.0",
+  "spec_id": "SPEC-014",
+  "contract_version": 1,
+  "status": "done",
+  "automatic_handoff": false,
+  "execution": {
+    "classification": "normal_implementation",
+    "role": "developer",
+    "model": "gpt-5.6-terra",
+    "reasoning": "medium",
+    "routing_rationale": "Politica documental legada gpt-5.6-terra; runtime efetivo e desvios registrados em evidence/lifecycle.json, sem mudar modelo cientifico.",
+    "runtime_override": null,
+    "working_directory": ".",
+    "sandbox_mode": "full-access",
+    "approval_mode": "deny_all",
+    "thread": {
+      "mode": "resume",
+      "purpose": "implementation",
+      "thread_id": "01a1b284-81a4-7493-9e7d-d379a3e091da"
+    },
+    "handoff_prompt": "Implementar SPEC-014 conforme SPEC.md, architecture-contract.md e implementation-handoff.md. Preservar baseline e SPEC-013 done. Dois cenarios multiagente, servico comum de modelos, historico legivel. Sem inferencia externa ou infraestrutura fora da autorizacao vigente. Evidencia por AC e auditoria independente antes de done."
+  },
+  "skills": [],
+  "references": [
+    {
+      "path": "AGENTS.md",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    },
+    {
+      "path": "README.md",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    },
+    {
+      "path": "inference_api/README.md",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    },
+    {
+      "path": "docs/arquitetura_inferencia_compartilhada.md",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    },
+    {
+      "path": "runpod/README.md",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    },
+    {
+      "path": "specs/README.md",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/SPEC.md",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/specialist-query-contract.md",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/engineering-closeout-contract.md",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    },
+    {
+      "path": "docs/protocolo_validacao_humana_avaliacao.md",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-014/architecture-contract.md",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-014/implementation-handoff.md",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-014/evidence/diagram-spec014.drawio",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-014/evidence/structural-baseline.json",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-014/evidence/baseline-snapshot.json",
+      "purpose": "Fonte de verdade e contrato de implementacao da frente",
+      "required": true
+    }
+  ],
+  "validation": [
+    {
+      "id": "VAL-001",
+      "kind": "contract",
+      "command": "inference_api/.venv/Scripts/python.exe C:/Users/vinic/.codex/skills/project-spec-architect/scripts/validate_spec.py specs/active/SPEC-014/SPEC.md specs/active/SPEC-014/SPEC.execution.json --project-root .",
+      "required": true
+    },
+    {
+      "id": "VAL-002",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_*.py",
+      "required": true
+    },
+    {
+      "id": "VAL-003",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py test",
+      "required": true
+    },
+    {
+      "id": "VAL-004",
+      "kind": "manual",
+      "command": "Verificar matriz local e navegacao A/B conforme implementation-handoff.md com evidence/local-matrix.md",
+      "required": true
+    },
+    {
+      "id": "VAL-005",
+      "kind": "manual",
+      "command": "Verificar baseline e consumidores conforme implementation-handoff.md com evidence/migration-audit.md",
+      "required": true
+    },
+    {
+      "id": "VAL-006",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s model_evaluation/tests -p test_*.py",
+      "required": true
+    },
+    {
+      "id": "VAL-007",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py typecheck",
+      "required": true
+    },
+    {
+      "id": "VAL-008",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py lint",
+      "required": true
+    },
+    {
+      "id": "VAL-009",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py build",
+      "required": true
+    }
+  ],
+  "review": {
+    "required": true,
+    "independence": "independent",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high",
+    "rationale": "Migracao estrutural afeta fronteiras de dados, comparabilidade e contratos historicos.",
+    "schema_path": ".codex/schemas/project-spec-review.schema.json",
+    "output_path": "specs/active/SPEC-014/evidence/review.json",
+    "handoff_prompt": "Review this Spec from durable evidence, baseline, diff, validations, and completion evidence."
+  },
+  "escalation": {
+    "policy_version": "1.0",
+    "allowed": [
+      "terra_high",
+      "needs_design"
+    ]
+  },
+  "completion": {
+    "schema_path": ".codex/schemas/project-spec-completion.schema.json",
+    "output_path": "specs/active/SPEC-014/evidence/completion.json"
+  },
+  "baseline": {
+    "required": true,
+    "path": "specs/active/SPEC-014/evidence/structural-baseline.json",
+    "snapshot_path": "specs/active/SPEC-014/evidence/baseline-snapshot.json",
+    "rationale": "Migracao estrutural dos modos, adaptadores, contratos e consumidores historicos."
+  },
+  "lifecycle": {
+    "output_path": "specs/active/SPEC-014/evidence/lifecycle.json"
+  }
+}

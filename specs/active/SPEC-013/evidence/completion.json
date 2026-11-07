@@ -1,0 +1,643 @@
+{
+  "spec_id": "SPEC-013",
+  "contract_version": 3,
+  "status": "completed",
+  "thread_id": null,
+  "runtime": {
+    "classification": "normal_implementation",
+    "model": "Codex session runtime",
+    "reasoning": "session default; not independently measured"
+  },
+  "changed_files": [
+    {
+      "path": "AGENTS.md",
+      "change": "modified"
+    },
+    {
+      "path": "BancoModeloUse/dw/fixed_queries.py",
+      "change": "modified"
+    },
+    {
+      "path": "README.md",
+      "change": "modified"
+    },
+    {
+      "path": "docs/arquitetura_inferencia_compartilhada.md",
+      "change": "modified"
+    },
+    {
+      "path": "docs/protocolo_validacao_humana_avaliacao.md",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/BenchPage.tsx",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/EvidenceTrajectory.test.tsx",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/EvidenceTrajectory.tsx",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/HarnessRounds.test.tsx",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/HarnessRounds.tsx",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/ReadableAnswer.test.tsx",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/ReadableAnswer.tsx",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/RunDetail.tsx",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/bench.scss",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/benchService.test.ts",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/benchService.ts",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/runPresentation.ts",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/scripts/verify_spec013_http_postgres.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/README.md",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/__init__.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/approved_catalog.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/catalog_runtime.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/contracts.json",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/data_contracts.json",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/engine.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/input_contracts.json",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/local_queries.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/openai_audit.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/openai_pilot.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/real_pilot.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/runtime_identity.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/synthetic_demo.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/typed_detail.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/dw_tools.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/groq.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/jobs.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/models.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/openai_provider.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/request_budget.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/service.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_agent_harness.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_dw_v2_gate.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_request_budget.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_runtime_identity.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec013_catalog.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec013_http.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec013_local_queries.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec013_openai_pilot.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec013_pilot_http.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec013_typed_detail.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_specialist_query_contract.py",
+      "change": "added"
+    },
+    {
+      "path": "model_evaluation/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "model_evaluation/activate_spec013_pilot_cases.py",
+      "change": "added"
+    },
+    {
+      "path": "model_evaluation/dw_v2.py",
+      "change": "added"
+    },
+    {
+      "path": "model_evaluation/export.py",
+      "change": "modified"
+    },
+    {
+      "path": "model_evaluation/harness_score.py",
+      "change": "added"
+    },
+    {
+      "path": "model_evaluation/materialize_spec013_pilot_cases.py",
+      "change": "added"
+    },
+    {
+      "path": "model_evaluation/prepare_run_review.py",
+      "change": "added"
+    },
+    {
+      "path": "model_evaluation/run_spec013_pilot_matrix.py",
+      "change": "added"
+    },
+    {
+      "path": "model_evaluation/templates/revisao_humana_caso_e_run.md",
+      "change": "added"
+    },
+    {
+      "path": "model_evaluation/tests/test_harness_score.py",
+      "change": "added"
+    },
+    {
+      "path": "model_evaluation/verify_human_review_receipt.py",
+      "change": "added"
+    },
+    {
+      "path": "specs/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "specs/active/SPEC-013/SPEC.execution.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-013/SPEC.md",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-013/engineering-closeout-contract.md",
+      "change": "added"
+    }
+  ],
+  "artifacts": [
+    "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+    "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+    "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md",
+    "specs/active/SPEC-013/engineering-closeout-contract.md"
+  ],
+  "acceptance_evidence": [
+    {
+      "id": "AC-001",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md"
+      ],
+      "notes": [
+        "Cinco papéis, mesmo candidato, contratos e trace; testes e ensaio real contrato 3."
+      ]
+    },
+    {
+      "id": "AC-002",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md"
+      ],
+      "notes": [
+        "Fixtures de aprofundamento e rota financeira inicial; teste três domínios e ensaio real."
+      ]
+    },
+    {
+      "id": "AC-003",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md"
+      ],
+      "notes": [
+        "Recusas tipadas distintas, sem SQL livre; referências DW/linhagem reproduzidas."
+      ]
+    },
+    {
+      "id": "AC-004",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md"
+      ],
+      "notes": [
+        "Revisor controla suficiência; saldo e estouros têm testes; nenhuma evidência inventada pelo backend."
+      ]
+    },
+    {
+      "id": "AC-005",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md"
+      ],
+      "notes": [
+        "Integridade dos nove casos e referências aprovada; casos científicos antigos congelados, sem migração silenciosa para contrato 3."
+      ]
+    },
+    {
+      "id": "AC-006",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md"
+      ],
+      "notes": [
+        "Snapshots históricos preservados e abertos na UI; V1/V2 e ausência de rede em mocks testadas."
+      ]
+    },
+    {
+      "id": "AC-007",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md"
+      ],
+      "notes": [
+        "Evidências distinguem modelo real, replay e fixture. Revisão global registrada separadamente em review.json; não equivale a revisão científica."
+      ]
+    },
+    {
+      "id": "AC-008",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md"
+      ],
+      "notes": [
+        "Avaliador exige caso aprovado e adjudicação vinculada a run/caso; scores separados e gates negativos testados."
+      ]
+    },
+    {
+      "id": "AC-009",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md"
+      ],
+      "notes": [
+        "Índice compacto e contexto integral por fonte; Especialista por domínio, sem Planejador."
+      ]
+    },
+    {
+      "id": "AC-010",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md"
+      ],
+      "notes": [
+        "Contratos JSON, produtores diretos e replay preservam entradas/resposta/evidências."
+      ]
+    },
+    {
+      "id": "AC-011",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md"
+      ],
+      "notes": [
+        "Limite do corpo HTTP exato, referências e overflow explícitos, inclusive erros de provedor."
+      ]
+    },
+    {
+      "id": "AC-012",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md"
+      ],
+      "notes": [
+        "Feedback da tentativa recusada, saldo atualizado, budgets e recusa sem SQL testados."
+      ]
+    },
+    {
+      "id": "AC-013",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/dependencies-answer-validation-2026-11-06.md"
+      ],
+      "notes": [
+        "Ensaio real completo pela UI já auditado; fechamento com testes/replay/readbacks e revisão independente; ciência posterior."
+      ]
+    }
+  ],
+  "validation_evidence": [
+    {
+      "validation_id": "VAL-001",
+      "canonical_command": "git diff --check",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-002",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": [
+        "143 testes, oito pulados por gates de ambiente; zero falhas."
+      ]
+    },
+    {
+      "validation_id": "VAL-003",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py typecheck",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-004",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py lint",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-005",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py test",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-006",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py build",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-007",
+      "canonical_command": "Ensaio HTTP/browser local autenticado com modelo e bancos simulados: cinco tipos de papel, Especialista por domínio, aprofundamento, idempotência, trace, histórico e nenhuma rede externa",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": null,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": [
+        "Suite HTTP simulada, HTTP+Postgres com fixture e histórico/comparação no Chrome. WinError10053 intermitente registrado; repetição manual passou."
+      ]
+    },
+    {
+      "validation_id": "VAL-008",
+      "canonical_command": "Revisar diff, logs e snapshots quanto a segredos, dados de origem, destino externo, consultas permitidas, isolamento do gabarito, documentação e compatibilidade histórica",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": null,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-009",
+      "canonical_command": "Reexecutar consultas de referência da bateria aprovada e conferir números, tolerâncias, vínculos e revisão humana de cada gabarito. Provar ausência de gold nos payloads dos agentes.",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": null,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": [
+        "Referências reexecutadas em 06/11; hashes DW 04769e61... e detalhe 33c8005b... idênticos; recibo humano íntegro, sem novos scores."
+      ]
+    },
+    {
+      "validation_id": "VAL-010",
+      "canonical_command": "Executar avaliador com casos aprovados e controles sintéticos de rota alternativa, dado ausente, cálculo incorreto, inferência causal indevida e not_scored",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-011",
+      "canonical_command": "Testar mapas versionados por domínio com inventário físico igual e divergente, índice compacto, seleção de IDs pelo modelo, validação/projeção do detalhe pelo backend, tabela vazia, relação proibida, pergunta integrada, isolamento de payloads, ordem/limites do Especialista por fonte, proveniência de paradas geradas na consulta machine da DW V2, aceitação explícita da V2 por verificador/exportador, recusa de fingerprint divergente e leitura de pacotes V1",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-012",
+      "canonical_command": "Testar schemas e templates JSON por papel e domínio do Especialista, projeções de contexto, IDs carimbados pelo backend, replay de transições, referências inválidas, aprofundamento, suficiência e overflow explícito sem corte silencioso de dados",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-013",
+      "canonical_command": "Testar feedback JSON de plano e rota para Especialista/Selecionador do mesmo modelo, tentativas contadas, resultado vazio para A4 e bloqueios sem SQL, conferindo trace e pontuação de correção",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-014",
+      "canonical_command": "Reproduzir smoke local com spec013_reader, catálogo aprovado, três bancos, modelo programado e três consultas; verificar hashes e manifestos das fontes em leituras internas, sem provedor.",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-015",
+      "canonical_command": "Executar diagnóstico real completo pela UI da Bancada com OpenAI autorizada: autenticação, job, agentes, consultas, resposta, persistência, trajetória e histórico; registrar evidência sem pontuação científica",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": null,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+        "specs/active/SPEC-013/evidence/specialist-query-openai-ui-2026-11-06.md"
+      ],
+      "notes": [
+        "Ensaio real já executado em 06/11: run769ecfc1; fechamento usa replay das saídas gravadas, não nova inferência."
+      ]
+    },
+    {
+      "validation_id": "VAL-016",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_specialist_query_contract.py -v",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md"
+      ],
+      "notes": [
+        "Incluído na suíte completa atual e executado isoladamente no contrato3 anterior."
+      ]
+    }
+  ],
+  "deviations": [
+    "Inventário de arquivos da implementação no checkout compartilhado; não representa autoria exclusiva nem commit novo.",
+    "Avaliação científica adiada por decisão explícita de 05/11; revisões humanas das respostas e matriz não fazem parte do Done técnico.",
+    "Fechamento reusa ensaio real contrato3 e executa replay mockado e consultas locais reais; nenhum novo envio ao provedor.",
+    "Runtime efetivo desta sessão não inferido do runtime planejado no manifest; consumo não medido."
+  ],
+  "unresolved_items": [],
+  "needs_design": null,
+  "usage": null
+}

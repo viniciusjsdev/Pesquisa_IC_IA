@@ -1,0 +1,59 @@
+{
+  "database_writes": false,
+  "source_databases": {
+    "db_industrial": {
+      "typed_tables": 38,
+      "csv_partitions": 113,
+      "rows": 1561794,
+      "physical_fks": 12
+    },
+    "db_financeiro": {
+      "typed_tables": 18,
+      "csv_partitions": 54,
+      "rows": 3872,
+      "physical_fks": 1
+    }
+  },
+  "warehouse": {
+    "tables": 35,
+    "v1_fact_rows": {
+      "fact_operation": 429565,
+      "fact_downtime": 1290,
+      "fact_sale": 120,
+      "fact_financial_observation": 72,
+      "fact_quality_inspection": 4021,
+      "fact_material_consumption": 1800,
+      "fact_material_price_observation": 180
+    },
+    "new_table_rows": {
+      "dim_turn": 9,
+      "dim_component": 65,
+      "dim_tariff": 15,
+      "dim_green_project": 10,
+      "fact_machine_event": 860628,
+      "fact_production_target": 13,
+      "fact_maintenance_order": 877,
+      "fact_predictive_reading": 4500,
+      "bridge_maintenance_case": 336,
+      "fact_energy_shift": 5260,
+      "fact_energy_interval": 42080,
+      "fact_energy_target": 13,
+      "fact_tariff_mix": 2,
+      "fact_financial_month": 132,
+      "fact_product_cost_month": 660,
+      "fact_co2_month": 132,
+      "fact_esg_resource_month": 132,
+      "fact_esg_target_month": 660,
+      "fact_green_project_result_month": 287,
+      "fact_certification": 10
+    },
+    "source_partitions": 167,
+    "source_rows": 1565666,
+    "fact_downtime_by_source": {
+      "paradas_maquinas_geradas": 90,
+      "paradas_maquinas": 1200
+    },
+    "schema_version": 2,
+    "contract_sha256": "66f8808cf83902ff6c7fd277937bf8e0671482058f540f3ea9c1ec8c5a182800"
+  }
+}

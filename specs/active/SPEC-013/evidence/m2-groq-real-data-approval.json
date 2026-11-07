@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "spec_id": "SPEC-013",
+  "decision": "approved",
+  "review_date_local": "2026-11-02",
+  "timezone": "America/Sao_Paulo",
+  "destination": "https://api.groq.com/openai/v1/chat/completions",
+  "approved_data_class": "dw_industrial_financial_detail",
+  "reviewed_document": "specs/active/SPEC-013/evidence/m2-groq-real-data-transmission-review-2026-11-02.md",
+  "reviewed_document_sha256": "271e6b1b9b647b33df991fa5b5763ae4de162ef70fcbdcf1563024f2516a0451",
+  "review_source": {
+    "kind": "user_reply_to_explicit_transmission_question",
+    "question_item_id": "call_dde320b417a0400d9bf90d1843e27c35/1",
+    "reply_verbatim": "Autorizo esse envio à Groq"
+  },
+  "scope_note": "Somente piloto Groq/Qwen nos limites do documento revisado; GPT/OpenAI e RunPod excluidos."
+}

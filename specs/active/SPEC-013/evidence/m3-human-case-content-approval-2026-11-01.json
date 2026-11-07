@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "spec_id": "SPEC-013",
+  "review_date_local": "2026-11-01",
+  "timezone": "America/Sao_Paulo",
+  "reviewer": "pesquisador_responsavel_nesta_conversa",
+  "preparer": "Codex_assistido_por_consultas_locais",
+  "review_source": {
+    "kind": "user_reply_to_explicit_case_review_question",
+    "question_item_id": "call_b5ac1b8ab5a842c38e0898dbc78ffbbb/0",
+    "question_scope": "Para cada ID (I1-I3, F1-F3, X1-X3), indicar aprovar ou correcao necessaria sobre o pacote privado de revisao.",
+    "reply_verbatim": "Tudo aprovado. Deixe explicito na documentação do projeto pontos que são essenciais nos testes e precisam de validação humana, como este, vou usar futuramente para outros pesquisadores olhares"
+  },
+  "reviewed_artifact": {
+    "path": "model_evaluation/.local/spec013-case-review-draft-2026-11-01.md",
+    "sha256": "75927ad3cdc81b7aaa59527c51c89809205243263bce08d857d67b1dd18fa27c"
+  },
+  "reference_artifacts": [
+    {
+      "path": "model_evaluation/.local/spec013-pilot-dw-reference-draft-2026-11-01.json",
+      "sha256": "04769e61cf5095ff8372b52e91d9cecbdfa65b61a468a7d73b6628c88cd22afd"
+    },
+    {
+      "path": "model_evaluation/.local/spec013-pilot-detail-reference-draft-2026-11-01-v2.json",
+      "sha256": "33c8005b327e1209c6bc49feefff702daf9af0e49b9f85f9a3abdfb5743f69bb"
+    }
+  ],
+  "scope": "Conteudo das nove perguntas, referencias numericas, ressalvas e interpretacoes do pacote revisado; sem alteracoes solicitadas.",
+  "case_decisions": [
+    {"case_id": "I1", "decision": "approved_content", "individual_rationale_provided": false},
+    {"case_id": "I2", "decision": "approved_content", "individual_rationale_provided": false},
+    {"case_id": "I3", "decision": "approved_content", "individual_rationale_provided": false},
+    {"case_id": "F1", "decision": "approved_content", "individual_rationale_provided": false},
+    {"case_id": "F2", "decision": "approved_content", "individual_rationale_provided": false},
+    {"case_id": "F3", "decision": "approved_content", "individual_rationale_provided": false},
+    {"case_id": "X1", "decision": "approved_content", "individual_rationale_provided": false},
+    {"case_id": "X2", "decision": "approved_content", "individual_rationale_provided": false},
+    {"case_id": "X3", "decision": "approved_content", "individual_rationale_provided": false}
+  ],
+  "scoring_eligibility": "pending_executable_case_contract_and_run_review",
+  "notes": [
+    "Uma unica resposta aprovou todos os IDs enumerados na pergunta; nao houve justificativa separada por caso.",
+    "A aprovacao vincula-se ao hash do pacote revisado. Mudancas de pergunta, dados, filtros, mapa, formula, referencia ou tolerancia exigem nova versao e revisao.",
+    "Nenhuma resposta de modelo foi revisada ou pontuada por esta decisao."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "mode": "local_read_only_test_with_in_memory_catalog_override",
+  "catalog_file_unchanged": true,
+  "provider_called": false,
+  "reader_role": "spec013_reader",
+  "catalog_sha256": "51543621d7643050cb7796342e60da33bbef708e667f310a9d856e5ee9edd032",
+  "sources": [
+    {
+      "domain": "industrial",
+      "table": "paradas_maquinas",
+      "rows": 1,
+      "period_index": 0,
+      "source_file_recorded": true
+    },
+    {
+      "domain": "industrial",
+      "table": "paradas_maquinas_geradas",
+      "rows": 1,
+      "period_index": 0,
+      "source_file_recorded": true
+    },
+    {
+      "domain": "industrial",
+      "table": "registros_operacao",
+      "rows": 1,
+      "period_index": 0,
+      "source_file_recorded": true
+    },
+    {
+      "domain": "financeiro",
+      "table": "resultados_financeiros",
+      "rows": 1,
+      "period_index": 0,
+      "source_file_recorded": true
+    },
+    {
+      "domain": "financeiro",
+      "table": "vendas",
+      "rows": 1,
+      "period_index": 0,
+      "source_file_recorded": true
+    }
+  ]
+}

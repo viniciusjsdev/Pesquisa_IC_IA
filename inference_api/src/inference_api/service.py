@@ -1,13 +1,13 @@
-"""Version 3 Bancada modes; historical snapshots remain read-only in storage."""
-from datetime import datetime, timezone
+"""SPEC-014 creation boundary; historical snapshots are read-only in storage."""
 from copy import deepcopy
-import json
-
-
-from . import config, criteria, dw_tools, evidence_packets, groq, models, storage, synthetic_data
-from .dw_tools import canonical
+from dataclasses import asdict
+import hashlib
+from pathlib import Path
+from . import criteria, evidence_packets, storage
 from .auth import Principal
-
+from .agent_harness import scenarios, approved_catalog, catalog_runtime, local_queries, real_pilot
+from .agent_harness.runtime_identity import identity as runtime_identity
+from .model_service import registry, ModelService
 
 def _options(payload: dict) -> tuple[float, int | None]:
     temperature = payload.get("temperature", 0)
@@ -56,48 +56,6 @@ def _criteria(payload: dict) -> dict:
 
 
 
-COMMON = {"evidence_mode", "model_alias", "temperature", "max_tokens",
-          "prompt_revision_id", "system_prompt", "criteria_revision_id", "criteria", "provider"}
-SYNTHETIC_PROMPT = "Responda apenas com a fixture inventada. Cite o ano e indique que os dados são sintéticos."
-GUIDANCE = ("Use somente a evidência entregue. Ausência de observação não é zero. "
-            "Associação temporal não estabelece causalidade. A tool financeira devolve "
-            "linhas observadas, nunca um total anual. Declare cobertura e ressalvas.")
-
-
-def _timestamp() -> str:
-    return datetime.now(timezone.utc).isoformat()
-
-
-def _validate_input(payload: dict) -> tuple[str, str, float, int | None]:
-    mode = payload.get("evidence_mode")
-    provider = payload.get("provider", "runpod")
-    if provider not in {"runpod", "groq"}:
-        raise ValueError("Unknown provider")
-    if provider == "groq":
-        if mode not in {"synthetic_snapshot", "synthetic_tools"} or payload.get("model_alias") != "groq":
-            raise ValueError("Groq only accepts synthetic modes and its configured model")
-        if payload.get("system_prompt") != SYNTHETIC_PROMPT or payload.get("prompt_revision_id") is not None or payload.get("criteria_revision_id") is not None or payload.get("criteria") is not None:
-            raise ValueError("Groq only accepts the server-approved synthetic prompt and default criteria")
-    elif mode not in {"dw_snapshot", "dw_tools"}:
-        raise ValueError("RunPod evidence_mode must be dw_snapshot or dw_tools")
-    allowed = COMMON | ({"case_id", "packet_sha256"} if mode == "dw_snapshot" else
-                        {"question"} if mode == "dw_tools" else set())
-    if set(payload) - allowed:
-        raise ValueError("Unexpected or cross-mode run parameters")
-    alias = payload.get("model_alias")
-    if not isinstance(alias, str) or (alias not in models.MODELS and not (provider == "groq" and alias == "groq")):
-        raise ValueError("Unknown model alias")
-    if mode == "dw_snapshot":
-        if not isinstance(payload.get("case_id"), str) or not isinstance(payload.get("packet_sha256"), str):
-            raise ValueError("case_id and packet_sha256 required")
-    elif mode == "dw_tools":
-        question = payload.get("question")
-        if not isinstance(question, str) or not question.strip() or len(question) > 4000:
-            raise ValueError("Question is required and limited to 4000 characters")
-    temperature, max_tokens = _options(payload)
-    return mode, alias, temperature, max_tokens
-
-
 def _checks(evidence_items: list[dict], answer: str, config: dict,
             source: str = "DW") -> list[dict]:
     """Literal checks only. They never assert numerical truth or causality."""
@@ -120,195 +78,122 @@ def _checks(evidence_items: list[dict], answer: str, config: dict,
     return results
 
 
-def execute_run(payload: dict, principal: Principal) -> dict:
-    mode, alias, temperature, max_tokens = _validate_input(payload)
-    prompt = _prompt(payload)
-    verification_criteria = _criteria(payload)
-    provider = payload.get("provider", "runpod")
-    model = ({"alias": alias, "provider": "groq", "model_id": groq.configuration()["model"],
-              "parameters": {"temperature": temperature, "max_tokens": max_tokens},
-              "provenance_status": "configured_only", "generation_confirmed": False}
-             if provider == "groq" else
-             {"alias": alias, "provider": "runpod", "base": models.BASE, "battery": models.MODELS[alias]["battery"],
-              "parameters": {"temperature": temperature, "max_tokens": max_tokens},
-              "endpoint": config.vllm_url() or None, "provenance_status": "unverified",
-              "generation_confirmed": False})
-    snapshot = {"schema_version": 4 if provider == "groq" else 3, "provider": provider,
-                "evidence_mode": mode, "evidence_source": synthetic_data.SOURCE if provider == "groq" else None,
-                "prompt": prompt, "verification_criteria": verification_criteria,
-                "model": model, "status": "preparing", "error": None,
-                "checks": [], "model_output": None, "model_turns": [],
-                "identity": {"principal_id": principal.id, "author_verified": True}}
+
+def _validate_input(payload):
+    if not isinstance(payload, dict):
+        raise ValueError('run_object_required')
+    if any(k in payload for k in ('evidence_mode', 'model_alias', 'provider')):
+        raise ValueError('legacy_execution_mode_retired: select fixed_evidence or data_access')
+    allowed = {'execution_contract_version', 'scenario', 'model_profile_id', 'question',
+               'evidence_packet', 'catalog_version', 'generation', 'limits'}
+    if set(payload) - allowed or payload.get('execution_contract_version') != 1:
+        raise ValueError('invalid_execution_contract')
+    scenario = payload.get('scenario')
+    if scenario not in {'fixed_evidence', 'data_access'}:
+        raise ValueError('invalid_scenario')
+    if not isinstance(payload.get('question'), str) or not payload['question'].strip() or len(payload['question']) > 4000:
+        raise ValueError('invalid_question')
+    if scenario == 'fixed_evidence':
+        packet = payload.get('evidence_packet')
+        if not isinstance(packet, dict) or set(packet) != {'id', 'sha256'} or 'catalog_version' in payload:
+            raise ValueError('fixed_evidence_packet_required')
+    elif (payload.get('evidence_packet') is not None or
+          type(payload.get('catalog_version')) is not int or payload['catalog_version'] < 1):
+        raise ValueError('data_access_catalog_required')
+    generation = payload.get('generation', {})
+    if not isinstance(generation, dict):
+        raise ValueError('invalid_generation')
+    profile = registry.resolve(payload.get('model_profile_id'))
+    registry.preflight(profile, generation)
+    requested = payload.get('limits', {})
+    defaults = asdict(scenarios.ScenarioLimits(query_attempts=0 if scenario == 'fixed_evidence' else 3))
+    if not isinstance(requested, dict) or set(requested) - set(defaults):
+        raise ValueError('invalid_limits')
+    for key, value in requested.items():
+        minimum = 0 if key == 'query_attempts' else 1
+        if type(value) is not int or not minimum <= value <= defaults[key]:
+            raise ValueError('limit_may_only_reduce:' + key)
+    return profile, {**defaults, **requested}
+
+
+def prepare(payload):
+    profile, limits = _validate_input(payload)
+    packet = catalog = maps = None
+    if payload['scenario'] == 'fixed_evidence':
+        ref = payload['evidence_packet']
+        packet, raw = evidence_packets.select_packet(ref['id'], ref['sha256'])
+        if packet['body']['question'] != payload['question']:
+            raise ValueError('packet_question_mismatch')
+        data_sha = packet['sha256']
+        source = {'kind': 'immutable_packet', 'sha256': data_sha,
+                  'file_sha256': hashlib.sha256(raw).hexdigest()}
+    else:
+        catalog = approved_catalog.load()
+        if catalog['version'] != payload['catalog_version']:
+            raise ValueError('catalog_version_mismatch')
+        maps = catalog_runtime.compile_maps(catalog)
+        data_sha = registry.digest(catalog)
+        source = {'kind': 'approved_local_catalog', 'catalog_sha256': data_sha,
+                  'version': catalog['version'], 'data_contract_sha256': local_queries.DATA_CONTRACT_SHA256,
+                  'dw_fingerprint': catalog['dw_source_fingerprint'],
+                  'physical_inventory_sha256': catalog.get('physical_inventory_sha256')}
+    authorization = registry.authorize(profile, payload['scenario'], data_sha, limits)
+    return deepcopy({'profile': profile, 'limits': limits, 'packet': packet,
+                     'catalog': catalog, 'maps': maps, 'source': source,
+                     'authorization_sha256': authorization, 'request_sha256': registry.digest(payload)})
+
+
+def require_provider_configuration(payload):
+    prepare(payload)
+
+
+def execute_run(payload, principal: Principal, *, prepared=None):
+    context = prepared if prepared is not None else prepare(payload)
+    if context['request_sha256'] != registry.digest(payload):
+        raise ValueError('prepared_request_changed')
+    profile = context['profile']
+    source = deepcopy(context['source'])
+    scenario = payload['scenario']
+    query = None
+    runtime_before = runtime_identity()
+    if scenario == 'data_access':
+        source['detail_loads'] = {'before': local_queries.source_fingerprints(context['catalog'])}
+        query = lambda plan: local_queries.execute(plan, context['catalog'])
+    result = scenarios.run(payload['question'], scenario, profile['id'],
+        ModelService(profile, payload.get('generation', {})), maps=context['maps'],
+        packet=context['packet'], query=query, limits=scenarios.ScenarioLimits(**context['limits']))
+    if scenario == 'data_access':
+        try:
+            source['detail_loads']['after'] = local_queries.source_fingerprints(context['catalog'])
+        except Exception as exc:
+            source['detail_loads']['after'] = {'status': 'unavailable', 'error_type': type(exc).__name__}
+            result['status'] = 'contract_error'
+            result['final_state'] = {'error': 'source_fingerprint_after_failed'}
+    snapshot = {'schema_version': 7, 'execution_contract_version': 1, 'scenario': scenario,
+        'evidence_mode': scenario, 'provider': profile['provider_id'], 'status': result['status'],
+        'scientific_status': 'not_scored', 'validation_purpose': 'engineering',
+        'data_class': 'synthetic_fixture' if profile.get('fixture') else 'research_evidence',
+        'data_destination': profile['deployment_id'],
+        'authorization_sha256': context['authorization_sha256'],
+        'question_request': {'question': payload['question'], 'model_alias': profile['id']},
+        'packet': ({'case_id': context['packet']['body']['case_id'], 'sha256': context['packet']['sha256']}
+                   if context['packet'] else None),
+        'evidence_source': source,
+        'runtime_contract': {'code': runtime_before, 'code_after': runtime_identity()},
+        'model_profile': {k: v for k, v in profile.items() if k not in {'key_env', 'endpoint'}},
+        'model': {'alias': profile['id'], 'provider': profile['provider_id'],
+                  'model_id': profile['requested_model'], 'api_surface': profile['adapter_id'],
+                  'parameters': payload.get('generation', {}), 'generation_confirmed': False},
+        'prompt': {'version': scenarios.VERSION, 'system_prompt': 'Versioned role contracts',
+                   'sha256': result['contract_sha256']},
+        'verification_criteria': {'scientific_status': 'not_scored'},
+        'harness_result': result, 'checks': [],
+        'model_output': {'raw_text': result['response']['resposta']} if result['response'] else None,
+        'error': {'stage': 'harness', 'type': result['status'], 'message': result['final_state']['error']}
+                 if result['final_state'] and 'error' in result['final_state'] else None,
+        'identity': {'principal_id': principal.id, 'author_verified': True}}
     try:
-        if mode == "synthetic_snapshot":
-            question = synthetic_data.QUESTION
-            evidence_json = synthetic_data.packet_json()
-            evidence_items = synthetic_data.PACKET["evidence_items"]
-            snapshot["question_request"] = {"question": question, "model_alias": alias}
-            snapshot["packet"] = {"case_id": "synthetic-v1", "source_snapshot": synthetic_data.SOURCE}
-            snapshot["evidence_json_sent"] = evidence_json
-            messages = [{"role": "system", "content": prompt["system_prompt"] + "\n" + GUIDANCE},
-                        {"role": "user", "content": question + "\n\nFixture JSON:\n" + evidence_json}]
-            tools = None
-        elif mode == "dw_snapshot":
-            packet, packet_bytes = evidence_packets.select_packet(payload["case_id"], payload["packet_sha256"])
-            body = packet["body"]
-            question = body["question"]
-            snapshot["question_request"] = {"question": question, "domain": body["domain"], "model_alias": alias}
-            snapshot["packet"] = {"case_id": body["case_id"], "sha256": packet["sha256"],
-                                  "file_sha256": __import__("hashlib").sha256(packet_bytes).hexdigest(),
-                                  "bytes_b64": __import__("base64").b64encode(packet_bytes).decode("ascii"),
-                                  "source_snapshot": body["source_snapshot"],
-                                  "schema_version": body["schema_version"],
-                                  "query_contract_version": body["query_contract_version"],
-                                  "query_code_sha256": body["query_code_sha256"]}
-            evidence_items = body["evidence_items"]
-            evidence_json = packet_bytes.decode("utf-8")
-            messages = [{"role": "system", "content": prompt["system_prompt"] + "\n" + GUIDANCE},
-                        {"role": "user", "content": question + "\n\nEvidência JSON exata:\n" + evidence_json}]
-            snapshot["evidence_json_sent"] = evidence_json
-            tools = None
-        else:
-            question = synthetic_data.QUESTION if mode == "synthetic_tools" else payload["question"]
-            snapshot["question_request"] = {"question": question, "model_alias": alias}
-            snapshot["tool_catalog"] = synthetic_data.catalog() if provider == "groq" else dw_tools.catalog()
-            snapshot["tool_limits"] = {"calls": dw_tools.MAX_CALLS, "turns": dw_tools.MAX_TURNS,
-                                       "rows": dw_tools.MAX_ROWS, "bytes": dw_tools.MAX_BYTES}
-            snapshot["tool_trace"] = []
-            availability = {"available": True, "source_fingerprint": "synthetic-v1", **synthetic_data.SOURCE} if provider == "groq" else dw_tools.availability()
-            snapshot["dw_source"] = availability
-            if not availability["available"]:
-                snapshot["status"] = "dw_unavailable"
-                snapshot["error"] = {"stage": "dw", "type": "DWUnavailable", "message": availability["reason"]}
-                return storage.create_run(principal.username, snapshot)
-            evidence_items = []
-            messages = [{"role": "system", "content": prompt["system_prompt"] + "\n" + GUIDANCE},
-                        {"role": "user", "content": question}]
-            tools = snapshot["tool_catalog"]
-        session_id = None
-        total_rows = total_bytes = 0
-        for turn_number in range(1, dw_tools.MAX_TURNS + 1 if tools is not None else 2):
-            started = _timestamp()
-            turn_record = {"order": turn_number, "started_at": started,
-                           "request": {"messages": deepcopy(messages), "tools": tools,
-                                       "tool_choice": "auto" if tools is not None else None,
-                                       "parallel_tool_calls": False if tools is not None else None,
-                                       "temperature": temperature, "max_tokens": max_tokens}}
-            snapshot["model_turns"].append(turn_record)
-            try:
-                message, serving = (groq.chat_turn(messages, temperature, max_tokens, tools=tools)
-                                    if provider == "groq" else
-                                    models.chat_turn(alias, messages, temperature, max_tokens,
-                                                     tools=tools, session_id=session_id))
-            except groq.GroqError as exc:
-                snapshot["status"] = exc.status
-                snapshot["error"] = {"stage": "provider", "type": exc.status, "message": str(exc),
-                                     "retry_after": exc.retry_after,
-                                     "finish_reason": exc.metadata.get("finish_reason")}
-                model.update({key: exc.metadata[key] for key in
-                              ("usage", "finish_reason", "served_model") if key in exc.metadata})
-                turn_record.update({"finished_at": _timestamp(), "error": snapshot["error"]})
-                break
-            except models.ModelResponseError as exc:
-                snapshot["status"] = "response_error"
-                snapshot["error"] = {"stage": "response", "type": type(exc).__name__, "message": str(exc)}
-                turn_record.update({"finished_at": _timestamp(), "error": str(exc),
-                                    "serving": exc.serving})
-                model.update({key: exc.serving.get(key) for key in
-                              ("served_model", "base_revision", "adapter_run", "adapter_hash",
-                               "provenance_status", "generation_confirmed", "session_id")})
-                break
-            except Exception as exc:
-                snapshot["status"] = "model_error"
-                snapshot["error"] = {"stage": "model", "type": type(exc).__name__, "message": str(exc)}
-                turn_record.update({"finished_at": _timestamp(), "error": str(exc)})
-                break
-            turn_record.update({"finished_at": _timestamp(), "serving": serving})
-            session_id = serving.get("session_id")
-            keys = ("served_model", "usage", "finish_reason") if provider == "groq" else (
-                "endpoint", "served_model", "base_revision", "adapter_run", "adapter_hash",
-                "provenance_status", "generation_confirmed", "session_id")
-            model.update({key: serving.get(key) for key in keys})
-            if provider == "groq":
-                model["provenance_status"] = "provider_response"
-            calls = message.get("tool_calls")
-            if calls is not None and calls != []:
-                if tools is None or not isinstance(calls, list) or len(calls) != 1 or len(snapshot["tool_trace"]) >= dw_tools.MAX_CALLS or turn_number >= dw_tools.MAX_TURNS:
-                    snapshot["status"] = "tool_protocol_error"
-                    snapshot["error"] = {"stage": "tool", "type": "ToolCallLimitOrShape"}
-                    break
-                call = calls[0]
-                trace = {"order": len(snapshot["tool_trace"]) + 1, "started_at": _timestamp(),
-                         "raw_request": call, "status": "pending"}
-                snapshot["tool_trace"].append(trace)
-                try:
-                    if not isinstance(call, dict) or call.get("type") != "function" or not isinstance(call.get("id"), str) or not call["id"]:
-                        raise ValueError("Malformed tool call")
-                    function = call["function"]
-                    if not isinstance(function, dict) or not isinstance(function.get("arguments"), str):
-                        raise ValueError("Malformed tool function")
-                    def unique_pairs(pairs):
-                        value = {}
-                        for key, item in pairs:
-                            if key in value:
-                                raise ValueError("Duplicate DW tool argument")
-                            value[key] = item
-                        return value
-                    args = json.loads(function["arguments"], object_pairs_hook=unique_pairs,
-                                      parse_constant=lambda _value: (_ for _ in ()).throw(ValueError("Invalid number")))
-                    args = (synthetic_data.validate_call(function.get("name"), args)
-                            if provider == "groq" else dw_tools.validate_call(function.get("name"), args))
-                    trace["validated_arguments"] = args
-                except (ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
-                    trace.update({"status": "failed", "error": {"stage": "tool_validation", "type": type(exc).__name__, "message": str(exc)}, "finished_at": _timestamp()})
-                    snapshot["status"] = "tool_error"
-                    snapshot["error"] = trace["error"]
-                    break
-                trace["name"] = function["name"]
-                try:
-                    result = (synthetic_data.execute(function["name"], args) if provider == "groq" else
-                              dw_tools.execute(function["name"], args,
-                                               expected_fingerprint=availability["source_fingerprint"]))
-                    result_bytes = canonical(result)
-                    if total_rows + len(result["rows"]) > dw_tools.MAX_ROWS or total_bytes + len(result_bytes) > dw_tools.MAX_BYTES:
-                        raise dw_tools.DWResultLimitError("Cumulative DW tool result limit exceeded")
-                except dw_tools.DWResultLimitError as exc:
-                    trace.update({"status": "failed", "error": {"stage": "limit", "type": type(exc).__name__, "message": str(exc)}, "finished_at": _timestamp()})
-                    snapshot["status"] = "tool_limit_error"
-                    snapshot["error"] = trace["error"]
-                    break
-                except Exception as exc:
-                    trace.update({"status": "failed", "error": {"stage": "query", "type": type(exc).__name__}, "finished_at": _timestamp()})
-                    snapshot["status"] = "query_error"
-                    snapshot["error"] = trace["error"]
-                    break
-                total_rows += len(result["rows"])
-                total_bytes += len(result_bytes)
-                trace.update({"result": result, "result_bytes": len(result_bytes),
-                              "status": "returned", "finished_at": _timestamp()})
-                evidence_items.append(result)
-                messages.append(message)
-                messages.append({"role": "tool", "tool_call_id": call["id"],
-                                 "content": result_bytes.decode("utf-8")})
-                continue
-            answer = message.get("content")
-            if not isinstance(answer, str) or not answer.strip():
-                snapshot["status"] = "response_error"
-                snapshot["error"] = {"stage": "response", "type": "EmptyModelResponse"}
-            elif not any(item.get("coverage", {}).get("state") == "observed" for item in evidence_items):
-                snapshot["status"] = "insufficient_evidence"
-                snapshot["error"] = {"stage": "evidence", "type": "NoDWObservation"}
-                snapshot["model_output"] = {"raw_text": answer, "serving": serving}
-            else:
-                snapshot["status"] = "answered_unverified"
-                snapshot["model_output"] = {"raw_text": answer, "serving": serving}
-                snapshot["checks"] = _checks(evidence_items, answer, verification_criteria["config"],
-                                             "synthetic fixture" if provider == "groq" else "DW")
-            break
-        else:
-            snapshot["status"] = "tool_protocol_error"
-            snapshot["error"] = {"stage": "tool", "type": "TurnLimit"}
+        return storage.create_run(principal.username, snapshot)
     except Exception as exc:
-        snapshot["status"] = "preparation_error"
-        snapshot["error"] = {"stage": "preparation", "type": type(exc).__name__, "message": str(exc)}
-    return storage.create_run(principal.username, snapshot)
+        real_pilot.preserve_failed_persistence(snapshot, exc)
+        raise

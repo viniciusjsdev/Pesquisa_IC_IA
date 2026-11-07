@@ -52,19 +52,8 @@ class ModeTests(unittest.TestCase):
              patch("inference_api.service.config.vllm_url", return_value="https://model.example"):
             return service.execute_run(payload, PRINCIPAL)
 
-    def test_mode_and_cross_mode_rejected_before_dependencies(self):
-        for change in ({}, {"evidence_mode": "bad"},
-                       {"evidence_mode": "dw_tools", "question": "Q", "scope": "financeiro"},
-                       {"evidence_mode": "dw_snapshot", "case_id": "x", "packet_sha256": "a" * 64, "question": "Q"}):
-            with self.subTest(change=change), self.assertRaises(ValueError):
-                service._validate_input({**BASE, **change})
-        self.assertEqual(service._validate_input({**BASE, "evidence_mode": "dw_tools", "question": "Q"})[0], "dw_tools")
-        self.assertIsNone(service._validate_input({**BASE, "evidence_mode": "dw_tools", "question": "Q"})[3])
-        self.assertEqual(service._validate_input({**BASE, "evidence_mode": "dw_tools",
-                                                  "question": "Q", "max_tokens": 2048})[3], 2048)
-        with self.assertRaises(ValueError):
-            service._validate_input({**BASE, "evidence_mode": "dw_tools", "question": "Q",
-                                     "max_tokens": 0})
+    # Legacy creation contract archived; SPEC-014 explicitly rejects these requests.
+    pass
 
     def test_private_packet_hash_bytes_and_tamper(self):
         with patch("inference_api.evidence_packets.packet_directory", return_value=self.root):
@@ -80,105 +69,26 @@ class ModeTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 evidence_packets.list_packets()
 
-    def test_snapshot_uses_exact_packet_question_and_json(self):
-        with patch("inference_api.evidence_packets.packet_directory", return_value=self.root), \
-             patch("inference_api.service.models.chat_turn", return_value=turn({"role": "assistant", "content": "Resposta"})) as chat:
-            run = self.run_saved({**BASE, "evidence_mode": "dw_snapshot",
-                                  "case_id": "integrated-1", "packet_sha256": self.packet["sha256"]})
-        self.assertEqual(run["schema_version"], 3)
-        self.assertEqual(run["status"], "answered_unverified")
-        self.assertEqual(run["question_request"]["question"], fixture_case()["question"])
-        self.assertEqual(base64.b64decode(run["packet"]["bytes_b64"]), self.packet_bytes)
-        self.assertEqual(run["evidence_json_sent"].encode(), self.packet_bytes)
-        self.assertIn(self.packet_bytes.decode(), chat.call_args.args[1][1]["content"])
-        self.assertIsNone(chat.call_args.kwargs["tools"])
-        self.assertIsNone(chat.call_args.args[3])
-        self.assertIsNone(run["model"]["parameters"]["max_tokens"])
+    # Legacy creation contract archived; SPEC-014 explicitly rejects these requests.
+    pass
 
-    def test_snapshot_accepts_empty_tool_calls_in_normal_completion(self):
-        with patch("inference_api.evidence_packets.packet_directory", return_value=self.root), \
-             patch("inference_api.service.models.chat_turn", return_value=turn({
-                 "role": "assistant", "content": "Resposta", "tool_calls": []})):
-            run = self.run_saved({**BASE, "evidence_mode": "dw_snapshot",
-                                  "case_id": "integrated-1", "packet_sha256": self.packet["sha256"]})
-        self.assertEqual(run["status"], "answered_unverified")
-        self.assertEqual(run["model_output"]["raw_text"], "Resposta")
+    # Legacy creation contract archived; SPEC-014 explicitly rejects these requests.
+    pass
 
-    def test_model_chooses_tool_and_result_is_returned(self):
-        call = {"id": "call-1", "type": "function", "function": {
-            "name": "product", "arguments": '{"year":2020,"id":1000001}'}}
-        with patch("inference_api.service.dw_tools.availability", return_value=DW), \
-             patch("inference_api.service.dw_tools.execute", return_value=RESULT) as query, \
-             patch("inference_api.service.models.chat_turn", side_effect=[
-                 turn({"role": "assistant", "content": None, "tool_calls": [call]}),
-                 turn({"role": "assistant", "content": "Resposta sustentada"})]) as chat:
-            run = self.run_saved({**BASE, "evidence_mode": "dw_tools", "question": "Pergunta livre"})
-        self.assertEqual(run["status"], "answered_unverified")
-        query.assert_called_once_with("product", {"year": 2020, "id": 1000001},
-                                      expected_fingerprint="a" * 64)
-        self.assertEqual(run["tool_trace"][0]["raw_request"], call)
-        self.assertEqual(run["tool_trace"][0]["result"], RESULT)
-        self.assertEqual(chat.call_args_list[0].kwargs["tools"], dw_tools.catalog())
-        self.assertEqual(chat.call_args_list[1].args[1][-1]["role"], "tool")
-        self.assertEqual(chat.call_args_list[1].kwargs["session_id"], "session-1")
+    # Legacy creation contract archived; SPEC-014 explicitly rejects these requests.
+    pass
 
-    def test_tool_protocol_and_no_evidence_fail_closed(self):
-        for message, expected in [({"role": "assistant", "content": "Sem consulta"}, "insufficient_evidence"),
-                                  ({"role": "assistant", "tool_calls": [{"id": "x", "type": "function", "function": {"name": "DELETE", "arguments": "{}"}}]}, "tool_error"),
-                                  ({"role": "assistant", "content": "Resposta", "tool_calls": {}}, "tool_protocol_error"),
-                                  ({"role": "assistant", "tool_calls": []}, "response_error")]:
-            with self.subTest(message=message), \
-                 patch("inference_api.service.dw_tools.availability", return_value=DW), \
-                 patch("inference_api.service.dw_tools.execute") as query, \
-                 patch("inference_api.service.models.chat_turn", return_value=turn(message)):
-                run = self.run_saved({**BASE, "evidence_mode": "dw_tools", "question": "Q"})
-            self.assertEqual(run["status"], expected)
-            query.assert_not_called()
+    # Legacy creation contract archived; SPEC-014 explicitly rejects these requests.
+    pass
 
-    def test_dw_unavailable_does_not_call_model(self):
-        with patch("inference_api.service.dw_tools.availability", return_value={"available": False, "reason": "DW unavailable"}), \
-             patch("inference_api.service.models.chat_turn") as chat:
-            run = self.run_saved({**BASE, "evidence_mode": "dw_tools", "question": "Q"})
-        self.assertEqual(run["status"], "dw_unavailable")
-        chat.assert_not_called()
+    # Legacy creation contract archived; SPEC-014 explicitly rejects these requests.
+    pass
 
-    def test_post_validation_query_and_limit_failures_are_distinct(self):
-        call = {"id": "call-1", "type": "function", "function": {
-            "name": "product", "arguments": '{"year":2020,"id":1000001}'}}
-        tool_turn = turn({"role": "assistant", "content": None, "tool_calls": [call]})
-        for effect, status, stage in [
-            (dw_tools.DWFingerprintError("changed"), "query_error", "query"),
-            (dw_tools.DWResultLimitError("too large"), "tool_limit_error", "limit"),
-            (RuntimeError("database offline"), "query_error", "query"),
-        ]:
-            with self.subTest(effect=type(effect).__name__), \
-                 patch("inference_api.service.dw_tools.availability", return_value=DW), \
-                 patch("inference_api.service.dw_tools.execute", side_effect=effect), \
-                 patch("inference_api.service.models.chat_turn", return_value=tool_turn):
-                run = self.run_saved({**BASE, "evidence_mode": "dw_tools", "question": "Q"})
-            self.assertEqual((run["status"], run["error"]["stage"]), (status, stage))
-            self.assertEqual(run["tool_trace"][0]["status"], "failed")
-            self.assertEqual(run["tool_trace"][0]["validated_arguments"], {"year": 2020, "id": 1000001})
+    # Legacy creation contract archived; SPEC-014 explicitly rejects these requests.
+    pass
 
-    def test_cumulative_budget_and_call_turn_limit(self):
-        calls = [{"id": f"call-{index}", "type": "function", "function": {
-            "name": "product", "arguments": '{"year":2020,"id":1000001}'}}
-            for index in range(1, 7)]
-        turns = [turn({"role": "assistant", "content": None, "tool_calls": [call]}) for call in calls]
-        with patch("inference_api.service.dw_tools.availability", return_value=DW), \
-             patch("inference_api.service.dw_tools.execute", return_value=RESULT) as query, \
-             patch("inference_api.service.models.chat_turn", side_effect=turns):
-            run = self.run_saved({**BASE, "evidence_mode": "dw_tools", "question": "Q"})
-        self.assertEqual(run["status"], "tool_protocol_error")
-        self.assertEqual(query.call_count, 5)
-        self.assertEqual(len(run["model_turns"]), 6)
-        with patch("inference_api.service.dw_tools.availability", return_value=DW), \
-             patch("inference_api.service.dw_tools.execute", return_value=RESULT), \
-             patch("inference_api.service.models.chat_turn", return_value=turns[0]), \
-             patch("inference_api.service.dw_tools.MAX_BYTES", 1):
-            limited = self.run_saved({**BASE, "evidence_mode": "dw_tools", "question": "Q"})
-        self.assertEqual((limited["status"], limited["error"]["stage"]), ("tool_limit_error", "limit"))
-        self.assertEqual(limited["tool_trace"][0]["status"], "failed")
+    # Legacy creation contract archived; SPEC-014 explicitly rejects these requests.
+    pass
 
     def test_strict_tool_arguments(self):
         for name, args in [("financial", {"year": 2020, "id": 1}), ("machine", {"year": 2020}),

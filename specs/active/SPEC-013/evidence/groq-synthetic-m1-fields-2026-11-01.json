@@ -1,0 +1,216 @@
+{
+  "run_id": "1d44d3c4-ed07-4622-b971-e2bd0e957046",
+  "status": "contract_error",
+  "question": "Na linha fictícia L1 em 2020, quantos minutos de parada houve e qual foi o lucro líquido observado no mesmo ano? Isso prova que a parada causou a variação do lucro?",
+  "protocol": "synthetic_fixture_m1",
+  "contract_sha256": "0ba4dcda968f082fd15eba384348d16f2ffc92388cb9d1b99f3810b74c4dd7cb",
+  "map_sha256": {
+    "dw": "b9ff76ee0b20f6a8202a1183f640b066a4fc56322605a1417c3074b2a13580bd",
+    "financeiro": "af8ca41d43c96c20c01d4a882060bc39f9d128a3f9c2a4b220f254b33c201fe2"
+  },
+  "candidate": [
+    "groq",
+    "qwen/qwen3.8-27b"
+  ],
+  "model_calls": 3,
+  "queries": 0,
+  "trace": [
+    {
+      "event_id": "call_01",
+      "role": "analista_pergunta",
+      "round": 1,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "run_id": "1d44d3c4-ed07-4622-b971-e2bd0e957046",
+        "call_id": "call_01",
+        "role": "analista_pergunta",
+        "round": 1,
+        "template_version": 1,
+        "source_event_ids": [],
+        "input": {
+          "question": "Na linha fictícia L1 em 2020, quantos minutos de parada houve e qual foi o lucro líquido observado no mesmo ano? Isso prova que a parada causou a variação do lucro?",
+          "domain_index": [
+            {
+              "domain": "dw",
+              "description": "Agregados fictícios por linha e ano"
+            },
+            {
+              "domain": "financeiro",
+              "description": "Observações financeiras fictícias por data"
+            }
+          ],
+          "protocol": "synthetic_fixture_m1; no SQL; no scientific score"
+        }
+      },
+      "contract_sha256": "0ba4dcda968f082fd15eba384348d16f2ffc92388cb9d1b99f3810b74c4dd7cb",
+      "status": "validated",
+      "model": {
+        "provider": "groq",
+        "model_id": "qwen/qwen3.8-27b",
+        "usage": {
+          "queue_time": 0.251438037,
+          "prompt_tokens": 491,
+          "prompt_time": 0.036534967,
+          "completion_tokens": 151,
+          "completion_time": 0.287812038,
+          "total_tokens": 642,
+          "total_time": 0.324347005
+        },
+        "finish_reason": "stop"
+      },
+      "raw_output": "{\n  \"tratavel\": true,\n  \"necessidade\": {\n    \"entidade\": \"linha L1\",\n    \"medida\": \"minutos de parada e lucro líquido\",\n    \"periodo\": \"2020\",\n    \"grao\": \"ano\"\n  },\n  \"dominios\": [\n    \"dw\",\n    \"financeiro\"\n  ],\n  \"lacunas\": [\n    \"A pergunta solicita uma conclusão causal ('prova que a parada causou a variação'), o que não é suportado apenas pela estruturação de dados agregados e observações financeiras sem análise estatística ou de correlação.\"\n  ]\n}",
+      "output": {
+        "tratavel": true,
+        "necessidade": {
+          "entidade": "linha L1",
+          "medida": "minutos de parada e lucro líquido",
+          "periodo": "2020",
+          "grao": "ano"
+        },
+        "dominios": [
+          "dw",
+          "financeiro"
+        ],
+        "lacunas": [
+          "A pergunta solicita uma conclusão causal ('prova que a parada causou a variação'), o que não é suportado apenas pela estruturação de dados agregados e observações financeiras sem análise estatística ou de correlação."
+        ]
+      }
+    },
+    {
+      "event_id": "call_02",
+      "role": "especialista_dados",
+      "round": 1,
+      "attempt": 1,
+      "input": {
+        "schema_version": 1,
+        "run_id": "1d44d3c4-ed07-4622-b971-e2bd0e957046",
+        "call_id": "call_02",
+        "role": "especialista_dados",
+        "round": 1,
+        "template_version": 1,
+        "source_event_ids": [
+          "call_01"
+        ],
+        "input": {
+          "necessidade": {
+            "entidade": "linha L1",
+            "medida": "minutos de parada e lucro líquido",
+            "periodo": "2020",
+            "grao": "ano"
+          },
+          "domain_map": {
+            "domain": "dw",
+            "version": "fixture-1",
+            "synthetic": true,
+            "description": "Agregados fictícios por linha e ano",
+            "sources": {
+              "dw_paradas": {
+                "fields": [
+                  "linha",
+                  "ano",
+                  "minutos_parada"
+                ],
+                "grain": "linha/ano",
+                "coverage": "2020"
+              }
+            }
+          },
+          "gap": null,
+          "evidence_refs": []
+        }
+      },
+      "contract_sha256": "0ba4dcda968f082fd15eba384348d16f2ffc92388cb9d1b99f3810b74c4dd7cb",
+      "status": "rejected",
+      "model": {
+        "provider": "groq",
+        "model_id": "qwen/qwen3.8-27b",
+        "usage": {
+          "queue_time": 0.153699956,
+          "prompt_tokens": 445,
+          "prompt_time": 0.039669717,
+          "completion_tokens": 65,
+          "completion_time": 0.128073022,
+          "total_tokens": 510,
+          "total_time": 0.167742739
+        },
+        "finish_reason": "stop"
+      },
+      "raw_output": "{\n  \"map_refs\": [\n    \"dw_paradas\"\n  ],\n  \"granularidade\": \"linha/ano\",\n  \"cobertura\": \"2020\",\n  \"lacunas\": [\n    \"lucro_líquido\"\n  ]\n}",
+      "error": "specialist_missing_field_refs"
+    },
+    {
+      "event_id": "call_03",
+      "role": "especialista_dados",
+      "round": 1,
+      "attempt": 2,
+      "input": {
+        "schema_version": 1,
+        "run_id": "1d44d3c4-ed07-4622-b971-e2bd0e957046",
+        "call_id": "call_03",
+        "role": "especialista_dados",
+        "round": 1,
+        "template_version": 1,
+        "source_event_ids": [
+          "call_01"
+        ],
+        "input": {
+          "necessidade": {
+            "entidade": "linha L1",
+            "medida": "minutos de parada e lucro líquido",
+            "periodo": "2020",
+            "grao": "ano"
+          },
+          "domain_map": {
+            "domain": "dw",
+            "version": "fixture-1",
+            "synthetic": true,
+            "description": "Agregados fictícios por linha e ano",
+            "sources": {
+              "dw_paradas": {
+                "fields": [
+                  "linha",
+                  "ano",
+                  "minutos_parada"
+                ],
+                "grain": "linha/ano",
+                "coverage": "2020"
+              }
+            }
+          },
+          "gap": null,
+          "evidence_refs": [],
+          "correction_feedback": {
+            "error_code": "specialist_missing_field_refs",
+            "attempt": 1,
+            "remaining_attempts": 1,
+            "hint": "Ao selecionar uma fonte, inclua tambem ao menos uma referencia fonte.campo existente no mapa."
+          }
+        }
+      },
+      "contract_sha256": "0ba4dcda968f082fd15eba384348d16f2ffc92388cb9d1b99f3810b74c4dd7cb",
+      "status": "rejected",
+      "model": {
+        "provider": "groq",
+        "model_id": "qwen/qwen3.8-27b",
+        "usage": {
+          "queue_time": 0.202430938,
+          "prompt_tokens": 499,
+          "prompt_time": 0.034092779,
+          "completion_tokens": 87,
+          "completion_time": 0.165671876,
+          "total_tokens": 586,
+          "total_time": 0.199764655
+        },
+        "finish_reason": "stop"
+      },
+      "raw_output": "{\n  \"map_refs\": [\n    \"dw_paradas.linha\",\n    \"dw_paradas.ano\",\n    \"dw_paradas.minutos_parada\"\n  ],\n  \"granularidade\": \"linha/ano\",\n  \"cobertura\": \"2020\",\n  \"lacunas\": [\n    \"lucro_líquido\"\n  ]\n}",
+      "error": "specialist_missing_field_refs"
+    }
+  ],
+  "evidence": [],
+  "response": null,
+  "final_state": {
+    "error": "specialist_missing_field_refs"
+  }
+}

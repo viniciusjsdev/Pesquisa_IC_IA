@@ -1,0 +1,84 @@
+{
+  "mode": "approved_catalog_local_read_only",
+  "approved_catalog_path": "specs/active/SPEC-013/catalog/pilot_local_v1.json",
+  "sources_checked": 12,
+  "data_contract_sha256": "1ef705c9a42702b451f2ea18d137626d2ec11f25422400e2d1bd9390ca4e6b3b",
+  "dw_source_fingerprint": "66f8808cf83902ff6c7fd277937bf8e0671482058f540f3ea9c1ec8c5a182800",
+  "reader_role": "spec013_reader",
+  "provider_called": false,
+  "scientific_score": null,
+  "results": [
+    {
+      "source_id": "machine",
+      "rows": 1,
+      "state": "observed",
+      "bytes": 874
+    },
+    {
+      "source_id": "product",
+      "rows": 1,
+      "state": "observed",
+      "bytes": 799
+    },
+    {
+      "source_id": "financial",
+      "rows": 13,
+      "state": "observed",
+      "bytes": 1889
+    },
+    {
+      "source_id": "quality",
+      "rows": 1,
+      "state": "observed",
+      "bytes": 615
+    },
+    {
+      "source_id": "material",
+      "rows": 1,
+      "state": "observed",
+      "bytes": 695
+    },
+    {
+      "source_id": "contributors",
+      "rows": 1,
+      "state": "observed",
+      "bytes": 682
+    },
+    {
+      "source_id": "trace",
+      "rows": 1,
+      "state": "observed",
+      "bytes": 752
+    },
+    {
+      "source_id": "paradas_maquinas",
+      "rows": 1,
+      "state": "observed",
+      "bytes": 738
+    },
+    {
+      "source_id": "paradas_maquinas_geradas",
+      "rows": 1,
+      "state": "observed",
+      "bytes": 733
+    },
+    {
+      "source_id": "registros_operacao",
+      "rows": 1,
+      "state": "observed",
+      "bytes": 749
+    },
+    {
+      "source_id": "resultados_financeiros",
+      "rows": 1,
+      "state": "observed",
+      "bytes": 748
+    },
+    {
+      "source_id": "vendas",
+      "rows": 1,
+      "state": "observed",
+      "bytes": 727
+    }
+  ]
+}

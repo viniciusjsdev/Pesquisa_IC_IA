@@ -1,0 +1,507 @@
+{
+  "$schema": "../../../.codex/schemas/project-spec-execution.schema.json",
+  "schema_version": "2.0",
+  "spec_id": "SPEC-013",
+  "contract_version": 3,
+  "status": "done",
+  "automatic_handoff": false,
+  "execution": {
+    "classification": "normal_implementation",
+    "role": "developer",
+    "model": "gpt-5.6-terra",
+    "reasoning": "medium",
+    "routing_rationale": "Escopo de engenharia esclarecido pelo pesquisador em 05/11: validar estrutura e funcionamento pela Bancada com OpenAI autorizada. Matriz científica e adjudicação humana dos runs ficam posteriores; gates de pontuação permanecem. Auditoria técnica independente Astra antes de done.",
+    "runtime_override": null,
+    "working_directory": ".",
+    "sandbox_mode": "workspace-write",
+    "approval_mode": "auto_review",
+    "thread": {
+      "mode": "new",
+      "purpose": "implementation",
+      "thread_id": null
+    },
+    "handoff_prompt": "Implementar SPEC-013 contrato 3 conforme specialist-query-contract.md. Diagrama e documentação primeiro; Especialista monta plano com contrato completo e feedback da tentativa recusada. Preservar catálogo aprovado, dados, recibos e resultados. Testes locais sem novos provedores. Não marcar done sem gates de engenharia e auditoria independente."
+  },
+  "skills": [],
+  "references": [
+    {
+      "path": "AGENTS.md",
+      "purpose": "Regras do checkout, dados protegidos e efeitos externos",
+      "required": true
+    },
+    {
+      "path": "README.md",
+      "purpose": "Mapa das frentes e estado vigente",
+      "required": true
+    },
+    {
+      "path": "specs/README.md",
+      "purpose": "Ordem e limites das SPECs",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-009/SPEC.md",
+      "purpose": "Modos existentes e escolha das cinco tools da DW",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-012/SPEC.md",
+      "purpose": "Contrato de provedor externo, dados e snapshots",
+      "required": true
+    },
+    {
+      "path": "inference_api/README.md",
+      "purpose": "Fluxo ativo da Bancada e estados exploratórios",
+      "required": true
+    },
+    {
+      "path": "docs/arquitetura_inferencia_compartilhada.md",
+      "purpose": "Topologia e fronteiras de dados",
+      "required": true
+    },
+    {
+      "path": "BancoModeloUse/README.md",
+      "purpose": "Carga local, bancos de origem e partições",
+      "required": true
+    },
+    {
+      "path": "BancoModeloUse/scripts/validate_semantic_catalog.py",
+      "purpose": "Conferência offline do recorte semântico candidato contra inventário e consultas fixas",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m0-catalog-review-2026-11-01.md",
+      "purpose": "Recorte M0 ainda desabilitado e limites da validação estrutural",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m0-pilot-scope-approval-2026-11-01.md",
+      "purpose": "Aprovação humana do escopo piloto de 12 fontes sem joins entre bancos",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m0-pilot-policy-for-review-2026-11-01.md",
+      "purpose": "Conteúdo da política piloto aprovada para limites, casos, acesso e rubrica",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m0-pilot-policy-approval-2026-11-01.md",
+      "purpose": "Aprovação humana da política piloto e compromisso de revisão dos gabaritos",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m0-semantic-map-candidate-2026-11-01.json",
+      "purpose": "Candidato versionado de fontes a revisar, sem habilitação",
+      "required": true
+    },
+    {
+      "path": "BancoModeloUse/dw/README.md",
+      "purpose": "Grãos, vínculos e limitações da DW v1",
+      "required": true
+    },
+    {
+      "path": "BancoModeloUse/docs/arquitetura_avaliacao_modelos.md",
+      "purpose": "Cenários A/B, comparabilidade e estado científico",
+      "required": true
+    },
+    {
+      "path": "BancoModeloUse/dw/fixed_queries.py",
+      "purpose": "Consultas fixas e metadados atuais",
+      "required": true
+    },
+    {
+      "path": "BancoModeloUse/dw/cli.py",
+      "purpose": "Linhagem contributors/trace",
+      "required": true
+    },
+    {
+      "path": "inference_api/src/inference_api/service.py",
+      "purpose": "Loop de tools, provedores e snapshot atual",
+      "required": true
+    },
+    {
+      "path": "inference_api/scripts/verify_spec013_http_postgres.py",
+      "purpose": "Ensaio M1 integrado de HTTP autenticado e persistência PostgreSQL com fixture",
+      "required": true
+    },
+    {
+      "path": "inference_api/src/inference_api/dw_tools.py",
+      "purpose": "Catálogo de tools, allowlist e leitura somente da DW",
+      "required": true
+    },
+    {
+      "path": "inference_api/src/inference_api/config.py",
+      "purpose": "Destinos de banco e configuração isolada",
+      "required": true
+    },
+    {
+      "path": "inference_api/src/inference_api/jobs.py",
+      "purpose": "Job idempotente e limite global",
+      "required": true
+    },
+    {
+      "path": "inference_api/src/inference_api/storage.py",
+      "purpose": "Persistência e histórico dos runs",
+      "required": true
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/BenchPage.tsx",
+      "purpose": "Modo explícito e submissão do run",
+      "required": true
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/RunDetail.tsx",
+      "purpose": "Compatibilidade visual de traces e snapshots",
+      "required": true
+    },
+    {
+      "path": "model_evaluation/README.md",
+      "purpose": "Pacotes candidatos e separação do harness",
+      "required": true
+    },
+    {
+      "path": "model_evaluation/harness_score.py",
+      "purpose": "Avaliador pós-run isolado e conservador em M3 parcial",
+      "required": true
+    },
+    {
+      "path": "model_evaluation/spec013_candidate_profile.py",
+      "purpose": "Perfil local de contagens e IDs para seleção dos casos piloto",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m3-case-matrix-draft-2026-11-01.md",
+      "purpose": "Nove perguntas candidatas ainda sem gabarito aprovado",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m3-case-review-packet-2026-11-01.md",
+      "purpose": "Inventário com hash do pacote privado de revisão dos nove casos",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m3-human-case-content-approval-2026-11-01.json",
+      "purpose": "Recibo humano com decisão de conteúdo para cada um dos nove IDs e hash revisado",
+      "required": true
+    },
+    {
+      "path": "docs/protocolo_validacao_humana_avaliacao.md",
+      "purpose": "Gates humanos obrigatórios para mapa, gabarito, run, relatório e transmissão",
+      "required": true
+    },
+    {
+      "path": "model_evaluation/templates/revisao_humana_caso_e_run.md",
+      "purpose": "Ficha repetível de revisão para pesquisadores",
+      "required": true
+    },
+    {
+      "path": "model_evaluation/verify_human_review_receipt.py",
+      "purpose": "Confere hashes e IDs do pacote revisado sem declarar identidade humana ou score",
+      "required": true
+    },
+    {
+      "path": "model_evaluation/materialize_spec013_pilot_cases.py",
+      "purpose": "Vincula os nove casos a planos, referências e estados esperados em manifesto privado",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m3-case-contract-binding-2026-11-02.md",
+      "purpose": "Hashes e replay local das referências privadas",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m3-approved-map-binding-2026-11-02.md",
+      "purpose": "Manifesto privado v4 vinculado aos três mapas habilitados, ainda sem score",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m3-executable-case-approval-2026-11-02.json",
+      "purpose": "Aprovação da v4 exata dos nove casos pelo pesquisador",
+      "required": true
+    },
+    {
+      "path": "model_evaluation/activate_spec013_pilot_cases.py",
+      "purpose": "Ativa v5 privada somente após verificar recibo, v4 e referências",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m3-executable-case-activation-2026-11-02.md",
+      "purpose": "Recibo da v5 privada, sem revisão de runs",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m0-semantic-activation-review-2026-11-02.md",
+      "purpose": "Contrato detalhado de campos, grão, filtros e linhagem para revisão humana",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m0-semantic-local-approval-2026-11-02.json",
+      "purpose": "Aprovação exata do contrato semântico apenas para leitura local",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/catalog/pilot_local_v1.json",
+      "purpose": "Cópia local habilitada das 12 fontes revisadas",
+      "required": true
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/approved_catalog.py",
+      "purpose": "Confere a transformação exata do candidato e o recibo de aprovação local",
+      "required": true
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/data_contracts.json",
+      "purpose": "Saídas versionadas DW e linhagem e hashes dos contratos de dados",
+      "required": true
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/catalog_runtime.py",
+      "purpose": "Projeção apenas de fontes habilitadas do catálogo local",
+      "required": true
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/local_queries.py",
+      "purpose": "Leitura local tipada com role restrita, sem SQL do modelo",
+      "required": true
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/real_pilot.py",
+      "purpose": "Composição Groq do piloto fechada por recibo e chave local",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m2-groq-real-data-approval.json",
+      "purpose": "Autorização de transmissão real somente para Groq/Qwen",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m2-groq-i1-http-interruption-2026-11-02.md",
+      "purpose": "Falha do PostgreSQL 5544 e job I1 reconciliado sem retry",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m2-reviewer-question-context-v7-2026-11-02.md",
+      "purpose": "Diagnóstico da perda de contexto do Revisor, contrato v7 e limite Groq observado",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m2-i3-v7-postgres-interruption-2026-11-04.md",
+      "purpose": "Queda PostgreSQL, snapshot de emergência e reconciliação exata do job I3",
+      "required": true
+    },
+    {
+      "path": "model_evaluation/run_spec013_pilot_matrix.py",
+      "purpose": "Executor sequencial da matriz v7 com hashes congelados, sem repetição automática",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m2-gated-backend-dispatch-2026-11-02.md",
+      "purpose": "Prova do bloqueio e despacho backend com mocks",
+      "required": true
+    },
+    {
+      "path": "inference_api/scripts/verify_spec013_local_chain.py",
+      "purpose": "Ensaio local dos cinco papéis com três bancos e modelo programado",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m2-approved-catalog-local-chain-2026-11-02.json",
+      "purpose": "Cadeia local de três bancos usando a cópia aprovada do catálogo e limites do piloto",
+      "required": true
+    },
+    {
+      "path": "inference_api/scripts/validate_frontend.py",
+      "purpose": "Gates do frontend usando Node e binários locais quando npm não está no PATH",
+      "required": true
+    },
+    {
+      "path": "model_evaluation/export.py",
+      "purpose": "Formato e hashes dos pacotes fixos existentes",
+      "required": true
+    },
+    {
+      "path": "model_evaluation/dw_v2.py",
+      "purpose": "Readback explícito da DW V2 local para novos pacotes fixos",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/m2-dw-v2-packet-export-2026-11-02.md",
+      "purpose": "Recibo do pacote candidato V2 local e limites da verificação",
+      "required": true
+    },
+    {
+      "path": "model_evaluation/examples/cases_2020.json",
+      "purpose": "Exemplo candidato que não equivale a caso oficial",
+      "required": true
+    },
+    {
+      "path": "model_evaluation/schemas/cases_manifest.schema.json",
+      "purpose": "Schema de exportação candidato, sem gabarito",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/engineering-scope-2026-11-05.md",
+      "purpose": "Decisão vigente de escopo técnico, OpenAI autorizada, UI e auditoria Astra",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/specialist-query-contract.md",
+      "purpose": "Contrato vigente 3: Especialista constrói consulta, contexto e correção explícitos",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/engineering-closeout-contract.md",
+      "purpose": "Contrato de fechamento: payload completo, comparabilidade e hash do run",
+      "required": true
+    },
+    {
+      "path": "inference_api/src/inference_api/request_budget.py",
+      "purpose": "Orçamento e recibo do corpo HTTP efetivo",
+      "required": true
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/runtime_identity.py",
+      "purpose": "Identidade dos componentes de execução",
+      "required": true
+    },
+    {
+      "path": "model_evaluation/prepare_run_review.py",
+      "purpose": "Pacote privado de revisão futura vinculado aos hashes",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-013/evidence/engineering-closeout-2026-11-06.md",
+      "purpose": "Evidência técnica final e limites científicos",
+      "required": true
+    }
+  ],
+  "validation": [
+    {
+      "id": "VAL-001",
+      "kind": "check",
+      "command": "git diff --check",
+      "required": true
+    },
+    {
+      "id": "VAL-002",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v",
+      "required": true
+    },
+    {
+      "id": "VAL-003",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py typecheck",
+      "required": true
+    },
+    {
+      "id": "VAL-004",
+      "kind": "lint",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py lint",
+      "required": true
+    },
+    {
+      "id": "VAL-005",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py test",
+      "required": true
+    },
+    {
+      "id": "VAL-006",
+      "kind": "build",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py build",
+      "required": true
+    },
+    {
+      "id": "VAL-007",
+      "kind": "browser",
+      "command": "Ensaio HTTP/browser local autenticado com modelo e bancos simulados: cinco tipos de papel, Especialista por domínio, aprofundamento, idempotência, trace, histórico e nenhuma rede externa",
+      "required": true
+    },
+    {
+      "id": "VAL-008",
+      "kind": "scan",
+      "command": "Revisar diff, logs e snapshots quanto a segredos, dados de origem, destino externo, consultas permitidas, isolamento do gabarito, documentação e compatibilidade histórica",
+      "required": true
+    },
+    {
+      "id": "VAL-009",
+      "kind": "evidence",
+      "command": "Reexecutar consultas de referência da bateria aprovada e conferir números, tolerâncias, vínculos e revisão humana de cada gabarito. Provar ausência de gold nos payloads dos agentes.",
+      "required": true
+    },
+    {
+      "id": "VAL-010",
+      "kind": "test",
+      "command": "Executar avaliador com casos aprovados e controles sintéticos de rota alternativa, dado ausente, cálculo incorreto, inferência causal indevida e not_scored",
+      "required": true
+    },
+    {
+      "id": "VAL-011",
+      "kind": "test",
+      "command": "Testar mapas versionados por domínio com inventário físico igual e divergente, índice compacto, seleção de IDs pelo modelo, validação/projeção do detalhe pelo backend, tabela vazia, relação proibida, pergunta integrada, isolamento de payloads, ordem/limites do Especialista por fonte, proveniência de paradas geradas na consulta machine da DW V2, aceitação explícita da V2 por verificador/exportador, recusa de fingerprint divergente e leitura de pacotes V1",
+      "required": true
+    },
+    {
+      "id": "VAL-012",
+      "kind": "test",
+      "command": "Testar schemas e templates JSON por papel e domínio do Especialista, projeções de contexto, IDs carimbados pelo backend, replay de transições, referências inválidas, aprofundamento, suficiência e overflow explícito sem corte silencioso de dados",
+      "required": true
+    },
+    {
+      "id": "VAL-013",
+      "kind": "test",
+      "command": "Testar feedback JSON de plano e rota para Especialista/Selecionador do mesmo modelo, tentativas contadas, resultado vazio para A4 e bloqueios sem SQL, conferindo trace e pontuação de correção",
+      "required": true
+    },
+    {
+      "id": "VAL-014",
+      "kind": "test",
+      "command": "Reproduzir smoke local com spec013_reader, catálogo aprovado, três bancos, modelo programado e três consultas; verificar hashes e manifestos das fontes em leituras internas, sem provedor.",
+      "required": true
+    },
+    {
+      "id": "VAL-015",
+      "kind": "integration",
+      "command": "Executar diagnóstico real completo pela UI da Bancada com OpenAI autorizada: autenticação, job, agentes, consultas, resposta, persistência, trajetória e histórico; registrar evidência sem pontuação científica",
+      "required": true
+    },
+    {
+      "id": "VAL-016",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_specialist_query_contract.py -v",
+      "required": true
+    }
+  ],
+  "review": {
+    "required": true,
+    "independence": "independent",
+    "model": "gpt-6-astra",
+    "reasoning": "high",
+    "rationale": "Astra foi explicitamente escolhido pelo pesquisador em 05/11 para auditoria independente da engenharia, contratos, contexto, execução, segurança, UI e persistência. Não substitui adjudicação humana científica posterior.",
+    "schema_path": ".codex/schemas/project-spec-review.schema.json",
+    "output_path": "specs/active/SPEC-013/evidence/review.json",
+    "handoff_prompt": "Audite a engenharia do contrato 3 e specialist-query-contract.md, código, testes e trajetórias. Distinga defeito de software, falha de infraestrutura e julgamento do candidato. Verifique gates científicos sem exigir matriz ou adjudicação de respostas para done técnico. Não aprove sem evidência do caminho UI completo. Não produza score científico."
+  },
+  "escalation": {
+    "policy_version": "1.0",
+    "allowed": [
+      "needs_design",
+      "terra_high",
+      "sol_high"
+    ]
+  },
+  "completion": {
+    "schema_path": ".codex/schemas/project-spec-completion.schema.json",
+    "output_path": "specs/active/SPEC-013/evidence/completion.json"
+  },
+  "baseline": {
+    "required": false,
+    "path": null,
+    "snapshot_path": null,
+    "rationale": "Novo modo aditivo sem migração estrutural ou reescrita de snapshots existentes; implementação deve preservar o fluxo antigo."
+  },
+  "lifecycle": {
+    "output_path": "specs/active/SPEC-013/evidence/lifecycle.json"
+  }
+}

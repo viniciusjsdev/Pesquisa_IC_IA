@@ -1,0 +1,81 @@
+{
+  "case_id": "I3",
+  "run_label": "i3-diagnostico-v6-spacing35",
+  "matrix_repetition": null,
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "destination": "https://api.groq.com/openai/v1/chat/completions",
+  "question_sha256": "03dc383e07ad19ed2a8c42aa72ac991eede1107cfa41d4a738a8096bb3dd4083",
+  "approved_case_manifest_sha256": "dc8b691165da7c0be071623cf5bfc195284a676c872c93b1b05a8a505b9364c3",
+  "private_run_sha256": "e8a8203f27c245dce77cea0dc5be5497869f0def8fccfdfd89b5d9acdf3d67c5",
+  "job_id": "49d93f4f-1176-4e8d-b2d2-61e2adf5e0fe",
+  "transient_readbacks": 0,
+  "job_status": "completed",
+  "run_id": "01f292c9-33f0-4e51-9719-98c1ff395c1b",
+  "run_status": "answered_unverified",
+  "model_calls": 11,
+  "queries": 1,
+  "source_ids": [
+    "paradas_maquinas_geradas"
+  ],
+  "role_statuses": [
+    {
+      "role": "analista_pergunta",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "especialista_indice",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "especialista_dados",
+      "status": "rejected",
+      "error": "specialist_missing_source_ref"
+    },
+    {
+      "role": "especialista_dados",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "especialista_indice",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "especialista_dados",
+      "status": "rejected",
+      "error": "specialist_missing_source_ref"
+    },
+    {
+      "role": "especialista_dados",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "selecionador_fontes",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "planejador_consulta",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "revisor_evidencias",
+      "status": "validated",
+      "error": null
+    },
+    {
+      "role": "redator_resposta",
+      "status": "validated",
+      "error": null
+    }
+  ],
+  "scientific_score": null,
+  "automatic_retry": false,
+  "authentication_note": "local bearer fixture mapped to existing researcher"
+}

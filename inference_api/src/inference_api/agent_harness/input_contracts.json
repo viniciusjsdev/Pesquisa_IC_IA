@@ -1,0 +1,250 @@
+{
+  "version": 7,
+  "roles": {
+    "analista_pergunta": {
+      "required": [
+        "question",
+        "domain_index",
+        "protocol"
+      ],
+      "properties": {
+        "question": {
+          "type": "string"
+        },
+        "domain_index": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "protocol": {
+          "type": "string"
+        }
+      }
+    },
+    "selecionador_fontes": {
+      "required": [
+        "question",
+        "necessidade",
+        "source_index",
+        "available_source_ids",
+        "evidence_state",
+        "gap",
+        "limits"
+      ],
+      "properties": {
+        "question": {
+          "type": "string"
+        },
+        "necessidade": {
+          "type": "object"
+        },
+        "source_index": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "available_source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence_state": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "gap": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "limits": {
+          "type": "object"
+        }
+      }
+    },
+    "revisor_evidencias": {
+      "required": [
+        "question",
+        "domains_identified",
+        "necessidade",
+        "query_result",
+        "evidence_state",
+        "available_evidence_ids",
+        "limits"
+      ],
+      "properties": {
+        "question": {
+          "type": "string"
+        },
+        "domains_identified": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "dw",
+              "industrial",
+              "financeiro"
+            ]
+          }
+        },
+        "necessidade": {
+          "type": "object"
+        },
+        "query_result": {
+          "type": "object"
+        },
+        "evidence_state": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "available_evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "limits": {
+          "type": "object"
+        }
+      }
+    },
+    "redator_resposta": {
+      "required": [
+        "question",
+        "evidence_state",
+        "available_evidence_ids",
+        "limits_and_errors"
+      ],
+      "properties": {
+        "question": {
+          "type": "string"
+        },
+        "evidence_state": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "available_evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "limits_and_errors": {
+          "type": "object"
+        }
+      }
+    },
+    "especialista_consulta": {
+      "required": [
+        "question",
+        "necessidade",
+        "domain",
+        "rota",
+        "source_contract",
+        "evidence_state",
+        "gap",
+        "available_evidence_ids",
+        "limits"
+      ],
+      "properties": {
+        "question": {
+          "type": "string"
+        },
+        "necessidade": {
+          "type": "object"
+        },
+        "domain": {
+          "enum": [
+            "dw",
+            "industrial",
+            "financeiro"
+          ]
+        },
+        "rota": {
+          "type": "object"
+        },
+        "source_contract": {
+          "type": "object"
+        },
+        "evidence_state": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "gap": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "available_evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "limits": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  "correction_feedback": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "error_code",
+      "attempt",
+      "remaining_attempts",
+      "hint",
+      "rejected_output",
+      "rejected_plan",
+      "rejected_event_id",
+      "budget"
+    ],
+    "properties": {
+      "error_code": {
+        "type": "string"
+      },
+      "attempt": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "remaining_attempts": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "hint": {
+        "type": "string"
+      },
+      "rejected_output": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "rejected_plan": {
+        "type": [
+          "object",
+          "null"
+        ]
+      },
+      "rejected_event_id": {
+        "type": "string"
+      },
+      "budget": {
+        "type": "object"
+      }
+    }
+  }
+}

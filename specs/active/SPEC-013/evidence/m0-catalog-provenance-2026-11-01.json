@@ -1,0 +1,62 @@
+{
+  "catalog_sha256": "51543621d7643050cb7796342e60da33bbef708e667f310a9d856e5ee9edd032",
+  "id_rule": "source_id + period_index * 1000000",
+  "checks": [
+    {
+      "domain": "industrial",
+      "table": "paradas_maquinas",
+      "rows": 1200,
+      "source_rows": 1200,
+      "source_partitions": 3,
+      "observed_periods": 3,
+      "rows_without_source": 0,
+      "ids_outside_period_range": 0,
+      "matched": true
+    },
+    {
+      "domain": "industrial",
+      "table": "paradas_maquinas_geradas",
+      "rows": 90,
+      "source_rows": 90,
+      "source_partitions": 3,
+      "observed_periods": 3,
+      "rows_without_source": 0,
+      "ids_outside_period_range": 0,
+      "matched": true
+    },
+    {
+      "domain": "industrial",
+      "table": "registros_operacao",
+      "rows": 429565,
+      "source_rows": 429565,
+      "source_partitions": 3,
+      "observed_periods": 3,
+      "rows_without_source": 0,
+      "ids_outside_period_range": 0,
+      "matched": true
+    },
+    {
+      "domain": "financeiro",
+      "table": "resultados_financeiros",
+      "rows": 72,
+      "source_rows": 72,
+      "source_partitions": 3,
+      "observed_periods": 3,
+      "rows_without_source": 0,
+      "ids_outside_period_range": 0,
+      "matched": true
+    },
+    {
+      "domain": "financeiro",
+      "table": "vendas",
+      "rows": 120,
+      "source_rows": 120,
+      "source_partitions": 3,
+      "observed_periods": 3,
+      "rows_without_source": 0,
+      "ids_outside_period_range": 0,
+      "matched": true
+    }
+  ],
+  "all_matched": true
+}

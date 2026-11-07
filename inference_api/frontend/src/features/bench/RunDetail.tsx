@@ -1,4 +1,6 @@
 import type { Run } from './benchService';
+import { HarnessRounds } from './HarnessRounds';
+import { EvidenceTrajectory } from './EvidenceTrajectory';
 import { runDateLabel, runStatusLabel } from './runPresentation';
 // Evidence bundles retain historical fields from versioned backend snapshots.
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -32,13 +34,21 @@ function RunSummary({ run }: { run: Run }) {
   const question = s.question_request?.question;
   const answer = s.model_output?.raw_text;
   const mode = s.evidence_mode === 'dw_snapshot' ? 'Pacote fixo da DW'
+    : s.evidence_mode === 'agent_harness' ? 'Agentes em sequência · fixture sintética'
+    : s.evidence_mode === 'agent_harness_pilot' ? 'Agentes em sequência · consulta local em camadas'
     : s.evidence_mode === 'dw_tools' ? 'LLM consulta a DW por tools'
       : s.evidence_mode === 'synthetic_snapshot' ? 'Pacote sintético fixo'
         : s.evidence_mode === 'synthetic_tools' ? 'LLM escolhe tool sintética' : 'Fluxo histórico';
   const tools = Array.isArray(s.tool_trace) ? s.tool_trace : [];
   const checks = Array.isArray(s.checks) ? s.checks : [];
-  const source = s.provider === 'groq' ? 'Fixture sintética inventada'
-    : s.packet?.case_id ? `Pacote ${s.packet.case_id}`
+  const hostedReceivedDwResult = ['groq', 'openai'].includes(s.provider) && s.status === 'answered_unverified'
+    && Array.isArray(s.model_turns) && s.model_turns.some((turn: any) =>
+      turn.request?.messages?.some((message: any) => message.role === 'tool'));
+  const source = s.evidence_mode === 'dw_tools' && s.dw_source?.database
+    ? `${s.dw_source.database}: ${tools.filter((tool: any) => tool.status === 'returned').length} consulta(s) concluída(s)${hostedReceivedDwResult ? `; resultado enviado à ${s.provider === 'openai' ? 'OpenAI' : 'Groq'}` : ''}`
+    : s.evidence_mode === 'agent_harness_pilot' ? 'DW e fontes de detalhe aprovadas; consulte o trace para ver quais resultados foram enviados'
+    : s.evidence_mode === 'agent_harness' || s.evidence_mode?.startsWith('synthetic_') ? 'Fixture sintética inventada'
+      : s.packet?.case_id ? `Pacote ${s.packet.case_id}`
       : s.dw_source?.database ? `Consulta registrada à ${s.dw_source.database}`
         : s.evidence_bundle?.items?.length ? `${s.evidence_bundle.items.length} item(ns) de evidência registrado(s)`
           : 'Origem não resumida neste snapshot';
@@ -56,22 +66,28 @@ function RunSummary({ run }: { run: Run }) {
   </div>;
 }
 
+function exportRun(run: Run) {
+  const url = URL.createObjectURL(new Blob([JSON.stringify(run, null, 2)], { type: 'application/json' }));
+  const link = document.createElement('a'); link.href = url; link.download = `run-${run.id}.json`; link.click(); URL.revokeObjectURL(url);
+}
+
 export function RunDetail({ run }: { run: Run }) {
   const s = run.snapshot || {};
   const model = s.model || {};
   const bundle = s.evidence_bundle;
-  if (s.schema_version === 3 || s.schema_version === 4) return <article className="run-card"><h3>Execução {run.id.slice(0, 8)}</h3><RunSummary run={run}/><details className="run-technical"><summary>Detalhes técnicos e rastreabilidade</summary><Field label="ID completo" value={run.id}/>
+  if (s.schema_version === 7 || (s.schema_version === 6 && ['agent_harness', 'agent_harness_pilot'].includes(s.evidence_mode))) return <article className="run-card"><h3>Execução {run.id.slice(0, 8)}</h3><button onClick={() => exportRun(run)}>Exportar JSON original</button><HarnessRounds key={run.id} run={run}/></article>;
+  if (s.schema_version === 3 || s.schema_version === 4 || s.schema_version === 5) return <article className="run-card"><h3>Execução {run.id.slice(0, 8)}</h3><button onClick={() => exportRun(run)}>Exportar JSON original</button><EvidenceTrajectory key={run.id} run={run}/><details className="run-technical"><summary>Detalhes técnicos e rastreabilidade</summary><Field label="ID completo" value={run.id}/>
     <Field label="Autor e data" value={`${run.author} · ${run.created_at}`}/><Field label="Estado" value={runStatusLabel(s.status)}/>
-    <Field label="Provedor" value={s.provider || 'runpod (snapshot histórico)'}/><Field label="Modelo configurado" value={model.model_id || model.alias}/>
+    <Field label="Provedor" value={s.provider || 'runpod (snapshot histórico)'}/><Field label="Modelo configurado" value={model.model_id || model.alias}/><Field label="API utilizada" value={model.api_surface}/><Field label="ID da resposta" value={model.response_id}/><Field label="ID da requisição" value={model.request_id}/><Field label="Classe e bytes da evidência nos pedidos tentados" value={s.schema_version === 5 ? `${s.data_class} · ${s.evidence_bytes_sent ?? 'não registrado'} bytes, incluindo reenvios da conversa` : null}/>
     <Field label="Modo de evidência" value={s.evidence_mode === 'dw_snapshot' ? 'Pacote fixo da DW' : s.evidence_mode === 'dw_tools' ? 'LLM consulta a DW por tools' : s.evidence_mode === 'synthetic_snapshot' ? 'Pacote sintético fixo' : 'LLM escolhe tool sintética'}/>
     <p className="bench-notice">Execução exploratória; modos A e B respondem perguntas de avaliação distintas. Checks não são pontuação científica.</p>
-    <section><h4>Pergunta e origem</h4><Field label="Pergunta" value={s.question_request?.question}/><Field label="Domínio" value={s.question_request?.domain || (s.provider === 'groq' ? 'fixture sintética' : null)}/><Field label="Pacote e hash" value={s.provider === 'groq' ? 'synthetic-v1; hash privado não se aplica' : s.packet ? `${s.packet.case_id} · ${s.packet.sha256}` : 'Não se aplica'}/><Field label="Fingerprint da DW" value={s.provider === 'groq' ? 'Não se aplica' : s.packet?.source_snapshot?.source_fingerprint || s.dw_source?.source_fingerprint}/><Field label="Versões e hash da consulta" value={s.provider === 'groq' ? 'Fixture sintética v1; consulta privada não se aplica' : s.packet ? `${s.packet.schema_version} · ${s.packet.query_contract_version} · ${s.packet.query_code_sha256}` : `${s.dw_source?.schema_version ?? '?'} · ${s.dw_source?.query_contract_version ?? '?'} · ${s.dw_source?.query_code_sha256 ?? '?'}`}/></section>
+    <section><h4>Pergunta e origem</h4><Field label="Pergunta" value={s.question_request?.question}/><Field label="Domínio" value={s.question_request?.domain || (s.evidence_mode?.startsWith('synthetic_') ? 'fixture sintética' : null)}/><Field label="Pacote e hash" value={s.evidence_mode?.startsWith('synthetic_') ? 'synthetic-v1; hash privado não se aplica' : s.packet ? `${s.packet.case_id} · ${s.packet.sha256}` : 'Não se aplica'}/><Field label="Fingerprint da DW" value={s.evidence_mode?.startsWith('synthetic_') ? 'Não se aplica' : s.packet?.source_snapshot?.source_fingerprint || s.dw_source?.source_fingerprint}/><Field label="Versões e hash da consulta" value={s.evidence_mode?.startsWith('synthetic_') ? 'Fixture sintética v1; consulta privada não se aplica' : s.packet ? `${s.packet.schema_version} · ${s.packet.query_contract_version} · ${s.packet.query_code_sha256}` : `${s.dw_source?.schema_version ?? '?'} · ${s.dw_source?.query_contract_version ?? '?'} · ${s.dw_source?.query_code_sha256 ?? '?'}`}/><Field label="Destino configurado para resultados" value={s.data_destination}/></section>
     <section><h4>Prompt, critérios e modelo</h4><Field label="Prompt exato" value={s.prompt?.system_prompt}/><Field label="Revisão do prompt" value={s.prompt?.revision ?? 'Rascunho'}/><Field label="Revisão dos critérios" value={s.verification_criteria?.revision ?? 'Rascunho'}/><pre>{JSON.stringify(s.verification_criteria?.config || {}, null, 2)}</pre><Field label="Modelo servido e sessão" value={`${model.alias || '?'} · ${model.served_model || model.model_id || 'não confirmado'} · ${model.session_id || 'não se aplica'}`}/><pre>{JSON.stringify({ parameters: model.parameters, usage: model.usage, finish_reason: model.finish_reason, base_revision: model.base_revision, adapter_run: model.adapter_run, adapter_hash: model.adapter_hash }, null, 2)}</pre></section>
     <section><h4>Evidência entregue</h4><Field label="Origem" value={s.evidence_source?.kind || s.dw_source?.database || s.packet?.source_snapshot?.kind}/>{['dw_snapshot', 'synthetic_snapshot'].includes(s.evidence_mode) ? <><Field label="SHA-256 dos bytes do arquivo" value={s.packet?.file_sha256}/><pre>{s.evidence_json_sent || 'Pacote não entregue.'}</pre></> : <><details><summary>Catálogo anunciado</summary><pre>{JSON.stringify(s.tool_catalog || [], null, 2)}</pre></details><pre>{JSON.stringify(s.tool_trace || [], null, 2)}</pre></>}</section>
     <section><h4>Resposta, falhas e verificações</h4><Field label="Resposta bruta" value={s.model_output?.raw_text || 'Sem resposta'}/><pre>{JSON.stringify({ error: s.error, checks: s.checks }, null, 2)}</pre><details><summary>Turnos do provedor</summary><pre>{JSON.stringify(s.model_turns || [], null, 2)}</pre></details></section></details>
   </article>;
   return <article className="run-card">
-    <h3>Execução {run.id.slice(0, 8)}</h3><RunSummary run={run}/><details className="run-technical"><summary>Detalhes técnicos e rastreabilidade</summary><Field label="ID completo" value={run.id}/><Field label="Autor e data" value={`${run.author} · ${run.created_at}`}/><Field label="Estado" value={s.status}/>
+    <h3>Execução {run.id.slice(0, 8)}</h3><button onClick={() => exportRun(run)}>Exportar JSON original</button><RunSummary run={run}/><details className="run-technical"><summary>Detalhes técnicos e rastreabilidade</summary><Field label="ID completo" value={run.id}/><Field label="Autor e data" value={`${run.author} · ${run.created_at}`}/><Field label="Estado" value={s.status}/>
     <p className="bench-notice">Fluxo anterior: escopo e consultas do backend.</p>
     {s.status === 'answered_unverified' && <p className="bench-notice">Respondido, sem validação científica.</p>}
     <section><h4>Pergunta e rota</h4><Field label="Pergunta" value={s.question_request?.question}/><Field label="Escopo e ano" value={`${s.question_request?.scope || '?'} · ${s.question_request?.year ?? '?'}`}/><Field label="Ferramentas e origem da escolha" value={`${(s.route_plan?.tools || []).join(', ') || 'Nenhuma'} · ${s.route_plan?.choice_origin || '?'}`}/></section>

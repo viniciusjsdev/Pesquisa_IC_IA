@@ -1,0 +1,12 @@
+{
+  "spec_id": "SPEC-013",
+  "decision": "approved",
+  "provider": "openai",
+  "destination": "https://api.openai.com/v1/responses",
+  "purpose": "engineering_validation",
+  "approved_data_class": "dw_industrial_financial_detail",
+  "reviewed_document": "specs/active/SPEC-013/evidence/engineering-scope-2026-11-05.md",
+  "reviewed_document_sha256": "29d063dacd75e9de06b4f7aa2b2ca92af3ace836906d5dc94e1a426d98246b9c",
+  "authorization_source": "Explicit user instruction in this chat on 2026-11-05 authorizing existing OpenAI API for the pilot via Bancada; scope resolved before code changes.",
+  "scientific_scoring_authorized": false
+}

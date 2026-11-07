@@ -1,0 +1,34 @@
+{
+  "spec_id": "SPEC-012",
+  "contract_version": 1,
+  "status": "approved",
+  "thread_id": null,
+  "runtime": {"classification": "critical_review", "model": "gpt-5.6-sol", "reasoning": "high"},
+  "review_input": [
+    "AGENTS.md and README.md",
+    "specs/README.md",
+    "specs/active/SPEC-012/SPEC.md",
+    "specs/active/SPEC-012/SPEC.execution.json",
+    "specs/active/SPEC-012/evidence/completion.json",
+    "specs/active/SPEC-012/evidence/local-2026-10-25.md",
+    "Working tree diff and tests on 2026-10-25"
+  ],
+  "baseline_assessment": [
+    {"category": "tests", "result": "changed_as_approved", "evidence": ["inference_api/tests/test_spec012.py"], "notes": ["Independent reviewer ran 8 SPEC-012 tests; all passed. Full suite run by executor: 66 tests, 8 opt-in PostgreSQL skips."]},
+    {"category": "schemas", "result": "changed_as_approved", "evidence": ["inference_api/src/inference_api/service.py", "inference_api/frontend/src/features/bench/RunDetail.tsx"], "notes": ["Snapshot v5 added; historical v1-v4 rendering remains available."]},
+    {"category": "protected_paths", "result": "preserved", "evidence": ["inference_api/src/inference_api/openai_provider.py", "inference_api/src/inference_api/service.py"], "notes": ["No external provider or real DW call; key stays in backend, with no key marker in frontend bundle."]},
+    {"category": "decisions", "result": "changed_as_approved", "evidence": ["specs/active/SPEC-012/SPEC.md", "inference_api/README.md"], "notes": ["Approval covers local synthetic implementation only. OpenAI DW modes require explicit local retention decision and a separate independent review before enabling."]},
+    {"category": "persistence", "result": "preserved", "evidence": ["inference_api/src/inference_api/storage.py", "specs/active/SPEC-012/evidence/completion.json"], "notes": ["Existing runs.snapshot stores complete payload without automatic TTL; this policy was inspected, not approved for real DW transmission."]}
+  ],
+  "findings": [
+    "Three initial P2 findings were corrected: requested/responded model provenance and IDs/usage on errors, stateless replay byte accounting, and consistent DW retention gate language.",
+    "No P1 or P2 remains for the local synthetic implementation.",
+    "This review does not approve OpenAI dw_snapshot or dw_tools activation, external inference, real DW access, current pricing, model quality or scientific evaluation. The later Groq+DW extension is outside scope."
+  ],
+  "evidence": [
+    "Independent read-only reviewer approved only the local synthetic scope on 2026-10-25 after corrections.",
+    "Reviewer executed test_spec012.py: 8 tests passed; git diff --check passed with LF/CRLF warnings only.",
+    "Reviewer inspected fixed endpoint, store:false, in-memory encrypted reasoning, model-selected and backend-validated functions, key isolation, snapshot v5 and UI history."
+  ],
+  "usage": null
+}

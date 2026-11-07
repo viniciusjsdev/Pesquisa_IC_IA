@@ -270,7 +270,8 @@ class ServingTests(unittest.TestCase):
         self.assertEqual(record["provenance_status"], "session_manifest_checked")
         with patch("inference_api.models.vllm_url", return_value=""):
             self.assertTrue(all(not item["available"] and not item["generation_confirmed"]
-                                for item in models.available_models().values()))
+                                for item in models.available_models().values()
+                                if item.get("provider") == "runpod"))
 
     def test_remote_verifier_reports_seven_short_generations_without_remote_call(self):
         identity = {"X-Inference-Manifest-SHA256": serving_catalog.FINGERPRINT,

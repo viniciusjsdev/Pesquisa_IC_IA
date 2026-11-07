@@ -1,4 +1,7 @@
+> **SPEC-014 concluída em engenharia local (06/11/2026):** preflight do catálogo e bloqueio de fonte corrigidos e aprovados em nova revisão independente. Não há nova inferência remota nem pontuação científica. Ver `specs/active/SPEC-014/evidence/local-integration.json`.
+
 # RunPod: fluxo codificado no repositório
+
 
 Esta pasta contém os scripts de execução remota. Antes de uma nova execução, conferir ambiente, custo, dependências e estado do pod; a presença destes scripts não é prova de prontidão remota.
 
