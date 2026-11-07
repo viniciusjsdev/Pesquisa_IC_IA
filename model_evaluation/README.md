@@ -43,6 +43,12 @@ O protocolo v7 passou localmente, mas a matriz real ainda não começou: dois
 diagnósticos Groq v7 foram limitados por HTTP 429 antes da consulta, conforme
 o recibo de evidência acima. Nenhuma nota científica foi atribuída.
 
+**Fonte vigente em 07/11/2026:** os 166 CSVs, o contrato e os scripts V2 estão
+no checkout principal. Use `--dw-v2` com a carga local atual; a função Python
+`dw.cli.verify()` conserva o contrato histórico V1, enquanto o comando de
+terminal `dw/cli.py verify` encaminha para o verificador canônico V2.
+Veja o [mapa das fontes e do arquivo](../docs/fontes_ativas_e_arquivo.md).
+
 Em 02/11/2026, a SPEC-013 acrescentou `--dw-v2` para a carga local V2 de
 fingerprint conhecido. O pacote mantém o envelope v1 e distingue
 `source_snapshot.schema_version: 2` e

@@ -236,7 +236,8 @@ def load_facts(cur, origins: dict, ids: dict, loader=load_rows) -> dict[str, int
                'reported_revenue','reported_net_profit','source_float','outside_source_label')
     def financial(r):
         file_id, period, original = meta('financeiro', table, r[0])
-        return (r[0], file_id, period, original, r[1].date() if r[1] else None,
+        return (r[0], file_id, period, original,
+                r[1].date() if isinstance(r[1], datetime) else r[1],
                 r[2], r[3], True, outside_label('financeiro', period, r[1]))
     totals[table] = loader(cur, origins['financeiro'],
         'SELECT id,data_registro,receita_total,lucro_liquido FROM public.resultados_financeiros ORDER BY id',
@@ -249,7 +250,8 @@ def load_facts(cur, origins: dict, ids: dict, loader=load_rows) -> dict[str, int
     def quality(r):
         file_id, period, original = meta('industrial', table, r[0])
         inspected = (r[5] or 0) + (r[6] or 0)
-        return (r[0], file_id, period, original, r[4].date() if r[4] else None, r[1], r[2],
+        inspected_on = r[4].date() if isinstance(r[4], datetime) else r[4]
+        return (r[0], file_id, period, original, inspected_on, r[1], r[2],
                 r[3], r[5], r[6], r[7], bool(r[7] is not None and inspected > r[7]),
                 outside_label('industrial', period, r[4]))
     totals[table] = loader(cur, origins['industrial'],
@@ -264,7 +266,8 @@ def load_facts(cur, origins: dict, ids: dict, loader=load_rows) -> dict[str, int
                'operation_id','material_id','material_lot_id','quantity_consumed','outside_source_label')
     def consumption(r):
         file_id, period, original = meta('industrial', table, r[0])
-        return (r[0], file_id, period, original, r[5].date() if r[5] else None,
+        registered_on = r[5].date() if isinstance(r[5], datetime) else r[5]
+        return (r[0], file_id, period, original, registered_on,
                 r[1], r[2], r[3], r[4], outside_label('industrial', period, r[5]))
     totals[table] = loader(cur, origins['industrial'],
         'SELECT consumo_id,registro_id,material_id,lote_material_id,quantidade_consumida,data_registro FROM public.consumo_materiais ORDER BY consumo_id',
@@ -284,6 +287,9 @@ def load_facts(cur, origins: dict, ids: dict, loader=load_rows) -> dict[str, int
 
 
 def build() -> dict:
+    if (ROOT / 'dados_complementares_datamind' / 'manifesto_canonico.json').exists():
+        raise RuntimeError('V1 DW build covers only the historical source contract. '
+                           'The canonical 166-file model is active; refusing to create an incomplete DW.')
     items = source.inventory()
     digest = fingerprint(items)
     source_report = source.verify(items)  # full, read-only raw/public reconciliation before any DW write
@@ -609,7 +615,11 @@ def main() -> None:
     if args.command == 'build':
         result = build()
     elif args.command == 'verify':
-        result = verify()
+        if (ROOT / 'dados_complementares_datamind' / 'manifesto_canonico.json').exists():
+            from scripts.verify_canonical_load import verify as verify_canonical
+            result = verify_canonical(ROOT)
+        else:
+            result = verify()
     elif args.command == 'query':
         result = query(args.kind, args.year, args.id)
     elif args.command == 'contributors':

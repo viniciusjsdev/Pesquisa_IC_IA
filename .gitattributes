@@ -1,0 +1,7 @@
+# Canonical manifests identify exact bytes, including line endings.
+/BancoModeloUse/dados_simulados/**/*.csv -text whitespace=cr-at-eol
+/BancoModeloUse/dados_complementares_datamind/**/*.csv -text whitespace=cr-at-eol
+/BancoModeloUse/dados_complementares_datamind/manifesto_canonico.json -text whitespace=cr-at-eol
+/BancoModeloUse/dados_complementares_datamind/contrato_tabelas_canonicas.json -text whitespace=cr-at-eol
+/BancoModeloUse/docs/carga_canonica_readback_2026-10-31.json -text whitespace=cr-at-eol
+/docs/evidence/organizacao-2026-11-07/*.json -text whitespace=cr-at-eol

@@ -1,0 +1,4594 @@
+{
+  "version": 1,
+  "source": "DER revisado do DataMind",
+  "tables": {
+    "clientes_referenciados": {
+      "database": "db_financeiro",
+      "table": "clientes_referenciados",
+      "fields": [
+        {
+          "name": "cliente_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "nome_exibicao_simulado",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem_referencia",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "identidade_cadastrada",
+          "type": "boolean",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "consumo_insumos_operacionais_simulado": {
+      "database": "db_financeiro",
+      "table": "consumo_insumos_operacionais_simulado",
+      "fields": [
+        {
+          "name": "consumo_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_operacional_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "mes_ano",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "LNK",
+          "source_date_only": false
+        },
+        {
+          "name": "insumo",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidade_fonte",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidade_simulada",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "horas_base_operacoes",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "fator_quantidade_por_hora",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "quantidade_simulada",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "valor_unitario_origem_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_total_simulado_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "contas_contabeis": {
+      "database": "db_financeiro",
+      "table": "contas_contabeis",
+      "fields": [
+        {
+          "name": "conta_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "numero_conta",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "nome_conta",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "tipo_conta",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "custo_hora_operador_estimado": {
+      "database": "db_financeiro",
+      "table": "custo_hora_operador_estimado",
+      "fields": [
+        {
+          "name": "operador_id",
+          "type": "integer",
+          "key": "PK,LNK",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_hora_estimado_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_vigencia",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "base_mediana_periodo_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "custo_mao_obra_historico": {
+      "database": "db_financeiro",
+      "table": "custo_mao_obra_historico",
+      "fields": [
+        {
+          "name": "custo_mo_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "operador_id",
+          "type": "integer",
+          "key": "LNK",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_hora",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_vigencia",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "tipo_custo",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "custos_indiretos_rateio": {
+      "database": "db_financeiro",
+      "table": "custos_indiretos_rateio",
+      "fields": [
+        {
+          "name": "rateio_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "descricao",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_total_mes",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "base_rateio",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_referencia",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "custos_operacionais_variaveis": {
+      "database": "db_financeiro",
+      "table": "custos_operacionais_variaveis",
+      "fields": [
+        {
+          "name": "custo_operacional_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "insumo",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "valor_unitario",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidade_medida",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_leitura",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidade_medida_original",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem_ajuste_unidade",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "custos_padrao": {
+      "database": "db_financeiro",
+      "table": "custos_padrao",
+      "fields": [
+        {
+          "name": "custo_padrao_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "tipo_custo",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidade_medida",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "valor_unitario_padrao",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_vigencia",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "custos_producao": {
+      "database": "db_financeiro",
+      "table": "custos_producao",
+      "fields": [
+        {
+          "name": "id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "materia_prima",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "mao_obra_direta",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custos_indiretos",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "estoque_inicial_elaboracao",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "estoque_final_elaboracao",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "estoque_inicial_acabados",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "estoque_final_acabados",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidades_produzidas",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_total",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_unitario",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "date",
+          "key": "",
+          "source_date_only": true
+        }
+      ]
+    },
+    "custos_produto_mensais_simulados": {
+      "database": "db_financeiro",
+      "table": "custos_produto_mensais_simulados",
+      "fields": [
+        {
+          "name": "registro_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "mes_ano",
+          "type": "time",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "produto_id",
+          "type": "integer",
+          "key": "LNK",
+          "source_date_only": false
+        },
+        {
+          "name": "unidades_base_operacoes",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "receita_atribuida_simulada_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "cpv_atribuido_simulado_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "kpis_gerenciais": {
+      "database": "db_financeiro",
+      "table": "kpis_gerenciais",
+      "fields": [
+        {
+          "name": "kpi_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "nome_kpi",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "valor_kpi",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_referencia",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "lancamentos_financeiros": {
+      "database": "db_financeiro",
+      "table": "lancamentos_financeiros",
+      "fields": [
+        {
+          "name": "lancamento_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "conta_id",
+          "type": "integer",
+          "key": "FK",
+          "source_date_only": false
+        },
+        {
+          "name": "data_lancamento",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "valor",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "descricao",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "materiais_custo_historico": {
+      "database": "db_financeiro",
+      "table": "materiais_custo_historico",
+      "fields": [
+        {
+          "name": "custo_material_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "material_id",
+          "type": "integer",
+          "key": "LNK",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_unitario",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_compra",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "lote_material_id",
+          "type": "integer",
+          "key": "LNK",
+          "source_date_only": false
+        },
+        {
+          "name": "lote_material_id_original",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem_vinculo_lote",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "rateio_custos_indiretos_maquina_simulado": {
+      "database": "db_financeiro",
+      "table": "rateio_custos_indiretos_maquina_simulado",
+      "fields": [
+        {
+          "name": "rateio_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "rateio_origem_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "mes_ano",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "LNK",
+          "source_date_only": false
+        },
+        {
+          "name": "horas_base_operacoes",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_total_origem_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_atribuido_simulado_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "rateio_custos_producao_produto_simulado": {
+      "database": "db_financeiro",
+      "table": "rateio_custos_producao_produto_simulado",
+      "fields": [
+        {
+          "name": "rateio_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_producao_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "mes_ano",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "produto_id",
+          "type": "integer",
+          "key": "LNK",
+          "source_date_only": false
+        },
+        {
+          "name": "unidades_base_operacoes",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_total_origem_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_atribuido_simulado_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "resultados_financeiros": {
+      "database": "db_financeiro",
+      "table": "resultados_financeiros",
+      "fields": [
+        {
+          "name": "id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "receita_total",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custos_variaveis",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "despesas_variaveis",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custos_fixos",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "despesas_operacionais",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "juros",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "impostos",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_ativo",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "valor_residual",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "vida_util_anos",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_investimento",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "ativos_circulantes",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "passivos_circulantes",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "margem_contribuicao",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "ponto_equilibrio",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "lucro_bruto",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "lucro_liquido",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "depreciacao_anual",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "roi_percentual",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "capital_de_giro",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "date",
+          "key": "",
+          "source_date_only": true
+        }
+      ]
+    },
+    "resultados_financeiros_mensais": {
+      "database": "db_financeiro",
+      "table": "resultados_financeiros_mensais",
+      "fields": [
+        {
+          "name": "id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "mes_ano",
+          "type": "time",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "receita_total",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custos_variaveis",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "despesas_variaveis",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custos_fixos",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "despesas_operacionais",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "cpv",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "lucro_bruto",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "lucro_liquido",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "margem_liquida_perc",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "margem_contribuicao_perc",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "icpr_conversao_perc",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "desvio_producao_receita_perc",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "vendas": {
+      "database": "db_financeiro",
+      "table": "vendas",
+      "fields": [
+        {
+          "name": "venda_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "produto_id",
+          "type": "integer",
+          "key": "LNK",
+          "source_date_only": false
+        },
+        {
+          "name": "quantidade_vendida",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "preco_unitario_venda",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_venda",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "cliente_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        }
+      ]
+    },
+    "certificacoes_ambientais": {
+      "database": "db_industrial",
+      "table": "certificacoes_ambientais",
+      "fields": [
+        {
+          "name": "certificacao_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "norma",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "escopo",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "orgao_emissor",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_emissao",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_validade",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "progresso_conformidade_perc",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "componentes_maquinas": {
+      "database": "db_industrial",
+      "table": "componentes_maquinas",
+      "fields": [
+        {
+          "name": "componente_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "nome_componente",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "criticidade",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "vida_util_horas",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_instalacao",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "composicao_tarifaria_inferida": {
+      "database": "db_industrial",
+      "table": "composicao_tarifaria_inferida",
+      "fields": [
+        {
+          "name": "periodo_indice",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "posto_composto",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "tarifa_ponta_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "tarifa_fora_ponta_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "fracao_kwh_ponta_inferida",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "fracao_kwh_fora_ponta_inferida",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "valor_efetivo_brl_kwh_inferido",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "consumo_energia_intervalo": {
+      "database": "db_industrial",
+      "table": "consumo_energia_intervalo",
+      "fields": [
+        {
+          "name": "intervalo_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "registro_turno_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "turno_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "inicio",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "fim",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "posto_tarifario",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "tarifa_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "kwh_simulado",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_simulado_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "tarifa_brl_kwh",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "consumo_energia_turno": {
+      "database": "db_industrial",
+      "table": "consumo_energia_turno",
+      "fields": [
+        {
+          "name": "registro_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "data",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "turno_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "posto_tarifario",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "kwh_consumido",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_energia_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidades_produzidas",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "kwh_por_unidade",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "eficiencia_iee_perc",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "consumo_materiais": {
+      "database": "db_industrial",
+      "table": "consumo_materiais",
+      "fields": [
+        {
+          "name": "consumo_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "registro_id",
+          "type": "integer",
+          "key": "FK",
+          "source_date_only": false
+        },
+        {
+          "name": "material_id",
+          "type": "integer",
+          "key": "FK",
+          "source_date_only": false
+        },
+        {
+          "name": "lote_material_id",
+          "type": "integer",
+          "key": "FK",
+          "source_date_only": false
+        },
+        {
+          "name": "quantidade_consumida",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "date",
+          "key": "",
+          "source_date_only": true
+        }
+      ]
+    },
+    "consumo_recursos_esg": {
+      "database": "db_industrial",
+      "table": "consumo_recursos_esg",
+      "fields": [
+        {
+          "name": "registro_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "mes_ano",
+          "type": "time",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidades_produzidas",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "consumo_agua_m3",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "agua_por_unidade_m3",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "residuos_gerados_kg",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "residuos_reciclados_kg",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "taxa_reciclagem_perc",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "consumo_energia_renovavel_kwh",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "consumo_energia_total_kwh",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "perc_energia_renovavel",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "controle_qualidade": {
+      "database": "db_industrial",
+      "table": "controle_qualidade",
+      "fields": [
+        {
+          "name": "controle_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "lote_producao_id",
+          "type": "integer",
+          "key": "FK",
+          "source_date_only": false
+        },
+        {
+          "name": "data_inspecao",
+          "type": "date",
+          "key": "",
+          "source_date_only": true
+        },
+        {
+          "name": "inspetor_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "unidades_aprovadas",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidades_rejeitadas",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "motivo_rejeicao",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "emissoes_co2": {
+      "database": "db_industrial",
+      "table": "emissoes_co2",
+      "fields": [
+        {
+          "name": "registro_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "mes_ano",
+          "type": "time",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "emissoes_totais_kg_co2",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "co2_evitado_kg",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "meta_emissao_kg_co2",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "fator_emissao_medio_kg_kwh",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "equipamentos": {
+      "database": "db_industrial",
+      "table": "equipamentos",
+      "fields": [
+        {
+          "name": "id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "nome",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "disponibilidade",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "performance",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "qualidade",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "oee",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "taxa_producao",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "capacidade_producao",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "eficiencia_linha",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "produtividade_mao_obra",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "eventos_maquina_turno": {
+      "database": "db_industrial",
+      "table": "eventos_maquina_turno",
+      "fields": [
+        {
+          "name": "evento_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "turno_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "inicio",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "fim",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "estado",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "registro_operacao_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "parada_id",
+          "type": "text",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "unidades_reportadas",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidades_boas_simuladas",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "fornecedores": {
+      "database": "db_industrial",
+      "table": "fornecedores",
+      "fields": [
+        {
+          "name": "fornecedor_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "nome_fornecedor",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "date",
+          "key": "",
+          "source_date_only": true
+        }
+      ]
+    },
+    "inspetores_referenciados": {
+      "database": "db_industrial",
+      "table": "inspetores_referenciados",
+      "fields": [
+        {
+          "name": "inspetor_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "nome_exibicao_simulado",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem_referencia",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "identidade_cadastrada",
+          "type": "boolean",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "lotes_materiais": {
+      "database": "db_industrial",
+      "table": "lotes_materiais",
+      "fields": [
+        {
+          "name": "lote_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "material_id",
+          "type": "integer",
+          "key": "FK",
+          "source_date_only": false
+        },
+        {
+          "name": "fornecedor_id",
+          "type": "integer",
+          "key": "FK",
+          "source_date_only": false
+        },
+        {
+          "name": "data_recebimento",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "lote_fornecedor",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "lotes_producao": {
+      "database": "db_industrial",
+      "table": "lotes_producao",
+      "fields": [
+        {
+          "name": "lote_producao_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "ordem_producao_id",
+          "type": "integer",
+          "key": "FK",
+          "source_date_only": false
+        },
+        {
+          "name": "data_lote",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "quantidade_total",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "maquinas": {
+      "database": "db_industrial",
+      "table": "maquinas",
+      "fields": [
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "nome_maquina",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "linha_producao",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "capacidade_producao_max",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "date",
+          "key": "",
+          "source_date_only": true
+        }
+      ]
+    },
+    "materiais": {
+      "database": "db_industrial",
+      "table": "materiais",
+      "fields": [
+        {
+          "name": "material_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "nome_material",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidade_medida",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "date",
+          "key": "",
+          "source_date_only": true
+        }
+      ]
+    },
+    "metas_energia_equipamento": {
+      "database": "db_industrial",
+      "table": "metas_energia_equipamento",
+      "fields": [
+        {
+          "name": "meta_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "meta_kwh_unidade",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "iee_alvo_perc",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_vigencia_inicio",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_vigencia_fim",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "metas_esg_simuladas": {
+      "database": "db_industrial",
+      "table": "metas_esg_simuladas",
+      "fields": [
+        {
+          "name": "meta_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "mes_ano",
+          "type": "time",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "vigencia_inicio",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "vigencia_fim",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "indicador",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "valor_meta",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "metas_producao_maquina": {
+      "database": "db_industrial",
+      "table": "metas_producao_maquina",
+      "fields": [
+        {
+          "name": "meta_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "meta_produtividade_un_h",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "meta_disponibilidade_perc",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "meta_performance_perc",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "meta_qualidade_perc",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "meta_oee_perc",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_vigencia_inicio",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_vigencia_fim",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "oee_maquina_turno_simulado": {
+      "database": "db_industrial",
+      "table": "oee_maquina_turno_simulado",
+      "fields": [
+        {
+          "name": "oee_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "resumo_estado_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "data_turno",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "turno_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "meta_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "meta_produtividade_un_h",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "segundos_programados",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "segundos_producao_exclusivos",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidades_reportadas",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidades_boas_simuladas",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "segundos_conflito_fonte",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "disponibilidade_simulada",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "performance_bruta_simulada",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "performance_limitada_simulada",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "qualidade_simulada",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "oee_simulado",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "performance_acima_meta",
+          "type": "boolean",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "meta_fora_vigencia",
+          "type": "boolean",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "operadores_referenciados": {
+      "database": "db_industrial",
+      "table": "operadores_referenciados",
+      "fields": [
+        {
+          "name": "operador_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "nome_exibicao_simulado",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "em_operacoes",
+          "type": "boolean",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "em_custo_mao_obra",
+          "type": "boolean",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "identidade_cadastrada",
+          "type": "boolean",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "ordens_manutencao_geradas": {
+      "database": "db_industrial",
+      "table": "ordens_manutencao_geradas",
+      "fields": [
+        {
+          "name": "om_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "codigo_om",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "componente_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "tipo_manutencao",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "prioridade",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_abertura",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_limite",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_conclusao",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_estimado",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_real",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "horas_estimadas",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "horas_reais",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "motivo",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "ordens_manutencao": {
+      "database": "db_industrial",
+      "table": "ordens_manutencao",
+      "fields": [
+        {
+          "name": "om_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "codigo_om",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "componente_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "tipo_manutencao",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "prioridade",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_abertura",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_limite",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_conclusao",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_estimado",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "custo_real",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "horas_estimadas",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "horas_reais",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "motivo",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "ordens_producao": {
+      "database": "db_industrial",
+      "table": "ordens_producao",
+      "fields": [
+        {
+          "name": "ordem_producao_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "produto_id",
+          "type": "integer",
+          "key": "FK",
+          "source_date_only": false
+        },
+        {
+          "name": "quantidade_planejada",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_planejamento",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_inicio_real",
+          "type": "date",
+          "key": "",
+          "source_date_only": true
+        },
+        {
+          "name": "data_fim_real",
+          "type": "date",
+          "key": "",
+          "source_date_only": true
+        },
+        {
+          "name": "status_ordem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "paradas_maquinas_geradas": {
+      "database": "db_industrial",
+      "table": "paradas_maquinas_geradas",
+      "fields": [
+        {
+          "name": "parada_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "hora_inicio_parada",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "hora_fim_parada",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "motivo_parada",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "paradas_maquinas": {
+      "database": "db_industrial",
+      "table": "paradas_maquinas",
+      "fields": [
+        {
+          "name": "parada_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK",
+          "source_date_only": false
+        },
+        {
+          "name": "hora_inicio_parada",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "hora_fim_parada",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "motivo_parada",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "processo_industrial": {
+      "database": "db_industrial",
+      "table": "processos_industriais",
+      "fields": [
+        {
+          "name": "id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "nome",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "area1",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "velocidade1",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "area2",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "velocidade2",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "massa",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "calor_especifico",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "delta_t",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "calor_transferido",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "date",
+          "key": "",
+          "source_date_only": true
+        }
+      ]
+    },
+    "produtos": {
+      "database": "db_industrial",
+      "table": "produtos",
+      "fields": [
+        {
+          "name": "produto_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "nome_produto",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "descricao",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidade_medida",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "date",
+          "key": "",
+          "source_date_only": true
+        }
+      ]
+    },
+    "projetos_investimento_verde": {
+      "database": "db_industrial",
+      "table": "projetos_investimento_verde",
+      "fields": [
+        {
+          "name": "projeto_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "nome_projeto",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "categoria",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "investimento_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "economia_anual_estimada_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "roi_verde_perc",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "payback_anos",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_aprovacao",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "registros_operacao": {
+      "database": "db_industrial",
+      "table": "registros_operacao",
+      "fields": [
+        {
+          "name": "registro_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "ordem_producao_id",
+          "type": "integer",
+          "key": "FK",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK",
+          "source_date_only": false
+        },
+        {
+          "name": "operador_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "hora_inicio",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "hora_fim",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "tempo_setup_real_min",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "quantidade_produzida_real",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "consumo_energia_kwh",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "resultados_projeto_esg_simulados": {
+      "database": "db_industrial",
+      "table": "resultados_projeto_esg_simulados",
+      "fields": [
+        {
+          "name": "resultado_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "mes_ano",
+          "type": "time",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "projeto_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "indicador",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "valor_atribuido_simulado",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "resumo_estado_maquina_turno_simulado": {
+      "database": "db_industrial",
+      "table": "resumo_estado_maquina_turno_simulado",
+      "fields": [
+        {
+          "name": "resumo_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "data_turno",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "turno_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "segundos_producao",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "segundos_setup",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "segundos_parada",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "segundos_sem_evento",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "segundos_sobreposicao_fonte",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidades_reportadas",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "unidades_boas_simuladas",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "roteiros_producao": {
+      "database": "db_industrial",
+      "table": "roteiros_producao",
+      "fields": [
+        {
+          "name": "roteiro_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "produto_id",
+          "type": "integer",
+          "key": "FK",
+          "source_date_only": false
+        },
+        {
+          "name": "versao",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "date",
+          "key": "",
+          "source_date_only": true
+        }
+      ]
+    },
+    "tarifas_energia": {
+      "database": "db_industrial",
+      "table": "tarifas_energia",
+      "fields": [
+        {
+          "name": "tarifa_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "posto_tarifario",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "horario_inicio",
+          "type": "time",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "horario_fim",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "dias_aplicaveis",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "valor_kwh_brl",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_vigencia_inicio",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_vigencia_fim",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "telemetria_preditiva": {
+      "database": "db_industrial",
+      "table": "telemetria_preditiva",
+      "fields": [
+        {
+          "name": "leitura_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "data_hora",
+          "type": "timestamp",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "componente_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "temperatura_c",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "vibracao_rms_mm_s",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "probabilidade_falha_perc",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "prazo_estimado_horas",
+          "type": "integer",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "status_alerta",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "turnos_trabalho": {
+      "database": "db_industrial",
+      "table": "turnos_trabalho",
+      "fields": [
+        {
+          "name": "turno_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "nome_turno",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "hora_inicio",
+          "type": "time",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "hora_fim",
+          "type": "time",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "meta_oee_perc",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "meta_produtividade_un_h",
+          "type": "numeric",
+          "key": "",
+          "source_date_only": false
+        },
+        {
+          "name": "data_registro",
+          "type": "date",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    },
+    "vinculos_manutencao_simulados": {
+      "database": "db_industrial",
+      "table": "vinculos_manutencao_simulados",
+      "fields": [
+        {
+          "name": "vinculo_id",
+          "type": "integer",
+          "key": "PK",
+          "source_date_only": false
+        },
+        {
+          "name": "om_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "leitura_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "parada_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "componente_id",
+          "type": "integer",
+          "key": "FK*",
+          "source_date_only": false
+        },
+        {
+          "name": "origem",
+          "type": "text",
+          "key": "",
+          "source_date_only": false
+        }
+      ]
+    }
+  },
+  "warehouse_tables": {
+    "v1": [
+      "dim_day",
+      "dim_machine",
+      "dim_material",
+      "dim_material_lot",
+      "dim_product",
+      "dim_source_period",
+      "fact_downtime",
+      "fact_financial_observation",
+      "fact_material_consumption",
+      "fact_material_price_observation",
+      "fact_operation",
+      "fact_quality_inspection",
+      "fact_sale",
+      "schema_migrations",
+      "source_file"
+    ],
+    "new": [
+      "bridge_maintenance_case",
+      "dim_component",
+      "dim_green_project",
+      "dim_tariff",
+      "dim_turn",
+      "fact_certification",
+      "fact_co2_month",
+      "fact_energy_interval",
+      "fact_energy_shift",
+      "fact_energy_target",
+      "fact_esg_resource_month",
+      "fact_esg_target_month",
+      "fact_financial_month",
+      "fact_green_project_result_month",
+      "fact_machine_event",
+      "fact_maintenance_order",
+      "fact_predictive_reading",
+      "fact_product_cost_month",
+      "fact_production_target",
+      "fact_tariff_mix"
+    ]
+  },
+  "warehouse_v1_schema": {
+    "dim_day": [
+      {
+        "name": "day",
+        "type": "date",
+        "key": "PK"
+      },
+      {
+        "name": "year",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "month",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "day_of_month",
+        "type": "integer",
+        "key": ""
+      }
+    ],
+    "dim_machine": [
+      {
+        "name": "machine_id",
+        "type": "integer",
+        "key": "PK"
+      },
+      {
+        "name": "period_index",
+        "type": "smallint",
+        "key": "FK"
+      },
+      {
+        "name": "source_file_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "original_id",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "name",
+        "type": "text",
+        "key": ""
+      },
+      {
+        "name": "production_line",
+        "type": "text",
+        "key": ""
+      }
+    ],
+    "dim_material": [
+      {
+        "name": "material_id",
+        "type": "integer",
+        "key": "PK"
+      },
+      {
+        "name": "period_index",
+        "type": "smallint",
+        "key": "FK"
+      },
+      {
+        "name": "source_file_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "original_id",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "name",
+        "type": "text",
+        "key": ""
+      },
+      {
+        "name": "unit",
+        "type": "text",
+        "key": ""
+      }
+    ],
+    "dim_material_lot": [
+      {
+        "name": "material_lot_id",
+        "type": "integer",
+        "key": "PK"
+      },
+      {
+        "name": "period_index",
+        "type": "smallint",
+        "key": "FK"
+      },
+      {
+        "name": "source_file_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "original_id",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "material_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "received_on",
+        "type": "date",
+        "key": ""
+      }
+    ],
+    "dim_product": [
+      {
+        "name": "product_id",
+        "type": "integer",
+        "key": "PK"
+      },
+      {
+        "name": "period_index",
+        "type": "smallint",
+        "key": "FK"
+      },
+      {
+        "name": "source_file_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "original_id",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "name",
+        "type": "text",
+        "key": ""
+      },
+      {
+        "name": "unit",
+        "type": "text",
+        "key": ""
+      }
+    ],
+    "dim_source_period": [
+      {
+        "name": "period_index",
+        "type": "smallint",
+        "key": "PK"
+      },
+      {
+        "name": "industrial_folder",
+        "type": "text",
+        "key": ""
+      },
+      {
+        "name": "financeiro_folder",
+        "type": "text",
+        "key": ""
+      }
+    ],
+    "fact_downtime": [
+      {
+        "name": "downtime_id",
+        "type": "integer",
+        "key": "PK"
+      },
+      {
+        "name": "source_file_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "period_index",
+        "type": "smallint",
+        "key": "FK"
+      },
+      {
+        "name": "original_id",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "start_day",
+        "type": "date",
+        "key": "FK"
+      },
+      {
+        "name": "machine_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "started_at",
+        "type": "timestamp",
+        "key": ""
+      },
+      {
+        "name": "ended_at",
+        "type": "timestamp",
+        "key": ""
+      },
+      {
+        "name": "duration_minutes",
+        "type": "numeric",
+        "key": ""
+      },
+      {
+        "name": "interval_invalid",
+        "type": "boolean",
+        "key": ""
+      },
+      {
+        "name": "outside_source_label",
+        "type": "boolean",
+        "key": ""
+      }
+    ],
+    "fact_financial_observation": [
+      {
+        "name": "observation_id",
+        "type": "integer",
+        "key": "PK"
+      },
+      {
+        "name": "source_file_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "period_index",
+        "type": "smallint",
+        "key": "FK"
+      },
+      {
+        "name": "original_id",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "observed_day",
+        "type": "date",
+        "key": "FK"
+      },
+      {
+        "name": "reported_revenue",
+        "type": "double precision",
+        "key": ""
+      },
+      {
+        "name": "reported_net_profit",
+        "type": "double precision",
+        "key": ""
+      },
+      {
+        "name": "source_float",
+        "type": "boolean",
+        "key": ""
+      },
+      {
+        "name": "outside_source_label",
+        "type": "boolean",
+        "key": ""
+      }
+    ],
+    "fact_material_consumption": [
+      {
+        "name": "consumption_id",
+        "type": "integer",
+        "key": "PK"
+      },
+      {
+        "name": "source_file_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "period_index",
+        "type": "smallint",
+        "key": "FK"
+      },
+      {
+        "name": "original_id",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "registered_day",
+        "type": "date",
+        "key": "FK"
+      },
+      {
+        "name": "operation_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "material_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "material_lot_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "quantity_consumed",
+        "type": "numeric",
+        "key": ""
+      },
+      {
+        "name": "outside_source_label",
+        "type": "boolean",
+        "key": ""
+      }
+    ],
+    "fact_material_price_observation": [
+      {
+        "name": "price_observation_id",
+        "type": "integer",
+        "key": "PK"
+      },
+      {
+        "name": "source_file_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "period_index",
+        "type": "smallint",
+        "key": "FK"
+      },
+      {
+        "name": "original_id",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "purchase_day",
+        "type": "date",
+        "key": "FK"
+      },
+      {
+        "name": "material_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "material_lot_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "unit_price",
+        "type": "numeric",
+        "key": ""
+      },
+      {
+        "name": "outside_source_label",
+        "type": "boolean",
+        "key": ""
+      }
+    ],
+    "fact_operation": [
+      {
+        "name": "operation_id",
+        "type": "integer",
+        "key": "PK"
+      },
+      {
+        "name": "source_file_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "period_index",
+        "type": "smallint",
+        "key": "FK"
+      },
+      {
+        "name": "original_id",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "operation_day",
+        "type": "date",
+        "key": "FK"
+      },
+      {
+        "name": "order_id",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "machine_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "product_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "started_at",
+        "type": "timestamp",
+        "key": ""
+      },
+      {
+        "name": "ended_at",
+        "type": "timestamp",
+        "key": ""
+      },
+      {
+        "name": "quantity_reported",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "energy_kwh",
+        "type": "numeric",
+        "key": ""
+      },
+      {
+        "name": "setup_minutes",
+        "type": "numeric",
+        "key": ""
+      },
+      {
+        "name": "order_dates_inverted",
+        "type": "boolean",
+        "key": ""
+      },
+      {
+        "name": "interval_invalid",
+        "type": "boolean",
+        "key": ""
+      },
+      {
+        "name": "outside_source_label",
+        "type": "boolean",
+        "key": ""
+      }
+    ],
+    "fact_quality_inspection": [
+      {
+        "name": "inspection_id",
+        "type": "integer",
+        "key": "PK"
+      },
+      {
+        "name": "source_file_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "period_index",
+        "type": "smallint",
+        "key": "FK"
+      },
+      {
+        "name": "original_id",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "inspection_day",
+        "type": "date",
+        "key": "FK"
+      },
+      {
+        "name": "production_lot_id",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "order_id",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "product_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "approved_units",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "rejected_units",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "lot_quantity",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "inspected_exceeds_lot",
+        "type": "boolean",
+        "key": ""
+      },
+      {
+        "name": "outside_source_label",
+        "type": "boolean",
+        "key": ""
+      }
+    ],
+    "fact_sale": [
+      {
+        "name": "sale_id",
+        "type": "integer",
+        "key": "PK"
+      },
+      {
+        "name": "source_file_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "period_index",
+        "type": "smallint",
+        "key": "FK"
+      },
+      {
+        "name": "original_id",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "sale_day",
+        "type": "date",
+        "key": "FK"
+      },
+      {
+        "name": "product_id",
+        "type": "integer",
+        "key": "FK"
+      },
+      {
+        "name": "quantity_sold",
+        "type": "integer",
+        "key": ""
+      },
+      {
+        "name": "unit_price",
+        "type": "numeric",
+        "key": ""
+      },
+      {
+        "name": "observed_sales_value",
+        "type": "numeric",
+        "key": ""
+      },
+      {
+        "name": "outside_source_label",
+        "type": "boolean",
+        "key": ""
+      }
+    ],
+    "schema_migrations": [
+      {
+        "name": "version",
+        "type": "integer",
+        "key": "PK"
+      },
+      {
+        "name": "source_fingerprint",
+        "type": "char(64)",
+        "key": ""
+      },
+      {
+        "name": "loaded_at_utc",
+        "type": "timestamptz",
+        "key": ""
+      },
+      {
+        "name": "source_checks",
+        "type": "jsonb",
+        "key": ""
+      }
+    ],
+    "source_file": [
+      {
+        "name": "source_file_id",
+        "type": "integer",
+        "key": "PK"
+      },
+      {
+        "name": "domain",
+        "type": "text",
+        "key": ""
+      },
+      {
+        "name": "period_index",
+        "type": "smallint",
+        "key": ""
+      },
+      {
+        "name": "table_name",
+        "type": "text",
+        "key": ""
+      },
+      {
+        "name": "pk_column",
+        "type": "text",
+        "key": ""
+      },
+      {
+        "name": "raw_schema",
+        "type": "text",
+        "key": ""
+      },
+      {
+        "name": "source_path",
+        "type": "text",
+        "key": ""
+      },
+      {
+        "name": "sha256",
+        "type": "char(64)",
+        "key": ""
+      },
+      {
+        "name": "row_count",
+        "type": "integer",
+        "key": ""
+      }
+    ]
+  },
+  "warehouse_new_schema": {
+    "dim_turn": {
+      "sources": [
+        "turnos_trabalho"
+      ],
+      "fields": [
+        {
+          "name": "turno_id",
+          "type": "integer"
+        },
+        {
+          "name": "nome_turno",
+          "type": "text"
+        },
+        {
+          "name": "hora_inicio",
+          "type": "time"
+        },
+        {
+          "name": "hora_fim",
+          "type": "time"
+        },
+        {
+          "name": "meta_oee_perc",
+          "type": "numeric"
+        },
+        {
+          "name": "meta_produtividade_un_h",
+          "type": "numeric"
+        },
+        {
+          "name": "data_registro",
+          "type": "date"
+        }
+      ]
+    },
+    "dim_component": {
+      "sources": [
+        "componentes_maquinas"
+      ],
+      "fields": [
+        {
+          "name": "componente_id",
+          "type": "integer"
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer"
+        },
+        {
+          "name": "nome_componente",
+          "type": "text"
+        },
+        {
+          "name": "criticidade",
+          "type": "text"
+        },
+        {
+          "name": "vida_util_horas",
+          "type": "integer"
+        },
+        {
+          "name": "data_instalacao",
+          "type": "date"
+        }
+      ]
+    },
+    "dim_tariff": {
+      "sources": [
+        "tarifas_energia"
+      ],
+      "fields": [
+        {
+          "name": "tarifa_id",
+          "type": "integer"
+        },
+        {
+          "name": "posto_tarifario",
+          "type": "text"
+        },
+        {
+          "name": "horario_inicio",
+          "type": "time"
+        },
+        {
+          "name": "horario_fim",
+          "type": "text"
+        },
+        {
+          "name": "dias_aplicaveis",
+          "type": "text"
+        },
+        {
+          "name": "valor_kwh_brl",
+          "type": "numeric"
+        },
+        {
+          "name": "data_vigencia_inicio",
+          "type": "date"
+        },
+        {
+          "name": "data_vigencia_fim",
+          "type": "date"
+        }
+      ]
+    },
+    "dim_green_project": {
+      "sources": [
+        "projetos_investimento_verde"
+      ],
+      "fields": [
+        {
+          "name": "projeto_id",
+          "type": "integer"
+        },
+        {
+          "name": "nome_projeto",
+          "type": "text"
+        },
+        {
+          "name": "categoria",
+          "type": "text"
+        },
+        {
+          "name": "investimento_brl",
+          "type": "numeric"
+        },
+        {
+          "name": "economia_anual_estimada_brl",
+          "type": "numeric"
+        },
+        {
+          "name": "roi_verde_perc",
+          "type": "numeric"
+        },
+        {
+          "name": "payback_anos",
+          "type": "numeric"
+        },
+        {
+          "name": "data_aprovacao",
+          "type": "date"
+        },
+        {
+          "name": "status",
+          "type": "text"
+        }
+      ]
+    },
+    "fact_machine_event": {
+      "sources": [
+        "eventos_maquina_turno"
+      ],
+      "fields": [
+        {
+          "name": "evento_id",
+          "type": "integer"
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer"
+        },
+        {
+          "name": "turno_id",
+          "type": "integer"
+        },
+        {
+          "name": "inicio",
+          "type": "timestamp"
+        },
+        {
+          "name": "fim",
+          "type": "timestamp"
+        },
+        {
+          "name": "estado",
+          "type": "text"
+        },
+        {
+          "name": "registro_operacao_id",
+          "type": "integer"
+        },
+        {
+          "name": "parada_id",
+          "type": "text"
+        },
+        {
+          "name": "unidades_reportadas",
+          "type": "integer"
+        },
+        {
+          "name": "unidades_boas_simuladas",
+          "type": "integer"
+        },
+        {
+          "name": "origem",
+          "type": "text"
+        }
+      ]
+    },
+    "fact_production_target": {
+      "sources": [
+        "metas_producao_maquina"
+      ],
+      "fields": [
+        {
+          "name": "meta_id",
+          "type": "integer"
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer"
+        },
+        {
+          "name": "meta_produtividade_un_h",
+          "type": "numeric"
+        },
+        {
+          "name": "meta_disponibilidade_perc",
+          "type": "numeric"
+        },
+        {
+          "name": "meta_performance_perc",
+          "type": "numeric"
+        },
+        {
+          "name": "meta_qualidade_perc",
+          "type": "numeric"
+        },
+        {
+          "name": "meta_oee_perc",
+          "type": "numeric"
+        },
+        {
+          "name": "data_vigencia_inicio",
+          "type": "date"
+        },
+        {
+          "name": "data_vigencia_fim",
+          "type": "date"
+        }
+      ]
+    },
+    "fact_maintenance_order": {
+      "sources": [
+        "ordens_manutencao",
+        "ordens_manutencao_geradas"
+      ],
+      "fields": [
+        {
+          "name": "om_id",
+          "type": "integer"
+        },
+        {
+          "name": "codigo_om",
+          "type": "text"
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer"
+        },
+        {
+          "name": "componente_id",
+          "type": "integer"
+        },
+        {
+          "name": "tipo_manutencao",
+          "type": "text"
+        },
+        {
+          "name": "prioridade",
+          "type": "text"
+        },
+        {
+          "name": "data_abertura",
+          "type": "date"
+        },
+        {
+          "name": "data_limite",
+          "type": "date"
+        },
+        {
+          "name": "data_conclusao",
+          "type": "timestamp"
+        },
+        {
+          "name": "status",
+          "type": "text"
+        },
+        {
+          "name": "custo_estimado",
+          "type": "numeric"
+        },
+        {
+          "name": "custo_real",
+          "type": "numeric"
+        },
+        {
+          "name": "horas_estimadas",
+          "type": "numeric"
+        },
+        {
+          "name": "horas_reais",
+          "type": "numeric"
+        },
+        {
+          "name": "motivo",
+          "type": "text"
+        },
+        {
+          "name": "origem",
+          "type": "text"
+        }
+      ]
+    },
+    "fact_predictive_reading": {
+      "sources": [
+        "telemetria_preditiva"
+      ],
+      "fields": [
+        {
+          "name": "leitura_id",
+          "type": "integer"
+        },
+        {
+          "name": "data_hora",
+          "type": "timestamp"
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer"
+        },
+        {
+          "name": "componente_id",
+          "type": "integer"
+        },
+        {
+          "name": "temperatura_c",
+          "type": "numeric"
+        },
+        {
+          "name": "vibracao_rms_mm_s",
+          "type": "numeric"
+        },
+        {
+          "name": "probabilidade_falha_perc",
+          "type": "numeric"
+        },
+        {
+          "name": "prazo_estimado_horas",
+          "type": "integer"
+        },
+        {
+          "name": "status_alerta",
+          "type": "text"
+        }
+      ]
+    },
+    "bridge_maintenance_case": {
+      "sources": [
+        "vinculos_manutencao_simulados"
+      ],
+      "fields": [
+        {
+          "name": "vinculo_id",
+          "type": "integer"
+        },
+        {
+          "name": "om_id",
+          "type": "integer"
+        },
+        {
+          "name": "leitura_id",
+          "type": "integer"
+        },
+        {
+          "name": "parada_id",
+          "type": "integer"
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer"
+        },
+        {
+          "name": "componente_id",
+          "type": "integer"
+        },
+        {
+          "name": "origem",
+          "type": "text"
+        }
+      ]
+    },
+    "fact_energy_shift": {
+      "sources": [
+        "consumo_energia_turno"
+      ],
+      "fields": [
+        {
+          "name": "registro_id",
+          "type": "integer"
+        },
+        {
+          "name": "data",
+          "type": "date"
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer"
+        },
+        {
+          "name": "turno_id",
+          "type": "integer"
+        },
+        {
+          "name": "posto_tarifario",
+          "type": "text"
+        },
+        {
+          "name": "kwh_consumido",
+          "type": "numeric"
+        },
+        {
+          "name": "custo_energia_brl",
+          "type": "numeric"
+        },
+        {
+          "name": "unidades_produzidas",
+          "type": "integer"
+        },
+        {
+          "name": "kwh_por_unidade",
+          "type": "numeric"
+        },
+        {
+          "name": "eficiencia_iee_perc",
+          "type": "numeric"
+        }
+      ]
+    },
+    "fact_energy_interval": {
+      "sources": [
+        "consumo_energia_intervalo"
+      ],
+      "fields": [
+        {
+          "name": "intervalo_id",
+          "type": "integer"
+        },
+        {
+          "name": "registro_turno_id",
+          "type": "integer"
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer"
+        },
+        {
+          "name": "turno_id",
+          "type": "integer"
+        },
+        {
+          "name": "inicio",
+          "type": "timestamp"
+        },
+        {
+          "name": "fim",
+          "type": "timestamp"
+        },
+        {
+          "name": "posto_tarifario",
+          "type": "text"
+        },
+        {
+          "name": "tarifa_id",
+          "type": "integer"
+        },
+        {
+          "name": "kwh_simulado",
+          "type": "numeric"
+        },
+        {
+          "name": "custo_simulado_brl",
+          "type": "numeric"
+        },
+        {
+          "name": "tarifa_brl_kwh",
+          "type": "numeric"
+        },
+        {
+          "name": "origem",
+          "type": "text"
+        }
+      ]
+    },
+    "fact_energy_target": {
+      "sources": [
+        "metas_energia_equipamento"
+      ],
+      "fields": [
+        {
+          "name": "meta_id",
+          "type": "integer"
+        },
+        {
+          "name": "maquina_id",
+          "type": "integer"
+        },
+        {
+          "name": "meta_kwh_unidade",
+          "type": "numeric"
+        },
+        {
+          "name": "iee_alvo_perc",
+          "type": "numeric"
+        },
+        {
+          "name": "data_vigencia_inicio",
+          "type": "date"
+        },
+        {
+          "name": "data_vigencia_fim",
+          "type": "date"
+        }
+      ]
+    },
+    "fact_tariff_mix": {
+      "sources": [
+        "composicao_tarifaria_inferida"
+      ],
+      "fields": [
+        {
+          "name": "periodo_indice",
+          "type": "integer"
+        },
+        {
+          "name": "posto_composto",
+          "type": "text"
+        },
+        {
+          "name": "tarifa_ponta_id",
+          "type": "integer"
+        },
+        {
+          "name": "tarifa_fora_ponta_id",
+          "type": "integer"
+        },
+        {
+          "name": "fracao_kwh_ponta_inferida",
+          "type": "numeric"
+        },
+        {
+          "name": "fracao_kwh_fora_ponta_inferida",
+          "type": "numeric"
+        },
+        {
+          "name": "valor_efetivo_brl_kwh_inferido",
+          "type": "numeric"
+        },
+        {
+          "name": "origem",
+          "type": "text"
+        }
+      ]
+    },
+    "fact_financial_month": {
+      "sources": [
+        "resultados_financeiros_mensais"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "integer"
+        },
+        {
+          "name": "mes_ano",
+          "type": "time"
+        },
+        {
+          "name": "data_registro",
+          "type": "date"
+        },
+        {
+          "name": "receita_total",
+          "type": "numeric"
+        },
+        {
+          "name": "custos_variaveis",
+          "type": "numeric"
+        },
+        {
+          "name": "despesas_variaveis",
+          "type": "numeric"
+        },
+        {
+          "name": "custos_fixos",
+          "type": "numeric"
+        },
+        {
+          "name": "despesas_operacionais",
+          "type": "numeric"
+        },
+        {
+          "name": "cpv",
+          "type": "numeric"
+        },
+        {
+          "name": "lucro_bruto",
+          "type": "numeric"
+        },
+        {
+          "name": "lucro_liquido",
+          "type": "numeric"
+        },
+        {
+          "name": "margem_liquida_perc",
+          "type": "numeric"
+        },
+        {
+          "name": "margem_contribuicao_perc",
+          "type": "numeric"
+        },
+        {
+          "name": "icpr_conversao_perc",
+          "type": "numeric"
+        },
+        {
+          "name": "desvio_producao_receita_perc",
+          "type": "numeric"
+        }
+      ]
+    },
+    "fact_product_cost_month": {
+      "sources": [
+        "custos_produto_mensais_simulados"
+      ],
+      "fields": [
+        {
+          "name": "registro_id",
+          "type": "integer"
+        },
+        {
+          "name": "mes_ano",
+          "type": "time"
+        },
+        {
+          "name": "produto_id",
+          "type": "integer"
+        },
+        {
+          "name": "unidades_base_operacoes",
+          "type": "integer"
+        },
+        {
+          "name": "receita_atribuida_simulada_brl",
+          "type": "numeric"
+        },
+        {
+          "name": "cpv_atribuido_simulado_brl",
+          "type": "numeric"
+        },
+        {
+          "name": "origem",
+          "type": "text"
+        }
+      ]
+    },
+    "fact_co2_month": {
+      "sources": [
+        "emissoes_co2"
+      ],
+      "fields": [
+        {
+          "name": "registro_id",
+          "type": "integer"
+        },
+        {
+          "name": "mes_ano",
+          "type": "time"
+        },
+        {
+          "name": "data_registro",
+          "type": "date"
+        },
+        {
+          "name": "emissoes_totais_kg_co2",
+          "type": "numeric"
+        },
+        {
+          "name": "co2_evitado_kg",
+          "type": "numeric"
+        },
+        {
+          "name": "meta_emissao_kg_co2",
+          "type": "numeric"
+        },
+        {
+          "name": "fator_emissao_medio_kg_kwh",
+          "type": "numeric"
+        }
+      ]
+    },
+    "fact_esg_resource_month": {
+      "sources": [
+        "consumo_recursos_esg"
+      ],
+      "fields": [
+        {
+          "name": "registro_id",
+          "type": "integer"
+        },
+        {
+          "name": "mes_ano",
+          "type": "time"
+        },
+        {
+          "name": "data_registro",
+          "type": "date"
+        },
+        {
+          "name": "unidades_produzidas",
+          "type": "integer"
+        },
+        {
+          "name": "consumo_agua_m3",
+          "type": "numeric"
+        },
+        {
+          "name": "agua_por_unidade_m3",
+          "type": "numeric"
+        },
+        {
+          "name": "residuos_gerados_kg",
+          "type": "numeric"
+        },
+        {
+          "name": "residuos_reciclados_kg",
+          "type": "numeric"
+        },
+        {
+          "name": "taxa_reciclagem_perc",
+          "type": "numeric"
+        },
+        {
+          "name": "consumo_energia_renovavel_kwh",
+          "type": "numeric"
+        },
+        {
+          "name": "consumo_energia_total_kwh",
+          "type": "numeric"
+        },
+        {
+          "name": "perc_energia_renovavel",
+          "type": "numeric"
+        }
+      ]
+    },
+    "fact_esg_target_month": {
+      "sources": [
+        "metas_esg_simuladas"
+      ],
+      "fields": [
+        {
+          "name": "meta_id",
+          "type": "integer"
+        },
+        {
+          "name": "mes_ano",
+          "type": "time"
+        },
+        {
+          "name": "vigencia_inicio",
+          "type": "date"
+        },
+        {
+          "name": "vigencia_fim",
+          "type": "date"
+        },
+        {
+          "name": "indicador",
+          "type": "text"
+        },
+        {
+          "name": "valor_meta",
+          "type": "numeric"
+        },
+        {
+          "name": "origem",
+          "type": "text"
+        }
+      ]
+    },
+    "fact_green_project_result_month": {
+      "sources": [
+        "resultados_projeto_esg_simulados"
+      ],
+      "fields": [
+        {
+          "name": "resultado_id",
+          "type": "integer"
+        },
+        {
+          "name": "mes_ano",
+          "type": "time"
+        },
+        {
+          "name": "projeto_id",
+          "type": "integer"
+        },
+        {
+          "name": "indicador",
+          "type": "text"
+        },
+        {
+          "name": "valor_atribuido_simulado",
+          "type": "numeric"
+        },
+        {
+          "name": "origem",
+          "type": "text"
+        }
+      ]
+    },
+    "fact_certification": {
+      "sources": [
+        "certificacoes_ambientais"
+      ],
+      "fields": [
+        {
+          "name": "certificacao_id",
+          "type": "integer"
+        },
+        {
+          "name": "norma",
+          "type": "text"
+        },
+        {
+          "name": "escopo",
+          "type": "text"
+        },
+        {
+          "name": "orgao_emissor",
+          "type": "text"
+        },
+        {
+          "name": "status",
+          "type": "text"
+        },
+        {
+          "name": "data_emissao",
+          "type": "date"
+        },
+        {
+          "name": "data_validade",
+          "type": "date"
+        },
+        {
+          "name": "progresso_conformidade_perc",
+          "type": "integer"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "source": "Git index, before commit",
+  "contains_private_database_or_credentials": false,
+  "command": "canonical_ingest.py plan",
+  "exit_code": 0,
+  "plan": {
+    "csv_files": 166,
+    "source_partitions": 167,
+    "source_tables": {
+      "db_industrial": 38,
+      "db_financeiro": 18
+    },
+    "dw_v1_tables": 15,
+    "dw_new_tables": 20,
+    "downtime_sources": {
+      "paradas_maquinas": 1200,
+      "paradas_maquinas_geradas": 90
+    },
+    "expected_fact_downtime_rows": 1290,
+    "rows": 1565666,
+    "classes": {
+      "original_preservado": 69,
+      "original_corrigido": 6,
+      "complementar": 39,
+      "referencia_derivada": 9,
+      "sintetico_derivado": 43
+    },
+    "contract_sha256": "66f8808cf83902ff6c7fd277937bf8e0671482058f540f3ea9c1ec8c5a182800",
+    "database_writes": false
+  }
+}

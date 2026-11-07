@@ -1,3 +1,5 @@
+> **Nota de localização em 07/11/2026:** a V2 foi integrada ao checkout principal. Os caminhos de worktree abaixo registram a execução histórica. Para uso atual, consulte [fontes vigentes](../../docs/fontes_ativas_e_arquivo.md).
+
 # Reconciliação do DER com o checkout de dados — 31/10/2026
 
 Escopo: leitura do XML da página **Modelagem integrada — 3 bancos** em
@@ -75,7 +77,7 @@ dos CSVs ou nomes propostos no diagrama.
 
 Na página [Modelagem integrada — 3 bancos](https://app.diagrams.net/#G1RbtLePrWCTs8GjCAmAegFv7XBcAtzN8E#%7B%22pageId%22%3A%22LoO58KlvWIB3R87rbpOu%22%7D),
 os rótulos de estado foram alinhados ao
-[readback canônico somente leitura](../../../specs/active/SPEC-013/evidence/canonical-load-readback-2026-11-01.md):
+[readback canônico somente leitura](../../specs/active/SPEC-013/evidence/canonical-load-readback-2026-11-01.md):
 três bancos locais carregados, DW V2 com 35 tabelas, 20 ampliações fisicamente
 presentes e `fact_downtime` com 1.200 linhas originais e 90 geradas. O quadro
 `paradas_maquinas_geradas`, o título e a legenda da DW nova também deixaram
@@ -88,14 +90,14 @@ Na página [Fluxo da Bancada e harness](https://app.diagrams.net/#G1RbtLePrWCTs8
 o fluxo e os quadros JSON dos especialistas passaram a mostrar duas chamadas
 do mesmo modelo por domínio: seleção de IDs em índice compacto, validação dos
 IDs pelo backend e análise do detalhe selecionado. Essa é a arquitetura
-proposta na [SPEC-013](../../../specs/active/SPEC-013/SPEC.md); o núcleo M1
+proposta na [SPEC-013](../../specs/active/SPEC-013/SPEC.md); o núcleo M1
 ainda usa uma chamada por especialista com mapa sintético pequeno.
 
 ## Readback posterior no mesmo dia
 
 Após a checagem inicial que encontrou os bancos ausentes, uma consulta
 **somente leitura** encontrou os três bancos de pesquisa no cluster isolado.
-A [evidência M0 da SPEC-013](../../../specs/active/SPEC-013/evidence/m0-inventory-2026-10-31.md)
+A [evidência M0 da SPEC-013](../../specs/active/SPEC-013/evidence/m0-inventory-2026-10-31.md)
 registra a versão 2 carregada, o fingerprint igual ao manifesto/contrato
 atuais, 56 tabelas de origem com schema coincidente, 20 tabelas novas da DW
 com 240 colunas e PK/FKs coincidentes, 167 partições de origem e as 1.290

@@ -1,20 +1,17 @@
-# DW local de pesquisa (SPEC-006)
+# DW de pesquisa — carga V2 ativa
 
-Em 01/11/2026, a tool exploratória da Bancada passou a reconhecer a carga V2
-somente pelo fingerprint canônico registrado no código e a consulta `machine`
-passou a listar as fontes de paradas presentes no recorte consultado, incluindo
-as geradas quando houver. Esta é compatibilidade de leitura das cinco tools;
-`dw/cli.py verify` e o exportador de pacotes ainda exigem a V1 e precisam de
-uma reconciliação V2 completa antes de novos pacotes. O harness da SPEC-013
-continua separado e em desenho.
+Em 07/11/2026, os arquivos, manifesto, contrato, DER e ingestão da V2 foram
+consolidados no checkout principal. [Fontes vigentes e arquivo](../../docs/fontes_ativas_e_arquivo.md).
+O banco usado é `db_pesquisa_dw` no cluster isolado `127.0.0.1:5544`.
+São 35 tabelas, 167 partições de origem e 1.290 paradas (1.200 originais e
+90 geradas). [Readback da integração](../../docs/evidence/organizacao-2026-11-07/canonical-readback.json).
 
-**Estado em 16/10/2026:** esquema e carga local v1 implementados em `db_pesquisa_dw`, no cluster isolado `127.0.0.1:5544`, com [revisão independente local aprovada](../../specs/active/SPEC-006/evidence/review.json). A carga nova foi criada em 13/10/2026 após verificação somente leitura dos dois bancos de origem; a revisão de 16/10/2026 ampliou a reconciliação, sem nova carga. O relatório local ignorado pelo Git fica em `../reports/dw_validation.json`. O fingerprint dos 75 arquivos é `64493abfdfd0b87535778eafd9d5938fad6039a99d9307f85e4cfc6eec0e89f2`. Esta evidência é local e não demonstra validade científica; a SPEC-009 integra consultas da DW apenas à Bancada exploratória.
-
-**Conferência de 31/10/2026 neste host:** a [reconciliação com o DER](../docs/reconciliacao_der_2026-10-31.md) confirmou que a carga histórica v1 só lia `paradas_maquinas` original. Os CSVs das 90 paradas geradas estão no worktree `datamind-dw-rebuild`, não neste checkout. Após a checagem inicial, um [readback posterior](../../specs/active/SPEC-013/evidence/m0-inventory-2026-10-31.md) encontrou os três bancos de pesquisa no cluster isolado: DW V2 com 35 tabelas, 167 partições de origem e `fact_downtime` com 1.200 paradas originais + 90 geradas. A verificação é de schema, fingerprint e contagens, não da avaliação científica.
-
-`db_datamind_dw` é legado e permanece intocado. O novo banco não substitui `db_industrial` e `db_financeiro` nem altera suas cargas. Os CSVs preservados são a fonte bruta; as tabelas `public` dos dois bancos são a fonte tipada. A validação do importador compara ambas com os CSVs antes de criar o DW.
-
-Para a comparação futura dos modelos, a [arquitetura de avaliação](../docs/arquitetura_avaliacao_modelos.md) separa evidências fixas de pesquisa com tools. O [exportador local da SPEC-007](../../model_evaluation/README.md) prepara pacotes fixos candidatos usando `verify` e as cinco consultas desta DW, sem modificar sua carga. As [revisões independentes da DW](../../specs/active/SPEC-006/evidence/review.json) e do [exportador](../../specs/active/SPEC-007/evidence/review.json) aprovaram o escopo local em 16/10/2026. O harness científico e o gold set permanecem pendentes; a escolha de tools pela LLM foi implementada localmente para runs exploratórios da Bancada; os pacotes ainda não são casos científicos oficiais.
+O contrato físico atual está em [contrato_tabelas_canonicas.json](../dados_complementares_datamind/contrato_tabelas_canonicas.json)
+e no [DER](../docs/datamind_erd_canonical.drawio.xml). A migração SQL V1 continua
+sendo componente usado pelo carregador V2; não é uma segunda carga ativa.
+As sete projeções abaixo são a parte herdada da V1; as 20 tabelas adicionais
+e os tipos de todas as fontes estão no contrato. As consultas compartilhadas
+foram mantidas na versão do principal, incluindo as correções de novembro.
 
 ## Perguntas e grãos
 
@@ -32,32 +29,39 @@ Para a comparação futura dos modelos, a [arquitetura de avaliação](../docs/a
 
 Associações por ano, produto ou máquina são exploratórias. Venda por produto e operação por produto compartilham uma chave de cadastro, mas venda não tem chave de ordem ou máquina. Resultado financeiro tem somente data. Coincidência temporal não prova causa. O DW não corrige lacunas ou anomalias e não é um gold set.
 
-## Comandos
+## Comandos atuais
 
-Na raiz do repositório, após iniciar o cluster já existente:
+Na raiz do projeto, com o cluster existente em execução:
 
 ```powershell
-BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/scripts/local_postgres.py start
-BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py build
+BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/scripts/canonical_ingest.py plan
 BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py verify
 BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py query product --year 2020 --id 1000001
 BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py query machine --year 2020 --id 1000001
 BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py query financial --year 2020
-BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py query quality --year 2020
-BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py query material --year 2020 --id 1000001
 BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py contributors product --year 2020 --id 1000001 --limit 100
-BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py contributors product --year 2020 --id 1000001 --fact fact_operation --after 1105126 --limit 100
 BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/cli.py trace fact_sale 1000039
-BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/dw/tests/run_existing_load.py
 ```
 
-`run_existing_load.py` roda dez testes, incluindo cinco provas em transações somente leitura contra a carga já existente. Não cria nem altera o banco.
+`verify` encaminha para `scripts/verify_canonical_load.py` e verifica os três
+bancos contra a V2, sem escrita. Confere schema, chaves, contagens e proveniência;
+não é comparação célula a célula. `query`, `contributors` e `trace` permanecem
+somente leitura. Os filtros continuam limitados às consultas fixas, ano de
+2015 a 2026 e ID opcional; não há SQL arbitrário. As conexões conferem host,
+porta e diretório do cluster. Credenciais ficam no `.env.local` ignorado.
 
-`build` faz o inventário dos 75 CSVs e uma verificação completa e somente leitura de `raw_pN`/`public`. Depois cria **somente** `db_pesquisa_dw`, executa `migrations/001_init.sql` e a carga numa transação. Se falhar, o banco novo pode ficar vazio, mas as tabelas não são parcialmente publicadas. Repetir `build` com o mesmo fingerprint chama a verificação integral e retorna `already_current`, sem recriar objetos. Se qualquer fonte mudou, o comando recusa substituir a carga existente. Uma versão nova exige migração e plano de reconciliação explícitos. `verify`, `query`, `contributors` e `trace` fazem apenas leitura nos bancos; o comando CLI `verify` atualiza o arquivo de relatório local.
+`build` é o carregador histórico V1 e recusa executar com o manifesto V2.
+Uma nova carga exige o plano canônico e decisão explícita; não rodar `load`
+para iniciar a aplicação. [Operação dos dados](../README.md).
+O exportador de pacotes tem opção explícita V2 (`--dw-v2`); o caminho V1 e os
+testes de carga V1 são históricos e não devem validar o banco atual.
 
-As consultas recebem somente nomes da lista fixa, ano de 2015 a 2026 e ID opcional. Retornam fórmula, unidade, grão, tabelas fonte, cobertura e limite de interpretação. Para `machine`, `product`, `quality` e `material`, passe o tipo, ano e ID da linha agregada a `contributors`; a saída informa tabelas de fatos, contagens, IDs ordenados e `next_after` para continuar cada tabela com `--fact`/`--after`. `trace` aceita um desses IDs e devolve a linha DW, raw e tipada. `financial` já retorna o ID de cada observação datada e meses representados; ano sem linha retorna `no_observation`. Não existe SQL arbitrário. O código confere host, porta e `data_directory` do cluster; não aceita o serviço PostgreSQL de `localhost:5432`. Credenciais ficam no `.env.local` ignorado.
+## Reconciliação histórica V1 e seus limites
 
-## Reconciliação e limites observados
+As contagens e verificações desta seção foram observadas na V1 em outubro.
+Não representam o inventário completo da V2 atual.
+
+
 
 A carga v1 reconciliou 75 arquivos/540.600 linhas fonte, 539.140 linhas tipadas industriais e 1.460 financeiras. Fatos: 429.565 operações, 1.200 paradas, 120 vendas, 72 observações financeiras, 4.021 inspeções, 1.800 consumos e 180 observações de preço. Dimensões: 15 produtos, 13 máquinas, 30 materiais e 650 lotes de material. Em 16/10/2026, `verify()` comparou **cada coluna carregada** dos sete fatos e quatro dimensões de origem com a mesma projeção da carga, além do manifesto, três partições, 4.019 dias e somas de controle. Divergência de valor, data, vínculo ou quantidade de linhas falha sem substituir a carga. As somas `quantidade_produzida_real` (61.592.575), `quantidade_vendida` (107.089) e valor das vendas observadas (5.414.227,91) coincidiram entre fonte tipada e DW. O relatório registra os valores sem caracterizá-los como produção final, receita contábil ou custo realizado.
 

@@ -1,0 +1,97 @@
+consumo_id,custo_operacional_id,mes_ano,maquina_id,insumo,unidade_fonte,unidade_simulada,horas_base_operacoes,fator_quantidade_por_hora,quantidade_simulada,valor_unitario_origem_brl,custo_total_simulado_brl,origem
+1,1,2015-01,1,Detergente Industrial,l,l,744.0,0.15,111.6000,4.25,474.30,fator_sintetico_por_hora_reportada_de_operacao
+2,1,2015-01,2,Detergente Industrial,l,l,744.0,0.15,111.6000,4.25,474.30,fator_sintetico_por_hora_reportada_de_operacao
+3,1,2015-01,3,Detergente Industrial,l,l,744.0,0.15,111.6000,4.25,474.30,fator_sintetico_por_hora_reportada_de_operacao
+4,1,2015-01,4,Detergente Industrial,l,l,744.0,0.15,111.6000,4.25,474.30,fator_sintetico_por_hora_reportada_de_operacao
+5,2,2015-01,1,Energia,kWh,kWh,744.0,,10445.7000,4.87,50870.56,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+6,2,2015-01,2,Energia,kWh,kWh,744.0,,10381.7500,4.87,50559.12,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+7,2,2015-01,3,Energia,kWh,kWh,744.0,,10499.8500,4.87,51134.27,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+8,2,2015-01,4,Energia,kWh,kWh,744.0,,10412.6000,4.87,50709.36,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+9,3,2015-03,1,Lubrificante,l,l,744.0,0.08,59.5200,3.32,197.61,fator_sintetico_por_hora_reportada_de_operacao
+10,3,2015-03,2,Lubrificante,l,l,744.0,0.08,59.5200,3.32,197.61,fator_sintetico_por_hora_reportada_de_operacao
+11,3,2015-03,3,Lubrificante,l,l,744.0,0.08,59.5200,3.32,197.61,fator_sintetico_por_hora_reportada_de_operacao
+12,3,2015-03,4,Lubrificante,l,l,744.0,0.08,59.5200,3.32,197.61,fator_sintetico_por_hora_reportada_de_operacao
+13,4,2015-04,1,Detergente Industrial,l,l,720.0,0.15,108.0000,3.76,406.08,fator_sintetico_por_hora_reportada_de_operacao
+14,4,2015-04,2,Detergente Industrial,l,l,720.0,0.15,108.0000,3.76,406.08,fator_sintetico_por_hora_reportada_de_operacao
+15,4,2015-04,3,Detergente Industrial,l,l,720.0,0.15,108.0000,3.76,406.08,fator_sintetico_por_hora_reportada_de_operacao
+16,4,2015-04,4,Detergente Industrial,l,l,720.0,0.15,108.0000,3.76,406.08,fator_sintetico_por_hora_reportada_de_operacao
+17,5,2015-05,1,Energia,kWh,kWh,744.0,,10341.1400,2.18,22543.69,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+18,5,2015-05,2,Energia,kWh,kWh,744.0,,10308.0900,2.18,22471.64,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+19,5,2015-05,3,Energia,kWh,kWh,744.0,,10337.9800,2.18,22536.80,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+20,5,2015-05,4,Energia,kWh,kWh,744.0,,10387.1100,2.18,22643.90,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+21,6,2015-05,1,Agua de refrigeração,l,l,744.0,12,8928.0000,0.73,6517.44,fator_sintetico_por_hora_reportada_de_operacao
+22,6,2015-05,2,Agua de refrigeração,l,l,744.0,12,8928.0000,0.73,6517.44,fator_sintetico_por_hora_reportada_de_operacao
+23,6,2015-05,3,Agua de refrigeração,l,l,744.0,12,8928.0000,0.73,6517.44,fator_sintetico_por_hora_reportada_de_operacao
+24,6,2015-05,4,Agua de refrigeração,l,l,744.0,12,8928.0000,0.73,6517.44,fator_sintetico_por_hora_reportada_de_operacao
+25,7,2015-06,1,Lubrificante,l,l,720.0,0.08,57.6000,0.84,48.38,fator_sintetico_por_hora_reportada_de_operacao
+26,7,2015-06,2,Lubrificante,l,l,720.0,0.08,57.6000,0.84,48.38,fator_sintetico_por_hora_reportada_de_operacao
+27,7,2015-06,3,Lubrificante,l,l,720.0,0.08,57.6000,0.84,48.38,fator_sintetico_por_hora_reportada_de_operacao
+28,7,2015-06,4,Lubrificante,l,l,720.0,0.08,57.6000,0.84,48.38,fator_sintetico_por_hora_reportada_de_operacao
+29,8,2015-07,1,Agua de refrigeração,l,l,744.0,12,8928.0000,3.93,35087.04,fator_sintetico_por_hora_reportada_de_operacao
+30,8,2015-07,2,Agua de refrigeração,l,l,744.0,12,8928.0000,3.93,35087.04,fator_sintetico_por_hora_reportada_de_operacao
+31,8,2015-07,3,Agua de refrigeração,l,l,744.0,12,8928.0000,3.93,35087.04,fator_sintetico_por_hora_reportada_de_operacao
+32,8,2015-07,4,Agua de refrigeração,l,l,744.0,12,8928.0000,3.93,35087.04,fator_sintetico_por_hora_reportada_de_operacao
+33,9,2015-08,1,Energia,kWh,kWh,744.0,,10409.8100,3.61,37579.41,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+34,9,2015-08,2,Energia,kWh,kWh,744.0,,10247.0400,3.61,36991.81,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+35,9,2015-08,3,Energia,kWh,kWh,744.0,,10481.3200,3.61,37837.57,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+36,9,2015-08,4,Energia,kWh,kWh,744.0,,10320.1900,3.61,37255.89,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+37,10,2015-09,1,Energia,kWh,kWh,720.0,,9953.5000,2.21,21997.24,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+38,10,2015-09,2,Energia,kWh,kWh,720.0,,10042.1000,2.21,22193.04,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+39,10,2015-09,3,Energia,kWh,kWh,720.0,,10200.5800,2.21,22543.28,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+40,10,2015-09,4,Energia,kWh,kWh,720.0,,10091.3900,2.21,22301.97,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+41,11,2015-10,1,Lubrificante,l,l,744.0,0.08,59.5200,3.06,182.13,fator_sintetico_por_hora_reportada_de_operacao
+42,11,2015-10,2,Lubrificante,l,l,744.0,0.08,59.5200,3.06,182.13,fator_sintetico_por_hora_reportada_de_operacao
+43,11,2015-10,3,Lubrificante,l,l,744.0,0.08,59.5200,3.06,182.13,fator_sintetico_por_hora_reportada_de_operacao
+44,11,2015-10,4,Lubrificante,l,l,744.0,0.08,59.5200,3.06,182.13,fator_sintetico_por_hora_reportada_de_operacao
+45,12,2015-11,1,Detergente Industrial,l,l,720.0,0.15,108.0000,4.71,508.68,fator_sintetico_por_hora_reportada_de_operacao
+46,12,2015-11,2,Detergente Industrial,l,l,720.0,0.15,108.0000,4.71,508.68,fator_sintetico_por_hora_reportada_de_operacao
+47,12,2015-11,3,Detergente Industrial,l,l,720.0,0.15,108.0000,4.71,508.68,fator_sintetico_por_hora_reportada_de_operacao
+48,12,2015-11,4,Detergente Industrial,l,l,720.0,0.15,108.0000,4.71,508.68,fator_sintetico_por_hora_reportada_de_operacao
+49,13,2015-12,1,Detergente Industrial,l,l,744.0,0.15,111.6000,3.48,388.37,fator_sintetico_por_hora_reportada_de_operacao
+50,13,2015-12,2,Detergente Industrial,l,l,744.0,0.15,111.6000,3.48,388.37,fator_sintetico_por_hora_reportada_de_operacao
+51,13,2015-12,3,Detergente Industrial,l,l,744.0,0.15,111.6000,3.48,388.37,fator_sintetico_por_hora_reportada_de_operacao
+52,13,2015-12,4,Detergente Industrial,l,l,744.0,0.15,111.6000,3.48,388.37,fator_sintetico_por_hora_reportada_de_operacao
+53,14,2016-01,1,Energia,kWh,kWh,744.0,,10565.1600,3.05,32223.74,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+54,14,2016-01,2,Energia,kWh,kWh,744.0,,10543.1300,3.05,32156.55,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+55,14,2016-01,3,Energia,kWh,kWh,744.0,,10311.9800,3.05,31451.54,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+56,14,2016-01,4,Energia,kWh,kWh,744.0,,10492.2400,3.05,32001.33,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+57,15,2016-02,1,Energia,kWh,kWh,696.0,,9745.4500,3.81,37130.16,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+58,15,2016-02,2,Energia,kWh,kWh,696.0,,9810.4900,3.81,37377.97,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+59,15,2016-02,3,Energia,kWh,kWh,696.0,,9726.7700,3.81,37058.99,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+60,15,2016-02,4,Energia,kWh,kWh,696.0,,9711.2700,3.81,36999.94,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+61,16,2016-03,1,Agua de refrigeração,l,l,744.0,12,8928.0000,2.09,18659.52,fator_sintetico_por_hora_reportada_de_operacao
+62,16,2016-03,2,Agua de refrigeração,l,l,744.0,12,8928.0000,2.09,18659.52,fator_sintetico_por_hora_reportada_de_operacao
+63,16,2016-03,3,Agua de refrigeração,l,l,744.0,12,8928.0000,2.09,18659.52,fator_sintetico_por_hora_reportada_de_operacao
+64,16,2016-03,4,Agua de refrigeração,l,l,744.0,12,8928.0000,2.09,18659.52,fator_sintetico_por_hora_reportada_de_operacao
+65,17,2016-04,1,Detergente Industrial,l,l,720.0,0.15,108.0000,1.76,190.08,fator_sintetico_por_hora_reportada_de_operacao
+66,17,2016-04,2,Detergente Industrial,l,l,720.0,0.15,108.0000,1.76,190.08,fator_sintetico_por_hora_reportada_de_operacao
+67,17,2016-04,3,Detergente Industrial,l,l,720.0,0.15,108.0000,1.76,190.08,fator_sintetico_por_hora_reportada_de_operacao
+68,17,2016-04,4,Detergente Industrial,l,l,720.0,0.15,108.0000,1.76,190.08,fator_sintetico_por_hora_reportada_de_operacao
+69,18,2016-05,1,Energia,kWh,kWh,744.0,,10349.3800,3.17,32807.53,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+70,18,2016-05,2,Energia,kWh,kWh,744.0,,10544.3900,3.17,33425.72,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+71,18,2016-05,3,Energia,kWh,kWh,744.0,,10329.8500,3.17,32745.62,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+72,18,2016-05,4,Energia,kWh,kWh,744.0,,10496.0700,3.17,33272.54,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+73,19,2016-06,1,Detergente Industrial,l,l,720.0,0.15,108.0000,4.21,454.68,fator_sintetico_por_hora_reportada_de_operacao
+74,19,2016-06,2,Detergente Industrial,l,l,720.0,0.15,108.0000,4.21,454.68,fator_sintetico_por_hora_reportada_de_operacao
+75,19,2016-06,3,Detergente Industrial,l,l,720.0,0.15,108.0000,4.21,454.68,fator_sintetico_por_hora_reportada_de_operacao
+76,19,2016-06,4,Detergente Industrial,l,l,720.0,0.15,108.0000,4.21,454.68,fator_sintetico_por_hora_reportada_de_operacao
+77,20,2016-07,1,Lubrificante,l,l,744.0,0.08,59.5200,4.03,239.87,fator_sintetico_por_hora_reportada_de_operacao
+78,20,2016-07,2,Lubrificante,l,l,744.0,0.08,59.5200,4.03,239.87,fator_sintetico_por_hora_reportada_de_operacao
+79,20,2016-07,3,Lubrificante,l,l,744.0,0.08,59.5200,4.03,239.87,fator_sintetico_por_hora_reportada_de_operacao
+80,20,2016-07,4,Lubrificante,l,l,744.0,0.08,59.5200,4.03,239.87,fator_sintetico_por_hora_reportada_de_operacao
+81,21,2016-08,1,Lubrificante,l,l,744.0,0.08,59.5200,3.28,195.23,fator_sintetico_por_hora_reportada_de_operacao
+82,21,2016-08,2,Lubrificante,l,l,744.0,0.08,59.5200,3.28,195.23,fator_sintetico_por_hora_reportada_de_operacao
+83,21,2016-08,3,Lubrificante,l,l,744.0,0.08,59.5200,3.28,195.23,fator_sintetico_por_hora_reportada_de_operacao
+84,21,2016-08,4,Lubrificante,l,l,744.0,0.08,59.5200,3.28,195.23,fator_sintetico_por_hora_reportada_de_operacao
+85,22,2016-09,1,Detergente Industrial,l,l,720.0,0.15,108.0000,4.66,503.28,fator_sintetico_por_hora_reportada_de_operacao
+86,22,2016-09,2,Detergente Industrial,l,l,720.0,0.15,108.0000,4.66,503.28,fator_sintetico_por_hora_reportada_de_operacao
+87,22,2016-09,3,Detergente Industrial,l,l,720.0,0.15,108.0000,4.66,503.28,fator_sintetico_por_hora_reportada_de_operacao
+88,22,2016-09,4,Detergente Industrial,l,l,720.0,0.15,108.0000,4.66,503.28,fator_sintetico_por_hora_reportada_de_operacao
+89,23,2016-10,1,Detergente Industrial,l,l,744.0,0.15,111.6000,1.38,154.01,fator_sintetico_por_hora_reportada_de_operacao
+90,23,2016-10,2,Detergente Industrial,l,l,744.0,0.15,111.6000,1.38,154.01,fator_sintetico_por_hora_reportada_de_operacao
+91,23,2016-10,3,Detergente Industrial,l,l,744.0,0.15,111.6000,1.38,154.01,fator_sintetico_por_hora_reportada_de_operacao
+92,23,2016-10,4,Detergente Industrial,l,l,744.0,0.15,111.6000,1.38,154.01,fator_sintetico_por_hora_reportada_de_operacao
+93,24,2016-11,1,Detergente Industrial,l,l,720.0,0.15,108.0000,2.07,223.56,fator_sintetico_por_hora_reportada_de_operacao
+94,24,2016-11,2,Detergente Industrial,l,l,720.0,0.15,108.0000,2.07,223.56,fator_sintetico_por_hora_reportada_de_operacao
+95,24,2016-11,3,Detergente Industrial,l,l,720.0,0.15,108.0000,2.07,223.56,fator_sintetico_por_hora_reportada_de_operacao
+96,24,2016-11,4,Detergente Industrial,l,l,720.0,0.15,108.0000,2.07,223.56,fator_sintetico_por_hora_reportada_de_operacao

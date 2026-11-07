@@ -1,0 +1,998 @@
+[
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2015_2016/contas_contabeis.csv",
+    "linhas": 7,
+    "sha256": "747b09b5f77141e3a213f509b14267d6f411d06139fecca7444141e7736a30d5"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2015_2016/custo_mao_obra_historico.csv",
+    "linhas": 10,
+    "sha256": "139ea50c4349fa8bee9553a9c9ac426ac208998d9500c52910b906e78d5b19e2"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2015_2016/custos_indiretos_rateio.csv",
+    "linhas": 12,
+    "sha256": "f28d800dcf8c350ba708025f90e17fb0e92cc3fcdad83e4f42f9db7875fedcbd"
+  },
+  {
+    "classe": "original_corrigido",
+    "caminho": "dados_simulados/dados_financeiros_2015_2016/custos_operacionais_variaveis.csv",
+    "linhas": 24,
+    "sha256": "21aab32b8e8f0289c2cea2958984a69f91a7ec84455896fc599ab80a6aa2050f"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2015_2016/custos_padrao.csv",
+    "linhas": 5,
+    "sha256": "62bb2d005b7968e0edb0c61c985cc050b4329a379efb05eb5c8239d3d1c00274"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2015_2016/custos_producao.csv",
+    "linhas": 12,
+    "sha256": "5bd038def1722df1e28bec0ac2a29b464f9724affcddb650c30e3fe1ef82289c"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2015_2016/kpis_gerenciais.csv",
+    "linhas": 12,
+    "sha256": "e1104eba22c4afddeb7db2d1cca9b7047dfa2ac33163d9f1ffa9753cd8413a7f"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2015_2016/lancamentos_financeiros.csv",
+    "linhas": 30,
+    "sha256": "3b11cfd1c41dbae8b2156b953bab4e1ddf9be801b2637f2ba1e9c89763127410"
+  },
+  {
+    "classe": "original_corrigido",
+    "caminho": "dados_simulados/dados_financeiros_2015_2016/materiais_custo_historico.csv",
+    "linhas": 20,
+    "sha256": "a3e3221c1df1408d28cb69e3c5a03b50b6880df7694b8871201e2ed4c637d3df"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2015_2016/resultados_financeiros.csv",
+    "linhas": 12,
+    "sha256": "81ea7f618ad38acf5beffb77e46b8a8d2227f868a4bfc84665afe45ed1e55fae"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2015_2016/vendas.csv",
+    "linhas": 20,
+    "sha256": "8e80aaaf88d23168cf9a5eee42e954df5561233c1f1b00e242c59c8065b06aab"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2017_2020/contas_contabeis.csv",
+    "linhas": 10,
+    "sha256": "57955af80c67e639a47774f4e43ea80e3f9fa5b34497eb0d3ac6c8700a3b7664"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2017_2020/custo_mao_obra_historico.csv",
+    "linhas": 19,
+    "sha256": "ea348351a44b499f2f0e5f1fa15c76c61532d5c0744be38d547e8aeb532f98cf"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2017_2020/custos_indiretos_rateio.csv",
+    "linhas": 48,
+    "sha256": "8bdd3f64eba397168a2ab0db7e9c58a380f9b691c0d44a854befda3fa28c3c96"
+  },
+  {
+    "classe": "original_corrigido",
+    "caminho": "dados_simulados/dados_financeiros_2017_2020/custos_operacionais_variaveis.csv",
+    "linhas": 47,
+    "sha256": "2ccafc269a25fc6b3f30a380a6c8564a31e62cf38b5283a4dca0f170fc9e44d4"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2017_2020/custos_padrao.csv",
+    "linhas": 5,
+    "sha256": "8a7af73b79550d7279241bcb5fc6abec57d15de956373bcf4f6d2b2b5f35e545"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2017_2020/custos_producao.csv",
+    "linhas": 24,
+    "sha256": "94e4074554c5c7f67f6eccb4b0fa3a0528b45fe8dcf32d898020d4e0d7c59ee9"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2017_2020/kpis_gerenciais.csv",
+    "linhas": 196,
+    "sha256": "0f195aab2e0266a809249f7fefed459d806127db39d9c3d73a907d30bc04f134"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2017_2020/lancamentos_financeiros.csv",
+    "linhas": 60,
+    "sha256": "b4c3bd5596b59b5df749c2520c218293f2c5f39590c3947469c6acaef4b86e43"
+  },
+  {
+    "classe": "original_corrigido",
+    "caminho": "dados_simulados/dados_financeiros_2017_2020/materiais_custo_historico.csv",
+    "linhas": 60,
+    "sha256": "8e2c69c65dd46f9d3a0a375e4cfbd9ff1f4952d98bc76f93694614eb2f6593dc"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2017_2020/resultados_financeiros.csv",
+    "linhas": 24,
+    "sha256": "19988f1a42ec61826ba4854c7fac1bc8b97bd8e6a3e26b9ce2fa0f92a64eb7a9"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2017_2020/vendas.csv",
+    "linhas": 40,
+    "sha256": "724a162049f655a1c06c7f1bff3307b128feea2842f7a6463f245ca036725024"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2021_2025/contas_contabeis.csv",
+    "linhas": 12,
+    "sha256": "8815c7326be795b031672bda4c205bfd16c2d19de02b9b56429c287eaa78e26d"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2021_2025/custo_mao_obra_historico.csv",
+    "linhas": 39,
+    "sha256": "96c536810e117b4b6788dc221b52624712fb27bfc2fae39fac52f27ed1afb287"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2021_2025/custos_indiretos_rateio.csv",
+    "linhas": 60,
+    "sha256": "5c12251bebbfbf98f5819250c3390b6cd669f477d3a7cad509f8a005bd449520"
+  },
+  {
+    "classe": "original_corrigido",
+    "caminho": "dados_simulados/dados_financeiros_2021_2025/custos_operacionais_variaveis.csv",
+    "linhas": 71,
+    "sha256": "e175f7bfa94522fa246286093040bbcac14cd2d6784b8d971dfa503e826cd314"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2021_2025/custos_padrao.csv",
+    "linhas": 5,
+    "sha256": "ecd10aa0901d008f5a271ac77bd6fb27a6c0858c6fce2ae5d0245f14a2bad6c1"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2021_2025/custos_producao.csv",
+    "linhas": 36,
+    "sha256": "cd8239ca9f4d92e554229c42f82d0d02dc4bfd93aed73aa2ce329abbee2856f6"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2021_2025/kpis_gerenciais.csv",
+    "linhas": 244,
+    "sha256": "6c4799626ce96479cae3db53e2e865f0d0c2f6c6c9cbddfb62a13cad49618680"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2021_2025/lancamentos_financeiros.csv",
+    "linhas": 100,
+    "sha256": "fe0337ada9f9e53139702e2c49daf766801ed4b1e2a84cfae4c661a7ac4ac6dc"
+  },
+  {
+    "classe": "original_corrigido",
+    "caminho": "dados_simulados/dados_financeiros_2021_2025/materiais_custo_historico.csv",
+    "linhas": 100,
+    "sha256": "035453ebd75a0ac119afe7505df855016ade6b148724b455d9ee04cf8a5d69c3"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2021_2025/resultados_financeiros.csv",
+    "linhas": 36,
+    "sha256": "46a4c69ef28647de1ebdbf495fe79982502338891deec0ce93ea0b57798ddf7e"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_financeiros_2021_2025/vendas.csv",
+    "linhas": 60,
+    "sha256": "419bfb832003a6da9737fd2fcfe6dc8a80c473ccbe380e2feb874000280554ae"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/consumo_materiais.csv",
+    "linhas": 300,
+    "sha256": "f7e352f5907507c7edaa4beabb2e6d9182ee91ae2a9987ab1ddc45ff6db76f3a"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/controle_qualidade.csv",
+    "linhas": 732,
+    "sha256": "fae12664ce2b07477324274a29844a2e760f337c0b1e8bffdfe12573bb56e473"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/equipamentos.csv",
+    "linhas": 17545,
+    "sha256": "a6a32d4a777cd88a9ae2ce4ee12c7c0456a323f288b0d0cd07f2db83b0d1dfb2"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/fornecedores.csv",
+    "linhas": 10,
+    "sha256": "d999948941728dcfe53061b00840d970313f30d7e58a8d9f335e000c71f63f78"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/lotes_materiais.csv",
+    "linhas": 100,
+    "sha256": "6e0408685ee686ced381d4e5d10ef52d4239a678ccfa7e21209e25d58627c93e"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/lotes_producao.csv",
+    "linhas": 100,
+    "sha256": "34f87682f340d0a5d4687b7aedd6fc07700500edd699d6c744bae2b8a35e599a"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/maquinas.csv",
+    "linhas": 4,
+    "sha256": "aec77fc55553fa747764e822b330cbec4b056486a660a717f4160a571fba7506"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/materiais.csv",
+    "linhas": 10,
+    "sha256": "758e9676ded7d29f0a1184a36092dddb7c7e27643670cdb255d7fd92a545a457"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/ordens_producao.csv",
+    "linhas": 100,
+    "sha256": "6e663d05b98ab281f947da75ba5b9b820650ec29259a93bd2d8f19e36cc26062"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/paradas_maquinas.csv",
+    "linhas": 200,
+    "sha256": "d5716fd3bc0e45dd368986b23fca976c172d5bb36f50a5f8d80e4018082dfc65"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/processo_industrial.csv",
+    "linhas": 732,
+    "sha256": "8ea83c124ca4e2539030e0ed3dc9e0acd2a316a3e6ed399ab2f665ec5b963cf5"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/produtos.csv",
+    "linhas": 5,
+    "sha256": "60ad257edb543085a282949dea4410322569696167d7ce01b5aa1d033c784e31"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/registros_operacao.csv",
+    "linhas": 70180,
+    "sha256": "ea579cdb0afc49c0cc1d533df9461f1dd24f59292f403de0ee689a2371add3e1"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2015_2017/roteiros_producao.csv",
+    "linhas": 5,
+    "sha256": "b67d3e970e7dd5fefdb33b6e62e2b6d5f2c178eff14adcea5e90bd9b88a2167b"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/consumo_materiais.csv",
+    "linhas": 600,
+    "sha256": "4ee1fad02910be5bd25622c454f39e20d8394fd05fb37194f856d42fa5d87b7a"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/controle_qualidade.csv",
+    "linhas": 1462,
+    "sha256": "a39ffb7c2a6a46630b4c2ae89aaf175a0c9fba886ec860832c6a1d486eb7f386"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/equipamentos.csv",
+    "linhas": 35065,
+    "sha256": "2661fbdfeeb70c99d8d955f5bfb9548c3f6c36c348ff54799526f1c255596c64"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/fornecedores.csv",
+    "linhas": 20,
+    "sha256": "6c9abb8feebd50dfd0093d7f53a8700eb25eb353dfb8146c70d6118dd2332a2b"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/lotes_materiais.csv",
+    "linhas": 200,
+    "sha256": "01214656ad76a48cc0ea2a3393924eb99b391807cdc0b85ccb91ebf8f13b4ddf"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/lotes_producao.csv",
+    "linhas": 200,
+    "sha256": "365c8455b98fe53ddc8bd0486cb18ba4c58b08e3056e2b2fd76f96224da2a2a2"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/maquinas.csv",
+    "linhas": 4,
+    "sha256": "ea372a0f7e023ce2c3a2d57ceef8840684fdd64b0a1fd1b956ecf936150d35ca"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/materiais.csv",
+    "linhas": 10,
+    "sha256": "713220e48191fab74939e04527a341384a932f171f77c1175c2d15120bfbbb06"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/ordens_producao.csv",
+    "linhas": 200,
+    "sha256": "1db080364c5e2975544489c33eb068d3294da9c6adfe8c632ba4fe86178f99b6"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/paradas_maquinas.csv",
+    "linhas": 400,
+    "sha256": "863da77cb484080c9a71f2a700bad951816a2733ab1198859bbb89a6254120f0"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/processo_industrial.csv",
+    "linhas": 1462,
+    "sha256": "4d313758e8d431d95edb37be98492a963d732a433aa2ed4841487a9e5fd12966"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/produtos.csv",
+    "linhas": 5,
+    "sha256": "877c00ede4e261540bb12499a6e3c2802e1161d18ba20c4c164d88bf1c1488d8"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/registros_operacao.csv",
+    "linhas": 140260,
+    "sha256": "01f688fd3a6106a067560e4f647b360d8732599d76deb6c0da466b09b82a9792"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronica_2017_2020/roteiros_producao.csv",
+    "linhas": 10,
+    "sha256": "fa5006423059120f3b0f0bca8e733c68bb47fe2733d46f6cef6f19e7423358a2"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/consumo_materiais.csv",
+    "linhas": 900,
+    "sha256": "2d8cc95db7e17d351b9b31f9314456236146d62edf79c0a00933c599622edcfd"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/controle_qualidade.csv",
+    "linhas": 1827,
+    "sha256": "cf73ba852242ea9d42a80fd950149b03a9129b5059f2e433080e6fdbe73b6d28"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/equipamentos.csv",
+    "linhas": 43825,
+    "sha256": "d9c2cdcb2509e98d5ce566f66f1c533cd447e550801c83b6d2702157135b2413"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/fornecedores.csv",
+    "linhas": 30,
+    "sha256": "685cd0ce850927e914df4510e55b98121a3d21ce61baf9587d9ae314dcc2e27a"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/lotes_materiais.csv",
+    "linhas": 350,
+    "sha256": "536d03cb4f2cad2594e3cbaa1a463cae3004d75ea124f468be69dc369db2993d"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/lotes_producao.csv",
+    "linhas": 350,
+    "sha256": "690dcdd83b7f1c5ba7d1ff7a4f8e98277302ba911878e2936c25ca9c6b002017"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/maquinas.csv",
+    "linhas": 5,
+    "sha256": "ffca32a878f9c68cefe3e46b3c2804b32bf0eebbf872220379fdca2eeb5f1843"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/materiais.csv",
+    "linhas": 10,
+    "sha256": "f2300a3e2c8bbfceafb3bf3501d8346863ba0ce062ad0f4e9ebd98b6d278ff35"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/ordens_producao.csv",
+    "linhas": 350,
+    "sha256": "891efb4016ee209b5f5fd4458855d7e4f9d6a0514ec43b56a90168d8ad4606d3"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/paradas_maquinas.csv",
+    "linhas": 600,
+    "sha256": "c44ec57f2f819bec86ee65c3b25c695ce2d1af5bed7f95d93a9799804dcf8702"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/processo_industrial.csv",
+    "linhas": 1827,
+    "sha256": "66abec0fafa24f4fcb45f9324b3f04eeefaff9b6e62a0a79ccae5a02d7e45920"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/produtos.csv",
+    "linhas": 5,
+    "sha256": "dc58332d450cfbe9d1e2bb139fa6cf6f3efdbd34bbe8aac1e69744dc8ef35852"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/registros_operacao.csv",
+    "linhas": 219125,
+    "sha256": "cd179cb9dd98af0ccc02f5e5ef36c1da2c0aac64ca8fe7596d31fee7f99423e2"
+  },
+  {
+    "classe": "original_preservado",
+    "caminho": "dados_simulados/dados_industriais_automotivo_eletronics_2021_2025/roteiros_producao.csv",
+    "linhas": 15,
+    "sha256": "e829e2708fe2d37cbd7ad6b8a0984408e36454267430706969741162c37dd712"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2015_2016/certificacoes_ambientais.csv",
+    "linhas": 3,
+    "sha256": "00689cd67d7a352c0bec1f102196e50bccdbe7c766e6ae980a17110666a04139"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2015_2016/componentes_maquinas.csv",
+    "linhas": 20,
+    "sha256": "ba506e8178174f432c086ed4541276eb6657521031ea7985895e925d99991245"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2015_2016/consumo_energia_turno.csv",
+    "linhas": 1260,
+    "sha256": "2048b616bb19095035f644c4b0d44699bcbcf1dac104e3ea81b0868961047ad4"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2015_2016/consumo_recursos_esg.csv",
+    "linhas": 24,
+    "sha256": "e654617b372d43998edb621be3b83acac70b07fdee332d0d31799bdab9dc0f0e"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2015_2016/emissoes_co2.csv",
+    "linhas": 24,
+    "sha256": "7e2e8d261e999abe2e904672d667c208e47f0cf00c80c628bdfff89a341f54cd"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2015_2016/metas_energia_equipamento.csv",
+    "linhas": 4,
+    "sha256": "2cae2fc42c6c7bb20bd373d180eaa652ee4e19ba62ad4fc22df3a1cda70799aa"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2015_2016/metas_producao_maquina.csv",
+    "linhas": 4,
+    "sha256": "e37703c511f8363ad644b058e0c7a98fc16d715c7274a8c1d34f18cee693cd52"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2015_2016/ordens_manutencao.csv",
+    "linhas": 120,
+    "sha256": "64921fadd1bcebc85f2da5398dceff9afc1f0c239fa2297b5559df3f9fc79e4d"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2015_2016/projetos_investimento_verde.csv",
+    "linhas": 3,
+    "sha256": "55863d53782a203828deef134040949b8309a3114bddbe757c86efb02982ecce"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2015_2016/resultados_financeiros_mensais.csv",
+    "linhas": 24,
+    "sha256": "ce7f5a4703e18d74f4f972606af8cb47eccd4b56c4b6137b324e1139a26842ac"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2015_2016/tarifas_energia.csv",
+    "linhas": 5,
+    "sha256": "2bf43f58d7ff1f2f33b399a3dbffe5288fc7d1e740be4f41517263aea6e5f850"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2015_2016/telemetria_preditiva.csv",
+    "linhas": 1500,
+    "sha256": "4a8923e62b63ab004b70c7083870fb1d025ba4f05f17b40c8fb39575c4581895"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2015_2016/turnos_trabalho.csv",
+    "linhas": 3,
+    "sha256": "f610fb7be1d015615151b1e3c76f4d905d9f6febccca60bb78784aa81b6718db"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2017_2020/certificacoes_ambientais.csv",
+    "linhas": 3,
+    "sha256": "d5b6e21b05ed1ed8b8d575a8917b30f8d090a46dcf36e2c3a98566aeab3b9878"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2017_2020/componentes_maquinas.csv",
+    "linhas": 20,
+    "sha256": "1109fbf28b5899253e65571349b038b13c95eecd79948a75892fa12f38dd43ca"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2017_2020/consumo_energia_turno.csv",
+    "linhas": 2000,
+    "sha256": "b2d12d5271f4760af0173f096790ee3e4128f9c069edebb97d5cc72fb4d4623f"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2017_2020/consumo_recursos_esg.csv",
+    "linhas": 48,
+    "sha256": "e2f7b6d4927e1f8fc3bfed8334cbf078fc667d4f6332949075a61d948085a0b0"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2017_2020/emissoes_co2.csv",
+    "linhas": 48,
+    "sha256": "a08368a0530bd32570025dd6aff93d764130c55ad8971cf69844d61c03ff6344"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2017_2020/metas_energia_equipamento.csv",
+    "linhas": 4,
+    "sha256": "b377cb72f6f17b28123952b059d8f742af1571438dc9d370553665bcdcc033f3"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2017_2020/metas_producao_maquina.csv",
+    "linhas": 4,
+    "sha256": "8b7b6b5289e02d4ad2f8754745567144abae5736256dfa9dd01934f847c6179f"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2017_2020/ordens_manutencao.csv",
+    "linhas": 240,
+    "sha256": "51a5eff2919cee9b9037bf641f2b0f89a543f245235f69de00195e306a5bded0"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2017_2020/projetos_investimento_verde.csv",
+    "linhas": 3,
+    "sha256": "f9a4a67a811da5b68377957e5f4cec32a6fdb890f1b18c69e19150bb2cf0967d"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2017_2020/resultados_financeiros_mensais.csv",
+    "linhas": 48,
+    "sha256": "199e3a2b6cfaef922647223efa672fa7f9086349272a27b4cb9c2bd2039797c1"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2017_2020/tarifas_energia.csv",
+    "linhas": 5,
+    "sha256": "eef46ce932e50f9fdce89608b485bd9b16f27c9646b2f355e7e27c1b4432cd22"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2017_2020/telemetria_preditiva.csv",
+    "linhas": 1500,
+    "sha256": "f71d6d04fedbbf3021c955f8f417485704113516ef0701f0845b92e57315d0e9"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2017_2020/turnos_trabalho.csv",
+    "linhas": 3,
+    "sha256": "17df6fb7ab5f6fcfdc7d83344b764102a22679111c142adc493f1a4ea9b51a86"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2021_2025/certificacoes_ambientais.csv",
+    "linhas": 4,
+    "sha256": "a7c462ebc68bcbdf2d0bdbbdbe3dab9e3fae303a1fb21d55a922702d2f0d0250"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2021_2025/componentes_maquinas.csv",
+    "linhas": 25,
+    "sha256": "dd79010a754e16d19068bed9c84a8cc041269532e9ee49f944af3bfb4fcf6b35"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2021_2025/consumo_energia_turno.csv",
+    "linhas": 2000,
+    "sha256": "73cf33799d10e9e52947ec1deeebc50aad09216f355384ca2ae5fe3a84791e28"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2021_2025/consumo_recursos_esg.csv",
+    "linhas": 60,
+    "sha256": "2922ae8dd448c525aae82729ce7822d977c2f73f4697e8e483a34961bd054ee9"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2021_2025/emissoes_co2.csv",
+    "linhas": 60,
+    "sha256": "8d3d0768842f412a3a1a66a3ac11768528a6ce3e86600296f290d0fe9285d9c5"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2021_2025/metas_energia_equipamento.csv",
+    "linhas": 5,
+    "sha256": "724702f638ebec248232ca3abd9473e482f0e211ace94bed7fbfeeba1e66ea77"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2021_2025/metas_producao_maquina.csv",
+    "linhas": 5,
+    "sha256": "c23c16a8fb259ed82dc309708b0f5af17d0b8808560cfe24d19478615cdf051a"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2021_2025/ordens_manutencao.csv",
+    "linhas": 300,
+    "sha256": "f96c13ac8cf02c5b9f2fd5b029851a5821892a1a2cd2965cfe2223769476a5c7"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2021_2025/projetos_investimento_verde.csv",
+    "linhas": 4,
+    "sha256": "8b3bf4207e40b5d3e2562ff9cb3b9ad59f032a8c5caa9f66831585fd7ce25288"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2021_2025/resultados_financeiros_mensais.csv",
+    "linhas": 60,
+    "sha256": "1f8da6a81b35d0b0b29a8ddcf9bdea286a97ece81c796a5ec879564ff152205c"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2021_2025/tarifas_energia.csv",
+    "linhas": 5,
+    "sha256": "f3d722e439b15a74400c2583d1d86ca29056c90d11a73dcdfa126da9d1898b18"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2021_2025/telemetria_preditiva.csv",
+    "linhas": 1500,
+    "sha256": "13481452635d6e3a3b5556e78245a7161642f656b17af364e4667683c0786881"
+  },
+  {
+    "classe": "complementar",
+    "caminho": "dados_complementares_datamind/periodo_2021_2025/turnos_trabalho.csv",
+    "linhas": 3,
+    "sha256": "3c0e1dab05bb7a96d8a48efe0da232642bf8d8c107ef6fb05c87033c67894da6"
+  },
+  {
+    "classe": "referencia_derivada",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/clientes_referenciados.csv",
+    "linhas": 9,
+    "sha256": "ca594e8a3e31cf598333e21d3c32707a7a8fb6d99f6e16ebc8d3856f846a5fbc"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/consumo_energia_intervalo.csv",
+    "linhas": 10080,
+    "sha256": "c01282c2c8e9f51d122adb4270274c037d7518c2fad9913121833db7f1deb1d8"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/consumo_insumos_operacionais_simulado.csv",
+    "linhas": 96,
+    "sha256": "245da53101a14f5f55a0327e96218845fec48999d2ed7968c3d0df1fca4af88c"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/custo_hora_operador_estimado.csv",
+    "linhas": 5,
+    "sha256": "e726c18e8d2226f8f4725876d9c081336c381ccbb7284d4ae34dfe45ea861713"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/custos_produto_mensais_simulados.csv",
+    "linhas": 120,
+    "sha256": "d7c3831f1f4bccbc37dbacae7a402e40f6b2587ba3c2802ed9be1080f8c20d48"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/eventos_maquina_turno.csv",
+    "linhas": 140629,
+    "sha256": "87f6b214956254b414a9902dd2149a95f2027f519e95b09c70bd5e2570fa54a6"
+  },
+  {
+    "classe": "referencia_derivada",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/inspetores_referenciados.csv",
+    "linhas": 9,
+    "sha256": "c1a6e8c06247a411b50302a82ad80879d36c038aeaab0be86ebed5b84b9a372c"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/metas_esg_simuladas.csv",
+    "linhas": 120,
+    "sha256": "63af1205d68e6791b9245d3c71de040054b057120b559fd7920e86f781d96ca6"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/oee_maquina_turno_simulado.csv",
+    "linhas": 8776,
+    "sha256": "b39733556c7c1e105a72426911ce0c3288dca33bf55826e6dbddff625e767a97"
+  },
+  {
+    "classe": "referencia_derivada",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/operadores_referenciados.csv",
+    "linhas": 10,
+    "sha256": "02488bd1551a2e3a7aaf0cfa50fce3e35e11663723b19873237b2ff0ea79d633"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/ordens_manutencao_geradas.csv",
+    "linhas": 48,
+    "sha256": "d901ac11bc5ade16d4e1924add63b4b0c34eab52dc3701c32e2a2a7a675b4964"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/paradas_maquinas_geradas.csv",
+    "linhas": 25,
+    "sha256": "335dcfdea01540306beae81482a944e4daee2be4988e4b0fe50a8ee48d1f034a"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/rateio_custos_indiretos_maquina_simulado.csv",
+    "linhas": 48,
+    "sha256": "c4c78b2635455506b660ea1897e4981b53ffcc74e78455702914d9bd5ff6f370"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/rateio_custos_producao_produto_simulado.csv",
+    "linhas": 60,
+    "sha256": "10b9e8a88e57cf64ab331170f0d37937949004e32c86049e19f606d75e3fd7a7"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/resultados_projeto_esg_simulados.csv",
+    "linhas": 40,
+    "sha256": "0d7b66fb3f803f3253a4742e4a35af12b1b0c8c7c9e9efd56a80e7b60ccf3beb"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/resumo_estado_maquina_turno_simulado.csv",
+    "linhas": 8776,
+    "sha256": "eaa0087665c58e2be1fc4b7110cf2cfe7817552183014d4c6424eeab690451f1"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2015_2016/vinculos_manutencao_simulados.csv",
+    "linhas": 71,
+    "sha256": "26f4146ac1e6b8b8c7d1c57aaf2cad4e5fc7fe15d02bd887f0fbb48a86976058"
+  },
+  {
+    "classe": "referencia_derivada",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/clientes_referenciados.csv",
+    "linhas": 14,
+    "sha256": "5651720eac901e176e4242d488e81c9535f4ce5887e6c308f7704614ceaaec2a"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/consumo_energia_intervalo.csv",
+    "linhas": 16000,
+    "sha256": "6039ae39889252c3661a2d068cf50654ba88233f0ed3450231a48b8bf77efbfc"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/consumo_insumos_operacionais_simulado.csv",
+    "linhas": 188,
+    "sha256": "759225998c34eadfd6771953a72b3f02e32fecb231074c98521e4a034617b7e6"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/custo_hora_operador_estimado.csv",
+    "linhas": 7,
+    "sha256": "7367c4e13a5c7f56bc86d532707999495f60bba4ffa4791c5ec064165ff8d54b"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/custos_produto_mensais_simulados.csv",
+    "linhas": 240,
+    "sha256": "c844c83a61ace7a0a5626db6a65cd19fc7fc8aadbc9decac98cabbb38e18da29"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/eventos_maquina_turno.csv",
+    "linhas": 281015,
+    "sha256": "1c5adcf0f2c126e60e0b9cab3464d8c78080bb81decc5c520710dad48ddcb925"
+  },
+  {
+    "classe": "referencia_derivada",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/inspetores_referenciados.csv",
+    "linhas": 19,
+    "sha256": "40961c158dc59b2f5cfdc4503effcb16515cb50a0b44f095e7d77fd72799c174"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/metas_esg_simuladas.csv",
+    "linhas": 240,
+    "sha256": "5090346a460df0f8c9875a4d27fde804808875b10d187bbb5fb0b003b3c6a504"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/oee_maquina_turno_simulado.csv",
+    "linhas": 17536,
+    "sha256": "71268a4e381dbe2c52bb88b9109d151896d6330901ba1a23b72bd4dcd5357d00"
+  },
+  {
+    "classe": "referencia_derivada",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/operadores_referenciados.csv",
+    "linhas": 20,
+    "sha256": "f5d9b2de2d9ca7d713c447ee85334fe74529cc32851b54f45c20ba4e9e3b80db"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/ordens_manutencao_geradas.csv",
+    "linhas": 52,
+    "sha256": "692320d1bc5e9f7cd5f47bcb10ef7a88271bf57d42e0718caec0dc0f7c82185d"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/paradas_maquinas_geradas.csv",
+    "linhas": 20,
+    "sha256": "880f8119803592d2504b97b6038e569b4607a32f73dfc0c39dbad98aecd8d025"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/rateio_custos_indiretos_maquina_simulado.csv",
+    "linhas": 192,
+    "sha256": "4aa86a2d35d9b59ba5dcd8d875d1267d61c3c7c475a3765c27b04a245771b7bb"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/rateio_custos_producao_produto_simulado.csv",
+    "linhas": 120,
+    "sha256": "3624eb803e531aa8839c406ebb01a976baea2a936b300acfd6fa7c32b2e8b41f"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/resultados_projeto_esg_simulados.csv",
+    "linhas": 93,
+    "sha256": "f1d9bd941fd59e75ca704f684574031421e65cc1ee698a1a631735d09c1a7817"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/resumo_estado_maquina_turno_simulado.csv",
+    "linhas": 17536,
+    "sha256": "5988323712dcfe7df4298288cc204fb9ec63b40e192423cdab1e9a5563884710"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2017_2020/vinculos_manutencao_simulados.csv",
+    "linhas": 92,
+    "sha256": "b1b15a7b88a448120f6c60a65402f72e0397bfcd2d0540f1731f82d0c31b8d96"
+  },
+  {
+    "classe": "referencia_derivada",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/clientes_referenciados.csv",
+    "linhas": 35,
+    "sha256": "4471c2124294da0f9752cd9110da4ff5df9f9ee5819e4efd35395c1709083754"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/consumo_energia_intervalo.csv",
+    "linhas": 16000,
+    "sha256": "ac7f390ed7d889ef143e1e1a74294ba802f11b3301b6fe36196dd6dde4fc7c3d"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/consumo_insumos_operacionais_simulado.csv",
+    "linhas": 355,
+    "sha256": "05b6b7c5edafde60fc44a189477ac2361b54b108decae1daa882229c194ce750"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/custo_hora_operador_estimado.csv",
+    "linhas": 11,
+    "sha256": "1742bcdac5b75d34b1bbe8fd773663029a9fffa7de534fa03d90c734dba7b69f"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/custos_produto_mensais_simulados.csv",
+    "linhas": 300,
+    "sha256": "317205957e59d7bd49146399069c2c072cf7a6363f59021383ffd1ca011d751c"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/eventos_maquina_turno.csv",
+    "linhas": 438984,
+    "sha256": "e7365928e671c2c2a1146e39d57dce1e98dd975ad2e196a68007069488e0cb82"
+  },
+  {
+    "classe": "referencia_derivada",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/inspetores_referenciados.csv",
+    "linhas": 29,
+    "sha256": "7db7abb52663415e89cfdb0c4367e4691eb034bbaa13667cbbde110ef7efa9d8"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/metas_esg_simuladas.csv",
+    "linhas": 300,
+    "sha256": "6eeeb51a240bb0d731c2c96be5986590b3175ef865e476687926e6be1d1776da"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/oee_maquina_turno_simulado.csv",
+    "linhas": 27395,
+    "sha256": "00752825a45919ac20765c693375d53a221ce60546d18ab7b0ab29f03b7315b4"
+  },
+  {
+    "classe": "referencia_derivada",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/operadores_referenciados.csv",
+    "linhas": 34,
+    "sha256": "ae2b1eef2752839384c8d0059b11a3f05adbdf80733ee8cd33f550344866c2e9"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/ordens_manutencao_geradas.csv",
+    "linhas": 117,
+    "sha256": "56137eb89b01266df591bce7cbfe9ebf2de3d460ec9bc812cb7ea87fd9b74748"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/paradas_maquinas_geradas.csv",
+    "linhas": 45,
+    "sha256": "fa7ef2834c1347c444c311862be926f8ace853a222932982403f5bd983ad1768"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/rateio_custos_indiretos_maquina_simulado.csv",
+    "linhas": 300,
+    "sha256": "54486b42ae4fcac3f5e11eebb34162755dee0ceab25fcd2aeb35c87a1bb39b92"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/rateio_custos_producao_produto_simulado.csv",
+    "linhas": 180,
+    "sha256": "0d8651cd34ef3607335050179cdb5b134e229554217a12f43309791a9c9ae879"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/resultados_projeto_esg_simulados.csv",
+    "linhas": 154,
+    "sha256": "1d9637da0ec345c213007359ecf8eac95668a774c34b2adc060c18be3d0f379d"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/resumo_estado_maquina_turno_simulado.csv",
+    "linhas": 27395,
+    "sha256": "ed12d9ff4f2b004ac92a57bb6b6b63093beee705dc0a7f144916d3a045d6e22d"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/gerados/periodo_2021_2025/vinculos_manutencao_simulados.csv",
+    "linhas": 173,
+    "sha256": "9e8124a78cb9a88058216e219fe463c05e69c1a185f67c8a7f01d52616bb516a"
+  },
+  {
+    "classe": "sintetico_derivado",
+    "caminho": "dados_complementares_datamind/composicao_tarifaria_inferida.csv",
+    "linhas": 2,
+    "sha256": "59489782842f6249f6a86424647e707f0857d7d582f1aadd5459f5ea098c211f"
+  }
+]

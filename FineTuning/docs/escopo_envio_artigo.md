@@ -12,9 +12,9 @@ O [Google Doc](https://docs.google.com/document/d/1LExZ17IkPXIKYGCHLEJ3mEZSsCU2I
 
 ## Material retirado da árvore ativa
 
-Cópias dos repositórios FinQA e FailureSensorIQ, cópias adicionais dos datasets originais, exploração em notebooks, relatórios anteriores, configs duplicadas ou não usadas no artigo, runs legadas, renders editoriais temporários, recálculo multirrótulo v1 e checkpoints intermediários foram movidos para `D:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA_FineTuning_archive_20261011`, fora do repositório. O arquivo `move_inventory.json` registra os caminhos e tamanhos. Os dados congelados, manifests, resultados brutos e seis adapters finais permaneceram nos caminhos de origem. A ausência dos checkpoints intermediários não altera a identidade dos seis adapters publicados.
+Cópias dos repositórios FinQA e FailureSensorIQ, cópias adicionais dos datasets originais, exploração em notebooks, relatórios anteriores, configs duplicadas ou não usadas no artigo, runs legadas, renders editoriais temporários, recálculo multirrótulo v1 e checkpoints intermediários foram movidos para `D:\Projetos\Github_ViniciusJ\_arquivo_Pesquisa_IC_IA\finetuning`, fora do repositório. O arquivo `move_inventory.json` registra os caminhos e tamanhos. Os dados congelados, manifests, resultados brutos e seis adapters finais permaneceram nos caminhos de origem. A ausência dos checkpoints intermediários não altera a identidade dos seis adapters publicados.
 
-O pacote editorial local divergente (`artigo_novo_2026-09-14/`), incluindo DOCX, PDF, gerador, figura e template, foi movido para `Pesquisa_IC_IA_FineTuning_archive_20261011/artigo_local_divergente_substituido_20261011/`. O `archive_manifest.json` nessa pasta registra seis arquivos e seus SHA-256. O pacote não deve ser usado como fonte do artigo atual.
+O pacote editorial local divergente (`artigo_novo_2026-09-14/`), incluindo DOCX, PDF, gerador, figura e template, foi movido para `_arquivo_Pesquisa_IC_IA/finetuning/artigo_local_divergente_substituido_20261011/`. O `archive_manifest.json` nessa pasta registra seis arquivos e seus SHA-256. O pacote não deve ser usado como fonte do artigo atual.
 
 ## Limites de verificação
 

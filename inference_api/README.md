@@ -1,3 +1,5 @@
+> **Fontes consolidadas em 07/11/2026:** a DW V2, seus 166 CSVs, contrato, DER e scripts agora estão no checkout principal. O worktree anterior é histórico. [Mapa de fontes e arquivo](../docs/fontes_ativas_e_arquivo.md). A integração não recarregou bancos nem atribuiu score.
+
 > **Ensaio real A/B em 06/11/2026:** [resultado pela Bancada](../specs/active/SPEC-014/evidence/openai-ab-real-ui-2026-11-06.md). B concluiu com duas consultas e resposta; A terminou em `invalid_review_gap`, sem resposta final. Houve recuperação do PostgreSQL e da trajetória A, sem reenvio. Sem pontuação científica.
 >
 > **Aceite anterior da SPEC-014 em engenharia local (06/11/2026):** preflight do catálogo e bloqueio de fonte corrigidos e aprovados em revisão independente com fixtures. Esse aceite não comprova funcionamento completo do cenário A no ensaio real acima.

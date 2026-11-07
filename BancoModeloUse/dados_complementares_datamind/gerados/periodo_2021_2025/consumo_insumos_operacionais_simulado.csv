@@ -1,0 +1,356 @@
+consumo_id,custo_operacional_id,mes_ano,maquina_id,insumo,unidade_fonte,unidade_simulada,horas_base_operacoes,fator_quantidade_por_hora,quantidade_simulada,valor_unitario_origem_brl,custo_total_simulado_brl,origem
+1,1,2021-01,1,Lubrificante,l,l,744.0,0.08,59.5200,7.46,444.02,fator_sintetico_por_hora_reportada_de_operacao
+2,1,2021-01,2,Lubrificante,l,l,744.0,0.08,59.5200,7.46,444.02,fator_sintetico_por_hora_reportada_de_operacao
+3,1,2021-01,3,Lubrificante,l,l,744.0,0.08,59.5200,7.46,444.02,fator_sintetico_por_hora_reportada_de_operacao
+4,1,2021-01,4,Lubrificante,l,l,744.0,0.08,59.5200,7.46,444.02,fator_sintetico_por_hora_reportada_de_operacao
+5,1,2021-01,5,Lubrificante,l,l,744.0,0.08,59.5200,7.46,444.02,fator_sintetico_por_hora_reportada_de_operacao
+6,2,2021-01,1,Lubrificante,l,l,744.0,0.08,59.5200,9.18,546.39,fator_sintetico_por_hora_reportada_de_operacao
+7,2,2021-01,2,Lubrificante,l,l,744.0,0.08,59.5200,9.18,546.39,fator_sintetico_por_hora_reportada_de_operacao
+8,2,2021-01,3,Lubrificante,l,l,744.0,0.08,59.5200,9.18,546.39,fator_sintetico_por_hora_reportada_de_operacao
+9,2,2021-01,4,Lubrificante,l,l,744.0,0.08,59.5200,9.18,546.39,fator_sintetico_por_hora_reportada_de_operacao
+10,2,2021-01,5,Lubrificante,l,l,744.0,0.08,59.5200,9.18,546.39,fator_sintetico_por_hora_reportada_de_operacao
+11,3,2021-02,1,Detergente Industrial,l,l,672.0,0.15,100.8000,7.04,709.63,fator_sintetico_por_hora_reportada_de_operacao
+12,3,2021-02,2,Detergente Industrial,l,l,672.0,0.15,100.8000,7.04,709.63,fator_sintetico_por_hora_reportada_de_operacao
+13,3,2021-02,3,Detergente Industrial,l,l,672.0,0.15,100.8000,7.04,709.63,fator_sintetico_por_hora_reportada_de_operacao
+14,3,2021-02,4,Detergente Industrial,l,l,672.0,0.15,100.8000,7.04,709.63,fator_sintetico_por_hora_reportada_de_operacao
+15,3,2021-02,5,Detergente Industrial,l,l,672.0,0.15,100.8000,7.04,709.63,fator_sintetico_por_hora_reportada_de_operacao
+16,4,2021-03,1,Lubrificante,l,l,744.0,0.08,59.5200,8.61,512.47,fator_sintetico_por_hora_reportada_de_operacao
+17,4,2021-03,2,Lubrificante,l,l,744.0,0.08,59.5200,8.61,512.47,fator_sintetico_por_hora_reportada_de_operacao
+18,4,2021-03,3,Lubrificante,l,l,744.0,0.08,59.5200,8.61,512.47,fator_sintetico_por_hora_reportada_de_operacao
+19,4,2021-03,4,Lubrificante,l,l,744.0,0.08,59.5200,8.61,512.47,fator_sintetico_por_hora_reportada_de_operacao
+20,4,2021-03,5,Lubrificante,l,l,744.0,0.08,59.5200,8.61,512.47,fator_sintetico_por_hora_reportada_de_operacao
+21,5,2021-04,1,Agua de refrigeração,l,l,720.0,12,8640.0000,2.71,23414.40,fator_sintetico_por_hora_reportada_de_operacao
+22,5,2021-04,2,Agua de refrigeração,l,l,720.0,12,8640.0000,2.71,23414.40,fator_sintetico_por_hora_reportada_de_operacao
+23,5,2021-04,3,Agua de refrigeração,l,l,720.0,12,8640.0000,2.71,23414.40,fator_sintetico_por_hora_reportada_de_operacao
+24,5,2021-04,4,Agua de refrigeração,l,l,720.0,12,8640.0000,2.71,23414.40,fator_sintetico_por_hora_reportada_de_operacao
+25,5,2021-04,5,Agua de refrigeração,l,l,720.0,12,8640.0000,2.71,23414.40,fator_sintetico_por_hora_reportada_de_operacao
+26,6,2021-05,1,Lubrificante,l,l,744.0,0.08,59.5200,2.82,167.85,fator_sintetico_por_hora_reportada_de_operacao
+27,6,2021-05,2,Lubrificante,l,l,744.0,0.08,59.5200,2.82,167.85,fator_sintetico_por_hora_reportada_de_operacao
+28,6,2021-05,3,Lubrificante,l,l,744.0,0.08,59.5200,2.82,167.85,fator_sintetico_por_hora_reportada_de_operacao
+29,6,2021-05,4,Lubrificante,l,l,744.0,0.08,59.5200,2.82,167.85,fator_sintetico_por_hora_reportada_de_operacao
+30,6,2021-05,5,Lubrificante,l,l,744.0,0.08,59.5200,2.82,167.85,fator_sintetico_por_hora_reportada_de_operacao
+31,7,2021-05,1,Lubrificante,l,l,744.0,0.08,59.5200,9.01,536.28,fator_sintetico_por_hora_reportada_de_operacao
+32,7,2021-05,2,Lubrificante,l,l,744.0,0.08,59.5200,9.01,536.28,fator_sintetico_por_hora_reportada_de_operacao
+33,7,2021-05,3,Lubrificante,l,l,744.0,0.08,59.5200,9.01,536.28,fator_sintetico_por_hora_reportada_de_operacao
+34,7,2021-05,4,Lubrificante,l,l,744.0,0.08,59.5200,9.01,536.28,fator_sintetico_por_hora_reportada_de_operacao
+35,7,2021-05,5,Lubrificante,l,l,744.0,0.08,59.5200,9.01,536.28,fator_sintetico_por_hora_reportada_de_operacao
+36,8,2021-06,1,Detergente Industrial,l,l,720.0,0.15,108.0000,9.19,992.52,fator_sintetico_por_hora_reportada_de_operacao
+37,8,2021-06,2,Detergente Industrial,l,l,720.0,0.15,108.0000,9.19,992.52,fator_sintetico_por_hora_reportada_de_operacao
+38,8,2021-06,3,Detergente Industrial,l,l,720.0,0.15,108.0000,9.19,992.52,fator_sintetico_por_hora_reportada_de_operacao
+39,8,2021-06,4,Detergente Industrial,l,l,720.0,0.15,108.0000,9.19,992.52,fator_sintetico_por_hora_reportada_de_operacao
+40,8,2021-06,5,Detergente Industrial,l,l,720.0,0.15,108.0000,9.19,992.52,fator_sintetico_por_hora_reportada_de_operacao
+41,9,2021-07,1,Lubrificante,l,l,744.0,0.08,59.5200,2.71,161.30,fator_sintetico_por_hora_reportada_de_operacao
+42,9,2021-07,2,Lubrificante,l,l,744.0,0.08,59.5200,2.71,161.30,fator_sintetico_por_hora_reportada_de_operacao
+43,9,2021-07,3,Lubrificante,l,l,744.0,0.08,59.5200,2.71,161.30,fator_sintetico_por_hora_reportada_de_operacao
+44,9,2021-07,4,Lubrificante,l,l,744.0,0.08,59.5200,2.71,161.30,fator_sintetico_por_hora_reportada_de_operacao
+45,9,2021-07,5,Lubrificante,l,l,744.0,0.08,59.5200,2.71,161.30,fator_sintetico_por_hora_reportada_de_operacao
+46,10,2021-08,1,Detergente Industrial,l,l,744.0,0.15,111.6000,4.7,524.52,fator_sintetico_por_hora_reportada_de_operacao
+47,10,2021-08,2,Detergente Industrial,l,l,744.0,0.15,111.6000,4.7,524.52,fator_sintetico_por_hora_reportada_de_operacao
+48,10,2021-08,3,Detergente Industrial,l,l,744.0,0.15,111.6000,4.7,524.52,fator_sintetico_por_hora_reportada_de_operacao
+49,10,2021-08,4,Detergente Industrial,l,l,744.0,0.15,111.6000,4.7,524.52,fator_sintetico_por_hora_reportada_de_operacao
+50,10,2021-08,5,Detergente Industrial,l,l,744.0,0.15,111.6000,4.7,524.52,fator_sintetico_por_hora_reportada_de_operacao
+51,11,2021-09,1,Manutencao Tecnologica,servico,servico,720.0,,0.0000,7.51,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+52,11,2021-09,2,Manutencao Tecnologica,servico,servico,720.0,,0.0000,7.51,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+53,11,2021-09,3,Manutencao Tecnologica,servico,servico,720.0,,1.0000,7.51,7.51,contagem_oms_do_mes;unidade_corrigida_na_fonte
+54,11,2021-09,4,Manutencao Tecnologica,servico,servico,720.0,,3.0000,7.51,22.53,contagem_oms_do_mes;unidade_corrigida_na_fonte
+55,11,2021-09,5,Manutencao Tecnologica,servico,servico,720.0,,2.0000,7.51,15.02,contagem_oms_do_mes;unidade_corrigida_na_fonte
+56,12,2021-10,1,Detergente Industrial,l,l,744.0,0.15,111.6000,6.37,710.89,fator_sintetico_por_hora_reportada_de_operacao
+57,12,2021-10,2,Detergente Industrial,l,l,744.0,0.15,111.6000,6.37,710.89,fator_sintetico_por_hora_reportada_de_operacao
+58,12,2021-10,3,Detergente Industrial,l,l,744.0,0.15,111.6000,6.37,710.89,fator_sintetico_por_hora_reportada_de_operacao
+59,12,2021-10,4,Detergente Industrial,l,l,744.0,0.15,111.6000,6.37,710.89,fator_sintetico_por_hora_reportada_de_operacao
+60,12,2021-10,5,Detergente Industrial,l,l,744.0,0.15,111.6000,6.37,710.89,fator_sintetico_por_hora_reportada_de_operacao
+61,13,2021-10,1,Agua de refrigeração,l,l,744.0,12,8928.0000,4.12,36783.36,fator_sintetico_por_hora_reportada_de_operacao
+62,13,2021-10,2,Agua de refrigeração,l,l,744.0,12,8928.0000,4.12,36783.36,fator_sintetico_por_hora_reportada_de_operacao
+63,13,2021-10,3,Agua de refrigeração,l,l,744.0,12,8928.0000,4.12,36783.36,fator_sintetico_por_hora_reportada_de_operacao
+64,13,2021-10,4,Agua de refrigeração,l,l,744.0,12,8928.0000,4.12,36783.36,fator_sintetico_por_hora_reportada_de_operacao
+65,13,2021-10,5,Agua de refrigeração,l,l,744.0,12,8928.0000,4.12,36783.36,fator_sintetico_por_hora_reportada_de_operacao
+66,14,2021-11,1,Energia,kWh,kWh,720.0,,19033.3600,4.12,78417.44,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+67,14,2021-11,2,Energia,kWh,kWh,720.0,,18968.3200,4.12,78149.48,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+68,14,2021-11,3,Energia,kWh,kWh,720.0,,19017.7800,4.12,78353.25,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+69,14,2021-11,4,Energia,kWh,kWh,720.0,,19401.1100,4.12,79932.57,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+70,14,2021-11,5,Energia,kWh,kWh,720.0,,18785.1700,4.12,77394.90,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+71,15,2021-12,1,Manutencao Tecnologica,servico,servico,744.0,,1.0000,9.86,9.86,contagem_oms_do_mes;unidade_corrigida_na_fonte
+72,15,2021-12,2,Manutencao Tecnologica,servico,servico,744.0,,1.0000,9.86,9.86,contagem_oms_do_mes;unidade_corrigida_na_fonte
+73,15,2021-12,3,Manutencao Tecnologica,servico,servico,744.0,,1.0000,9.86,9.86,contagem_oms_do_mes;unidade_corrigida_na_fonte
+74,15,2021-12,4,Manutencao Tecnologica,servico,servico,744.0,,1.0000,9.86,9.86,contagem_oms_do_mes;unidade_corrigida_na_fonte
+75,15,2021-12,5,Manutencao Tecnologica,servico,servico,744.0,,2.0000,9.86,19.72,contagem_oms_do_mes;unidade_corrigida_na_fonte
+76,16,2022-01,1,Lubrificante,l,l,744.0,0.08,59.5200,8.52,507.11,fator_sintetico_por_hora_reportada_de_operacao
+77,16,2022-01,2,Lubrificante,l,l,744.0,0.08,59.5200,8.52,507.11,fator_sintetico_por_hora_reportada_de_operacao
+78,16,2022-01,3,Lubrificante,l,l,744.0,0.08,59.5200,8.52,507.11,fator_sintetico_por_hora_reportada_de_operacao
+79,16,2022-01,4,Lubrificante,l,l,744.0,0.08,59.5200,8.52,507.11,fator_sintetico_por_hora_reportada_de_operacao
+80,16,2022-01,5,Lubrificante,l,l,744.0,0.08,59.5200,8.52,507.11,fator_sintetico_por_hora_reportada_de_operacao
+81,17,2022-02,1,Energia,kWh,kWh,672.0,,18053.0200,5.1,92070.40,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+82,17,2022-02,2,Energia,kWh,kWh,672.0,,17738.9000,5.1,90468.39,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+83,17,2022-02,3,Energia,kWh,kWh,672.0,,17813.5100,5.1,90848.90,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+84,17,2022-02,4,Energia,kWh,kWh,672.0,,17750.8300,5.1,90529.23,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+85,17,2022-02,5,Energia,kWh,kWh,672.0,,17898.5200,5.1,91282.45,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+86,18,2022-03,1,Agua de refrigeração,l,l,744.0,12,8928.0000,1.36,12142.08,fator_sintetico_por_hora_reportada_de_operacao
+87,18,2022-03,2,Agua de refrigeração,l,l,744.0,12,8928.0000,1.36,12142.08,fator_sintetico_por_hora_reportada_de_operacao
+88,18,2022-03,3,Agua de refrigeração,l,l,744.0,12,8928.0000,1.36,12142.08,fator_sintetico_por_hora_reportada_de_operacao
+89,18,2022-03,4,Agua de refrigeração,l,l,744.0,12,8928.0000,1.36,12142.08,fator_sintetico_por_hora_reportada_de_operacao
+90,18,2022-03,5,Agua de refrigeração,l,l,744.0,12,8928.0000,1.36,12142.08,fator_sintetico_por_hora_reportada_de_operacao
+91,19,2022-03,1,Manutencao Tecnologica,servico,servico,744.0,,1.0000,6.46,6.46,contagem_oms_do_mes;unidade_corrigida_na_fonte
+92,19,2022-03,2,Manutencao Tecnologica,servico,servico,744.0,,0.0000,6.46,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+93,19,2022-03,3,Manutencao Tecnologica,servico,servico,744.0,,2.0000,6.46,12.92,contagem_oms_do_mes;unidade_corrigida_na_fonte
+94,19,2022-03,4,Manutencao Tecnologica,servico,servico,744.0,,0.0000,6.46,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+95,19,2022-03,5,Manutencao Tecnologica,servico,servico,744.0,,2.0000,6.46,12.92,contagem_oms_do_mes;unidade_corrigida_na_fonte
+96,20,2022-04,1,Energia,kWh,kWh,720.0,,18966.1700,3.55,67329.90,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+97,20,2022-04,2,Energia,kWh,kWh,720.0,,19181.3700,3.55,68093.86,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+98,20,2022-04,3,Energia,kWh,kWh,720.0,,19201.1900,3.55,68164.22,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+99,20,2022-04,4,Energia,kWh,kWh,720.0,,19143.2500,3.55,67958.54,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+100,20,2022-04,5,Energia,kWh,kWh,720.0,,18913.7800,3.55,67143.92,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+101,21,2022-05,1,Manutencao Tecnologica,servico,servico,744.0,,2.0000,5.85,11.70,contagem_oms_do_mes;unidade_corrigida_na_fonte
+102,21,2022-05,2,Manutencao Tecnologica,servico,servico,744.0,,2.0000,5.85,11.70,contagem_oms_do_mes;unidade_corrigida_na_fonte
+103,21,2022-05,3,Manutencao Tecnologica,servico,servico,744.0,,0.0000,5.85,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+104,21,2022-05,4,Manutencao Tecnologica,servico,servico,744.0,,0.0000,5.85,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+105,21,2022-05,5,Manutencao Tecnologica,servico,servico,744.0,,0.0000,5.85,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+106,22,2022-06,1,Energia,kWh,kWh,720.0,,18904.3500,3.14,59359.66,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+107,22,2022-06,2,Energia,kWh,kWh,720.0,,18969.7300,3.14,59564.95,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+108,22,2022-06,3,Energia,kWh,kWh,720.0,,19021.4300,3.14,59727.29,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+109,22,2022-06,4,Energia,kWh,kWh,720.0,,19018.9600,3.14,59719.53,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+110,22,2022-06,5,Energia,kWh,kWh,720.0,,19383.4400,3.14,60864.00,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+111,23,2022-07,1,Lubrificante,l,l,744.0,0.08,59.5200,7.97,474.37,fator_sintetico_por_hora_reportada_de_operacao
+112,23,2022-07,2,Lubrificante,l,l,744.0,0.08,59.5200,7.97,474.37,fator_sintetico_por_hora_reportada_de_operacao
+113,23,2022-07,3,Lubrificante,l,l,744.0,0.08,59.5200,7.97,474.37,fator_sintetico_por_hora_reportada_de_operacao
+114,23,2022-07,4,Lubrificante,l,l,744.0,0.08,59.5200,7.97,474.37,fator_sintetico_por_hora_reportada_de_operacao
+115,23,2022-07,5,Lubrificante,l,l,744.0,0.08,59.5200,7.97,474.37,fator_sintetico_por_hora_reportada_de_operacao
+116,24,2022-07,1,Lubrificante,l,l,744.0,0.08,59.5200,1.36,80.95,fator_sintetico_por_hora_reportada_de_operacao
+117,24,2022-07,2,Lubrificante,l,l,744.0,0.08,59.5200,1.36,80.95,fator_sintetico_por_hora_reportada_de_operacao
+118,24,2022-07,3,Lubrificante,l,l,744.0,0.08,59.5200,1.36,80.95,fator_sintetico_por_hora_reportada_de_operacao
+119,24,2022-07,4,Lubrificante,l,l,744.0,0.08,59.5200,1.36,80.95,fator_sintetico_por_hora_reportada_de_operacao
+120,24,2022-07,5,Lubrificante,l,l,744.0,0.08,59.5200,1.36,80.95,fator_sintetico_por_hora_reportada_de_operacao
+121,25,2022-08,1,Lubrificante,l,l,744.0,0.08,59.5200,1.17,69.64,fator_sintetico_por_hora_reportada_de_operacao
+122,25,2022-08,2,Lubrificante,l,l,744.0,0.08,59.5200,1.17,69.64,fator_sintetico_por_hora_reportada_de_operacao
+123,25,2022-08,3,Lubrificante,l,l,744.0,0.08,59.5200,1.17,69.64,fator_sintetico_por_hora_reportada_de_operacao
+124,25,2022-08,4,Lubrificante,l,l,744.0,0.08,59.5200,1.17,69.64,fator_sintetico_por_hora_reportada_de_operacao
+125,25,2022-08,5,Lubrificante,l,l,744.0,0.08,59.5200,1.17,69.64,fator_sintetico_por_hora_reportada_de_operacao
+126,26,2022-09,1,Energia,kWh,kWh,720.0,,19354.9400,7.77,150387.88,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+127,26,2022-09,2,Energia,kWh,kWh,720.0,,19004.3800,7.77,147664.03,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+128,26,2022-09,3,Energia,kWh,kWh,720.0,,19185.7600,7.77,149073.36,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+129,26,2022-09,4,Energia,kWh,kWh,720.0,,19158.9000,7.77,148864.65,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+130,26,2022-09,5,Energia,kWh,kWh,720.0,,19057.1400,7.77,148073.98,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+131,27,2022-10,1,Detergente Industrial,l,l,744.0,0.15,111.6000,8.73,974.27,fator_sintetico_por_hora_reportada_de_operacao
+132,27,2022-10,2,Detergente Industrial,l,l,744.0,0.15,111.6000,8.73,974.27,fator_sintetico_por_hora_reportada_de_operacao
+133,27,2022-10,3,Detergente Industrial,l,l,744.0,0.15,111.6000,8.73,974.27,fator_sintetico_por_hora_reportada_de_operacao
+134,27,2022-10,4,Detergente Industrial,l,l,744.0,0.15,111.6000,8.73,974.27,fator_sintetico_por_hora_reportada_de_operacao
+135,27,2022-10,5,Detergente Industrial,l,l,744.0,0.15,111.6000,8.73,974.27,fator_sintetico_por_hora_reportada_de_operacao
+136,28,2022-11,1,Agua de refrigeração,l,l,720.0,12,8640.0000,9.08,78451.20,fator_sintetico_por_hora_reportada_de_operacao
+137,28,2022-11,2,Agua de refrigeração,l,l,720.0,12,8640.0000,9.08,78451.20,fator_sintetico_por_hora_reportada_de_operacao
+138,28,2022-11,3,Agua de refrigeração,l,l,720.0,12,8640.0000,9.08,78451.20,fator_sintetico_por_hora_reportada_de_operacao
+139,28,2022-11,4,Agua de refrigeração,l,l,720.0,12,8640.0000,9.08,78451.20,fator_sintetico_por_hora_reportada_de_operacao
+140,28,2022-11,5,Agua de refrigeração,l,l,720.0,12,8640.0000,9.08,78451.20,fator_sintetico_por_hora_reportada_de_operacao
+141,29,2022-12,1,Lubrificante,l,l,744.0,0.08,59.5200,9.75,580.32,fator_sintetico_por_hora_reportada_de_operacao
+142,29,2022-12,2,Lubrificante,l,l,744.0,0.08,59.5200,9.75,580.32,fator_sintetico_por_hora_reportada_de_operacao
+143,29,2022-12,3,Lubrificante,l,l,744.0,0.08,59.5200,9.75,580.32,fator_sintetico_por_hora_reportada_de_operacao
+144,29,2022-12,4,Lubrificante,l,l,744.0,0.08,59.5200,9.75,580.32,fator_sintetico_por_hora_reportada_de_operacao
+145,29,2022-12,5,Lubrificante,l,l,744.0,0.08,59.5200,9.75,580.32,fator_sintetico_por_hora_reportada_de_operacao
+146,30,2022-12,1,Manutencao Tecnologica,servico,servico,744.0,,1.0000,7.42,7.42,contagem_oms_do_mes;unidade_corrigida_na_fonte
+147,30,2022-12,2,Manutencao Tecnologica,servico,servico,744.0,,1.0000,7.42,7.42,contagem_oms_do_mes;unidade_corrigida_na_fonte
+148,30,2022-12,3,Manutencao Tecnologica,servico,servico,744.0,,2.0000,7.42,14.84,contagem_oms_do_mes;unidade_corrigida_na_fonte
+149,30,2022-12,4,Manutencao Tecnologica,servico,servico,744.0,,1.0000,7.42,7.42,contagem_oms_do_mes;unidade_corrigida_na_fonte
+150,30,2022-12,5,Manutencao Tecnologica,servico,servico,744.0,,1.0000,7.42,7.42,contagem_oms_do_mes;unidade_corrigida_na_fonte
+151,31,2023-01,1,Energia,kWh,kWh,744.0,,19790.7400,1.63,32258.91,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+152,31,2023-01,2,Energia,kWh,kWh,744.0,,19859.1800,1.63,32370.46,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+153,31,2023-01,3,Energia,kWh,kWh,744.0,,19598.1600,1.63,31945.00,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+154,31,2023-01,4,Energia,kWh,kWh,744.0,,19499.7900,1.63,31784.66,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+155,31,2023-01,5,Energia,kWh,kWh,744.0,,19751.2200,1.63,32194.49,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+156,32,2023-02,1,Energia,kWh,kWh,672.0,,17757.8700,3.35,59488.86,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+157,32,2023-02,2,Energia,kWh,kWh,672.0,,17817.2600,3.35,59687.82,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+158,32,2023-02,3,Energia,kWh,kWh,672.0,,17840.3100,3.35,59765.04,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+159,32,2023-02,4,Energia,kWh,kWh,672.0,,17768.1400,3.35,59523.27,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+160,32,2023-02,5,Energia,kWh,kWh,672.0,,17695.9800,3.35,59281.53,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+161,33,2023-03,1,Agua de refrigeração,l,l,744.0,12,8928.0000,9.55,85262.40,fator_sintetico_por_hora_reportada_de_operacao
+162,33,2023-03,2,Agua de refrigeração,l,l,744.0,12,8928.0000,9.55,85262.40,fator_sintetico_por_hora_reportada_de_operacao
+163,33,2023-03,3,Agua de refrigeração,l,l,744.0,12,8928.0000,9.55,85262.40,fator_sintetico_por_hora_reportada_de_operacao
+164,33,2023-03,4,Agua de refrigeração,l,l,744.0,12,8928.0000,9.55,85262.40,fator_sintetico_por_hora_reportada_de_operacao
+165,33,2023-03,5,Agua de refrigeração,l,l,744.0,12,8928.0000,9.55,85262.40,fator_sintetico_por_hora_reportada_de_operacao
+166,34,2023-04,1,Energia,kWh,kWh,720.0,,19314.0900,3.19,61611.95,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+167,34,2023-04,2,Energia,kWh,kWh,720.0,,18908.9000,3.19,60319.39,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+168,34,2023-04,3,Energia,kWh,kWh,720.0,,19271.7300,3.19,61476.82,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+169,34,2023-04,4,Energia,kWh,kWh,720.0,,19163.1100,3.19,61130.32,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+170,34,2023-04,5,Energia,kWh,kWh,720.0,,19318.2400,3.19,61625.19,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+171,35,2023-05,1,Detergente Industrial,l,l,744.0,0.15,111.6000,3.79,422.96,fator_sintetico_por_hora_reportada_de_operacao
+172,35,2023-05,2,Detergente Industrial,l,l,744.0,0.15,111.6000,3.79,422.96,fator_sintetico_por_hora_reportada_de_operacao
+173,35,2023-05,3,Detergente Industrial,l,l,744.0,0.15,111.6000,3.79,422.96,fator_sintetico_por_hora_reportada_de_operacao
+174,35,2023-05,4,Detergente Industrial,l,l,744.0,0.15,111.6000,3.79,422.96,fator_sintetico_por_hora_reportada_de_operacao
+175,35,2023-05,5,Detergente Industrial,l,l,744.0,0.15,111.6000,3.79,422.96,fator_sintetico_por_hora_reportada_de_operacao
+176,36,2023-05,1,Lubrificante,l,l,744.0,0.08,59.5200,8.4,499.97,fator_sintetico_por_hora_reportada_de_operacao
+177,36,2023-05,2,Lubrificante,l,l,744.0,0.08,59.5200,8.4,499.97,fator_sintetico_por_hora_reportada_de_operacao
+178,36,2023-05,3,Lubrificante,l,l,744.0,0.08,59.5200,8.4,499.97,fator_sintetico_por_hora_reportada_de_operacao
+179,36,2023-05,4,Lubrificante,l,l,744.0,0.08,59.5200,8.4,499.97,fator_sintetico_por_hora_reportada_de_operacao
+180,36,2023-05,5,Lubrificante,l,l,744.0,0.08,59.5200,8.4,499.97,fator_sintetico_por_hora_reportada_de_operacao
+181,37,2023-06,1,Detergente Industrial,l,l,720.0,0.15,108.0000,4.01,433.08,fator_sintetico_por_hora_reportada_de_operacao
+182,37,2023-06,2,Detergente Industrial,l,l,720.0,0.15,108.0000,4.01,433.08,fator_sintetico_por_hora_reportada_de_operacao
+183,37,2023-06,3,Detergente Industrial,l,l,720.0,0.15,108.0000,4.01,433.08,fator_sintetico_por_hora_reportada_de_operacao
+184,37,2023-06,4,Detergente Industrial,l,l,720.0,0.15,108.0000,4.01,433.08,fator_sintetico_por_hora_reportada_de_operacao
+185,37,2023-06,5,Detergente Industrial,l,l,720.0,0.15,108.0000,4.01,433.08,fator_sintetico_por_hora_reportada_de_operacao
+186,38,2023-07,1,Manutencao Tecnologica,servico,servico,744.0,,1.0000,8.82,8.82,contagem_oms_do_mes;unidade_corrigida_na_fonte
+187,38,2023-07,2,Manutencao Tecnologica,servico,servico,744.0,,0.0000,8.82,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+188,38,2023-07,3,Manutencao Tecnologica,servico,servico,744.0,,2.0000,8.82,17.64,contagem_oms_do_mes;unidade_corrigida_na_fonte
+189,38,2023-07,4,Manutencao Tecnologica,servico,servico,744.0,,0.0000,8.82,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+190,38,2023-07,5,Manutencao Tecnologica,servico,servico,744.0,,0.0000,8.82,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+191,39,2023-08,1,Agua de refrigeração,l,l,744.0,12,8928.0000,6.0,53568.00,fator_sintetico_por_hora_reportada_de_operacao
+192,39,2023-08,2,Agua de refrigeração,l,l,744.0,12,8928.0000,6.0,53568.00,fator_sintetico_por_hora_reportada_de_operacao
+193,39,2023-08,3,Agua de refrigeração,l,l,744.0,12,8928.0000,6.0,53568.00,fator_sintetico_por_hora_reportada_de_operacao
+194,39,2023-08,4,Agua de refrigeração,l,l,744.0,12,8928.0000,6.0,53568.00,fator_sintetico_por_hora_reportada_de_operacao
+195,39,2023-08,5,Agua de refrigeração,l,l,744.0,12,8928.0000,6.0,53568.00,fator_sintetico_por_hora_reportada_de_operacao
+196,40,2023-09,1,Detergente Industrial,l,l,720.0,0.15,108.0000,7.33,791.64,fator_sintetico_por_hora_reportada_de_operacao
+197,40,2023-09,2,Detergente Industrial,l,l,720.0,0.15,108.0000,7.33,791.64,fator_sintetico_por_hora_reportada_de_operacao
+198,40,2023-09,3,Detergente Industrial,l,l,720.0,0.15,108.0000,7.33,791.64,fator_sintetico_por_hora_reportada_de_operacao
+199,40,2023-09,4,Detergente Industrial,l,l,720.0,0.15,108.0000,7.33,791.64,fator_sintetico_por_hora_reportada_de_operacao
+200,40,2023-09,5,Detergente Industrial,l,l,720.0,0.15,108.0000,7.33,791.64,fator_sintetico_por_hora_reportada_de_operacao
+201,41,2023-09,1,Manutencao Tecnologica,servico,servico,720.0,,0.0000,3.33,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+202,41,2023-09,2,Manutencao Tecnologica,servico,servico,720.0,,4.0000,3.33,13.32,contagem_oms_do_mes;unidade_corrigida_na_fonte
+203,41,2023-09,3,Manutencao Tecnologica,servico,servico,720.0,,3.0000,3.33,9.99,contagem_oms_do_mes;unidade_corrigida_na_fonte
+204,41,2023-09,4,Manutencao Tecnologica,servico,servico,720.0,,2.0000,3.33,6.66,contagem_oms_do_mes;unidade_corrigida_na_fonte
+205,41,2023-09,5,Manutencao Tecnologica,servico,servico,720.0,,1.0000,3.33,3.33,contagem_oms_do_mes;unidade_corrigida_na_fonte
+206,42,2023-10,1,Lubrificante,l,l,744.0,0.08,59.5200,5.82,346.41,fator_sintetico_por_hora_reportada_de_operacao
+207,42,2023-10,2,Lubrificante,l,l,744.0,0.08,59.5200,5.82,346.41,fator_sintetico_por_hora_reportada_de_operacao
+208,42,2023-10,3,Lubrificante,l,l,744.0,0.08,59.5200,5.82,346.41,fator_sintetico_por_hora_reportada_de_operacao
+209,42,2023-10,4,Lubrificante,l,l,744.0,0.08,59.5200,5.82,346.41,fator_sintetico_por_hora_reportada_de_operacao
+210,42,2023-10,5,Lubrificante,l,l,744.0,0.08,59.5200,5.82,346.41,fator_sintetico_por_hora_reportada_de_operacao
+211,43,2023-11,1,Manutencao Tecnologica,servico,servico,720.0,,0.0000,9.56,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+212,43,2023-11,2,Manutencao Tecnologica,servico,servico,720.0,,0.0000,9.56,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+213,43,2023-11,3,Manutencao Tecnologica,servico,servico,720.0,,0.0000,9.56,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+214,43,2023-11,4,Manutencao Tecnologica,servico,servico,720.0,,0.0000,9.56,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+215,43,2023-11,5,Manutencao Tecnologica,servico,servico,720.0,,0.0000,9.56,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+216,44,2023-12,1,Agua de refrigeração,l,l,744.0,12,8928.0000,5.33,47586.24,fator_sintetico_por_hora_reportada_de_operacao
+217,44,2023-12,2,Agua de refrigeração,l,l,744.0,12,8928.0000,5.33,47586.24,fator_sintetico_por_hora_reportada_de_operacao
+218,44,2023-12,3,Agua de refrigeração,l,l,744.0,12,8928.0000,5.33,47586.24,fator_sintetico_por_hora_reportada_de_operacao
+219,44,2023-12,4,Agua de refrigeração,l,l,744.0,12,8928.0000,5.33,47586.24,fator_sintetico_por_hora_reportada_de_operacao
+220,44,2023-12,5,Agua de refrigeração,l,l,744.0,12,8928.0000,5.33,47586.24,fator_sintetico_por_hora_reportada_de_operacao
+221,45,2024-01,1,Agua de refrigeração,l,l,744.0,12,8928.0000,9.78,87315.84,fator_sintetico_por_hora_reportada_de_operacao
+222,45,2024-01,2,Agua de refrigeração,l,l,744.0,12,8928.0000,9.78,87315.84,fator_sintetico_por_hora_reportada_de_operacao
+223,45,2024-01,3,Agua de refrigeração,l,l,744.0,12,8928.0000,9.78,87315.84,fator_sintetico_por_hora_reportada_de_operacao
+224,45,2024-01,4,Agua de refrigeração,l,l,744.0,12,8928.0000,9.78,87315.84,fator_sintetico_por_hora_reportada_de_operacao
+225,45,2024-01,5,Agua de refrigeração,l,l,744.0,12,8928.0000,9.78,87315.84,fator_sintetico_por_hora_reportada_de_operacao
+226,46,2024-01,1,Agua de refrigeração,l,l,744.0,12,8928.0000,5.68,50711.04,fator_sintetico_por_hora_reportada_de_operacao
+227,46,2024-01,2,Agua de refrigeração,l,l,744.0,12,8928.0000,5.68,50711.04,fator_sintetico_por_hora_reportada_de_operacao
+228,46,2024-01,3,Agua de refrigeração,l,l,744.0,12,8928.0000,5.68,50711.04,fator_sintetico_por_hora_reportada_de_operacao
+229,46,2024-01,4,Agua de refrigeração,l,l,744.0,12,8928.0000,5.68,50711.04,fator_sintetico_por_hora_reportada_de_operacao
+230,46,2024-01,5,Agua de refrigeração,l,l,744.0,12,8928.0000,5.68,50711.04,fator_sintetico_por_hora_reportada_de_operacao
+231,47,2024-02,1,Energia,kWh,kWh,696.0,,18441.7700,6.3,116183.15,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+232,47,2024-02,2,Energia,kWh,kWh,696.0,,18207.0200,6.3,114704.23,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+233,47,2024-02,3,Energia,kWh,kWh,696.0,,18410.8300,6.3,115988.23,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+234,47,2024-02,4,Energia,kWh,kWh,696.0,,18579.6800,6.3,117051.98,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+235,47,2024-02,5,Energia,kWh,kWh,696.0,,18335.4300,6.3,115513.21,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+236,48,2024-03,1,Lubrificante,l,l,744.0,0.08,59.5200,1.08,64.28,fator_sintetico_por_hora_reportada_de_operacao
+237,48,2024-03,2,Lubrificante,l,l,744.0,0.08,59.5200,1.08,64.28,fator_sintetico_por_hora_reportada_de_operacao
+238,48,2024-03,3,Lubrificante,l,l,744.0,0.08,59.5200,1.08,64.28,fator_sintetico_por_hora_reportada_de_operacao
+239,48,2024-03,4,Lubrificante,l,l,744.0,0.08,59.5200,1.08,64.28,fator_sintetico_por_hora_reportada_de_operacao
+240,48,2024-03,5,Lubrificante,l,l,744.0,0.08,59.5200,1.08,64.28,fator_sintetico_por_hora_reportada_de_operacao
+241,49,2024-04,1,Manutencao Tecnologica,servico,servico,720.0,,2.0000,9.5,19.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+242,49,2024-04,2,Manutencao Tecnologica,servico,servico,720.0,,4.0000,9.5,38.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+243,49,2024-04,3,Manutencao Tecnologica,servico,servico,720.0,,0.0000,9.5,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+244,49,2024-04,4,Manutencao Tecnologica,servico,servico,720.0,,2.0000,9.5,19.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+245,49,2024-04,5,Manutencao Tecnologica,servico,servico,720.0,,0.0000,9.5,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+246,50,2024-05,1,Energia,kWh,kWh,744.0,,19765.1000,1.44,28461.74,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+247,50,2024-05,2,Energia,kWh,kWh,744.0,,19734.1400,1.44,28417.16,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+248,50,2024-05,3,Energia,kWh,kWh,744.0,,19504.5400,1.44,28086.54,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+249,50,2024-05,4,Energia,kWh,kWh,744.0,,19686.3800,1.44,28348.39,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+250,50,2024-05,5,Energia,kWh,kWh,744.0,,19715.4600,1.44,28390.26,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+251,51,2024-06,1,Agua de refrigeração,l,l,720.0,12,8640.0000,3.82,33004.80,fator_sintetico_por_hora_reportada_de_operacao
+252,51,2024-06,2,Agua de refrigeração,l,l,720.0,12,8640.0000,3.82,33004.80,fator_sintetico_por_hora_reportada_de_operacao
+253,51,2024-06,3,Agua de refrigeração,l,l,720.0,12,8640.0000,3.82,33004.80,fator_sintetico_por_hora_reportada_de_operacao
+254,51,2024-06,4,Agua de refrigeração,l,l,720.0,12,8640.0000,3.82,33004.80,fator_sintetico_por_hora_reportada_de_operacao
+255,51,2024-06,5,Agua de refrigeração,l,l,720.0,12,8640.0000,3.82,33004.80,fator_sintetico_por_hora_reportada_de_operacao
+256,52,2024-06,1,Energia,kWh,kWh,720.0,,19211.8600,4.76,91448.45,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+257,52,2024-06,2,Energia,kWh,kWh,720.0,,19065.1600,4.76,90750.16,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+258,52,2024-06,3,Energia,kWh,kWh,720.0,,18817.3100,4.76,89570.40,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+259,52,2024-06,4,Energia,kWh,kWh,720.0,,19117.8100,4.76,91000.78,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+260,52,2024-06,5,Energia,kWh,kWh,720.0,,19224.1600,4.76,91507.00,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+261,53,2024-07,1,Manutencao Tecnologica,servico,servico,744.0,,2.0000,2.17,4.34,contagem_oms_do_mes;unidade_corrigida_na_fonte
+262,53,2024-07,2,Manutencao Tecnologica,servico,servico,744.0,,2.0000,2.17,4.34,contagem_oms_do_mes;unidade_corrigida_na_fonte
+263,53,2024-07,3,Manutencao Tecnologica,servico,servico,744.0,,2.0000,2.17,4.34,contagem_oms_do_mes;unidade_corrigida_na_fonte
+264,53,2024-07,4,Manutencao Tecnologica,servico,servico,744.0,,2.0000,2.17,4.34,contagem_oms_do_mes;unidade_corrigida_na_fonte
+265,53,2024-07,5,Manutencao Tecnologica,servico,servico,744.0,,1.0000,2.17,2.17,contagem_oms_do_mes;unidade_corrigida_na_fonte
+266,54,2024-08,1,Lubrificante,l,l,744.0,0.08,59.5200,2.67,158.92,fator_sintetico_por_hora_reportada_de_operacao
+267,54,2024-08,2,Lubrificante,l,l,744.0,0.08,59.5200,2.67,158.92,fator_sintetico_por_hora_reportada_de_operacao
+268,54,2024-08,3,Lubrificante,l,l,744.0,0.08,59.5200,2.67,158.92,fator_sintetico_por_hora_reportada_de_operacao
+269,54,2024-08,4,Lubrificante,l,l,744.0,0.08,59.5200,2.67,158.92,fator_sintetico_por_hora_reportada_de_operacao
+270,54,2024-08,5,Lubrificante,l,l,744.0,0.08,59.5200,2.67,158.92,fator_sintetico_por_hora_reportada_de_operacao
+271,55,2024-09,1,Manutencao Tecnologica,servico,servico,720.0,,0.0000,6.72,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+272,55,2024-09,2,Manutencao Tecnologica,servico,servico,720.0,,3.0000,6.72,20.16,contagem_oms_do_mes;unidade_corrigida_na_fonte
+273,55,2024-09,3,Manutencao Tecnologica,servico,servico,720.0,,0.0000,6.72,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+274,55,2024-09,4,Manutencao Tecnologica,servico,servico,720.0,,0.0000,6.72,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+275,55,2024-09,5,Manutencao Tecnologica,servico,servico,720.0,,1.0000,6.72,6.72,contagem_oms_do_mes;unidade_corrigida_na_fonte
+276,56,2024-10,1,Energia,kWh,kWh,744.0,,19853.8400,6.81,135204.65,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+277,56,2024-10,2,Energia,kWh,kWh,744.0,,19743.4900,6.81,134453.17,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+278,56,2024-10,3,Energia,kWh,kWh,744.0,,19827.9300,6.81,135028.20,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+279,56,2024-10,4,Energia,kWh,kWh,744.0,,19640.1500,6.81,133749.42,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+280,56,2024-10,5,Energia,kWh,kWh,744.0,,19699.5700,6.81,134154.07,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+281,57,2024-11,1,Lubrificante,l,l,720.0,0.08,57.6000,9.37,539.71,fator_sintetico_por_hora_reportada_de_operacao
+282,57,2024-11,2,Lubrificante,l,l,720.0,0.08,57.6000,9.37,539.71,fator_sintetico_por_hora_reportada_de_operacao
+283,57,2024-11,3,Lubrificante,l,l,720.0,0.08,57.6000,9.37,539.71,fator_sintetico_por_hora_reportada_de_operacao
+284,57,2024-11,4,Lubrificante,l,l,720.0,0.08,57.6000,9.37,539.71,fator_sintetico_por_hora_reportada_de_operacao
+285,57,2024-11,5,Lubrificante,l,l,720.0,0.08,57.6000,9.37,539.71,fator_sintetico_por_hora_reportada_de_operacao
+286,58,2024-11,1,Detergente Industrial,l,l,720.0,0.15,108.0000,3.45,372.60,fator_sintetico_por_hora_reportada_de_operacao
+287,58,2024-11,2,Detergente Industrial,l,l,720.0,0.15,108.0000,3.45,372.60,fator_sintetico_por_hora_reportada_de_operacao
+288,58,2024-11,3,Detergente Industrial,l,l,720.0,0.15,108.0000,3.45,372.60,fator_sintetico_por_hora_reportada_de_operacao
+289,58,2024-11,4,Detergente Industrial,l,l,720.0,0.15,108.0000,3.45,372.60,fator_sintetico_por_hora_reportada_de_operacao
+290,58,2024-11,5,Detergente Industrial,l,l,720.0,0.15,108.0000,3.45,372.60,fator_sintetico_por_hora_reportada_de_operacao
+291,59,2024-12,1,Manutencao Tecnologica,servico,servico,744.0,,1.0000,3.54,3.54,contagem_oms_do_mes;unidade_corrigida_na_fonte
+292,59,2024-12,2,Manutencao Tecnologica,servico,servico,744.0,,2.0000,3.54,7.08,contagem_oms_do_mes;unidade_corrigida_na_fonte
+293,59,2024-12,3,Manutencao Tecnologica,servico,servico,744.0,,0.0000,3.54,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+294,59,2024-12,4,Manutencao Tecnologica,servico,servico,744.0,,2.0000,3.54,7.08,contagem_oms_do_mes;unidade_corrigida_na_fonte
+295,59,2024-12,5,Manutencao Tecnologica,servico,servico,744.0,,1.0000,3.54,3.54,contagem_oms_do_mes;unidade_corrigida_na_fonte
+296,60,2025-01,1,Manutencao Tecnologica,servico,servico,744.0,,0.0000,2.97,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+297,60,2025-01,2,Manutencao Tecnologica,servico,servico,744.0,,1.0000,2.97,2.97,contagem_oms_do_mes;unidade_corrigida_na_fonte
+298,60,2025-01,3,Manutencao Tecnologica,servico,servico,744.0,,1.0000,2.97,2.97,contagem_oms_do_mes;unidade_corrigida_na_fonte
+299,60,2025-01,4,Manutencao Tecnologica,servico,servico,744.0,,0.0000,2.97,0.00,contagem_oms_do_mes;unidade_corrigida_na_fonte
+300,60,2025-01,5,Manutencao Tecnologica,servico,servico,744.0,,2.0000,2.97,5.94,contagem_oms_do_mes;unidade_corrigida_na_fonte
+301,61,2025-02,1,Agua de refrigeração,l,l,672.0,12,8064.0000,9.7,78220.80,fator_sintetico_por_hora_reportada_de_operacao
+302,61,2025-02,2,Agua de refrigeração,l,l,672.0,12,8064.0000,9.7,78220.80,fator_sintetico_por_hora_reportada_de_operacao
+303,61,2025-02,3,Agua de refrigeração,l,l,672.0,12,8064.0000,9.7,78220.80,fator_sintetico_por_hora_reportada_de_operacao
+304,61,2025-02,4,Agua de refrigeração,l,l,672.0,12,8064.0000,9.7,78220.80,fator_sintetico_por_hora_reportada_de_operacao
+305,61,2025-02,5,Agua de refrigeração,l,l,672.0,12,8064.0000,9.7,78220.80,fator_sintetico_por_hora_reportada_de_operacao
+306,62,2025-03,1,Energia,kWh,kWh,744.0,,19471.9100,2.01,39138.54,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+307,62,2025-03,2,Energia,kWh,kWh,744.0,,19597.6100,2.01,39391.20,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+308,62,2025-03,3,Energia,kWh,kWh,744.0,,19755.1200,2.01,39707.79,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+309,62,2025-03,4,Energia,kWh,kWh,744.0,,19633.4900,2.01,39463.31,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+310,62,2025-03,5,Energia,kWh,kWh,744.0,,19462.4300,2.01,39119.48,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+311,63,2025-03,1,Energia,kWh,kWh,744.0,,19471.9100,8.04,156554.16,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+312,63,2025-03,2,Energia,kWh,kWh,744.0,,19597.6100,8.04,157564.78,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+313,63,2025-03,3,Energia,kWh,kWh,744.0,,19755.1200,8.04,158831.16,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+314,63,2025-03,4,Energia,kWh,kWh,744.0,,19633.4900,8.04,157853.26,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+315,63,2025-03,5,Energia,kWh,kWh,744.0,,19462.4300,8.04,156477.94,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+316,64,2025-04,1,Detergente Industrial,l,l,720.0,0.15,108.0000,2.54,274.32,fator_sintetico_por_hora_reportada_de_operacao
+317,64,2025-04,2,Detergente Industrial,l,l,720.0,0.15,108.0000,2.54,274.32,fator_sintetico_por_hora_reportada_de_operacao
+318,64,2025-04,3,Detergente Industrial,l,l,720.0,0.15,108.0000,2.54,274.32,fator_sintetico_por_hora_reportada_de_operacao
+319,64,2025-04,4,Detergente Industrial,l,l,720.0,0.15,108.0000,2.54,274.32,fator_sintetico_por_hora_reportada_de_operacao
+320,64,2025-04,5,Detergente Industrial,l,l,720.0,0.15,108.0000,2.54,274.32,fator_sintetico_por_hora_reportada_de_operacao
+321,65,2025-05,1,Detergente Industrial,l,l,744.0,0.15,111.6000,3.12,348.19,fator_sintetico_por_hora_reportada_de_operacao
+322,65,2025-05,2,Detergente Industrial,l,l,744.0,0.15,111.6000,3.12,348.19,fator_sintetico_por_hora_reportada_de_operacao
+323,65,2025-05,3,Detergente Industrial,l,l,744.0,0.15,111.6000,3.12,348.19,fator_sintetico_por_hora_reportada_de_operacao
+324,65,2025-05,4,Detergente Industrial,l,l,744.0,0.15,111.6000,3.12,348.19,fator_sintetico_por_hora_reportada_de_operacao
+325,65,2025-05,5,Detergente Industrial,l,l,744.0,0.15,111.6000,3.12,348.19,fator_sintetico_por_hora_reportada_de_operacao
+326,66,2025-06,1,Energia,kWh,kWh,720.0,,19345.0500,5.05,97692.50,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+327,66,2025-06,2,Energia,kWh,kWh,720.0,,18871.7400,5.05,95302.29,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+328,66,2025-06,3,Energia,kWh,kWh,720.0,,19112.1400,5.05,96516.31,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+329,66,2025-06,4,Energia,kWh,kWh,720.0,,19132.3400,5.05,96618.32,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+330,66,2025-06,5,Energia,kWh,kWh,720.0,,18929.7800,5.05,95595.39,kwh_reportado_nas_operacoes;unidade_corrigida_na_fonte
+331,67,2025-07,1,Lubrificante,l,l,744.0,0.08,59.5200,5.84,347.60,fator_sintetico_por_hora_reportada_de_operacao
+332,67,2025-07,2,Lubrificante,l,l,744.0,0.08,59.5200,5.84,347.60,fator_sintetico_por_hora_reportada_de_operacao
+333,67,2025-07,3,Lubrificante,l,l,744.0,0.08,59.5200,5.84,347.60,fator_sintetico_por_hora_reportada_de_operacao
+334,67,2025-07,4,Lubrificante,l,l,744.0,0.08,59.5200,5.84,347.60,fator_sintetico_por_hora_reportada_de_operacao
+335,67,2025-07,5,Lubrificante,l,l,744.0,0.08,59.5200,5.84,347.60,fator_sintetico_por_hora_reportada_de_operacao
+336,68,2025-08,1,Detergente Industrial,l,l,744.0,0.15,111.6000,2.31,257.80,fator_sintetico_por_hora_reportada_de_operacao
+337,68,2025-08,2,Detergente Industrial,l,l,744.0,0.15,111.6000,2.31,257.80,fator_sintetico_por_hora_reportada_de_operacao
+338,68,2025-08,3,Detergente Industrial,l,l,744.0,0.15,111.6000,2.31,257.80,fator_sintetico_por_hora_reportada_de_operacao
+339,68,2025-08,4,Detergente Industrial,l,l,744.0,0.15,111.6000,2.31,257.80,fator_sintetico_por_hora_reportada_de_operacao
+340,68,2025-08,5,Detergente Industrial,l,l,744.0,0.15,111.6000,2.31,257.80,fator_sintetico_por_hora_reportada_de_operacao
+341,69,2025-08,1,Lubrificante,l,l,744.0,0.08,59.5200,4.01,238.68,fator_sintetico_por_hora_reportada_de_operacao
+342,69,2025-08,2,Lubrificante,l,l,744.0,0.08,59.5200,4.01,238.68,fator_sintetico_por_hora_reportada_de_operacao
+343,69,2025-08,3,Lubrificante,l,l,744.0,0.08,59.5200,4.01,238.68,fator_sintetico_por_hora_reportada_de_operacao
+344,69,2025-08,4,Lubrificante,l,l,744.0,0.08,59.5200,4.01,238.68,fator_sintetico_por_hora_reportada_de_operacao
+345,69,2025-08,5,Lubrificante,l,l,744.0,0.08,59.5200,4.01,238.68,fator_sintetico_por_hora_reportada_de_operacao
+346,70,2025-09,1,Agua de refrigeração,l,l,720.0,12,8640.0000,3.25,28080.00,fator_sintetico_por_hora_reportada_de_operacao
+347,70,2025-09,2,Agua de refrigeração,l,l,720.0,12,8640.0000,3.25,28080.00,fator_sintetico_por_hora_reportada_de_operacao
+348,70,2025-09,3,Agua de refrigeração,l,l,720.0,12,8640.0000,3.25,28080.00,fator_sintetico_por_hora_reportada_de_operacao
+349,70,2025-09,4,Agua de refrigeração,l,l,720.0,12,8640.0000,3.25,28080.00,fator_sintetico_por_hora_reportada_de_operacao
+350,70,2025-09,5,Agua de refrigeração,l,l,720.0,12,8640.0000,3.25,28080.00,fator_sintetico_por_hora_reportada_de_operacao
+351,71,2025-10,1,Detergente Industrial,l,l,744.0,0.15,111.6000,6.89,768.92,fator_sintetico_por_hora_reportada_de_operacao
+352,71,2025-10,2,Detergente Industrial,l,l,744.0,0.15,111.6000,6.89,768.92,fator_sintetico_por_hora_reportada_de_operacao
+353,71,2025-10,3,Detergente Industrial,l,l,744.0,0.15,111.6000,6.89,768.92,fator_sintetico_por_hora_reportada_de_operacao
+354,71,2025-10,4,Detergente Industrial,l,l,744.0,0.15,111.6000,6.89,768.92,fator_sintetico_por_hora_reportada_de_operacao
+355,71,2025-10,5,Detergente Industrial,l,l,744.0,0.15,111.6000,6.89,768.92,fator_sintetico_por_hora_reportada_de_operacao

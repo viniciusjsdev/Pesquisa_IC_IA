@@ -218,6 +218,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--verify', action='store_true', help='Read-only validation of an existing load')
     args = parser.parse_args()
+    if (ROOT / 'dados_complementares_datamind' / 'manifesto_canonico.json').exists():
+        if not args.verify:
+            raise RuntimeError('V1 importer accepts only 75 historical CSVs. The canonical '
+                               '166-file model is active; use canonical_ingest.py plan. '
+                               'Refusing to create incomplete source databases.')
+        from scripts.verify_canonical_load import verify as verify_canonical
+        print(json.dumps(verify_canonical(ROOT), ensure_ascii=False, indent=2))
+        return
     items = inventory()
     print(f'Preflight: {len(items)} CSVs, {sum(len(i["rows"]) for i in items.values())} rows; IDs and references valid.', flush=True)
     if not args.verify:

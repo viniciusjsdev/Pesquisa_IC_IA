@@ -1,0 +1,15 @@
+cliente_id,nome_exibicao_simulado,origem_referencia,identidade_cadastrada
+1,Cliente simulado P2-001,vendas.cliente_id,false
+2,Cliente simulado P2-002,vendas.cliente_id,false
+3,Cliente simulado P2-003,vendas.cliente_id,false
+4,Cliente simulado P2-004,vendas.cliente_id,false
+5,Cliente simulado P2-005,vendas.cliente_id,false
+6,Cliente simulado P2-006,vendas.cliente_id,false
+7,Cliente simulado P2-007,vendas.cliente_id,false
+8,Cliente simulado P2-008,vendas.cliente_id,false
+9,Cliente simulado P2-009,vendas.cliente_id,false
+10,Cliente simulado P2-010,vendas.cliente_id,false
+11,Cliente simulado P2-011,vendas.cliente_id,false
+12,Cliente simulado P2-012,vendas.cliente_id,false
+13,Cliente simulado P2-013,vendas.cliente_id,false
+14,Cliente simulado P2-014,vendas.cliente_id,false

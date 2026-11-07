@@ -1,0 +1,3 @@
+periodo_indice,posto_composto,tarifa_ponta_id,tarifa_fora_ponta_id,fracao_kwh_ponta_inferida,fracao_kwh_fora_ponta_inferida,valor_efetivo_brl_kwh_inferido,origem
+0,MISTO_PONTA,1,2,0.4,0.6,0.512,inferencia_do_custo_reportado_nao_medicao_horaria
+2,MISTO_PONTA,1,2,0.4,0.6,0.758,inferencia_do_custo_reportado_nao_medicao_horaria

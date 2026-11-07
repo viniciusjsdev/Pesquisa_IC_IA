@@ -1,0 +1,51 @@
+{
+  "database_writes": false,
+  "queries": [
+    {
+      "query": "machine",
+      "year": 2020,
+      "rows": 1,
+      "sources": [
+        "db_industrial.public.registros_operacao",
+        "db_industrial.public.paradas_maquinas"
+      ]
+    },
+    {
+      "query": "product",
+      "year": 2020,
+      "rows": 1,
+      "sources": [
+        "db_industrial.public.registros_operacao",
+        "db_financeiro.public.vendas"
+      ]
+    },
+    {
+      "query": "financial",
+      "year": 2020,
+      "rows": 0,
+      "sources": [
+        "db_financeiro.public.resultados_financeiros"
+      ]
+    },
+    {
+      "query": "quality",
+      "year": 2020,
+      "rows": 1,
+      "sources": [
+        "db_industrial.public.controle_qualidade"
+      ]
+    },
+    {
+      "query": "material",
+      "year": 2020,
+      "rows": 1,
+      "sources": [
+        "db_industrial.public.consumo_materiais",
+        "db_financeiro.public.materiais_custo_historico"
+      ]
+    }
+  ],
+  "contributors_query": "product",
+  "trace_source_csv": "dados_simulados/dados_financeiros_2017_2020/vendas.csv",
+  "trace_csv_exists": true
+}

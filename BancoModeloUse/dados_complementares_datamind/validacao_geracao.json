@@ -1,0 +1,63 @@
+{
+  "periods": {
+    "periodo_2015_2016": {
+      "consumo_energia_intervalo.csv": 10080,
+      "vinculos_manutencao_simulados.csv": 71,
+      "ordens_manutencao_geradas.csv": 48,
+      "paradas_maquinas_geradas.csv": 25,
+      "custos_produto_mensais_simulados.csv": 120,
+      "eventos_maquina_turno.csv": 140629,
+      "metas_esg_simuladas.csv": 120,
+      "resultados_projeto_esg_simulados.csv": 40,
+      "clientes_referenciados.csv": 9,
+      "operadores_referenciados.csv": 10,
+      "inspetores_referenciados.csv": 9,
+      "rateio_custos_producao_produto_simulado.csv": 60,
+      "rateio_custos_indiretos_maquina_simulado.csv": 48,
+      "custo_hora_operador_estimado.csv": 5,
+      "consumo_insumos_operacionais_simulado.csv": 96,
+      "resumo_estado_maquina_turno_simulado.csv": 8776,
+      "oee_maquina_turno_simulado.csv": 8776
+    },
+    "periodo_2017_2020": {
+      "consumo_energia_intervalo.csv": 16000,
+      "vinculos_manutencao_simulados.csv": 92,
+      "ordens_manutencao_geradas.csv": 52,
+      "paradas_maquinas_geradas.csv": 20,
+      "custos_produto_mensais_simulados.csv": 240,
+      "eventos_maquina_turno.csv": 281015,
+      "metas_esg_simuladas.csv": 240,
+      "resultados_projeto_esg_simulados.csv": 93,
+      "clientes_referenciados.csv": 14,
+      "operadores_referenciados.csv": 20,
+      "inspetores_referenciados.csv": 19,
+      "rateio_custos_producao_produto_simulado.csv": 120,
+      "rateio_custos_indiretos_maquina_simulado.csv": 192,
+      "custo_hora_operador_estimado.csv": 7,
+      "consumo_insumos_operacionais_simulado.csv": 188,
+      "resumo_estado_maquina_turno_simulado.csv": 17536,
+      "oee_maquina_turno_simulado.csv": 17536
+    },
+    "periodo_2021_2025": {
+      "consumo_energia_intervalo.csv": 16000,
+      "vinculos_manutencao_simulados.csv": 173,
+      "ordens_manutencao_geradas.csv": 117,
+      "paradas_maquinas_geradas.csv": 45,
+      "custos_produto_mensais_simulados.csv": 300,
+      "eventos_maquina_turno.csv": 438984,
+      "metas_esg_simuladas.csv": 300,
+      "resultados_projeto_esg_simulados.csv": 154,
+      "clientes_referenciados.csv": 35,
+      "operadores_referenciados.csv": 34,
+      "inspetores_referenciados.csv": 29,
+      "rateio_custos_producao_produto_simulado.csv": 180,
+      "rateio_custos_indiretos_maquina_simulado.csv": 300,
+      "custo_hora_operador_estimado.csv": 11,
+      "consumo_insumos_operacionais_simulado.csv": 355,
+      "resumo_estado_maquina_turno_simulado.csv": 27395,
+      "oee_maquina_turno_simulado.csv": 27395
+    }
+  },
+  "database_writes": false,
+  "canonical_files": 166
+}
