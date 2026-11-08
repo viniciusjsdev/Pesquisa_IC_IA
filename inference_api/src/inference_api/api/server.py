@@ -8,9 +8,9 @@ from pathlib import Path
 from urllib.parse import urlparse
 from uuid import UUID
 
-from . import auth, budget, dw_tools, evidence_packets, jobs, limits, models, service, storage
+from inference_api import auth, budget, dw_tools, evidence_packets, jobs, limits, models, service, storage
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 WEB = ROOT / "frontend" / "dist"
 BI_SNAPSHOT = ROOT / "private" / "bi_snapshot.json"
 
@@ -126,10 +126,10 @@ class Handler(BaseHTTPRequestHandler):
                     cleared += "; Secure"
                 self._send(200, {"status": "logged_out"}, {"Set-Cookie": cleared} if cookie_token else None)
             elif method == "GET" and path == "/api/models":
-                from .model_service.registry import public_profiles
+                from inference_api.model_service.registry import public_profiles
                 self._send(200, public_profiles())
             elif method == "GET" and path == "/api/bench/scenarios":
-                from .agent_harness import approved_catalog
+                from inference_api.agent_harness import approved_catalog
                 self._send(200, {"scenarios": ["fixed_evidence", "data_access"],
                                  "catalog_version": approved_catalog.load()["version"]})
             elif method == "GET" and path == "/api/bench/evidence-packets":

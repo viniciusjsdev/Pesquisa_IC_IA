@@ -21,7 +21,7 @@ import psycopg2
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from inference_api import config, criteria, server, service, storage
-from inference_api.auth import Principal
+from inference_api.identity.auth import Principal
 
 PRINCIPAL = Principal("00000000-0000-0000-0000-000000000001", "Nicoli")
 
@@ -45,7 +45,7 @@ class CriteriaTests(unittest.TestCase):
 
     def test_saved_revision_snapshot_remains_exact_after_later_edit(self):
         saved = {"revision": 1, "system_prompt": "P", "config": copy.deepcopy(criteria.DEFAULT)}
-        with patch("inference_api.service.storage.get_criteria", return_value=saved):
+        with patch("inference_api.executions.service.storage.get_criteria", return_value=saved):
             first = service._criteria({"criteria_revision_id": "00000000-0000-0000-0000-000000000002"})
         saved["config"]["required_caveats"].append("novo")
         self.assertEqual(first["revision"], 1)

@@ -4,7 +4,7 @@ import os
 
 import psycopg2
 
-from .config import app_db_params
+from inference_api.config import app_db_params
 
 LOCK_KEY = 773104003
 

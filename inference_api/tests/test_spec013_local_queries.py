@@ -17,7 +17,7 @@ from inference_api.agent_harness.catalog_runtime import compile_maps  # noqa: E4
 from inference_api.agent_harness import approved_catalog  # noqa: E402
 from inference_api.agent_harness import real_pilot  # noqa: E402
 from inference_api import models, service  # noqa: E402
-from inference_api.auth import Principal  # noqa: E402
+from inference_api.identity.auth import Principal  # noqa: E402
 
 
 CATALOG = json.loads((ROOT / "specs/active/SPEC-013/evidence/m0-semantic-map-candidate-2026-11-01.json")

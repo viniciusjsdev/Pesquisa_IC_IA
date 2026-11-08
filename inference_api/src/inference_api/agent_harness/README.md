@@ -1,6 +1,6 @@
 # Núcleo de agentes da SPEC-013
 
-**SPEC-014 · ready para outra thread (06/11/2026), ainda não implementada:** [Evolução planejada: mesmos cinco papéis nos dois cenários, Especialista analisa pacote no A ou monta plano no B, serviço comum para todas as chamadas de modelo.](../../../../specs/active/SPEC-014/architecture-contract.md) Diagrama e documentação atualizados primeiro; implementação e aceite próprios serão posteriores.
+**SPEC-014 · implementada em engenharia local em 06/11/2026:** [Evolução planejada: mesmos cinco papéis nos dois cenários, Especialista analisa pacote no A ou monta plano no B, serviço comum para todas as chamadas de modelo.](../../../../specs/active/SPEC-014/architecture-contract.md) O ensaio real posterior mostrou `invalid_review_gap` no cenário A; a correção desse cenário segue pendente e separada da reorganização de pastas.
 
 **Contrato vigente em 06/11/2026:** [consulta pelo Especialista](../../../../specs/active/SPEC-013/specialist-query-contract.md).
 São cinco papéis, na ordem Analista → Selecionador → Especialista → Revisor

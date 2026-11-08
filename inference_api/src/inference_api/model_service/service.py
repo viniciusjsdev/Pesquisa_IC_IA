@@ -6,7 +6,7 @@ import time
 from urllib.error import HTTPError, URLError
 from urllib.request import Request
 from .. import models
-from ..request_budget import encode_request, RequestBudgetExceeded
+from inference_api.model_service.request_budget import encode_request, RequestBudgetExceeded
 from . import adapters
 from .registry import preflight
 

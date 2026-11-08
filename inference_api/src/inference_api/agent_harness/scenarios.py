@@ -13,7 +13,7 @@ from jsonschema import Draft202012Validator
 from .engine import CONTRACT, BLOCKED_QUERY_ERRORS, _bytes
 from ..model_service.registry import digest
 from ..model_service.service import ModelError
-from ..request_budget import POLICY
+from inference_api.model_service.request_budget import POLICY
 
 
 VERSION = 'scenarios_v1'

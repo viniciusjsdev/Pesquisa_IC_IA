@@ -13,7 +13,7 @@ sys.path.insert(0, str(ROOT / "inference_api" / "src"))
 sys.path.insert(0, str(ROOT))
 
 from inference_api import dw_tools, evidence_packets, models, service
-from inference_api.auth import Principal
+from inference_api.identity.auth import Principal
 from model_evaluation import export
 from model_evaluation.tests.test_export import fixture_case, fixture_report, fixture_query
 
@@ -48,15 +48,15 @@ class ModeTests(unittest.TestCase):
         self.packet_bytes = packet
 
     def run_saved(self, payload, **patches):
-        with patch("inference_api.service.storage.create_run", side_effect=lambda _a, s: s), \
-             patch("inference_api.service.config.vllm_url", return_value="https://model.example"):
+        with patch("inference_api.executions.service.storage.create_run", side_effect=lambda _a, s: s), \
+             patch("inference_api.executions.service.config.vllm_url", return_value="https://model.example"):
             return service.execute_run(payload, PRINCIPAL)
 
     # Legacy creation contract archived; SPEC-014 explicitly rejects these requests.
     pass
 
     def test_private_packet_hash_bytes_and_tamper(self):
-        with patch("inference_api.evidence_packets.packet_directory", return_value=self.root):
+        with patch("inference_api.evidence.evidence_packets.packet_directory", return_value=self.root):
             listing = evidence_packets.list_packets()
             self.assertEqual(listing[0]["sha256"], self.packet["sha256"])
             selected, raw = evidence_packets.select_packet("integrated-1", self.packet["sha256"])
@@ -112,10 +112,10 @@ class ModeTests(unittest.TestCase):
             sent.append(json.loads(request.data))
             return Response()
         identity = {"manifest_sha256": "a" * 64, "base_revision": "b" * 40, "session_id": "s"}
-        with patch("inference_api.models.vllm_url", return_value="https://model.example"), \
-             patch("inference_api.models.available_models", return_value={"qwen-base": {"available": True, "session_id": "s"}}), \
-             patch("inference_api.models.urlopen", side_effect=open_request), \
-             patch("inference_api.models.serving_catalog.response_identity", return_value=identity):
+        with patch("inference_api.model_service.models.vllm_url", return_value="https://model.example"), \
+             patch("inference_api.model_service.models.available_models", return_value={"qwen-base": {"available": True, "session_id": "s"}}), \
+             patch("inference_api.model_service.models.urlopen", side_effect=open_request), \
+             patch("inference_api.model_service.models.serving_catalog.response_identity", return_value=identity):
             _, record = models.chat_turn("qwen-base", [{"role": "user", "content": "Q"}], 0, None,
                                          tools=dw_tools.catalog(), session_id="s")
             self.assertEqual(record["session_id"], "s")

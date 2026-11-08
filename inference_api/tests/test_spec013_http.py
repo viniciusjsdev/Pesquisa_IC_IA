@@ -15,7 +15,7 @@ from uuid import uuid4
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from inference_api import jobs, server, service, storage
 from inference_api.agent_harness.synthetic_demo import QUESTION
-from inference_api.auth import Principal
+from inference_api.identity.auth import Principal
 from test_agent_harness import ScriptedModel, scripted_outputs
 
 

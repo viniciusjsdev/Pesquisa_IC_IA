@@ -7,7 +7,7 @@ import sys
 
 import psycopg2
 
-from .config import ROOT, dw_db_params
+from inference_api.config import ROOT, dw_db_params
 
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))

@@ -17,6 +17,10 @@ class RuntimeIdentityTests(unittest.TestCase):
                      'openai_pilot.py', 'catalog_runtime.py', 'synthetic_demo.py',
                      'openai_provider.py', 'groq.py', 'request_budget.py', 'fixed_queries.py'):
             self.assertTrue(any(path.endswith('/' + name) for path in files), name)
+        for group, module in (('api', 'server.py'), ('identity', 'auth.py'),
+                              ('executions', 'service.py'), ('data_access', 'dw_tools.py'),
+                              ('evidence', 'evidence_packets.py'), ('persistence', 'storage.py')):
+            self.assertTrue(any(path.endswith(f'/{group}/{module}') for path in files), group)
         with TemporaryDirectory() as folder, patch.object(runtime_identity, 'ROOT', Path(folder)):
             source = Path(folder) / 'compiler.py'
             source.write_bytes(b'first')

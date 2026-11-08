@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src'))
 from inference_api import groq, models, openai_provider
-from inference_api.request_budget import encode_request, RequestBudgetExceeded
+from inference_api.model_service.request_budget import encode_request, RequestBudgetExceeded
 from inference_api.agent_harness import run, Limits
 from inference_api.agent_harness import openai_pilot, real_pilot, synthetic_demo, openai_audit
 from test_spec012 import Stream, response, answer

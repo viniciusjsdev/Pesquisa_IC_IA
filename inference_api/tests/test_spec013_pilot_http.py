@@ -18,7 +18,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from inference_api import server, service  # noqa: E402
 from inference_api.agent_harness import real_pilot  # noqa: E402
 from inference_api.agent_harness.real_pilot import PROTOCOL_PROMPT  # noqa: E402
-from inference_api.auth import Principal  # noqa: E402
+from inference_api.identity.auth import Principal  # noqa: E402
 
 
 class PilotHttpGateTests(unittest.TestCase):
@@ -77,11 +77,11 @@ class PilotHttpGateTests(unittest.TestCase):
                                    "Authorization": "Bearer fixture"})
         try:
             with patch.dict(os.environ, {"INFERENCE_SPEC013_GROQ_REAL_DATA": "0"}), \
-                 patch("inference_api.server.auth.authenticate",
+                 patch("inference_api.api.server.auth.authenticate",
                        return_value=Principal(str(uuid4()), "Researcher")), \
-                 patch("inference_api.storage.create_job",
+                 patch("inference_api.persistence.storage.create_job",
                        side_effect=AssertionError("job created")), \
-                 patch("inference_api.groq.chat_turn",
+                 patch("inference_api.model_service.groq.chat_turn",
                        side_effect=AssertionError("provider called")):
                 with self.assertRaises(HTTPError) as raised:
                     urlopen(request, timeout=5)

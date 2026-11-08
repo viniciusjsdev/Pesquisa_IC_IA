@@ -14,7 +14,7 @@ from inference_api.agent_harness.engine import INPUT_CONTRACT_SHA256, INPUT_SCHE
 from inference_api.agent_harness.synthetic_demo import MAPS, QUESTION, fixture_query
 from inference_api.agent_harness import openai_audit, synthetic_demo
 from inference_api import groq, jobs, models, service
-from inference_api.auth import Principal
+from inference_api.identity.auth import Principal
 
 
 class ScriptedModel:
@@ -276,7 +276,7 @@ class HarnessTests(unittest.TestCase):
         with patch.dict(os.environ, {"GROQ_API_KEY": "fixture-key",
                                   "GROQ_MODEL": "openai/gpt-oss-120b",
                                   "GROQ_HARNESS_MODEL": model_id}), \
-             patch("inference_api.groq.models.urlopen", side_effect=urlopen):
+             patch("inference_api.model_service.groq.models.urlopen", side_effect=urlopen):
             message, metadata = groq.chat_turn([{"role": "user", "content": "fixture"}],
                                                0, 900, tools=None, harness_model=model_id)
         self.assertEqual(requested[0]["model"], model_id)

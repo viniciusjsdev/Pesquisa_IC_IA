@@ -8,7 +8,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
 from inference_api import auth, storage  # noqa: E402
-from inference_api.server import serve  # noqa: E402
+from inference_api.api.server import serve  # noqa: E402
 
 
 def main() -> None:

@@ -13,7 +13,7 @@ from urllib.request import Request, urlopen
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
-from inference_api.server import Handler  # noqa: E402
+from inference_api.api.server import Handler  # noqa: E402
 
 
 class QuietHandler(Handler):

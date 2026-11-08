@@ -3,11 +3,11 @@ from copy import deepcopy
 from dataclasses import asdict
 import hashlib
 from pathlib import Path
-from . import criteria, evidence_packets, storage
-from .auth import Principal
-from .agent_harness import scenarios, approved_catalog, catalog_runtime, local_queries, real_pilot
-from .agent_harness.runtime_identity import identity as runtime_identity
-from .model_service import registry, ModelService
+from inference_api import criteria, evidence_packets, storage
+from inference_api.identity.auth import Principal
+from inference_api.agent_harness import scenarios, approved_catalog, catalog_runtime, local_queries, real_pilot
+from inference_api.agent_harness.runtime_identity import identity as runtime_identity
+from inference_api.model_service import registry, ModelService
 
 def _options(payload: dict) -> tuple[float, int | None]:
     temperature = payload.get("temperature", 0)

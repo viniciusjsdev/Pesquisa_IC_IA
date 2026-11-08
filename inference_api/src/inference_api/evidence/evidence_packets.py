@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 import sys
 
-from .config import ROOT, packet_directory
+from inference_api.config import ROOT, packet_directory
 
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))

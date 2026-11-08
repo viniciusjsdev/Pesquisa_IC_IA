@@ -22,7 +22,7 @@ sys.path.insert(0, str(ROOT / "runpod" / "serving"))
 
 import gateway
 from inference_api import auth, config, jobs, limits, models, server, storage
-from inference_api.auth import Principal
+from inference_api.identity.auth import Principal
 import psycopg2
 from uuid import uuid4
 
@@ -93,30 +93,30 @@ class StreamingTests(unittest.TestCase):
         ]
         identity = {"manifest_sha256": "a" * 64, "base_revision": "b" * 40,
                     "session_id": "session"}
-        with patch("inference_api.models.vllm_url", return_value="https://example.invalid"), \
-             patch("inference_api.models.available_models", return_value={
+        with patch("inference_api.model_service.models.vllm_url", return_value="https://example.invalid"), \
+             patch("inference_api.model_service.models.available_models", return_value={
                  "qwen-base": {"available": True, "session_id": "session"}}), \
-             patch("inference_api.models.serving_catalog.response_identity", return_value=identity), \
-             patch("inference_api.models.urlopen", return_value=Response(complete)):
+             patch("inference_api.model_service.models.serving_catalog.response_identity", return_value=identity), \
+             patch("inference_api.model_service.models.urlopen", return_value=Response(complete)):
             message, record = models.chat_turn("qwen-base", [{"role": "user", "content": "Q"}],
                                                0, None, tools=[], session_id="session")
         self.assertEqual(message["tool_calls"][0]["function"]["arguments"], '{"year":2020}')
         self.assertEqual(record["raw_response_format"], "sse")
-        with patch("inference_api.models.vllm_url", return_value="https://example.invalid"), \
-             patch("inference_api.models.available_models", return_value={
+        with patch("inference_api.model_service.models.vllm_url", return_value="https://example.invalid"), \
+             patch("inference_api.model_service.models.available_models", return_value={
                  "qwen-base": {"available": True, "session_id": "session"}}), \
-             patch("inference_api.models.serving_catalog.response_identity", return_value=identity), \
-             patch("inference_api.models.urlopen", return_value=Response(complete[:-1])):
+             patch("inference_api.model_service.models.serving_catalog.response_identity", return_value=identity), \
+             patch("inference_api.model_service.models.urlopen", return_value=Response(complete[:-1])):
             with self.assertRaises(models.ModelResponseError) as caught:
                 models.chat_turn("qwen-base", [{"role": "user", "content": "Q"}],
                                  0, None, tools=[], session_id="session")
         self.assertIn("incomplete", str(caught.exception).lower())
         exhausted = [event({"content": "unfinished"}, "length"), b"data: [DONE]\n\n"]
-        with patch("inference_api.models.vllm_url", return_value="https://example.invalid"), \
-             patch("inference_api.models.available_models", return_value={
+        with patch("inference_api.model_service.models.vllm_url", return_value="https://example.invalid"), \
+             patch("inference_api.model_service.models.available_models", return_value={
                  "qwen-base": {"available": True, "session_id": "session"}}), \
-             patch("inference_api.models.serving_catalog.response_identity", return_value=identity), \
-             patch("inference_api.models.urlopen", return_value=Response(exhausted)):
+             patch("inference_api.model_service.models.serving_catalog.response_identity", return_value=identity), \
+             patch("inference_api.model_service.models.urlopen", return_value=Response(exhausted)):
             with self.assertRaises(models.ModelResponseError) as caught:
                 models.chat_turn("qwen-base", [{"role": "user", "content": "Q"}],
                                  0, None, tools=None, session_id="session")

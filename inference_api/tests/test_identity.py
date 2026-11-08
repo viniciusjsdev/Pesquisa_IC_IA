@@ -236,7 +236,7 @@ class IdentityDatabaseTests(unittest.TestCase):
                                       {"identity": {"principal_id": principal.id,
                                                     "author_verified": True},
                                        "model": {"alias": "test"}, "status": "test"})
-        with patch("inference_api.server.service.execute_run", side_effect=fake_run):
+        with patch("inference_api.api.server.service.execute_run", side_effect=fake_run):
             thread = threading.Thread(target=lambda: outcomes.append(
                 self.request("/api/runs", first, {"question": "one"})))
             thread.start()

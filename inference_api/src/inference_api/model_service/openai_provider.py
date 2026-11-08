@@ -7,7 +7,7 @@ from http.client import HTTPException
 from urllib.error import HTTPError, URLError
 from urllib.request import Request
 
-from . import models
+from inference_api import models
 
 ENDPOINT = "https://api.openai.com/v1/responses"
 MODEL = "gpt-6-luna"
@@ -181,7 +181,7 @@ class Conversation:
         if tools is not None:
             payload["tools"] = [{"type": "function", **tool["function"]} for tool in tools]
             payload.update({"tool_choice": "auto", "parallel_tool_calls": False})
-        from .request_budget import encode_request
+        from inference_api.model_service.request_budget import encode_request
         body, request_budget = encode_request(payload, max_request_bytes)
         request = Request(ENDPOINT, data=body,
                           headers={"Authorization": f"Bearer {os.environ['OPENAI_API_KEY'].strip()}",

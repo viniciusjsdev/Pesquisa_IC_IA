@@ -1,3 +1,5 @@
+> **Organização da API:** [mapa dos módulos da Bancada](docs/organizacao_inference_api.md). Esta etapa apenas realoca código e atualiza referências; o cenário A mantém sua limitação registrada.
+
 > **Fonte ativa consolidada em 07/11/2026:** este checkout `Pesquisa_IC_IA`
 > reúne Bancada, harness e a DW V2: 166 CSVs, manifesto, contrato, DER e
 > ingestão. O worktree `datamind-dw-rebuild` é histórico de segurança.

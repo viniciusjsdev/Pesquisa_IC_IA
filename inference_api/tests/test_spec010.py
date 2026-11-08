@@ -14,7 +14,7 @@ from urllib.request import HTTPCookieProcessor, Request, build_opener
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from inference_api import groq, models, server, service
-from inference_api.auth import Principal
+from inference_api.identity.auth import Principal
 
 PRINCIPAL = Principal("00000000-0000-0000-0000-000000000001", "Nicoli")
 GROQ_INPUT = {"provider": "groq", "model_alias": "groq", "evidence_mode": "synthetic_snapshot",
@@ -60,7 +60,7 @@ class GroqTests(unittest.TestCase):
     def test_stream_success_rate_limit_length_and_partial(self):
         from urllib.error import HTTPError
         with patch.dict(os.environ, {"GROQ_API_KEY": "fixture-key", "GROQ_MODEL": "fixture-model"}), \
-             patch("inference_api.models.urlopen", return_value=Stream(sse())) as opener:
+             patch("inference_api.model_service.models.urlopen", return_value=Stream(sse())) as opener:
             message, receipt = groq.chat_turn([{"role": "user", "content": "synthetic"}], .2, None, tools=None)
             self.assertEqual(message["content"], "fixture")
             self.assertEqual(receipt["usage"]["prompt_tokens"], 9)
@@ -68,7 +68,7 @@ class GroqTests(unittest.TestCase):
         with patch.dict(os.environ, {"GROQ_API_KEY": "fixture-key", "GROQ_MODEL": "fixture-model"}):
             for response, status in [(Stream(sse(finish="length")), "context_limit"),
                                      (Stream(sse(complete=False)), "stream_incomplete")]:
-                with self.subTest(status=status), patch("inference_api.models.urlopen", return_value=response), \
+                with self.subTest(status=status), patch("inference_api.model_service.models.urlopen", return_value=response), \
                      self.assertRaises(groq.GroqError) as caught:
                     groq.chat_turn([], .2, None, tools=None)
                 self.assertEqual(caught.exception.status, status)
@@ -76,12 +76,12 @@ class GroqTests(unittest.TestCase):
                     self.assertEqual(caught.exception.metadata["usage"]["completion_tokens"], 2)
                     self.assertEqual(caught.exception.metadata["finish_reason"], "length")
             error = HTTPError(groq.ENDPOINT, 429, "limit", {"Retry-After": "12"}, None)
-            with patch("inference_api.models.urlopen", side_effect=error), self.assertRaises(groq.GroqError) as caught:
+            with patch("inference_api.model_service.models.urlopen", side_effect=error), self.assertRaises(groq.GroqError) as caught:
                 groq.chat_turn([], .2, None, tools=None)
             self.assertEqual((caught.exception.status, caught.exception.retry_after), ("provider_rate_limited", "12"))
             for code, status in [(400, "provider_bad_request"), (401, "provider_auth_error"),
                                  (500, "provider_error")]:
-                with self.subTest(code=code), patch("inference_api.models.urlopen",
+                with self.subTest(code=code), patch("inference_api.model_service.models.urlopen",
                       side_effect=HTTPError(groq.ENDPOINT, code, "private upstream detail", {}, None)), \
                      self.assertRaises(groq.GroqError) as caught:
                     groq.chat_turn([], .2, None, tools=None)
@@ -90,7 +90,7 @@ class GroqTests(unittest.TestCase):
             for body, status in [({"error": {"code": "context_length_exceeded", "message": "private"}}, "context_limit"),
                                  ({"error": {"type": "invalid_request_error", "failed_generation": {"attempted_arguments": "private"}}}, "provider_tool_error")]:
                 response = HTTPError(groq.ENDPOINT, 400, "private", {}, io.BytesIO(json.dumps(body).encode()))
-                with self.subTest(status=status), patch("inference_api.models.urlopen", side_effect=response), \
+                with self.subTest(status=status), patch("inference_api.model_service.models.urlopen", side_effect=response), \
                      self.assertRaises(groq.GroqError) as caught:
                     groq.chat_turn([], .2, None, tools=None)
                 self.assertEqual(caught.exception.status, status)
@@ -130,9 +130,9 @@ class CookieHttpTests(unittest.TestCase):
             except HTTPError as exc:
                 return exc.code, json.load(exc), exc.headers
         try:
-            with patch("inference_api.server.auth.login", side_effect=login), \
-                 patch("inference_api.server.auth.authenticate", side_effect=authenticate), \
-                 patch("inference_api.server.auth.logout", side_effect=logout):
+            with patch("inference_api.api.server.auth.login", side_effect=login), \
+                 patch("inference_api.api.server.auth.authenticate", side_effect=authenticate), \
+                 patch("inference_api.api.server.auth.logout", side_effect=logout):
                 origin = {"Origin": base, "X-Browser-Session": "1"}
                 status, payload, headers = request("/api/login", body={"username": "Nicoli", "password": "fixture"}, headers=origin)
                 self.assertEqual(status, 200)

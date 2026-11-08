@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "inference_api" / "src"))
 sys.path.insert(0, str(ROOT / "inference_api" / "tests"))
 from inference_api import service, storage  # noqa: E402
-from inference_api.auth import Principal  # noqa: E402
+from inference_api.identity.auth import Principal  # noqa: E402
 from inference_api.config import app_db_params  # noqa: E402
 from test_agent_harness import ScriptedModel, scripted_outputs  # noqa: E402
 
@@ -46,7 +46,7 @@ def verify() -> dict:
     try:
         with patch.dict(os.environ, {"GROQ_API_KEY": "fixture-key",
                                   "GROQ_HARNESS_MODEL": "qwen/qwen3.8-27b"}), \
-             patch("inference_api.service.synthetic_demo.make_groq_model_call",
+             patch("inference_api.executions.service.synthetic_demo.make_groq_model_call",
                    return_value=model):
             run = service.execute_run(payload, principal)
         run_id = run["id"]

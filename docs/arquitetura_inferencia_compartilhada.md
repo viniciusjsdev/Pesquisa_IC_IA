@@ -1,3 +1,5 @@
+> **Mapa dos módulos da API:** [organização por responsabilidade](organizacao_inference_api.md). Os contratos dos cenários A e B seguem a SPEC-014.
+
 > **Fontes consolidadas em 07/11/2026:** a DW V2, seus 166 CSVs, contrato, DER e scripts agora estão no checkout principal. O worktree anterior é histórico. [Mapa de fontes e arquivo](fontes_ativas_e_arquivo.md). A integração não recarregou bancos nem atribuiu score.
 
 > **SPEC-014 concluída em engenharia local (06/11/2026):** preflight do catálogo e bloqueio de fonte corrigidos e aprovados em nova revisão independente. Não há nova inferência remota nem pontuação científica. Ver `specs/active/SPEC-014/evidence/local-integration.json`.

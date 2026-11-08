@@ -191,7 +191,7 @@ class ServingTests(unittest.TestCase):
         for thread in threads:
             thread.start()
         try:
-            with patch("inference_api.models.vllm_url", return_value=f"http://127.0.0.1:{source.server_port}"), \
+            with patch("inference_api.model_service.models.vllm_url", return_value=f"http://127.0.0.1:{source.server_port}"), \
                  patch.dict("os.environ", {"INFERENCE_VLLM_TOKEN": "local-test-token"}):
                 with self.assertRaises(HTTPError) as failure:
                     models.available_models()
@@ -256,8 +256,8 @@ class ServingTests(unittest.TestCase):
                 return Response({"data": [{"id": "ft-finqa-a"}]}, headers)
             return Response({}, headers, stream=True)
 
-        with patch("inference_api.models.vllm_url", return_value="https://pod.example"), \
-             patch("inference_api.models.urlopen", side_effect=open_request):
+        with patch("inference_api.model_service.models.vllm_url", return_value="https://pod.example"), \
+             patch("inference_api.model_service.models.urlopen", side_effect=open_request):
             listing = models.available_models()
             self.assertTrue(listing["ft-finqa-a"]["available"])
             self.assertFalse(listing["ft-finqa-a"]["generation_confirmed"])
@@ -268,7 +268,7 @@ class ServingTests(unittest.TestCase):
         self.assertEqual(record["adapter_run"], "run_v1_seed42")
         self.assertEqual(record["adapter_hash"], self.manifest["adapters"][0]["weight_sha256"])
         self.assertEqual(record["provenance_status"], "session_manifest_checked")
-        with patch("inference_api.models.vllm_url", return_value=""):
+        with patch("inference_api.model_service.models.vllm_url", return_value=""):
             self.assertTrue(all(not item["available"] and not item["generation_confirmed"]
                                 for item in models.available_models().values()
                                 if item.get("provider") == "runpod"))

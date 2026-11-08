@@ -1,3 +1,5 @@
+> **Mapa dos módulos da API:** [organização por responsabilidade](../docs/organizacao_inference_api.md). Os contratos dos cenários A e B seguem a SPEC-014.
+
 > **Fontes consolidadas em 07/11/2026:** a DW V2, seus 166 CSVs, contrato, DER e scripts agora estão no checkout principal. O worktree anterior é histórico. [Mapa de fontes e arquivo](../docs/fontes_ativas_e_arquivo.md). A integração não recarregou bancos nem atribuiu score.
 
 > **Ensaio real A/B em 06/11/2026:** [resultado pela Bancada](../specs/active/SPEC-014/evidence/openai-ab-real-ui-2026-11-06.md). B concluiu com duas consultas e resposta; A terminou em `invalid_review_gap`, sem resposta final. Houve recuperação do PostgreSQL e da trajetória A, sem reenvio. Sem pontuação científica.
@@ -558,7 +560,7 @@ aprovou esse escopo local.
 Este é o ponto de entrada para um chat novo entender **o fluxo ativo**. A
 [SPEC-009](../specs/active/SPEC-009/SPEC.md) registra o contrato da mudança;
 o comportamento executado fica em `frontend/src/features/bench/BenchPage.tsx`,
-`src/inference_api/server.py` e `src/inference_api/service.py`. Os módulos
+`src/inference_api/api/server.py` e `src/inference_api/executions/service.py`. Os módulos
 `orchestrator.py`, `evidence.py` e `response_agent.py` citados em descrições
 anteriores foram retirados do fluxo ativo após a SPEC-009.
 
@@ -700,15 +702,15 @@ pacotes durante o run. No Compose, as variáveis da DW apontam apenas para
 
 | Caminho | Responsabilidade atual |
 | --- | --- |
-| `run.py` e `src/inference_api/server.py` | Entrada por linha de comando, servidor HTTP, rotas e entrega do front. |
+| `run.py` e `src/inference_api/api/server.py` | Entrada por linha de comando, servidor HTTP, rotas e entrega do front. |
 | `frontend/src/` e `frontend/dist/` | Código React/TypeScript e build estático da única interface ativa. `dist/` é gerado localmente e ignorado pelo Git. |
 | `private/bi_snapshot.json` | Retrato sintético extraído sem alteração lógica da referência da SPEC-008; nunca entregue por rota estática. |
 | `Dockerfile`, `compose.yaml`, `scripts/copy_logical_databases.py` | Imagem app, PostgreSQL isolado e cópia lógica explícita por recusa de destino não vazio. |
-| `src/inference_api/auth.py`, `limits.py` e `budget.py` | Login de dois pesquisadores, sessão revogável, vaga única de inferência e leitura separada do saldo RunPod. |
-| `src/inference_api/service.py` | Coordena uma execução e grava seu snapshot final. |
-| `src/inference_api/evidence_packets.py` e `dw_tools.py` | Selecionam pacote por ID/hash e executam as cinco consultas fixas da DW após escolha da LLM. |
-| `src/inference_api/models.py` e `serving_catalog.py` | Fazem turnos de chat e vinculam a proveniência da sessão ao manifesto. O serving remoto ainda não foi ensaiado com tool calling real. |
-| `src/inference_api/criteria.py`, `config.py` e `storage.py` | Validam critérios, restringem destinos e persistem prompts, runs e feedback. |
+| `src/inference_api/identity/auth.py`, `src/inference_api/executions/limits.py` e `src/inference_api/executions/budget.py` | Login de dois pesquisadores, sessão revogável, vaga única de inferência e leitura separada do saldo RunPod. |
+| `src/inference_api/executions/service.py` | Coordena uma execução e grava seu snapshot final. |
+| `src/inference_api/evidence/evidence_packets.py` e `dw_tools.py` | Selecionam pacote por ID/hash e executam as cinco consultas fixas da DW após escolha da LLM. |
+| `src/inference_api/model_service/models.py` e `serving_catalog.py` | Fazem turnos de chat e vinculam a proveniência da sessão ao manifesto. O serving remoto ainda não foi ensaiado com tool calling real. |
+| `src/inference_api/executions/criteria.py`, `config.py` e `storage.py` | Validam critérios, restringem destinos e persistem prompts, runs e feedback. |
 | `tests/test_contract.py`, `test_serving.py`, `test_identity.py`, `test_criteria.py`, `test_bi_http.py`, `test_spec009_http.py` e `browser_spec009.cjs` | Contratos Python, proteção do BI, paridade de navegador com referência e smoke Docker descartável. |
 | `session_checks.py` e `tests/test_session_checks.py` | Pré-voo somente leitura da DW e prova HTTP do túnel; o ensaio legado foi retirado. |
 

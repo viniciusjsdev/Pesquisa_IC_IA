@@ -14,7 +14,7 @@ from urllib.request import Request, urlopen
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from inference_api import synthetic_data, jobs, models, openai_provider, server, service
-from inference_api.auth import Principal
+from inference_api.identity.auth import Principal
 
 PRINCIPAL = Principal("00000000-0000-0000-0000-000000000001", "Nicoli")
 SYNTHETIC = {"provider": "openai", "model_alias": "openai", "evidence_mode": "synthetic_snapshot",
@@ -50,7 +50,7 @@ class OpenAITests(unittest.TestCase):
         for omit in (False, True):
             with self.subTest(omit=omit), \
                  patch.dict(os.environ, {"OPENAI_API_KEY": "sk-fixture-secret"}), \
-                 patch("inference_api.models.urlopen", return_value=Stream(response([answer("ok")]))) as opener:
+                 patch("inference_api.model_service.models.urlopen", return_value=Stream(response([answer("ok")]))) as opener:
                 _, metadata = openai_provider.Conversation().chat_turn(
                     messages, 0, None, tools=None, omit_output_token_limit=omit)
                 payload = json.loads(opener.call_args.args[0].data)
@@ -59,7 +59,7 @@ class OpenAITests(unittest.TestCase):
                     self.assertIsNone(metadata["max_output_tokens"])
                 else:
                     self.assertEqual(payload["max_output_tokens"], 4096)
-        with patch("inference_api.models.urlopen") as opener:
+        with patch("inference_api.model_service.models.urlopen") as opener:
             with self.assertRaises(ValueError):
                 openai_provider.Conversation().chat_turn(
                     messages, 0, 100, tools=None, omit_output_token_limit=True)
@@ -77,7 +77,7 @@ class OpenAITests(unittest.TestCase):
         reasoning = {"type": "reasoning", "id": "rs_fixture", "encrypted_content": "opaque_fixture"}
         conversation = openai_provider.Conversation()
         with patch.dict(os.environ, {"OPENAI_API_KEY": "sk-fixture-secret"}), \
-             patch("inference_api.models.urlopen", side_effect=[Stream(response([reasoning, call])),
+             patch("inference_api.model_service.models.urlopen", side_effect=[Stream(response([reasoning, call])),
                                                          Stream(response([answer("Valor inventado: 42")]))]) as opener:
             messages = [{"role": "system", "content": "Fixture only"},
                         {"role": "user", "content": "Qual o valor?"}]
@@ -105,7 +105,7 @@ class OpenAITests(unittest.TestCase):
 
     def test_model_mismatch_and_request_ids_remain_in_sanitized_failure(self):
         with patch.dict(os.environ, {"OPENAI_API_KEY": "sk-fixture-secret"}), \
-             patch("inference_api.models.urlopen", return_value=Stream(response(
+             patch("inference_api.model_service.models.urlopen", return_value=Stream(response(
                  [answer("wrong model")], model="other-model"))), \
              self.assertRaises(openai_provider.OpenAIError) as caught:
             openai_provider.Conversation().chat_turn([{"role": "system", "content": "x"},
@@ -129,20 +129,20 @@ class OpenAITests(unittest.TestCase):
                                  (429, "provider_rate_limited"), (500, "provider_error")]:
                 error = HTTPError(openai_provider.ENDPOINT, code, "private secret",
                                   {"Retry-After": "12", "x-request-id": "req_http"}, io.BytesIO())
-                with self.subTest(code=code), patch("inference_api.models.urlopen", side_effect=error), \
+                with self.subTest(code=code), patch("inference_api.model_service.models.urlopen", side_effect=error), \
                      self.assertRaises(openai_provider.OpenAIError) as caught:
                     openai_provider.Conversation().chat_turn([{"role": "system", "content": "x"},
                         {"role": "user", "content": "x"}], .2, None, tools=None)
                 self.assertEqual(caught.exception.status, status)
                 self.assertEqual(caught.exception.metadata["request_id"], "req_http")
                 self.assertNotIn("private", str(caught.exception))
-            with patch("inference_api.models.urlopen", return_value=Stream(response([answer("partial")]), False)), \
+            with patch("inference_api.model_service.models.urlopen", return_value=Stream(response([answer("partial")]), False)), \
                  self.assertRaises(openai_provider.OpenAIError) as caught:
                 openai_provider.Conversation().chat_turn([{"role": "system", "content": "x"},
                     {"role": "user", "content": "x"}], .2, None, tools=None)
             self.assertEqual(caught.exception.status, "stream_incomplete")
             incomplete = response([], status="incomplete", incomplete_details={"reason": "max_output_tokens"})
-            with patch("inference_api.models.urlopen", return_value=Stream(incomplete)), \
+            with patch("inference_api.model_service.models.urlopen", return_value=Stream(incomplete)), \
                  self.assertRaises(openai_provider.OpenAIError) as caught:
                 openai_provider.Conversation().chat_turn([{"role": "system", "content": "x"},
                     {"role": "user", "content": "x"}], .2, None, tools=None)
@@ -150,7 +150,7 @@ class OpenAITests(unittest.TestCase):
             exhausted = HTTPError(openai_provider.ENDPOINT, 429, "private",
                                   {}, io.BytesIO(json.dumps({"error": {
                                       "code": "credit_balance_exhausted", "message": "private"}}).encode()))
-            with patch("inference_api.models.urlopen", side_effect=exhausted), \
+            with patch("inference_api.model_service.models.urlopen", side_effect=exhausted), \
                  self.assertRaises(openai_provider.OpenAIError) as caught:
                 openai_provider.Conversation().chat_turn([{"role": "system", "content": "x"},
                     {"role": "user", "content": "x"}], .2, None, tools=None)

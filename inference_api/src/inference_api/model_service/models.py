@@ -5,8 +5,8 @@ from urllib.error import HTTPError
 import json
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
-from .config import vllm_url
-from . import serving_catalog
+from inference_api.config import vllm_url
+from inference_api import serving_catalog
 
 BASE = serving_catalog.BASE
 MODELS = serving_catalog.MODELS
@@ -140,8 +140,8 @@ def _serving_record(endpoint: str, response, *, parsed: bool,
 
 
 def available_models() -> dict:
-    from . import groq, openai_provider
-    from .agent_harness import openai_pilot, real_pilot
+    from inference_api import groq, openai_provider
+    from inference_api.agent_harness import openai_pilot, real_pilot
     groq_settings = groq.configuration()
     groq_entry = {"groq": {"provider": "groq", "kind": "hosted", "model_id": groq_settings["model"],
                            "available": groq_settings["available"], "reason": groq_settings["reason"],

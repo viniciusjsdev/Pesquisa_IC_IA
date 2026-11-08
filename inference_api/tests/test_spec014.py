@@ -104,8 +104,8 @@ class ScenariosTests(unittest.TestCase):
                 'catalog_version':catalog['version'], 'generation':{}}
         with patch('inference_api.model_service.registry.resolve', return_value=profile()), \
              patch('inference_api.model_service.registry.authorize', return_value='fixture-approval') as auth, \
-             patch('inference_api.service.approved_catalog.load', wraps=approved_catalog.load) as load, \
-             patch('inference_api.service.catalog_runtime.compile_maps', wraps=catalog_runtime.compile_maps) as compile_maps, \
+             patch('inference_api.executions.service.approved_catalog.load', wraps=approved_catalog.load) as load, \
+             patch('inference_api.executions.service.catalog_runtime.compile_maps', wraps=catalog_runtime.compile_maps) as compile_maps, \
              patch('psycopg2.connect', side_effect=AssertionError('unexpected database access')):
             prepared=service.prepare(body)
             self.assertEqual(sum(len(m['sources']) for m in prepared['maps'].values()),12)
@@ -265,7 +265,7 @@ class ScenariosTests(unittest.TestCase):
                     self.assertEqual(transport.call_count,1)
 
     def test_fingerprint_failure_after_run_preserves_trace_in_snapshot(self):
-        from inference_api.auth import Principal
+        from inference_api.identity.auth import Principal
         p=profile(); payload={'scenario':'data_access','question':QUESTION,'generation':{}}
         context={'profile':p,'request_sha256':digest(payload),'source':{},'catalog':{},
                  'maps':MAPS,'packet':None,'limits':asdict(scenarios.ScenarioLimits()),
@@ -273,9 +273,9 @@ class ScenariosTests(unittest.TestCase):
         simulated={'run_id':'fixture-run','status':'answered_unverified','contract_sha256':'contract',
                    'trace':[{'event_id':'call_01','model':{'request_dispatched':True}}],
                    'response':{'resposta':'fixture'},'final_state':None}
-        with patch('inference_api.service.local_queries.source_fingerprints',side_effect=[{'status':'recorded'}, OSError('failed')]), \
-             patch('inference_api.service.scenarios.run',return_value=simulated), \
-             patch('inference_api.service.storage.create_run',side_effect=lambda _author,snapshot:snapshot):
+        with patch('inference_api.executions.service.local_queries.source_fingerprints',side_effect=[{'status':'recorded'}, OSError('failed')]), \
+             patch('inference_api.executions.service.scenarios.run',return_value=simulated), \
+             patch('inference_api.executions.service.storage.create_run',side_effect=lambda _author,snapshot:snapshot):
             snapshot=service.execute_run(payload,Principal('fixture','Vinicius'),prepared=context)
         self.assertEqual(snapshot['status'],'contract_error')
         self.assertEqual(snapshot['harness_result']['trace'][0]['event_id'],'call_01')

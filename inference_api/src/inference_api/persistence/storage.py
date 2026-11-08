@@ -9,7 +9,7 @@ from uuid import uuid4
 import psycopg2
 from psycopg2.extras import Json, RealDictCursor
 
-from .config import app_db_params, db_params
+from inference_api.config import app_db_params, db_params
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS prompt_revisions (
@@ -36,9 +36,9 @@ CREATE TABLE IF NOT EXISTS feedback (
 );
 """
 
-MIGRATION = Path(__file__).resolve().parents[2] / "migrations" / "001_identity_up.sql"
-CRITERIA_MIGRATION = Path(__file__).resolve().parents[2] / "migrations" / "002_criteria_up.sql"
-JOBS_MIGRATION = Path(__file__).resolve().parents[2] / "migrations" / "003_run_jobs_up.sql"
+MIGRATION = Path(__file__).resolve().parents[3] / "migrations" / "001_identity_up.sql"
+CRITERIA_MIGRATION = Path(__file__).resolve().parents[3] / "migrations" / "002_criteria_up.sql"
+JOBS_MIGRATION = Path(__file__).resolve().parents[3] / "migrations" / "003_run_jobs_up.sql"
 
 
 class RevisionConflict(Exception):
@@ -152,7 +152,7 @@ def migrate_run_jobs(backup_path: Path, pg_dump: str = "pg_dump") -> None:
 
 
 def create_job(researcher_id: str, request_key: str, request: dict) -> tuple[dict, bool]:
-    from .limits import BusyError
+    from inference_api.executions.limits import BusyError
 
     job_id = str(uuid4())
     with closing(psycopg2.connect(**app_db_params())) as connection, connection:
@@ -270,7 +270,7 @@ def get_prompt(prompt_id: str) -> dict | None:
 
 def create_criteria(name: str, author: str, config: dict,
                     expected_revision: int) -> dict:
-    from .criteria import validate
+    from inference_api.executions.criteria import validate
     if not isinstance(name, str) or not name.strip() or len(name) > 100:
         raise ValueError("Criteria name is required and limited to 100 characters")
     if not isinstance(author, str) or not author.strip() or len(author) > 100:

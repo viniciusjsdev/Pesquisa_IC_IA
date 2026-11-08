@@ -11,7 +11,7 @@ from uuid import uuid4
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src'))
 from inference_api import service, openai_provider, models
 from inference_api.agent_harness import openai_pilot, real_pilot
-from inference_api.auth import Principal
+from inference_api.identity.auth import Principal
 
 
 class OpenAIPilotTests(unittest.TestCase):

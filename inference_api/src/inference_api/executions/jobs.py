@@ -2,8 +2,8 @@
 from threading import Thread
 from uuid import UUID
 
-from . import limits, service, storage
-from .auth import Principal
+from inference_api import limits, service, storage
+from inference_api.identity.auth import Principal
 
 
 def submit(payload: dict, principal: Principal, request_key: str) -> dict:

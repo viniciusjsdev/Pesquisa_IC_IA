@@ -12,7 +12,7 @@ from uuid import UUID, uuid4
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
-from .config import app_db_params
+from inference_api.config import app_db_params
 
 ALLOWED_USERS = frozenset({"Nicoli", "Vinicius"})
 ITERATIONS = 600_000

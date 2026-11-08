@@ -13,7 +13,7 @@ from typing import Callable
 from uuid import uuid4
 
 from jsonschema import Draft202012Validator
-from ..request_budget import RequestBudgetExceeded, POLICY as REQUEST_BUDGET_POLICY
+from inference_api.model_service.request_budget import RequestBudgetExceeded, POLICY as REQUEST_BUDGET_POLICY
 
 
 CONTRACT_BYTES = (Path(__file__).parent / "contracts.json").read_bytes()

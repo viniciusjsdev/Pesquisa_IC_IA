@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 import re
 
-from .config import ROOT
+from inference_api.config import ROOT
 
 
 MANIFEST_PATH = ROOT / "runpod" / "serving" / "manifest.json"

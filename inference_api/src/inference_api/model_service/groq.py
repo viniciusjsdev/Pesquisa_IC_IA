@@ -7,7 +7,7 @@ from http.client import HTTPException
 from urllib.error import HTTPError, URLError
 from urllib.request import Request
 
-from . import models
+from inference_api import models
 
 ENDPOINT = "https://api.groq.com/openai/v1/chat/completions"
 MODEL_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:/-]{0,127}\Z")
@@ -59,7 +59,7 @@ def chat_turn(messages: list[dict], temperature: float, max_tokens: int | None,
         payload["max_tokens"] = max_tokens
     if tools is not None:
         payload.update({"tools": tools, "tool_choice": "auto", "parallel_tool_calls": False})
-    from .request_budget import encode_request
+    from inference_api.model_service.request_budget import encode_request
     body, request_budget = encode_request(payload, max_request_bytes)
     request = Request(ENDPOINT, data=body,
                       headers={"Authorization": f"Bearer {os.environ['GROQ_API_KEY'].strip()}",
