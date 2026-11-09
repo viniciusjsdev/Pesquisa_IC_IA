@@ -1,0 +1,175 @@
+{
+  "$schema": "../../../.codex/schemas/project-spec-execution.schema.json",
+  "schema_version": "2.0",
+  "spec_id": "SPEC-015",
+  "contract_version": 2,
+  "status": "done",
+  "automatic_handoff": false,
+  "execution": {
+    "classification": "normal_implementation",
+    "role": "developer",
+    "model": "gpt-5.6-terra",
+    "reasoning": "medium",
+    "routing_rationale": "Migracao estrutural resolvida no contrato. Runtime documental segue politica legada; materializacao efetiva e disponibilidade devem constar no lifecycle antes de dispatch.",
+    "runtime_override": null,
+    "working_directory": ".",
+    "sandbox_mode": "workspace-write",
+    "approval_mode": "auto_review",
+    "thread": {
+      "mode": "resume",
+      "purpose": "implementation",
+      "thread_id": "01a1bc15-78b1-7360-821c-b8099bdd20d2"
+    },
+    "handoff_prompt": "SPEC-015 contrato 2 concluida em engenharia local; review.json e hosted-fix-review.json aprovados. Envio hospedado sintetico A/B e readback confirmados em hosted-readback.json (11/26 spans); renderizacao na sessao do usuario nao inspecionada. Nao repetir envio: recibos existentes preservam IDs exatos. Backend continua off; dados reais/inferencia paga/infraestrutura exigem autorizacao propria. Defeito funcional de A continua separado."
+  },
+  "skills": [],
+  "references": [
+    {
+      "path": "AGENTS.md",
+      "purpose": "Contrato duravel e fonte de verdade para a migracao estrutural",
+      "required": true
+    },
+    {
+      "path": "README.md",
+      "purpose": "Contrato duravel e fonte de verdade para a migracao estrutural",
+      "required": true
+    },
+    {
+      "path": "inference_api/README.md",
+      "purpose": "Contrato duravel e fonte de verdade para a migracao estrutural",
+      "required": true
+    },
+    {
+      "path": "docs/arquitetura_inferencia_compartilhada.md",
+      "purpose": "Contrato duravel e fonte de verdade para a migracao estrutural",
+      "required": true
+    },
+    {
+      "path": "docs/organizacao_inference_api.md",
+      "purpose": "Contrato duravel e fonte de verdade para a migracao estrutural",
+      "required": true
+    },
+    {
+      "path": "docs/protocolo_validacao_humana_avaliacao.md",
+      "purpose": "Contrato duravel e fonte de verdade para a migracao estrutural",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-014/architecture-contract.md",
+      "purpose": "Contrato duravel e fonte de verdade para a migracao estrutural",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-014/evidence/openai-ab-real-ui-2026-11-06.md",
+      "purpose": "Contrato duravel e fonte de verdade para a migracao estrutural",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-015/architecture-contract.md",
+      "purpose": "Contrato duravel e fonte de verdade para a migracao estrutural",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-015/architecture.mmd",
+      "purpose": "Contrato duravel e fonte de verdade para a migracao estrutural",
+      "required": true
+    },
+    {
+      "path": "specs/active/SPEC-015/observability-contract.md",
+      "purpose": "Contrato LangSmith opcional, protecao de conteudo, hierarquia e testes",
+      "required": true
+    }
+  ],
+  "validation": [
+    {
+      "id": "VAL-001",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v",
+      "required": true
+    },
+    {
+      "id": "VAL-002",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s model_evaluation/tests -v",
+      "required": true
+    },
+    {
+      "id": "VAL-003",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_*.py -v",
+      "required": true
+    },
+    {
+      "id": "VAL-004",
+      "kind": "integration",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/verify_spec015_local.py",
+      "required": true
+    },
+    {
+      "id": "VAL-005",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py test",
+      "required": true
+    },
+    {
+      "id": "VAL-006",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py typecheck",
+      "required": true
+    },
+    {
+      "id": "VAL-007",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py lint",
+      "required": true
+    },
+    {
+      "id": "VAL-008",
+      "kind": "build",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py build",
+      "required": true
+    },
+    {
+      "id": "VAL-009",
+      "kind": "manual",
+      "command": "Revisar instalacao limpa/lock, consumidores, hashes protegidos e criterios AC-001 a AC-013. registrar evidence/engineering-validation.md.",
+      "required": true
+    },
+    {
+      "id": "VAL-010",
+      "kind": "test",
+      "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_observability*.py -v",
+      "required": true
+    }
+  ],
+  "review": {
+    "required": true,
+    "independence": "independent",
+    "model": "gpt-5.6-sol",
+    "reasoning": "high",
+    "rationale": "Migracao complexa afeta autorizacao, contexto, concorrencia e contratos publicos; exige revisao independente de engenharia.",
+    "schema_path": ".codex/schemas/project-spec-review.schema.json",
+    "output_path": "specs/active/SPEC-015/evidence/review.json",
+    "handoff_prompt": "Review this Spec from durable evidence, baseline, diff, validations, and completion evidence."
+  },
+  "escalation": {
+    "policy_version": "1.0",
+    "allowed": [
+      "terra_high",
+      "needs_design"
+    ]
+  },
+  "completion": {
+    "schema_path": ".codex/schemas/project-spec-completion.schema.json",
+    "output_path": "specs/active/SPEC-015/evidence/completion.json"
+  },
+  "baseline": {
+    "required": true,
+    "path": "specs/active/SPEC-015/evidence/structural-baseline.json",
+    "snapshot_path": "specs/active/SPEC-015/evidence/baseline-snapshot.json",
+    "rationale": "Migracao estrutural de orquestracao e modulos exige preservar contratos, consumidores, testes e evidencias anteriores."
+  },
+  "lifecycle": {
+    "output_path": "specs/active/SPEC-015/evidence/lifecycle.json"
+  }
+}

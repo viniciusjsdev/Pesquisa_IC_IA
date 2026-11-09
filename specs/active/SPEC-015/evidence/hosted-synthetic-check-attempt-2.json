@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-08",
+  "synthetic_only": true,
+  "external_inference": false,
+  "research_database_access": false,
+  "content_mode": "redacted",
+  "runs": [
+    {
+      "run_id": "a9a43d6c-a9bb-468d-bb32-40eba86b67b4",
+      "scenario": "fixed_evidence",
+      "status": "answered_unverified",
+      "model_calls": 5,
+      "queries": 0,
+      "observability": {
+        "state": "pending",
+        "submitted_events": 7,
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 4,
+        "instrumentation_version": "spec015.observability.v1",
+        "content_mode": "redacted"
+      }
+    },
+    {
+      "run_id": "583dae35-f440-444f-8fb2-1c9634cf321b",
+      "scenario": "data_access",
+      "status": "answered_unverified",
+      "model_calls": 11,
+      "queries": 3,
+      "observability": {
+        "state": "pending",
+        "submitted_events": 1,
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 25,
+        "instrumentation_version": "spec015.observability.v1",
+        "content_mode": "redacted"
+      }
+    }
+  ],
+  "visual_panel_verified": false
+}

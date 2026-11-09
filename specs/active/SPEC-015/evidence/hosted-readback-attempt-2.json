@@ -1,0 +1,128 @@
+{
+  "project": "pesquisa-ic-ia-synthetic",
+  "project_id": "141e9216-ae8f-4967-a698-6d0e7970d65a",
+  "traces": [
+    {
+      "local_run_id": "a9a43d6c-a9bb-468d-bb32-40eba86b67b4",
+      "scenario": "fixed_evidence",
+      "trace_id": "67d8a203-dc66-569c-886b-72fc4f081f1e",
+      "remote_spans": 11,
+      "root_present": true,
+      "spans": [
+        {
+          "id": "c576d6e9-4e59-5c1c-9be1-7a488570f984",
+          "parent": "370a4863-cd95-53d2-86b6-edd89d4bb726",
+          "name": "redator_resposta · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true
+        },
+        {
+          "id": "370a4863-cd95-53d2-86b6-edd89d4bb726",
+          "parent": "67d8a203-dc66-569c-886b-72fc4f081f1e",
+          "name": "redator_resposta",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true
+        },
+        {
+          "id": "14c5887a-6cf4-5f1c-a080-dcc88382352e",
+          "parent": "b2c44594-ba6e-5b81-8480-c3898006e179",
+          "name": "revisor_evidencias · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true
+        },
+        {
+          "id": "b2c44594-ba6e-5b81-8480-c3898006e179",
+          "parent": "67d8a203-dc66-569c-886b-72fc4f081f1e",
+          "name": "revisor_evidencias",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true
+        },
+        {
+          "id": "b51ad4aa-a353-55b2-acfb-4bcd4fc260a9",
+          "parent": "42f650c6-9044-5a81-8b8b-5200972f32b6",
+          "name": "especialista_consulta · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true
+        },
+        {
+          "id": "42f650c6-9044-5a81-8b8b-5200972f32b6",
+          "parent": "67d8a203-dc66-569c-886b-72fc4f081f1e",
+          "name": "especialista_consulta",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true
+        },
+        {
+          "id": "55680750-cc51-559d-befb-e05c13e23a2f",
+          "parent": "3d74734f-a343-5e11-93f6-8ed3fd546cb5",
+          "name": "selecionador_fontes · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true
+        },
+        {
+          "id": "3d74734f-a343-5e11-93f6-8ed3fd546cb5",
+          "parent": "67d8a203-dc66-569c-886b-72fc4f081f1e",
+          "name": "selecionador_fontes",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true
+        },
+        {
+          "id": "5f50f8e2-2080-535b-a4db-9bba92932278",
+          "parent": "67d8a203-dc66-569c-886b-72fc4f081f1e",
+          "name": "analista_pergunta",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true
+        },
+        {
+          "id": "5a8a93a2-15fe-50ed-a1d6-3b5873f328e6",
+          "parent": "5f50f8e2-2080-535b-a4db-9bba92932278",
+          "name": "analista_pergunta · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true
+        },
+        {
+          "id": "67d8a203-dc66-569c-886b-72fc4f081f1e",
+          "parent": null,
+          "name": "Bancada",
+          "type": "chain",
+          "has_inputs": false,
+          "has_outputs": true
+        }
+      ]
+    },
+    {
+      "local_run_id": "583dae35-f440-444f-8fb2-1c9634cf321b",
+      "scenario": "data_access",
+      "trace_id": "a300a90a-ed34-5b97-a9bb-509d59aa219d",
+      "remote_spans": 2,
+      "root_present": false,
+      "spans": [
+        {
+          "id": "314b089d-d246-5b2e-bf24-8c91c4e3484a",
+          "parent": "a300a90a-ed34-5b97-a9bb-509d59aa219d",
+          "name": "analista_pergunta",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true
+        },
+        {
+          "id": "3446a5e9-2f7d-5f82-8329-e0a3c68dd842",
+          "parent": "314b089d-d246-5b2e-bf24-8c91c4e3484a",
+          "name": "analista_pergunta · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true
+        }
+      ]
+    }
+  ]
+}

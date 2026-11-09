@@ -1,4 +1,8 @@
-> **Organização da API:** [mapa dos módulos da Bancada](docs/organizacao_inference_api.md). Esta etapa apenas realoca código e atualiza referências; o cenário A mantém sua limitação registrada.
+> **SPEC-015 contrato 3, engenharia local em 08/11/2026:** [correção de A e dois ajustes do LangSmith](specs/active/SPEC-015/corrections-v3.md). Implementado e aprovado em revisão independente local. A multidomínio corrigido, raiz após persistência e reconciliação manual com receipt durável. [Parecer v3](specs/active/SPEC-015/evidence/v3/review.json). [Ambiente local ativado e conferido em 08/11/2026](docs/bancada_operacao.md), com A/B real e LangSmith. Sem score científico.
+
+> **Proposta de migração em 08/11/2026:** [SPEC-015 — LangGraph, agentes, ferramentas e LangSmith opcional](specs/active/SPEC-015/SPEC.md). Implementação do contrato 2 autorizada em 08/11/2026: grafo real e LangSmith opcional implementados, engenharia local aprovada em revisão independente. Exportação desligada por padrão; envio hospedado sintético A/B confirmado por leitura da API (11/26 spans); renderização na sessão do usuário não inspecionada. Preserva ModelService e A/B; a correção funcional de A permanece separada.
+
+> **Organização da API:** [mapa dos módulos da Bancada](docs/organizacao_inference_api.md). A correção de A e a reconciliação do monitoramento seguem o contrato 3 da SPEC-015.
 
 > **Fonte ativa consolidada em 07/11/2026:** este checkout `Pesquisa_IC_IA`
 > reúne Bancada, harness e a DW V2: 166 CSVs, manifesto, contrato, DER e

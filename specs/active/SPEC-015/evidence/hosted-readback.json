@@ -1,0 +1,411 @@
+{
+  "project": "pesquisa-ic-ia-synthetic",
+  "project_id": "141e9216-ae8f-4967-a698-6d0e7970d65a",
+  "traces": [
+    {
+      "local_run_id": "02dbf03f-1126-4f37-a238-8c2349722ddd",
+      "scenario": "fixed_evidence",
+      "trace_id": "37b23ab8-4565-5d5f-82dd-aff97c56c44f",
+      "remote_spans": 11,
+      "root_present": true,
+      "url": "https://smith.langchain.com/o/4fdabc4f-acd1-4808-abd8-538421b1a7bb/projects/p/141e9216-ae8f-4967-a698-6d0e7970d65a/r/37b23ab8-4565-5d5f-82dd-aff97c56c44f?trace_id=37b23ab8-4565-5d5f-82dd-aff97c56c44f&start_time=2026-11-08T18:39:25.791108",
+      "app_path": "/o/4fdabc4f-acd1-4808-abd8-538421b1a7bb/projects/p/141e9216-ae8f-4967-a698-6d0e7970d65a/r/37b23ab8-4565-5d5f-82dd-aff97c56c44f?trace_id=37b23ab8-4565-5d5f-82dd-aff97c56c44f&start_time=2026-11-08T18:39:25.791108",
+      "spans": [
+        {
+          "id": "66406683-9fe8-5b4f-b474-76ec2f2560fc",
+          "parent": "81e7f0ee-4aaa-5412-9d63-3f118ef03a44",
+          "name": "redator_resposta · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "81e7f0ee-4aaa-5412-9d63-3f118ef03a44",
+          "parent": "37b23ab8-4565-5d5f-82dd-aff97c56c44f",
+          "name": "redator_resposta",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "48cf84f0-2e07-503c-8e3c-4f4162473b35",
+          "parent": "37b23ab8-4565-5d5f-82dd-aff97c56c44f",
+          "name": "revisor_evidencias",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "fc53e81e-4560-52da-8224-a4f8585d34f0",
+          "parent": "48cf84f0-2e07-503c-8e3c-4f4162473b35",
+          "name": "revisor_evidencias · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "71d34019-8627-54ff-bb6d-885dd98085a3",
+          "parent": "1c8321d1-9b61-5469-95e5-ead98af8323a",
+          "name": "especialista_consulta · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "1c8321d1-9b61-5469-95e5-ead98af8323a",
+          "parent": "37b23ab8-4565-5d5f-82dd-aff97c56c44f",
+          "name": "especialista_consulta",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "bed52ace-03bd-55fe-8736-dba76258827c",
+          "parent": "e0ebd82f-ba73-5014-9979-f09ccb1c2fc6",
+          "name": "selecionador_fontes · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "e0ebd82f-ba73-5014-9979-f09ccb1c2fc6",
+          "parent": "37b23ab8-4565-5d5f-82dd-aff97c56c44f",
+          "name": "selecionador_fontes",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "3f15586d-1efa-563e-bccb-e6f0ee5b09a5",
+          "parent": "69c2c39b-1a16-5abc-be22-dd78b66b77b3",
+          "name": "analista_pergunta · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "69c2c39b-1a16-5abc-be22-dd78b66b77b3",
+          "parent": "37b23ab8-4565-5d5f-82dd-aff97c56c44f",
+          "name": "analista_pergunta",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "37b23ab8-4565-5d5f-82dd-aff97c56c44f",
+          "parent": null,
+          "name": "Bancada",
+          "type": "chain",
+          "has_inputs": false,
+          "has_outputs": true,
+          "usage_metadata": null
+        }
+      ]
+    },
+    {
+      "local_run_id": "58726b61-02f1-477f-88d4-121fa5d1b26f",
+      "scenario": "data_access",
+      "trace_id": "83439d19-d155-5191-9a4f-b448585666ba",
+      "remote_spans": 26,
+      "root_present": true,
+      "url": "https://smith.langchain.com/o/4fdabc4f-acd1-4808-abd8-538421b1a7bb/projects/p/141e9216-ae8f-4967-a698-6d0e7970d65a/r/83439d19-d155-5191-9a4f-b448585666ba?trace_id=83439d19-d155-5191-9a4f-b448585666ba&start_time=2026-11-08T18:39:27.863307",
+      "app_path": "/o/4fdabc4f-acd1-4808-abd8-538421b1a7bb/projects/p/141e9216-ae8f-4967-a698-6d0e7970d65a/r/83439d19-d155-5191-9a4f-b448585666ba?trace_id=83439d19-d155-5191-9a4f-b448585666ba&start_time=2026-11-08T18:39:27.863307",
+      "spans": [
+        {
+          "id": "91e64994-329a-5a8d-b9a6-7e1f8b489235",
+          "parent": "5176494b-0c64-598f-a7e4-2295dfdcd191",
+          "name": "redator_resposta · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "5176494b-0c64-598f-a7e4-2295dfdcd191",
+          "parent": "83439d19-d155-5191-9a4f-b448585666ba",
+          "name": "redator_resposta",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "ca176955-a851-5ac5-b51e-2f8bd3e631a4",
+          "parent": "1e75ce90-37f8-5b31-b39d-2945454872aa",
+          "name": "revisor_evidencias · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "1e75ce90-37f8-5b31-b39d-2945454872aa",
+          "parent": "83439d19-d155-5191-9a4f-b448585666ba",
+          "name": "revisor_evidencias",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "7fd09300-4801-550f-bbc0-dd3942bf663f",
+          "parent": "c6d276af-4688-5bb5-9ea2-7195246c8d3f",
+          "name": "financial_query",
+          "type": "tool",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "6e7f34ff-e32d-5cba-bf50-3d6126333028",
+          "parent": "c6d276af-4688-5bb5-9ea2-7195246c8d3f",
+          "name": "especialista_consulta · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "c6d276af-4688-5bb5-9ea2-7195246c8d3f",
+          "parent": "83439d19-d155-5191-9a4f-b448585666ba",
+          "name": "especialista_consulta",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "c8aaa9c0-2202-5f7b-9bd4-a638bf39f961",
+          "parent": "0653db6f-445d-559a-a26d-d71dcb39b1ef",
+          "name": "selecionador_fontes · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "0653db6f-445d-559a-a26d-d71dcb39b1ef",
+          "parent": "83439d19-d155-5191-9a4f-b448585666ba",
+          "name": "selecionador_fontes",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "3d81de6b-666b-5722-8865-a42befb3452f",
+          "parent": "5ee95980-77a7-52bf-960a-d0ed82c1b1c8",
+          "name": "revisor_evidencias · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "5ee95980-77a7-52bf-960a-d0ed82c1b1c8",
+          "parent": "83439d19-d155-5191-9a4f-b448585666ba",
+          "name": "revisor_evidencias",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "b7a6a54b-e049-5fb1-90eb-ff92a33bfa88",
+          "parent": "47ea93a6-e27e-5161-841e-2a18b0b062b9",
+          "name": "industrial_query",
+          "type": "tool",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "0e3a979c-3356-5509-b13c-91d6b2a54fc8",
+          "parent": "47ea93a6-e27e-5161-841e-2a18b0b062b9",
+          "name": "especialista_consulta · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "47ea93a6-e27e-5161-841e-2a18b0b062b9",
+          "parent": "83439d19-d155-5191-9a4f-b448585666ba",
+          "name": "especialista_consulta",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "56811735-e1b8-57fe-8c2e-215040fb0014",
+          "parent": "07658204-9bfe-5453-8fbd-8eece2d50b82",
+          "name": "selecionador_fontes · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "07658204-9bfe-5453-8fbd-8eece2d50b82",
+          "parent": "83439d19-d155-5191-9a4f-b448585666ba",
+          "name": "selecionador_fontes",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "484c0d0e-a1f9-5e20-b9dc-631f7918286f",
+          "parent": "5fd9fb02-4e2b-53f6-b9f9-7e9fcc67cb04",
+          "name": "revisor_evidencias · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "5fd9fb02-4e2b-53f6-b9f9-7e9fcc67cb04",
+          "parent": "83439d19-d155-5191-9a4f-b448585666ba",
+          "name": "revisor_evidencias",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "06a5985d-0eaa-53b4-a1a8-9eb70ce56f53",
+          "parent": "0dcb27f9-ff19-5075-8284-b4df321ec56e",
+          "name": "dw_query",
+          "type": "tool",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "6f9e8f97-1f42-5791-b353-df10dbe39f80",
+          "parent": "0dcb27f9-ff19-5075-8284-b4df321ec56e",
+          "name": "especialista_consulta · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "0dcb27f9-ff19-5075-8284-b4df321ec56e",
+          "parent": "83439d19-d155-5191-9a4f-b448585666ba",
+          "name": "especialista_consulta",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "6e667f31-9087-54f4-9fa1-37d602c61322",
+          "parent": "a1e4dad7-0a07-52da-9045-9a2a26b02b3a",
+          "name": "selecionador_fontes · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "a1e4dad7-0a07-52da-9045-9a2a26b02b3a",
+          "parent": "83439d19-d155-5191-9a4f-b448585666ba",
+          "name": "selecionador_fontes",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "435fd8fb-7d6f-505d-9ab6-d3ab0c7b9598",
+          "parent": "edbb82b2-d800-52b0-a8dd-fcdf840c5721",
+          "name": "analista_pergunta · modelo",
+          "type": "llm",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": {
+            "input_tokens": 10,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "edbb82b2-d800-52b0-a8dd-fcdf840c5721",
+          "parent": "83439d19-d155-5191-9a4f-b448585666ba",
+          "name": "analista_pergunta",
+          "type": "chain",
+          "has_inputs": true,
+          "has_outputs": true,
+          "usage_metadata": null
+        },
+        {
+          "id": "83439d19-d155-5191-9a4f-b448585666ba",
+          "parent": null,
+          "name": "Bancada",
+          "type": "chain",
+          "has_inputs": false,
+          "has_outputs": true,
+          "usage_metadata": null
+        }
+      ]
+    }
+  ],
+  "remote_hierarchy_verified": true,
+  "visual_panel_verified": false
+}

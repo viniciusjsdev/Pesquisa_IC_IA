@@ -1,6 +1,12 @@
+> **SPEC-015 contrato 3, engenharia local em 08/11/2026:** [correção de A e dois ajustes do LangSmith](../specs/active/SPEC-015/corrections-v3.md). Implementado e aprovado em revisão independente local. A multidomínio corrigido, raiz após persistência e reconciliação manual com receipt durável. [Parecer v3](../specs/active/SPEC-015/evidence/v3/review.json). [Ambiente local ativado e conferido em 08/11/2026](bancada_operacao.md), com A/B real e LangSmith. Sem score científico.
+
+> **LangGraph e painel:** [configuração do LangSmith e limites de validação](langsmith_bancada.md). A execução ativa usa `agent_harness/scenarios.py` → `graph/`; os comandos históricos abaixo não substituem esse caminho.
+
+> **Proposta de migração em 08/11/2026:** [SPEC-015 — LangGraph, agentes, ferramentas e LangSmith opcional](../specs/active/SPEC-015/SPEC.md). Implementação do contrato 2 autorizada em 08/11/2026: grafo real e LangSmith opcional implementados, engenharia local aprovada em revisão independente. Exportação desligada por padrão; envio hospedado sintético A/B confirmado por leitura da API (11/26 spans); renderização na sessão do usuário não inspecionada. Preserva ModelService e A/B; a correção funcional de A permanece separada.
+
 # Organização da API da Bancada
 
-O pacote `inference_api` reúne a interface HTTP, o ciclo de execução, os agentes, o acesso a dados, os provedores e a persistência. Esta reorganização muda somente a localização dos módulos Python. Os contratos de execução dos cenários A e B continuam os da SPEC-014. A falha real `invalid_review_gap` em A permanece registrada e será tratada separadamente.
+O pacote `inference_api` reúne a interface HTTP, o ciclo de execução, os agentes, o acesso a dados, os provedores e a persistência. A reorganização inicial mudou a localização dos módulos Python; a SPEC-015 passou a orquestração ativa para LangGraph. No contrato 3, A usa projeção semântica local `fixed_evidence_v2`, sem acesso aos bancos de pesquisa; B preserva seus contratos. `observability/receipts.py` guarda o estado atual no banco da aplicação e `observability/reconciliation.py` consulta o destino remoto original somente por ação autenticada. A falha real antiga de A permanece como evidência histórica, sem reinterpretar o snapshot.
 
 | Diretório | Responsabilidade |
 |---|---|

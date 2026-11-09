@@ -1,0 +1,45 @@
+{
+  "spec_id": "SPEC-015",
+  "contract_version": 2,
+  "status": "done",
+  "implementation_thread_id": "01a1bc15-78b1-7360-821c-b8099bdd20d2",
+  "recorded_on": "2026-11-08",
+  "authorization": {
+    "source": "user message in implementation chat",
+    "text": "Ta autorizado, a ideia ÃƒÆ’Ã‚Â© justamente usar o painel para visualizaÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o",
+    "implementation": true,
+    "hosted_synthetic_visualization": true,
+    "real_data_export": false
+  },
+  "runtime": {
+    "execution": "current Codex implementation session",
+    "model": "active session model; exact identifier not exposed in tool context",
+    "reasoning": "session default",
+    "requested_legacy_label": "gpt-5.6-terra/medium",
+    "legacy_runtime_invoked": false,
+    "dispatch": "resume in designated current chat; no SDK dispatch or new implementation chat"
+  },
+  "baseline": "e93b816ef6df667992f3bfd0f632aaf7875f78e2",
+  "scientific_status": "not_scored",
+  "hosted_panel": "synthetic export and exact API readback confirmed; visual rendering in user session not inspected",
+  "engineering_review": "approved_independent_local",
+  "review_path": "specs/active/SPEC-015/evidence/review.json",
+  "review_agent": "/root/spec015_review",
+  "hosted_followup": {
+    "date": "2026-11-08",
+    "synthetic_only": true,
+    "backend_export_mode": "off",
+    "remote_spans": {
+      "A": 11,
+      "B": 26
+    },
+    "receipt": "hosted-synthetic-check.json",
+    "readback": "hosted-readback.json",
+    "corrections": [
+      "SDK constructor endpoint argument conflict",
+      "dedicated smoke process must stay alive for bounded asynchronous delivery"
+    ],
+    "review": "approved_independent",
+    "review_path": "hosted-fix-review.json"
+  }
+}

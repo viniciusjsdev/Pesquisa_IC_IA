@@ -1,0 +1,65 @@
+test_all_frozen_baseline_cases (test_spec015_differential.DifferentialTests.test_all_frozen_baseline_cases) ... ok
+test_matrix_hierarchy_identity_tokens_and_no_duplicates (test_spec015_observability.ObservabilityTests.test_matrix_hierarchy_identity_tokens_and_no_duplicates) ... ok
+test_off_ignores_global_flags_and_creds_no_network (test_spec015_observability.ObservabilityTests.test_off_ignores_global_flags_and_creds_no_network) ... ok
+test_off_on_parity_and_A_no_database_even_fingerprints (test_spec015_observability.ObservabilityTests.test_off_on_parity_and_A_no_database_even_fingerprints) ... ok
+test_opaque_tokens_metadata_hash_and_invalid_config_are_isolated (test_spec015_observability.ObservabilityTests.test_opaque_tokens_metadata_hash_and_invalid_config_are_isolated) ... ok
+test_production_constructor_with_real_sdk_and_local_transport (test_spec015_observability.ObservabilityTests.test_production_constructor_with_real_sdk_and_local_transport) ... D:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA\inference_api\src\inference_api\observability\langsmith_sink.py:30: LangSmithDeprecationWarning: read_run() is deprecated and will be removed after Jan 31, 2027. Use client.runs.retrieve() instead.See https://docs.langchain.com/langsmith/smithdb-sdk-migration-runs#runs-retrieve for the migration guide.
+  url = self.client.read_run(event['id']).url
+ok
+test_queue_full_flush_bounded_and_duplicate_end (test_spec015_observability.ObservabilityTests.test_queue_full_flush_bounded_and_duplicate_end) ... ok
+test_reasoning_is_subtype_and_unknown_is_unknown (test_spec015_observability.ObservabilityTests.test_reasoning_is_subtype_and_unknown_is_unknown) ... ok
+test_redaction_before_queue_never_mutates_local_inputs (test_spec015_observability.ObservabilityTests.test_redaction_before_queue_never_mutates_local_inputs) ... ok
+test_repairs_errors_and_no_cross_run_context (test_spec015_observability.ObservabilityTests.test_repairs_errors_and_no_cross_run_context) ... ok
+test_sdk_serialization_and_private_url_without_socket (test_spec015_observability.ObservabilityTests.test_sdk_serialization_and_private_url_without_socket) ... ok
+test_sdk_timeout_no_retry_and_response_preserved (test_spec015_observability.ObservabilityTests.test_sdk_timeout_no_retry_and_response_preserved) ... ok
+test_snapshot_does_not_end_or_submit_again (test_spec015_observability.ObservabilityTests.test_snapshot_does_not_end_or_submit_again) ... ok
+test_compiled_graph_has_distinct_agents_tools_and_explicit_edges (test_spec015_structure.StructureTests.test_compiled_graph_has_distinct_agents_tools_and_explicit_edges) ... ok
+test_recursive_identity_changes_when_deep_module_changes (test_spec015_structure.StructureTests.test_recursive_identity_changes_when_deep_module_changes) ... ok
+test_repairs_do_not_hit_default_framework_recursion_limit (test_spec015_structure.StructureTests.test_repairs_do_not_hit_default_framework_recursion_limit) ... ok
+test_tools_route_from_approved_source_not_model_decision (test_spec015_structure.StructureTests.test_tools_route_from_approved_source_not_model_decision) ... ok
+test_unexpected_recursion_error_preserves_already_executed_calls (test_spec015_structure.StructureTests.test_unexpected_recursion_error_preserves_already_executed_calls) ... ok
+test_no_auth_invalid_id_body_and_errors_have_no_remote_dispatch (test_spec015_v3_http.HttpTests.test_no_auth_invalid_id_body_and_errors_have_no_remote_dispatch) ... 127.0.0.1 - - [08/Nov/2026 20:29:29] "POST /api/runs/614dc51a-1346-4baa-b30c-d95e6832092d/observability/reconcile HTTP/1.1" 401 -
+127.0.0.1 - - [08/Nov/2026 20:29:29] "POST /api/runs/bad/observability/reconcile HTTP/1.1" 400 -
+127.0.0.1 - - [08/Nov/2026 20:29:29] "POST /api/runs/614dc51a-1346-4baa-b30c-d95e6832092d/observability/reconcile HTTP/1.1" 400 -
+127.0.0.1 - - [08/Nov/2026 20:29:29] "POST /api/runs/614dc51a-1346-4baa-b30c-d95e6832092d/observability/reconcile HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2026 20:29:29] "POST /api/runs/614dc51a-1346-4baa-b30c-d95e6832092d/observability/reconcile HTTP/1.1" 403 -
+127.0.0.1 - - [08/Nov/2026 20:29:29] "POST /api/runs/614dc51a-1346-4baa-b30c-d95e6832092d/observability/reconcile HTTP/1.1" 409 -
+127.0.0.1 - - [08/Nov/2026 20:29:29] "POST /api/runs/614dc51a-1346-4baa-b30c-d95e6832092d/observability/reconcile HTTP/1.1" 200 -
+ok
+test_absent_domain_is_insufficiency_not_review_contract_error (test_spec015_v3_packet.PacketTests.test_absent_domain_is_insufficiency_not_review_contract_error) ... ok
+test_budget_at_specialist_does_not_expose_unexamined_item_to_writer (test_spec015_v3_packet.PacketTests.test_budget_at_specialist_does_not_expose_unexamined_item_to_writer) ... ok
+test_budget_during_repair_resets_context_before_reserved_writer (test_spec015_v3_packet.PacketTests.test_budget_during_repair_resets_context_before_reserved_writer) ... ok
+test_budget_reserves_writer_without_changing_limits (test_spec015_v3_packet.PacketTests.test_budget_reserves_writer_without_changing_limits) ... ok
+test_cycle_and_new_gap_have_distinct_progress (test_spec015_v3_packet.PacketTests.test_cycle_and_new_gap_have_distinct_progress) ... ok
+test_empty_item_is_available_but_not_zero (test_spec015_v3_packet.PacketTests.test_empty_item_is_available_but_not_zero) ... ok
+test_matrix_and_physical_origin_remain_separate (test_spec015_v3_packet.PacketTests.test_matrix_and_physical_origin_remain_separate) ... ok
+test_mixed_items_use_one_consolidated_specialist_each (test_spec015_v3_packet.PacketTests.test_mixed_items_use_one_consolidated_specialist_each) ... ok
+test_no_source_contradiction_and_unknown_reference (test_spec015_v3_packet.PacketTests.test_no_source_contradiction_and_unknown_reference) ... ok
+test_only_absent_need_can_be_declared_unanswerable (test_spec015_v3_packet.PacketTests.test_only_absent_need_can_be_declared_unanswerable) ... ok
+test_periods_keep_distinct_ids_and_global_index_has_no_rows (test_spec015_v3_packet.PacketTests.test_periods_keep_distinct_ids_and_global_index_has_no_rows) ... ok
+test_unknown_query_rejected_before_model_call_and_json_repair (test_spec015_v3_packet.PacketTests.test_unknown_query_rejected_before_model_call_and_json_repair) ... ok
+test_authorization_existence_uuid_and_lock_precede_remote_reads (test_spec015_v3_reconciliation.ReconciliationTests.test_authorization_existence_uuid_and_lock_precede_remote_reads) ... ok
+test_collection_off_can_read_only_original_trusted_destination (test_spec015_v3_reconciliation.ReconciliationTests.test_collection_off_can_read_only_original_trusted_destination) ... ok
+test_complete_tree_public_dto_and_failed_later_read_preserves_verified_url (test_spec015_v3_reconciliation.ReconciliationTests.test_complete_tree_public_dto_and_failed_later_read_preserves_verified_url) ... ok
+test_partial_same_count_wrong_ids_parents_trace_duplicate_and_limit (test_spec015_v3_reconciliation.ReconciliationTests.test_partial_same_count_wrong_ids_parents_trace_duplicate_and_limit) ... ok
+test_receipt_read_or_write_failure_returns_last_authorized_dto_not_null (test_spec015_v3_reconciliation.ReconciliationTests.test_receipt_read_or_write_failure_returns_last_authorized_dto_not_null) ... ok
+test_root_not_indexed_destination_unavailable_invalid_url_no_remote_writes (test_spec015_v3_reconciliation.ReconciliationTests.test_root_not_indexed_destination_unavailable_invalid_url_no_remote_writes) ... ok
+test_actual_sdk_serialization_only_root_and_bounded_trace_query (test_spec015_v3_reconciliation.SDKReadTests.test_actual_sdk_serialization_only_root_and_bounded_trace_query) ... D:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA\inference_api\src\inference_api\observability\reconciliation.py:76: LangSmithDeprecationWarning: read_run() is deprecated and will be removed after Jan 31, 2027. Use client.runs.retrieve() instead.See https://docs.langchain.com/langsmith/smithdb-sdk-migration-runs#runs-retrieve for the migration guide.
+  root=client.read_run(trace_id)
+D:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA\inference_api\src\inference_api\observability\reconciliation.py:77: LangSmithDeprecationWarning: list_runs() is deprecated and will be removed after Jan 31, 2027. Use client.runs.query() instead.See https://docs.langchain.com/langsmith/smithdb-sdk-migration-query-runs#runs-query for the migration guide.
+  spans=list(client.list_runs(project_id=root.session_id,trace_id=trace_id,limit=128,
+ok
+test_physical_request_deadline_redirect_size_and_operation_limits (test_spec015_v3_reconciliation.SDKReadTests.test_physical_request_deadline_redirect_size_and_operation_limits) ... ok
+test_slow_headers_and_oversize_body_cannot_exceed_read_budget (test_spec015_v3_reconciliation.SDKReadTests.test_slow_headers_and_oversize_body_cannot_exceed_read_budget) ... ok
+test_A_understands_industrial_and_financial_packet_without_query (test_spec015_v3_regressions.Regressions.test_A_understands_industrial_and_financial_packet_without_query) ... ok
+test_persistence_failure_preserves_original_exception_and_closes_root_once (test_spec015_v3_regressions.Regressions.test_persistence_failure_preserves_original_exception_and_closes_root_once) ... ok
+test_root_has_technical_error_for_timeout (test_spec015_v3_regressions.Regressions.test_root_has_technical_error_for_timeout) ... ok
+test_service_closes_root_after_persistence_not_inside_graph (test_spec015_v3_regressions.Regressions.test_service_closes_root_after_persistence_not_inside_graph) ... ok
+test_slow_receipt_does_not_block_flush_and_final_late_delivery_is_durable (test_spec015_v3_regressions.Regressions.test_slow_receipt_does_not_block_flush_and_final_late_delivery_is_durable) ... ok
+test_success_insufficiency_and_technical_statuses_root_error_mapping (test_spec015_v3_regressions.Regressions.test_success_insufficiency_and_technical_statuses_root_error_mapping) ... ok
+test_tracing_on_A_runs_remain_isolated_without_research_queries (test_spec015_v3_regressions.Regressions.test_tracing_on_A_runs_remain_isolated_without_research_queries) ... ok
+
+----------------------------------------------------------------------
+Ran 47 tests in 5.803s
+
+OK

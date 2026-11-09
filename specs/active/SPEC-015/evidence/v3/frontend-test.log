@@ -1,0 +1,9 @@
+
+ RUN  v4.1.12 D:/Projetos/Github_ViniciusJ/Pesquisa_IC_IA/inference_api/frontend
+
+
+ Test Files  6 passed (6)
+      Tests  23 passed (23)
+   Start at  20:24:09
+   Duration  2.83s (transform 297ms, setup 1.11s, import 2.06s, tests 985ms, environment 8.61s)
+

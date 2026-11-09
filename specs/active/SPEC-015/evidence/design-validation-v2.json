@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-08",
+  "contract_version": 2,
+  "scope": "Documentation only. LangSmith optional integration added; no implementation, install, tests of product, external export or inference.",
+  "spec_validator_require_ready": "passed",
+  "execution_manifest_jsonschema": "passed",
+  "git_diff_check": "passed",
+  "baseline_changes": [
+    "inference_api/README.md"
+  ],
+  "baseline_change_reason": "README navigation only. Product source/tests and historical SPEC evidence unchanged.",
+  "implementation_thread_id": "01a1bc15-78b1-7360-821c-b8099bdd20d2",
+  "implementation_authorized": false,
+  "files_sha256": {
+    "SPEC.md": "5bf7c5218b74bf889b5aac4c62473f4fcf3e48848d573d67d4a2ecc6ae388a32",
+    "SPEC.execution.json": "1fd53e0a995ed380eaa24c79acf73ce0b9e26a33c23411c0517833779bdbfe01",
+    "architecture-contract.md": "a16f262ea57ee33ac6cd628837aaf5a95417fe6eb70bfeec2747f1c376bc00ba",
+    "architecture.mmd": "6716c83a048962f7b9735c0e91a8123a222c2cf8d856fae67ae074ff525ae2c2",
+    "observability-contract.md": "88d07e96e55e0e4f9484df7302a83902674cf045fde7db6531ca829dfb93410c"
+  }
+}

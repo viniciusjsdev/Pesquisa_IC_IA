@@ -97,9 +97,15 @@ def authorize(profile, scenario, data_sha256, limits):
     if not path:
         raise ValueError('transmission_authorization_required')
     receipt = json.loads(Path(path).read_text(encoding='utf-8'))
-    if (receipt.get('decision') != 'approved' or receipt.get('spec_id') != 'SPEC-014' or
-        receipt.get('profile_sha256') != profile['sha256'] or
-        receipt.get('destination') != profile['endpoint'] or receipt.get('scenario') != scenario or
-        receipt.get('data_sha256') != data_sha256 or receipt.get('limits') != limits):
-        raise ValueError('transmission_authorization_mismatch')
-    return digest(receipt)
+    if isinstance(receipt,dict) and receipt.get('schema_version')==1 and set(receipt)=={'schema_version','authorizations'}:
+        entries=receipt['authorizations']
+        if not isinstance(entries,list) or not 1<=len(entries)<=100:
+            raise ValueError('invalid_transmission_authorization_bundle')
+    else:entries=[receipt]
+    for entry in entries:
+        if (isinstance(entry,dict) and entry.get('decision')=='approved' and entry.get('spec_id')=='SPEC-014'
+            and entry.get('profile_sha256')==profile['sha256'] and entry.get('destination')==profile['endpoint']
+            and entry.get('scenario')==scenario and entry.get('data_sha256')==data_sha256
+            and entry.get('limits')==limits):
+            return digest(entry)
+    raise ValueError('transmission_authorization_mismatch')

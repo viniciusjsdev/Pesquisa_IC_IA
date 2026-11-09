@@ -5,7 +5,12 @@ import { api } from '../../services/api';
 export type Prompt = { id: string; name: string; revision: number; author: string; system_prompt: string };
 export type CriteriaConfig = { schema_version: 1; require_evidence: boolean; require_period: boolean; required_units: string[]; require_cited_ids: boolean; required_caveats: string[] };
 export type Criterion = { id: string; name: string; revision: number; author: string; config: CriteriaConfig };
-export type Run = { id: string; author: string; created_at: string; snapshot: Record<string, any> };
+export type ObservabilityCurrent = { schema_version: 1; state: string; remote_verified: boolean;
+  can_reconcile: boolean; trace_id: string; submitted_events: number; failed_events: number;
+  dropped_events: number; pending_events: number; expected_events: number; observed_remote_events: number | null;
+  url: string | null; trusted_origin: string | null; last_checked_at: string | null;
+  last_check_error: string | null; revision: number };
+export type Run = { id: string; author: string; created_at: string; snapshot: Record<string, any>; observability_current?: ObservabilityCurrent | null };
 export type RunJob = { id: string; status: 'accepted' | 'running' | 'completed' | 'failed' | 'interrupted' | 'busy'; run_id: string | null; error: string | null; created_at: string; started_at: string | null; finished_at: string | null };
 export type Model = { configured: boolean; availability: string; provider_id: string; requested_model: string; reason: string;
   capabilities: { temperature: boolean; reasoning_effort: boolean; seed: boolean; omit_output_limit: boolean; json_schema: string } };
@@ -20,6 +25,7 @@ export const benchService = {
   criteria: async () => (await api.get<Criterion[]>('/criteria')).data,
   runs: async () => (await api.get<Run[]>('/runs')).data,
   run: async (id: string) => (await api.get<Run>(`/runs/${encodeURIComponent(id)}`)).data,
+  reconcile: async (id: string) => (await api.post<{observability_current: ObservabilityCurrent}>(`/runs/${encodeURIComponent(id)}/observability/reconcile`)).data.observability_current,
   budget: async () => (await api.get<Budget>('/budget')).data,
   packets: async () => (await api.get<Packet[]>('/bench/evidence-packets')).data,
   dwStatus: async () => (await api.get<DWStatus>('/bench/dw-tools')).data,

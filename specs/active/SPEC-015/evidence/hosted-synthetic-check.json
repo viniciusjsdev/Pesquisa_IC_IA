@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-08",
+  "synthetic_only": true,
+  "external_inference": false,
+  "research_database_access": false,
+  "content_mode": "redacted",
+  "runs": [
+    {
+      "run_id": "02dbf03f-1126-4f37-a238-8c2349722ddd",
+      "scenario": "fixed_evidence",
+      "status": "answered_unverified",
+      "model_calls": 5,
+      "queries": 0,
+      "observability": {
+        "state": "submitted",
+        "submitted_events": 11,
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "instrumentation_version": "spec015.observability.v1",
+        "content_mode": "redacted",
+        "url": "https://smith.langchain.com/o/4fdabc4f-acd1-4808-abd8-538421b1a7bb/projects/p/141e9216-ae8f-4967-a698-6d0e7970d65a/r/37b23ab8-4565-5d5f-82dd-aff97c56c44f?trace_id=37b23ab8-4565-5d5f-82dd-aff97c56c44f&start_time=2026-11-08T18:39:25.791108",
+        "trusted_origin": "https://smith.langchain.com",
+        "remote_span_count": 11,
+        "readback_confirmed": true
+      }
+    },
+    {
+      "run_id": "58726b61-02f1-477f-88d4-121fa5d1b26f",
+      "scenario": "data_access",
+      "status": "answered_unverified",
+      "model_calls": 11,
+      "queries": 3,
+      "observability": {
+        "state": "submitted",
+        "submitted_events": 26,
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "instrumentation_version": "spec015.observability.v1",
+        "content_mode": "redacted",
+        "url": "https://smith.langchain.com/o/4fdabc4f-acd1-4808-abd8-538421b1a7bb/projects/p/141e9216-ae8f-4967-a698-6d0e7970d65a/r/83439d19-d155-5191-9a4f-b448585666ba?trace_id=83439d19-d155-5191-9a4f-b448585666ba&start_time=2026-11-08T18:39:27.863307",
+        "trusted_origin": "https://smith.langchain.com",
+        "remote_span_count": 26,
+        "readback_confirmed": true
+      }
+    }
+  ],
+  "visual_panel_verified": false,
+  "remote_hierarchy_verified": true,
+  "url_resolution": "subsequent readback of exact remote root IDs; immediate lookup was not yet available"
+}

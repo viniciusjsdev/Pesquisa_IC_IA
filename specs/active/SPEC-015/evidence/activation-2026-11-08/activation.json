@@ -1,0 +1,182 @@
+{
+  "date": "2026-11-08",
+  "purpose": "User-authorized technical activation, not scientific evaluation",
+  "runs": [
+    {
+      "id": "bc701782-f624-4131-a86c-b6091f7c26ef",
+      "scenario": "fixed_evidence",
+      "status": "insufficient_evidence",
+      "scientific_status": "not_scored",
+      "model": "gpt-6-luna",
+      "generation": {
+        "reasoning_effort": "low",
+        "output_token_limit": 2048
+      },
+      "model_calls": 8,
+      "queries": 0,
+      "query_attempts": 0,
+      "sources": [],
+      "final_error": null,
+      "snapshot_sha256": "868e8769fc6a6072f486c78eda4ded74a923ff2a887ad6b22c8405b7b5d850a8",
+      "observability": {
+        "schema_version": 1,
+        "state": "submitted",
+        "remote_verified": true,
+        "can_reconcile": true,
+        "trace_id": "1246a292-88a0-5743-b698-bd9b244d9908",
+        "submitted_events": 17,
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "url": "https://smith.langchain.com/o/4fdabc4f-acd1-4808-abd8-538421b1a7bb/projects/p/2d3f742d-43c6-4b9e-a956-991720c908f2/r/1246a292-88a0-5743-b698-bd9b244d9908?trace_id=1246a292-88a0-5743-b698-bd9b244d9908&start_time=2026-11-09T00:03:18.416039",
+        "trusted_origin": "https://smith.langchain.com",
+        "last_check_error": null,
+        "revision": 38,
+        "expected_events": 17,
+        "observed_remote_events": 17,
+        "last_checked_at": "2026-11-09T00:06:42.063859+00:00"
+      },
+      "remote_root": {
+        "verified": true,
+        "error": null
+      },
+      "usage": {
+        "input": 12830,
+        "output": 1911,
+        "total": 14741,
+        "reasoning": 604
+      }
+    },
+    {
+      "id": "d362ba9d-00dc-4d72-87d9-86192f9a8845",
+      "scenario": "data_access",
+      "status": "contract_error",
+      "scientific_status": "not_scored",
+      "model": "gpt-6-luna",
+      "generation": {
+        "reasoning_effort": "low",
+        "output_token_limit": 2048
+      },
+      "model_calls": 3,
+      "queries": 0,
+      "query_attempts": 1,
+      "sources": [],
+      "final_error": {
+        "type": "contract_error",
+        "stage": "harness",
+        "message": "query_blocked:row_limit_exceeded"
+      },
+      "snapshot_sha256": "2abbe77f33e94bb2cc18b124e7fbba4d0c4980635133e6962f94fba14b79ab35",
+      "observability": {
+        "schema_version": 1,
+        "state": "submitted",
+        "remote_verified": true,
+        "can_reconcile": true,
+        "trace_id": "162ed224-bc02-5112-b45a-ce751aa0b1b2",
+        "submitted_events": 8,
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "url": "https://smith.langchain.com/o/4fdabc4f-acd1-4808-abd8-538421b1a7bb/projects/p/2d3f742d-43c6-4b9e-a956-991720c908f2/r/162ed224-bc02-5112-b45a-ce751aa0b1b2?trace_id=162ed224-bc02-5112-b45a-ce751aa0b1b2&start_time=2026-11-09T00:07:51.338749",
+        "trusted_origin": "https://smith.langchain.com",
+        "last_check_error": null,
+        "revision": 18,
+        "expected_events": 8,
+        "observed_remote_events": 8,
+        "last_checked_at": "2026-11-09T00:09:21.696112+00:00"
+      },
+      "remote_root": {
+        "verified": true,
+        "error": "query_blocked:row_limit_exceeded"
+      },
+      "usage": {
+        "input": 4240,
+        "output": 917,
+        "total": 5157,
+        "reasoning": 408
+      },
+      "source_fingerprints_unchanged": true
+    },
+    {
+      "id": "74fef088-8525-4519-a529-cf91dce37d51",
+      "scenario": "data_access",
+      "status": "answered_unverified",
+      "scientific_status": "not_scored",
+      "model": "gpt-6-luna",
+      "generation": {
+        "reasoning_effort": "low",
+        "output_token_limit": 2048
+      },
+      "model_calls": 8,
+      "queries": 2,
+      "query_attempts": 2,
+      "sources": [
+        "paradas_maquinas_geradas",
+        "resultados_financeiros"
+      ],
+      "final_error": null,
+      "snapshot_sha256": "28be43a637c10e8bc88cde131372e2d0c0022e208c61b90b89ab8e975e19a10a",
+      "observability": {
+        "schema_version": 1,
+        "state": "submitted",
+        "remote_verified": true,
+        "can_reconcile": true,
+        "trace_id": "84e2b2c0-3bba-53ee-be46-9b1570045d84",
+        "submitted_events": 19,
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "url": "https://smith.langchain.com/o/4fdabc4f-acd1-4808-abd8-538421b1a7bb/projects/p/2d3f742d-43c6-4b9e-a956-991720c908f2/r/84e2b2c0-3bba-53ee-be46-9b1570045d84?trace_id=84e2b2c0-3bba-53ee-be46-9b1570045d84&start_time=2026-11-09T00:09:31.467439",
+        "trusted_origin": "https://smith.langchain.com",
+        "last_check_error": null,
+        "revision": 35,
+        "expected_events": 19,
+        "observed_remote_events": 19,
+        "last_checked_at": "2026-11-09T00:10:29.508163+00:00"
+      },
+      "remote_root": {
+        "verified": true,
+        "error": null
+      },
+      "usage": {
+        "input": 21224,
+        "output": 2393,
+        "total": 23617,
+        "reasoning": 562
+      },
+      "source_fingerprints_unchanged": true
+    }
+  ],
+  "preflight": {
+    "migration_versions": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "backup": {
+      "path": "inference_api\\.local\\observability-backup-20261108-205817.dump",
+      "bytes": 317203,
+      "sha256": "e050297291fa8688508ec8f3e7fcafd8ac36b8bf82561aebc4a6b3712609eb56",
+      "pg_restore_list_exit": 0
+    }
+  },
+  "snapshot_hashes_preserved": true,
+  "paid_model_runs": 3,
+  "real_server_ready": true,
+  "history_reopen_verified": true,
+  "hosted_panel_A_B_visually_verified": true,
+  "local_defaults": {
+    "provider": "openai",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "low",
+    "output_token_limit": 2048
+  },
+  "notes": [
+    "An initial annual B query exceeded the row limit and was blocked. Its failed run/root were preserved, with no automatic retry. A second, narrower user-authorized smoke question completed.",
+    "First A submission was rejected before job creation due to concurrent stale server; no model call resulted.",
+    "Remote pagination limit100 discovered and corrected while keeping128 total spans,three physical requests and10seconds. A later optional readback failed transiently; previously verified receipts/links remained intact."
+  ],
+  "old_real_B_snapshot_unchanged": true,
+  "unfinished_jobs": 0
+}

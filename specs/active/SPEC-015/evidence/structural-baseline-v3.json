@@ -1,0 +1,177 @@
+{
+  "schema_version": "1.0",
+  "spec_id": "SPEC-015",
+  "contract_version": 3,
+  "captured_at": "2026-11-08",
+  "tests": {
+    "count": 35,
+    "paths": [
+      "inference_api/frontend/src/features/bench/EvidenceTrajectory.test.tsx",
+      "inference_api/frontend/src/features/bench/HarnessRounds.test.tsx",
+      "inference_api/frontend/src/features/bench/ObservabilityLink.test.tsx",
+      "inference_api/frontend/src/features/bench/ReadableAnswer.test.tsx",
+      "inference_api/frontend/src/features/bench/benchService.test.ts",
+      "inference_api/frontend/src/features/bi/biRenderer.test.ts",
+      "inference_api/tests/test_agent_harness.py",
+      "inference_api/tests/test_bi_http.py",
+      "inference_api/tests/test_contract.py",
+      "inference_api/tests/test_criteria.py",
+      "inference_api/tests/test_dw_v2_gate.py",
+      "inference_api/tests/test_identity.py",
+      "inference_api/tests/test_request_budget.py",
+      "inference_api/tests/test_runtime_identity.py",
+      "inference_api/tests/test_serving.py",
+      "inference_api/tests/test_session_checks.py",
+      "inference_api/tests/test_spec009_http.py",
+      "inference_api/tests/test_spec010.py",
+      "inference_api/tests/test_spec011.py",
+      "inference_api/tests/test_spec012.py",
+      "inference_api/tests/test_spec013_catalog.py",
+      "inference_api/tests/test_spec013_local_queries.py",
+      "inference_api/tests/test_spec013_openai_pilot.py",
+      "inference_api/tests/test_spec013_pilot_http.py",
+      "inference_api/tests/test_spec013_typed_detail.py",
+      "inference_api/tests/test_spec014.py",
+      "inference_api/tests/test_spec015_differential.py",
+      "inference_api/tests/test_spec015_observability.py",
+      "inference_api/tests/test_spec015_structure.py",
+      "inference_api/tests/test_specialist_query_contract.py",
+      "inference_api/tests/test_streaming_jobs.py",
+      "model_evaluation/tests/test_export.py",
+      "model_evaluation/tests/test_fixed_queries_metadata.py",
+      "model_evaluation/tests/test_harness_score.py",
+      "model_evaluation/tests/test_review_gate.py"
+    ],
+    "commands": [
+      "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v",
+      "inference_api/.venv/Scripts/python.exe -m unittest discover -s model_evaluation/tests -v"
+    ],
+    "notes": [
+      "Current post-contract-2 inventory for contract 3. Counts are test files, not passing test claims. Original baselines/evidence untouched."
+    ]
+  },
+  "cli": [
+    {
+      "command": "inference_api/.venv/Scripts/python.exe -m inference_api.api.server",
+      "flags": []
+    }
+  ],
+  "json_contracts": [
+    {
+      "path": "inference_api/src/inference_api/agent_harness/contracts/data_access.json",
+      "fields": [
+        "analista_pergunta",
+        "selecionador_fontes",
+        "revisor_evidencias",
+        "redator_resposta",
+        "especialista_consulta"
+      ]
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/contracts/fixed_evidence.json",
+      "fields": [
+        "analista_pergunta",
+        "selecionador_fontes",
+        "revisor_evidencias",
+        "redator_resposta",
+        "especialista_consulta"
+      ]
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/contracts/input.json",
+      "fields": [
+        "envelope",
+        "fields"
+      ]
+    }
+  ],
+  "persistence": [
+    {
+      "path": "inference_api/src/inference_api/persistence/storage.py",
+      "public_methods": [
+        "RevisionConflict",
+        "initialize",
+        "migrate_identity",
+        "migrate_criteria",
+        "migrate_run_jobs",
+        "create_job",
+        "get_job",
+        "get_job_by_key",
+        "update_job",
+        "interrupt_unfinished_jobs",
+        "create_prompt",
+        "list_prompts",
+        "get_prompt",
+        "create_criteria",
+        "list_criteria",
+        "get_criteria",
+        "create_run",
+        "get_run",
+        "list_runs",
+        "add_feedback"
+      ]
+    },
+    {
+      "path": "inference_api/src/inference_api/executions/jobs.py",
+      "public_methods": [
+        "submit"
+      ]
+    }
+  ],
+  "schemas": [
+    {
+      "path": "inference_api/src/inference_api/agent_harness/scenarios.py",
+      "idempotency_keys": []
+    },
+    {
+      "path": "inference_api/src/inference_api/executions/jobs.py",
+      "idempotency_keys": [
+        "request_key"
+      ]
+    }
+  ],
+  "protected_paths": [
+    {
+      "path": "specs/active/SPEC-013",
+      "kind": "directory"
+    },
+    {
+      "path": "specs/active/SPEC-014",
+      "kind": "directory"
+    },
+    {
+      "path": "FineTuning",
+      "kind": "directory"
+    },
+    {
+      "path": "BancoModeloUse/dados_complementares_datamind",
+      "kind": "directory"
+    },
+    {
+      "path": "model_evaluation/.local",
+      "kind": "directory"
+    }
+  ],
+  "decisions": [
+    {
+      "path": "specs/active/SPEC-014/architecture-contract.md",
+      "status": "active",
+      "effective_before_spec": true
+    },
+    {
+      "path": "specs/active/SPEC-014/evidence/openai-ab-real-ui-2026-11-06.md",
+      "status": "historical evidence",
+      "effective_before_spec": true
+    },
+    {
+      "path": "docs/protocolo_validacao_humana_avaliacao.md",
+      "status": "active",
+      "effective_before_spec": true
+    },
+    {
+      "path": "specs/active/SPEC-015/revisions/contract-2/SPEC.md",
+      "status": "historical done contract 2",
+      "effective_before_spec": true
+    }
+  ]
+}

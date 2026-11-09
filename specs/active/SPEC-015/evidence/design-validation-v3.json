@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-08",
+  "contract_version": 3,
+  "scope": "Design only: A correction and LangSmith AUD-01/AUD-02. No code, execution, install, DB migration, API send or thread dispatch.",
+  "spec_require_ready": "passed",
+  "manifest_schema": "passed",
+  "baseline_files": 320,
+  "baseline_files_changed": [],
+  "contract_2_archive_verified": true,
+  "previous_review_evidence_preserved": true,
+  "implementation_started": false,
+  "product_tests_run_this_revision": false,
+  "implementation_requires_user_instruction": true,
+  "documents_sha256": {
+    "SPEC.md": "680b62ac9199748747565be13f5f75e5a6497ebe6a7aa68faf3a2b48ec2be4fb",
+    "SPEC.execution.json": "bb215b366808e54b689fd62fe27d8f86b23fcd9f79759a5f928454d31a9c68ad",
+    "corrections-v3.md": "336d57cc7fd2ade38ca3a2705d45bb430c16e8681277fa3ec8c955fbd82eb32b",
+    "corrections-v3.mmd": "eb8941181763fdef480ecadebc2dd2dc10418fb910b58f9bd483ba296442106d"
+  }
+}

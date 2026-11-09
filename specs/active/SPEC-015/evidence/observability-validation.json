@@ -1,0 +1,51 @@
+{
+  "date": "2026-11-08",
+  "langgraph": "1.2.20",
+  "langsmith": "0.14.17",
+  "local_sink_only": true,
+  "hosted_panel_verified": false,
+  "performance": {
+    "off": {
+      "samples_ms": [
+        76.038,
+        66.255,
+        81.79,
+        65.13,
+        109.058,
+        70.539
+      ],
+      "median_ms": 73.2885
+    },
+    "on_local_sink": {
+      "samples_ms": [
+        132.374,
+        143.137,
+        137.896,
+        136.225,
+        134.827,
+        134.735
+      ],
+      "median_ms": 135.526
+    }
+  },
+  "performance_note": "Synthetic fake model and local memory sink only; not hosted network overhead. No claim of identical latency.",
+  "protected_files_checked": 155,
+  "protected_files_unchanged": true,
+  "clean_install_log": "inference_api/.local/spec015-clean-install.log",
+  "clean_tests_log": "inference_api/.local/spec015-clean-tests.log",
+  "hosted_followup": {
+    "synthetic_export_verified": true,
+    "api_hierarchy_verified": true,
+    "visual_panel_verified": false,
+    "root_counts": {
+      "A": 11,
+      "B": 26
+    },
+    "readback": "hosted-readback.json",
+    "review": "hosted-fix-review.json",
+    "research_data_export": false,
+    "external_inference": false,
+    "final_focused_tests": 18,
+    "final_observability_tests": 12
+  }
+}

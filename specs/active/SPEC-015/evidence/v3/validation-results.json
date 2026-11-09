@@ -1,0 +1,156 @@
+[
+  {
+    "validation_id": "VAL-001",
+    "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v",
+    "verification": "reported",
+    "result": "passed",
+    "exit_code": 0,
+    "evidence": [
+      "specs/active/SPEC-015/evidence/v3/backend.log"
+    ],
+    "notes": [],
+    "evidence_sha256": {
+      "specs/active/SPEC-015/evidence/v3/backend.log": "f7a44f3aef424b83ca6c5318643d77789a8b31a98439335f75100ba4466d3285"
+    }
+  },
+  {
+    "validation_id": "VAL-002",
+    "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s model_evaluation/tests -v",
+    "verification": "reported",
+    "result": "passed",
+    "exit_code": 0,
+    "evidence": [
+      "specs/active/SPEC-015/evidence/v3/model-evaluation.log"
+    ],
+    "notes": [],
+    "evidence_sha256": {
+      "specs/active/SPEC-015/evidence/v3/model-evaluation.log": "273ba5a469c4830bd601b22e5fd52799d24c97c15273c3c045ef43beb0cf7f25"
+    }
+  },
+  {
+    "validation_id": "VAL-003",
+    "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_*.py -v",
+    "verification": "reported",
+    "result": "passed",
+    "exit_code": 0,
+    "evidence": [
+      "specs/active/SPEC-015/evidence/v3/spec015-tests.log"
+    ],
+    "notes": [],
+    "evidence_sha256": {
+      "specs/active/SPEC-015/evidence/v3/spec015-tests.log": "1c72fdccd485240f5a45efe02e48d1908ed7e1cccd508aa1cd308b1775cdda8d"
+    }
+  },
+  {
+    "validation_id": "VAL-004",
+    "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/verify_spec015_v3_local.py",
+    "verification": "reported",
+    "result": "passed",
+    "exit_code": 0,
+    "evidence": [
+      "specs/active/SPEC-015/evidence/v3/integration.log"
+    ],
+    "notes": [],
+    "evidence_sha256": {
+      "specs/active/SPEC-015/evidence/v3/integration.log": "186002278a31e622ac79632509779a2f85bc1f78e1ea70ca83ee5d1901570b0e"
+    }
+  },
+  {
+    "validation_id": "VAL-005",
+    "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py test",
+    "verification": "reported",
+    "result": "passed",
+    "exit_code": 0,
+    "evidence": [
+      "specs/active/SPEC-015/evidence/v3/frontend-test.log"
+    ],
+    "notes": [],
+    "evidence_sha256": {
+      "specs/active/SPEC-015/evidence/v3/frontend-test.log": "d55a4ca9da67583e1252d785599fa0c0d0700fbf80e79ddd447a409e81abc96c"
+    }
+  },
+  {
+    "validation_id": "VAL-006",
+    "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py typecheck",
+    "verification": "reported",
+    "result": "passed",
+    "exit_code": 0,
+    "evidence": [
+      "specs/active/SPEC-015/evidence/v3/frontend-typecheck.log"
+    ],
+    "notes": [],
+    "evidence_sha256": {
+      "specs/active/SPEC-015/evidence/v3/frontend-typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "validation_id": "VAL-007",
+    "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py lint",
+    "verification": "reported",
+    "result": "passed",
+    "exit_code": 0,
+    "evidence": [
+      "specs/active/SPEC-015/evidence/v3/frontend-lint.log"
+    ],
+    "notes": [],
+    "evidence_sha256": {
+      "specs/active/SPEC-015/evidence/v3/frontend-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "validation_id": "VAL-008",
+    "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py build",
+    "verification": "reported",
+    "result": "passed",
+    "exit_code": 0,
+    "evidence": [
+      "specs/active/SPEC-015/evidence/v3/frontend-build.log"
+    ],
+    "notes": [],
+    "evidence_sha256": {
+      "specs/active/SPEC-015/evidence/v3/frontend-build.log": "fd6221cfa55e53f306c92dddde6e142797c32319cf9a7c0dcef7841004e9b692"
+    }
+  },
+  {
+    "validation_id": "VAL-009",
+    "canonical_command": "Revisar baseline v3, preservacao dos contratos anteriores, migracao aditiva e criterios AC-001 a AC-019. Registrar evidence/v3/engineering-validation.md.",
+    "verification": "reported",
+    "result": "passed",
+    "exit_code": null,
+    "evidence": [
+      "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+    ],
+    "notes": [],
+    "evidence_sha256": {
+      "specs/active/SPEC-015/evidence/v3/engineering-validation.md": "75b341c12dafdcd6e895fbde45cb8f839424c1e91ba29dc7ee22fa0d009bb01e"
+    }
+  },
+  {
+    "validation_id": "VAL-010",
+    "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_observability*.py -v",
+    "verification": "reported",
+    "result": "passed",
+    "exit_code": 0,
+    "evidence": [
+      "specs/active/SPEC-015/evidence/v3/observability-tests.log"
+    ],
+    "notes": [],
+    "evidence_sha256": {
+      "specs/active/SPEC-015/evidence/v3/observability-tests.log": "1b04a12cdc5f6d1e6317922793a3226da39790877578ad28894f956ec5a0552d"
+    }
+  },
+  {
+    "validation_id": "VAL-011",
+    "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_v3_*.py -v",
+    "verification": "reported",
+    "result": "passed",
+    "exit_code": 0,
+    "evidence": [
+      "specs/active/SPEC-015/evidence/v3/v3-tests.log"
+    ],
+    "notes": [],
+    "evidence_sha256": {
+      "specs/active/SPEC-015/evidence/v3/v3-tests.log": "9f4fdf7f6c51bd319df27614b65b9a14edc7e382fcb7c0b7bf9bd0fbb8252f91"
+    }
+  }
+]

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Run } from './benchService';
+import { ObservabilityLink } from './ObservabilityLink';
 import { ReadableAnswer } from './ReadableAnswer';
 
 /* Snapshots are immutable, but older and partial v6 traces may omit fields. */
@@ -134,6 +135,11 @@ export function HarnessRounds({ run }: { run: Run }) {
   }
 
   return <section className="harness-rounds" aria-label="Rodadas do Harness">
+    <ObservabilityLink value={run.snapshot?.observability} current={run.observability_current} runId={run.id}/>
+    {run.snapshot?.scenario === 'fixed_evidence' && <p className="harness-contract-version">
+      {(harness?.scenario_contract_version || run.snapshot?.scenario_contract_version || 1) >= 2
+        ? 'Pacote fixo · contrato 2: domínios semânticos separados da origem física.'
+        : 'Pacote fixo · contrato anterior, preservado sem reinterpretação.'}</p>}
     <div className="harness-heading">
       <div><h4>Trajetória da execução</h4><p>Selecione uma etapa para entender a decisão; o JSON exato está nos detalhes da chamada.</p></div>
       <div className="harness-counts"><span>{harness?.model_calls ?? trace.filter(event => eventKind(event) === 'assistant').length} chamadas</span><span>{harness?.queries ?? trace.filter(event => ['synthetic_query', 'data_query'].includes(event.role) && event.status === 'validated').length} consultas</span><span>{rounds.length} rodadas</span></div>

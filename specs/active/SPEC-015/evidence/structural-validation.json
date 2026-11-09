@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-08",
+  "baseline_git": "e93b816ef6df667992f3bfd0f632aaf7875f78e2",
+  "archive_files_verified": 12,
+  "protected_files_verified": 155,
+  "query_services": {
+    "local_queries": "all function/class ASTs identical; only import and path relocation changed",
+    "typed_detail": "all function/class ASTs identical; only import and path relocation changed"
+  },
+  "active_orchestration": "scenarios.run -> graph.execution.execute -> StateGraph",
+  "old_engine_run_removed": true,
+  "historical_tests_retired": 36,
+  "replacement_differential_cases": 78
+}

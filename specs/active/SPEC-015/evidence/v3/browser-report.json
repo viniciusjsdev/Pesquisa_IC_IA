@@ -1,0 +1,67 @@
+{
+  "fixture": true,
+  "scenarios": [
+    {
+      "adapter": "openai_responses",
+      "scenario": "fixed_evidence",
+      "status": "answered_unverified"
+    },
+    {
+      "adapter": "openai_responses",
+      "scenario": "data_access",
+      "status": "answered_unverified"
+    },
+    {
+      "adapter": "groq_chat",
+      "scenario": "fixed_evidence",
+      "status": "answered_unverified"
+    },
+    {
+      "adapter": "groq_chat",
+      "scenario": "data_access",
+      "status": "answered_unverified"
+    },
+    {
+      "adapter": "chat_completions",
+      "scenario": "fixed_evidence",
+      "status": "answered_unverified"
+    },
+    {
+      "adapter": "chat_completions",
+      "scenario": "data_access",
+      "status": "answered_unverified"
+    }
+  ],
+  "downloads": [
+    {
+      "id": "23648be2-845b-424c-994a-e7f3aa400349",
+      "version": 7
+    },
+    {
+      "id": "b4ff08ae-5e51-4a6a-a7dc-0e608daba1b8",
+      "version": 7
+    },
+    {
+      "id": "17e103ca-ea5f-45fc-8a14-ae1c146d4907",
+      "version": 7
+    },
+    {
+      "id": "7cacdf5c-8d07-4820-9255-ec0178b52ab8",
+      "version": 7
+    },
+    {
+      "id": "7e3726cd-2dbc-470c-b01e-e182e438dd3f",
+      "version": 7
+    },
+    {
+      "id": "bbe33e63-63ea-4078-819f-c2b9e48422ab",
+      "version": 7
+    }
+  ],
+  "page_errors": [],
+  "reconciliation_pending_then_verified": true,
+  "absent_domain_partial_answer": true,
+  "error_visible": true,
+  "legacy_export": true,
+  "refresh_reopen": true
+}

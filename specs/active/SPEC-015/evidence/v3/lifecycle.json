@@ -1,0 +1,28 @@
+{
+  "spec_id": "SPEC-015",
+  "contract_version": 3,
+  "status": "completed",
+  "implementation_thread_id": "01a1bc15-78b1-7360-821c-b8099bdd20d2",
+  "date": "2026-11-08",
+  "authorization": "Explicit user authorization relayed by origin chat: implement corrections and run local tests.",
+  "runtime": {
+    "execution": "existing designated Codex session",
+    "model": "active model identifier not exposed",
+    "legacy_alias_invoked": false
+  },
+  "boundaries": {
+    "hosted_sends": false,
+    "paid_inference": false,
+    "research_database_changes": false,
+    "real_server_restart": false
+  },
+  "baseline_files_verified": 320,
+  "review_status": "approved",
+  "review_path": "specs/active/SPEC-015/evidence/v3/review.json",
+  "completion_path": "specs/active/SPEC-015/evidence/v3/completion.json",
+  "resumed_by_explicit_user_authorization": true,
+  "local_engineering_only": true,
+  "scientific_status": "not_scored",
+  "real_application_migration": false,
+  "real_server_restart": false
+}

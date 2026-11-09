@@ -9,6 +9,8 @@ from .. import models
 from inference_api.model_service.request_budget import encode_request, RequestBudgetExceeded
 from . import adapters
 from .registry import preflight
+from ..observability.service import current
+from ..observability.contracts import usage_metadata
 
 
 class ModelError(RuntimeError):
@@ -46,6 +48,8 @@ class ModelService:
             'call_id': envelope['call_id'], 'request_dispatched': False,
             'requested_parameters': deepcopy(self.generation), 'usage': normalized_usage(None)}
         started = time.monotonic()
+        observer, parent_span = current()
+        model_span = None
         try:
             preflight(p, self.generation)
             if self.cancelled():
@@ -58,6 +62,10 @@ class ModelService:
                 json.dumps(contract.get('input_schema', {}), ensure_ascii=False)},
                 {'role': 'user', 'content': json.dumps(envelope, ensure_ascii=False)}]
             body = adapters.payload(p, messages, contract['schema'], self.generation)
+            if observer is not None:
+                model_span = observer.start(envelope['call_id'] + ':llm', role + ' · modelo', 'llm',
+                    parent=parent_span, inputs={'messages': messages},
+                    metadata={'ls_provider': p['provider_id'], 'ls_model_name': p['requested_model']})
             receipt['applied_parameters'] = {k: v for k, v in body.items()
                 if k not in {'input', 'messages', 'text', 'response_format'}}
             encoded, receipt['request_budget'] = encode_request(body, envelope['request_byte_limit'])
@@ -109,3 +117,9 @@ class ModelService:
                 status = getattr(exc, 'status', None) or (str(exc) if isinstance(exc, ValueError) else 'provider_error')
             receipt.update(error=status, finish_normalized='error', latency_ms=round((time.monotonic()-started)*1000))
             raise ModelError(status, receipt) from None
+        finally:
+            if observer is not None:
+                observer.end(model_span, outputs={'choices': [{'message': {'role': 'assistant',
+                    'content': raw}}]} if 'raw' in locals() else {},
+                    status=receipt['status'], error=receipt.get('error'),
+                    metadata={'usage_metadata': usage_metadata(receipt.get('usage'))})

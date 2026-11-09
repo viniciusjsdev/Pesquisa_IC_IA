@@ -1,0 +1,250 @@
+{
+  "envelope": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "contract_version",
+      "run_id",
+      "call_id",
+      "role",
+      "scenario",
+      "round",
+      "model_profile_id",
+      "question",
+      "allowed_actions",
+      "remaining_budget",
+      "request_byte_limit",
+      "timeout_seconds",
+      "input",
+      "source_event_ids"
+    ],
+    "properties": {
+      "contract_version": {
+        "const": 1
+      },
+      "run_id": {
+        "type": "string"
+      },
+      "call_id": {
+        "type": "string"
+      },
+      "role": {
+        "type": "string"
+      },
+      "model_profile_id": {
+        "type": "string"
+      },
+      "question": {
+        "type": "string"
+      },
+      "scenario": {
+        "enum": [
+          "fixed_evidence",
+          "data_access"
+        ]
+      },
+      "round": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "request_byte_limit": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "timeout_seconds": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "allowed_actions": {
+        "type": "array",
+        "items": {
+          "enum": [
+            "analyze_packet",
+            "query_source"
+          ]
+        },
+        "minItems": 1,
+        "maxItems": 1
+      },
+      "remaining_budget": {
+        "type": "object"
+      },
+      "input": {
+        "type": "object"
+      },
+      "source_event_ids": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "fields": {
+    "analista_pergunta": {
+      "question": "string",
+      "domain_index": "array",
+      "source_index": "array"
+    },
+    "selecionador_fontes": {
+      "question": "string",
+      "necessidade": "object",
+      "source_index": "array",
+      "available_source_ids": "array",
+      "evidence_state": "array",
+      "gap": [
+        "object",
+        "null"
+      ],
+      "attempts": "array"
+    },
+    "especialista_consulta": {
+      "question": "string",
+      "necessidade": "object",
+      "domain": "string",
+      "source_contract": "object",
+      "gap": [
+        "object",
+        "null"
+      ],
+      "evidence_state": "array",
+      "available_evidence_ids": "array"
+    },
+    "revisor_evidencias": {
+      "question": "string",
+      "domains_identified": "array",
+      "necessidade": "object",
+      "query_result": "object",
+      "evidence_state": "array",
+      "findings": "array",
+      "available_evidence_ids": "array",
+      "attempts": "array"
+    },
+    "redator_resposta": {
+      "question": "string",
+      "evidence_state": "array",
+      "findings": "array",
+      "available_evidence_ids": "array",
+      "limits_and_errors": "object"
+    }
+  },
+  "fixed_evidence": {
+    "fields": {
+      "analista_pergunta": {
+        "question": "string",
+        "domain_index": "array",
+        "source_index": "array",
+        "available_domains": "array"
+      },
+      "selecionador_fontes": {
+        "question": "string",
+        "necessidade": "object",
+        "source_index": "array",
+        "available_source_ids": "array",
+        "evidence_state": "array",
+        "gap": [
+          "object",
+          "null"
+        ],
+        "attempts": "array",
+        "examined_item_ids": "array",
+        "remaining_item_ids": "array"
+      },
+      "especialista_consulta": {
+        "question": "string",
+        "necessidade": "object",
+        "domain": "string",
+        "source_contract": "object",
+        "gap": [
+          "object",
+          "null"
+        ],
+        "evidence_state": "array",
+        "available_evidence_ids": "array",
+        "evidence": "array",
+        "semantic_domains": "array",
+        "source_origin": "object"
+      },
+      "revisor_evidencias": {
+        "question": "string",
+        "domains_identified": "array",
+        "necessidade": "object",
+        "query_result": "object",
+        "evidence_state": "array",
+        "findings": "array",
+        "available_evidence_ids": "array",
+        "attempts": "array",
+        "source_index": "array",
+        "examined_item_ids": "array",
+        "remaining_item_ids": "array",
+        "known_domains": "array",
+        "available_domains": "array"
+      },
+      "redator_resposta": {
+        "question": "string",
+        "evidence_state": "array",
+        "findings": "array",
+        "available_evidence_ids": "array",
+        "limits_and_errors": "object",
+        "review": [
+          "object",
+          "null"
+        ],
+        "closure_reason": [
+          "string",
+          "null"
+        ]
+      }
+    }
+  },
+  "data_access": {
+    "fields": {
+      "analista_pergunta": {
+        "question": "string",
+        "domain_index": "array",
+        "source_index": "array"
+      },
+      "selecionador_fontes": {
+        "question": "string",
+        "necessidade": "object",
+        "source_index": "array",
+        "available_source_ids": "array",
+        "evidence_state": "array",
+        "gap": [
+          "object",
+          "null"
+        ],
+        "attempts": "array"
+      },
+      "especialista_consulta": {
+        "question": "string",
+        "necessidade": "object",
+        "domain": "string",
+        "source_contract": "object",
+        "gap": [
+          "object",
+          "null"
+        ],
+        "evidence_state": "array",
+        "available_evidence_ids": "array"
+      },
+      "revisor_evidencias": {
+        "question": "string",
+        "domains_identified": "array",
+        "necessidade": "object",
+        "query_result": "object",
+        "evidence_state": "array",
+        "findings": "array",
+        "available_evidence_ids": "array",
+        "attempts": "array"
+      },
+      "redator_resposta": {
+        "question": "string",
+        "evidence_state": "array",
+        "findings": "array",
+        "available_evidence_ids": "array",
+        "limits_and_errors": "object"
+      }
+    }
+  }
+}

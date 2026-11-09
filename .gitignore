@@ -1,6 +1,7 @@
 venv/
 BancoModeloUse/.venv/
 inference_api/.venv/
+inference_api/.venv-spec015/
 inference_api/.local/
 inference_api/frontend/dist/
 inference_api/frontend/node_modules/

@@ -121,7 +121,7 @@ class ScenariosTests(unittest.TestCase):
         p = packet(); p['body']['evidence_items'][0].update(rows=[], coverage={'rows':0,'state':'no_observation'}); p['sha256']=digest(p['body'])
         self.assertEqual(self.run_case(packet=p)['status'], 'insufficient_evidence')
         def again(e, v):
-            if e['role']=='revisor_evidencias': v.update(decisao='precisa_aprofundar', lacuna='gap', proximo_dado_necessario='data', dominio_sugerido='dw')
+            if e['role']=='revisor_evidencias': v.update(decisao='precisa_aprofundar', lacuna='gap', proximo_dado_necessario='data', dominio_sugerido='industrial')
             return v
         r = self.run_case(transport=Transport(again))
         self.assertEqual(r['final_state']['reason'], 'no_progress')
@@ -164,8 +164,8 @@ class ScenariosTests(unittest.TestCase):
         initial, repair = transport.envelopes[:2]
         self.assertEqual(initial['role'], repair['role'])
         feedback = repair['input']['feedback']
-        self.assertEqual(feedback['schema_id'], 'analista_pergunta.fixed_evidence.v1')
-        self.assertEqual(feedback['schema_version'], 1)
+        self.assertEqual(feedback['schema_id'], 'analista_pergunta.fixed_evidence.v2')
+        self.assertEqual(feedback['schema_version'], 2)
         self.assertEqual(feedback['schema_sha256'], digest(scenarios.contracts('fixed_evidence')['analista_pergunta']['schema']))
         self.assertEqual(feedback['path'], '/necessidade/medida')
         self.assertEqual(feedback['keyword'], 'type')
@@ -275,8 +275,8 @@ class ScenariosTests(unittest.TestCase):
                    'response':{'resposta':'fixture'},'final_state':None}
         with patch('inference_api.executions.service.local_queries.source_fingerprints',side_effect=[{'status':'recorded'}, OSError('failed')]), \
              patch('inference_api.executions.service.scenarios.run',return_value=simulated), \
-             patch('inference_api.executions.service.storage.create_run',side_effect=lambda _author,snapshot:snapshot):
-            snapshot=service.execute_run(payload,Principal('fixture','Vinicius'),prepared=context)
+             patch('inference_api.executions.service.storage.create_run',side_effect=lambda _author,snapshot:{'id':'00000000-0000-4000-8000-000000000003','snapshot':snapshot}):
+            snapshot=service.execute_run(payload,Principal('fixture','Vinicius'),prepared=context)['snapshot']
         self.assertEqual(snapshot['status'],'contract_error')
         self.assertEqual(snapshot['harness_result']['trace'][0]['event_id'],'call_01')
         self.assertEqual(snapshot['evidence_source']['detail_loads']['after']['status'],'unavailable')

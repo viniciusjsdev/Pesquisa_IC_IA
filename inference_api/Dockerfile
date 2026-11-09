@@ -12,7 +12,8 @@ FROM python:3.11-slim AS app
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 INFERENCE_RUNTIME_MODE=docker
 WORKDIR /app
 COPY inference_api/requirements.txt /app/inference_api/requirements.txt
-RUN pip install --no-cache-dir -r /app/inference_api/requirements.txt \
+COPY inference_api/requirements.lock /app/inference_api/requirements.lock
+RUN pip install --no-cache-dir --require-hashes -r /app/inference_api/requirements.lock \
     && groupadd --system inference && useradd --system --gid inference --home /app inference
 COPY inference_api/run.py /app/inference_api/run.py
 COPY inference_api/src /app/inference_api/src

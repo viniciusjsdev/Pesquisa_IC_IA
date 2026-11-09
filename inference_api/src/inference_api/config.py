@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parents[3]
 load_dotenv(ROOT / "BancoModeloUse" / ".env.local", override=False)
+load_dotenv(ROOT / "inference_api" / ".local" / "observability.env", override=False)
 
 
 def _required(name: str) -> str:

@@ -1,0 +1,232 @@
+{
+  "analista_pergunta": {
+    "task": "Estruture a necessidade da pergunta usando o vocabulário semântico industrial|financeiro, mesmo se o domínio necessário estiver ausente do pacote. available_domains informa o que existe; source_index contém apenas metadados dos itens, não fatos analisados. tratavel indica se alguma parte pode ser analisada com o pacote; registre ausências como lacunas. Não invente valores ou causalidade.",
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tratavel",
+        "necessidade",
+        "dominios",
+        "lacunas"
+      ],
+      "properties": {
+        "tratavel": {
+          "type": "boolean"
+        },
+        "necessidade": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "entidade",
+            "medida",
+            "periodo",
+            "grao"
+          ],
+          "properties": {
+            "entidade": {
+              "type": "string"
+            },
+            "medida": {
+              "type": "string"
+            },
+            "periodo": {
+              "type": "string"
+            },
+            "grao": {
+              "type": "string"
+            }
+          }
+        },
+        "dominios": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "industrial",
+              "financeiro"
+            ]
+          }
+        },
+        "lacunas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "selecionador_fontes": {
+    "task": "Escolha analisar_item em available_source_ids para examinar evidência já no pacote imutável. Use o índice, itens examinados/restantes, lacunas e orçamento. Não consulte bancos nem peça domínios novos. Sem item adequado, sem_fonte com fonte_id=null e map_refs=[]. analisar_item exige map_refs contendo somente fonte_id. dominio_adicional=null.",
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decisao",
+        "justificativa",
+        "fonte_id",
+        "dominio_adicional",
+        "map_refs",
+        "selection_kind"
+      ],
+      "properties": {
+        "decisao": {
+          "enum": [
+            "analisar_item",
+            "sem_fonte"
+          ]
+        },
+        "justificativa": {
+          "type": "string"
+        },
+        "fonte_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dominio_adicional": {
+          "const": null
+        },
+        "map_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "selection_kind": {
+          "const": "packet_source"
+        }
+      }
+    }
+  },
+  "revisor_evidencias": {
+    "task": "Revise somente as evidências efetivamente analisadas. O índice completo contém metadados, não fatos adicionais. precisa_aprofundar pede outro item/recorte já existente no pacote; domínio necessário ausente é lacuna válida, nunca consulta. Use industrial|financeiro|null para dominio_sugerido. indisponivel, contraditoria e precisa_aprofundar exigem lacuna; aprofundamento exige próximo dado concreto. Referências somente em available_evidence_ids.",
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decisao",
+        "evidencias_utilizadas",
+        "justificativa",
+        "lacuna",
+        "proximo_dado_necessario",
+        "dominio_sugerido"
+      ],
+      "properties": {
+        "decisao": {
+          "enum": [
+            "suficiente",
+            "precisa_aprofundar",
+            "contraditoria",
+            "indisponivel"
+          ]
+        },
+        "evidencias_utilizadas": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "justificativa": {
+          "type": "string"
+        },
+        "lacuna": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "proximo_dado_necessario": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dominio_sugerido": {
+          "enum": [
+            "industrial",
+            "financeiro",
+            null
+          ]
+        }
+      }
+    }
+  },
+  "redator_resposta": {
+    "task": "Redija somente a parte sustentada pelas evidências analisadas. Considere review e closure_reason e exponha dados ausentes, contradições, cobertura e limitações. Não cite item apenas visto no índice como fato analisado, não preencha ausência com zero e não afirme causalidade sem suporte. Cite somente available_evidence_ids.",
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resposta",
+        "evidencias_utilizadas",
+        "calculos",
+        "ressalvas"
+      ],
+      "properties": {
+        "resposta": {
+          "type": "string"
+        },
+        "evidencias_utilizadas": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "calculos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ressalvas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "especialista_consulta": {
+    "task": "Analise somente o item escolhido do pacote e as evidências anteriores entregues. semantic_domains descreve o conteúdo; source_origin descreve a origem física preservada. Não consulte bancos. Cite somente available_evidence_ids e declare achados e lacunas; rows vazias significam no_observation, nunca zero.",
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "evidence_refs",
+        "findings",
+        "gaps"
+      ],
+      "properties": {
+        "action": {
+          "const": "analyze_packet"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

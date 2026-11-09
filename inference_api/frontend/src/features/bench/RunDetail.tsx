@@ -2,6 +2,7 @@ import type { Run } from './benchService';
 import { HarnessRounds } from './HarnessRounds';
 import { EvidenceTrajectory } from './EvidenceTrajectory';
 import { runDateLabel, runStatusLabel } from './runPresentation';
+import { ObservabilityLink } from './ObservabilityLink';
 // Evidence bundles retain historical fields from versioned backend snapshots.
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -54,6 +55,7 @@ function RunSummary({ run }: { run: Run }) {
           : 'Origem não resumida neste snapshot';
   return <div className="run-summary">
     <p className="run-summary-meta">{runDateLabel(run.created_at)} <span>· horário deste dispositivo</span> · {run.author}</p>
+    <ObservabilityLink value={s.observability} current={run.observability_current} runId={run.id}/>
     <p className={`run-summary-status ${s.status === 'answered_unverified' ? 'is-complete' : 'is-error'}`}><strong>{runStatusLabel(s.status)}</strong></p>
     <div className="run-summary-facts"><span>{s.provider || 'Provedor não registrado'}</span><span>{model.model_id || model.alias || 'Modelo não registrado'}</span><span>{mode}</span></div>
     <h4>Pergunta</h4><p className="run-summary-copy">{question || 'Pergunta não registrada neste snapshot.'}</p>

@@ -1,0 +1,102 @@
+{
+  "spec_id": "SPEC-015",
+  "contract_version": 3,
+  "scope": "Local engineering acceptance only",
+  "criteria": {
+    "AC-001": {
+      "status": "passed",
+      "evidence": "inference_api/tests/test_spec015_structure.py",
+      "assessment": "Real compiled graph, separate nodes/modules and constrained repair/budget edges inspected; no legacy algorithm reintroduced."
+    },
+    "AC-002": {
+      "status": "passed",
+      "evidence": "inference_api/tests/test_spec015_v3_packet.py",
+      "assessment": "A research DB/catalog/fingerprint access blocked in local tests. Query service routing and prior boundary suites retained; integration records nine B source reads and zero A reads."
+    },
+    "AC-003": {
+      "status": "passed",
+      "evidence": "inference_api/tests/test_spec015_v3_regressions.py",
+      "assessment": "Selected packet item staging, examined-only Writer context, same-profile identity, separate runs and telemetry context isolation verified."
+    },
+    "AC-004": {
+      "status": "passed",
+      "evidence": "inference_api/tests/test_spec015_differential.py",
+      "assessment": "39 B baseline cases retain exact effective HTTP requests/results. A intentionally has new semantic/protocol fixtures; historical 78-entry baseline preserved as historical evidence."
+    },
+    "AC-005": {
+      "status": "passed",
+      "evidence": "inference_api/tests/test_spec015_structure.py",
+      "assessment": "Explicit repairs, budgets, recurrence guard and error receipts verified. Additional independent 45-case budget/repair matrix has no unhandled exception."
+    },
+    "AC-006": {
+      "status": "passed",
+      "evidence": "specs/active/SPEC-015/evidence/v3/local-integration.json",
+      "assessment": "Recorded old snapshot export/readback and unchanged snapshot digest; optional observability_current is a sibling field. Runtime identity still recursively covers new code."
+    },
+    "AC-007": {
+      "status": "passed",
+      "evidence": "specs/active/SPEC-015/evidence/v3/local-integration.json",
+      "assessment": "Recorded A/B by three adapter UI matrix uses only local synthetic HTTP model transport."
+    },
+    "AC-008": {
+      "status": "passed",
+      "evidence": "specs/active/SPEC-015/evidence/v3/local-integration.json",
+      "assessment": "Inspected verifier and recorded eight UI/auth/job/graph/response/history runs on a stopped disposable PostgreSQL cluster."
+    },
+    "AC-009": {
+      "status": "passed",
+      "evidence": "specs/active/SPEC-015/evidence/v3/baseline-check.json",
+      "assessment": "Compared baseline-v3 source changes and invariants; inspected clean lock-install and clean-backend143/8skip logs. No paid/remote infrastructure evidence inferred."
+    },
+    "AC-010": {
+      "status": "passed",
+      "evidence": "specs/active/SPEC-015/evidence/v3/review.json",
+      "assessment": "This independent contract-3 engineering review resolves initial findings and approves the corrected local implementation; no scientific scoring."
+    },
+    "AC-011": {
+      "status": "passed",
+      "evidence": "inference_api/tests/test_spec015_observability.py",
+      "assessment": "Existing12 telemetry tests pass for hierarchy, unique IDs, actual SDK serialization, tokens including unknown/reasoning, configuration hashes and off/on parity."
+    },
+    "AC-012": {
+      "status": "passed",
+      "evidence": "inference_api/tests/test_spec015_v3_regressions.py",
+      "assessment": "Slow receipt writer no longer blocks flush; final delivery forces coalesced persistence. Off/global-flag, privacy, failure, bounded queue and concurrent-run tests pass."
+    },
+    "AC-013": {
+      "status": "passed",
+      "evidence": "specs/active/SPEC-015/evidence/v3/frontend-test.log",
+      "assessment": "Inspected23 frontend tests plus integration for private links, pending/failed/verified states, historical fallback and manual-only reads. No hosted v3 panel validation claimed."
+    },
+    "AC-014": {
+      "status": "passed",
+      "evidence": "inference_api/tests/test_spec015_v3_packet.py",
+      "assessment": "A fixtures cover machine+financial, consolidated product/material, distinct period IDs, empty-item metadata and physical DW origin; packet exporter/schema and source-query ASTs remain unchanged."
+    },
+    "AC-015": {
+      "status": "passed",
+      "evidence": "inference_api/tests/test_spec015_v3_packet.py",
+      "assessment": "Missing domain, no source, contradiction, empty observation, no progress, budgets, JSON repair and invented refs tested; unexamined rows cannot reach reserved Writer."
+    },
+    "AC-016": {
+      "status": "passed",
+      "evidence": "inference_api/tests/test_spec015_v3_regressions.py",
+      "assessment": "Managed root remains open during run persistence; technical root errors, insufficient-evidence non-error, single close and original persistence exception preservation verified."
+    },
+    "AC-017": {
+      "status": "passed",
+      "evidence": "inference_api/tests/test_spec015_v3_reconciliation.py",
+      "assessment": "Expected IDs/parents/root trace/uniqueness verified; remote partial and equal-count wrong trees fail verification. Last authorized receipt/link survives read/write error; integration proves snapshot immutability and later readback."
+    },
+    "AC-018": {
+      "status": "passed",
+      "evidence": "inference_api/tests/test_spec015_v3_http.py",
+      "assessment": "Owner/auth/UUID/body/destination checks precede reads; HTTP401/400/403/404/409/200 verified. SDK reads bounded to configured root/query. Integration tests additive idempotent migration, actual advisory locking and non-destructive rollback."
+    },
+    "AC-019": {
+      "status": "passed",
+      "evidence": "specs/active/SPEC-015/evidence/v3/local-integration.json",
+      "assessment": "Recorded eight-run integration covers corrected A, unchanged B, absent-domain partial answer, root technical error, delayed export/root404 then manual verified link. Reviewed independently; no production deployment inferred."
+    }
+  }
+}

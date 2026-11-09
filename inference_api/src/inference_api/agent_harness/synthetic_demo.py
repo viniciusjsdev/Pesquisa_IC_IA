@@ -5,9 +5,6 @@ import json
 from datetime import date
 from jsonschema import Draft202012Validator
 
-from . import run, Limits
-from .engine import INPUT_SCHEMAS
-from .. import config, groq  # config loads the ignored local .env without printing it
 
 
 QUESTION = ("Na linha fictícia L1 em 2020, quantos minutos de parada houve "
@@ -101,60 +98,3 @@ def fixture_query(plan: dict) -> dict:
             "coverage": {"state": "observed" if rows else "no_observation",
                          "rows": len(rows), "synthetic": True},
             "units": units}
-
-
-def make_groq_model_call(model_id: str, protocol_prompt: str = ""):
-    """Pin the same non-GPT Groq model across every role call."""
-    if not isinstance(model_id, str) or not model_id or "gpt" in model_id.casefold() or "openai" in model_id.casefold():
-        raise ValueError("Synthetic harness requires a non-GPT model")
-    def call(role: str, envelope: dict, contract: dict) -> tuple[str, dict]:
-        message, metadata = groq.chat_turn(
-            role_messages(envelope, contract, protocol_prompt),
-            0, 900, tools=None, harness_model=model_id,
-            max_request_bytes=envelope.get("request_byte_limit", Limits().input_bytes))
-        return message.get("content") or "", {
-            "provider": "groq", "model_id": metadata.get("served_model"),
-            "usage": metadata.get("usage"), "finish_reason": metadata.get("finish_reason"),
-            "request_budget": metadata.get("request_budget")}
-    return call
-
-
-def role_messages(envelope: dict, contract: dict, protocol_prompt: str = "") -> list[dict]:
-    """Identical per-role prompt for the synthetic provider audit."""
-    system = ("Você executa exatamente um papel de um teste sintético. "
-              "Responda somente com um objeto JSON válido, sem markdown ou texto fora dele. "
-              "Não inclua campos extras. Use null para valores não aplicáveis. "
-              "Se a entrada contiver correction_feedback, corrija o mesmo papel usando o erro e a dica. "
-              f"{protocol_prompt}\n"
-              f"Tarefa: {contract['task']}\n"
-              "Schema da entrada em input: " + json.dumps(
-                  INPUT_SCHEMAS[envelope["role"]].schema, ensure_ascii=False) + "\n"
-              "Schema JSON obrigatório da saída: " + json.dumps(
-                  contract["schema"], ensure_ascii=False))
-    return [{"role": "system", "content": system},
-            {"role": "user", "content": json.dumps(envelope, ensure_ascii=False)}]
-
-
-def main() -> None:
-    import argparse
-    from pathlib import Path
-
-    parser = argparse.ArgumentParser(description="SPEC-013 synthetic-only Groq smoke")
-    parser.add_argument("--output", type=Path, help="Optional local trace JSON path")
-    args = parser.parse_args()
-    settings = groq.harness_configuration()
-    if not settings["available"]:
-        raise SystemExit("Groq is not configured; no call sent")
-    result = run(QUESTION, MAPS, make_groq_model_call(settings["model"], PROTOCOL_PROMPT), fixture_query)
-    if args.output:
-        args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({"run_id": result["run_id"], "status": result["status"],
-                      "model_calls": result["model_calls"], "queries": result["queries"],
-                      "roles": [event["role"] for event in result["trace"]],
-                      "error": result["final_state"].get("error") if result["final_state"] else None},
-                     ensure_ascii=False))
-
-
-if __name__ == "__main__":
-    main()

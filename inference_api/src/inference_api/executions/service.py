@@ -3,6 +3,9 @@ from copy import deepcopy
 from dataclasses import asdict
 import hashlib
 from pathlib import Path
+from uuid import uuid4
+from inference_api.observability.service import create as create_observer
+from inference_api.observability import receipts
 from inference_api import criteria, evidence_packets, storage
 from inference_api.identity.auth import Principal
 from inference_api.agent_harness import scenarios, approved_catalog, catalog_runtime, local_queries, real_pilot
@@ -147,53 +150,74 @@ def require_provider_configuration(payload):
     prepare(payload)
 
 
-def execute_run(payload, principal: Principal, *, prepared=None):
+def execute_run(payload, principal: Principal, *, prepared=None,job_id=None):
     context = prepared if prepared is not None else prepare(payload)
     if context['request_sha256'] != registry.digest(payload):
         raise ValueError('prepared_request_changed')
-    profile = context['profile']
-    source = deepcopy(context['source'])
-    scenario = payload['scenario']
-    query = None
-    runtime_before = runtime_identity()
-    if scenario == 'data_access':
-        source['detail_loads'] = {'before': local_queries.source_fingerprints(context['catalog'])}
-        query = lambda plan: local_queries.execute(plan, context['catalog'])
-    result = scenarios.run(payload['question'], scenario, profile['id'],
-        ModelService(profile, payload.get('generation', {})), maps=context['maps'],
-        packet=context['packet'], query=query, limits=scenarios.ScenarioLimits(**context['limits']))
-    if scenario == 'data_access':
-        try:
-            source['detail_loads']['after'] = local_queries.source_fingerprints(context['catalog'])
-        except Exception as exc:
-            source['detail_loads']['after'] = {'status': 'unavailable', 'error_type': type(exc).__name__}
-            result['status'] = 'contract_error'
-            result['final_state'] = {'error': 'source_fingerprint_after_failed'}
-    snapshot = {'schema_version': 7, 'execution_contract_version': 1, 'scenario': scenario,
-        'evidence_mode': scenario, 'provider': profile['provider_id'], 'status': result['status'],
-        'scientific_status': 'not_scored', 'validation_purpose': 'engineering',
-        'data_class': 'synthetic_fixture' if profile.get('fixture') else 'research_evidence',
-        'data_destination': profile['deployment_id'],
-        'authorization_sha256': context['authorization_sha256'],
-        'question_request': {'question': payload['question'], 'model_alias': profile['id']},
-        'packet': ({'case_id': context['packet']['body']['case_id'], 'sha256': context['packet']['sha256']}
-                   if context['packet'] else None),
-        'evidence_source': source,
-        'runtime_contract': {'code': runtime_before, 'code_after': runtime_identity()},
-        'model_profile': {k: v for k, v in profile.items() if k not in {'key_env', 'endpoint'}},
-        'model': {'alias': profile['id'], 'provider': profile['provider_id'],
-                  'model_id': profile['requested_model'], 'api_surface': profile['adapter_id'],
-                  'parameters': payload.get('generation', {}), 'generation_confirmed': False},
-        'prompt': {'version': scenarios.VERSION, 'system_prompt': 'Versioned role contracts',
-                   'sha256': result['contract_sha256']},
-        'verification_criteria': {'scientific_status': 'not_scored'},
-        'harness_result': result, 'checks': [],
-        'model_output': {'raw_text': result['response']['resposta']} if result['response'] else None,
-        'error': {'stage': 'harness', 'type': result['status'], 'message': result['final_state']['error']}
-                 if result['final_state'] and 'error' in result['final_state'] else None,
-        'identity': {'principal_id': principal.id, 'author_verified': True}}
+    harness_id=str(uuid4())
+    observer=create_observer(harness_id)
+    observer.attach_receipt(principal.id,job_id)
+    observer.annotate({'harness_run_id':harness_id,'job_id':job_id})
+    snapshot=None
+    result=None
     try:
-        return storage.create_run(principal.username, snapshot)
+        profile = context['profile']
+        source = deepcopy(context['source'])
+        scenario = payload['scenario']
+        query = None
+        runtime_before = runtime_identity()
+        if scenario == 'data_access':
+            source['detail_loads'] = {'before': local_queries.source_fingerprints(context['catalog'])}
+            query = lambda plan: local_queries.execute(plan, context['catalog'])
+        result = scenarios.run(payload['question'], scenario, profile['id'],
+            ModelService(profile, payload.get('generation', {})), maps=context['maps'],
+            packet=context['packet'], query=query, limits=scenarios.ScenarioLimits(**context['limits']),
+            observer=observer,run_id=harness_id,managed=True)
+        if scenario == 'data_access':
+            try:
+                source['detail_loads']['after'] = local_queries.source_fingerprints(context['catalog'])
+            except Exception as exc:
+                source['detail_loads']['after'] = {'status': 'unavailable', 'error_type': type(exc).__name__}
+                result['status'] = 'contract_error'
+                result['final_state'] = {'error': 'source_fingerprint_after_failed'}
+        snapshot = {'schema_version': 7, 'execution_contract_version': 1, 'scenario': scenario,
+            'evidence_mode': scenario, 'provider': profile['provider_id'], 'status': result['status'],
+            'scientific_status': 'not_scored', 'validation_purpose': 'engineering',
+            'data_class': 'synthetic_fixture' if profile.get('fixture') else 'research_evidence',
+            'data_destination': profile['deployment_id'],
+            'authorization_sha256': context['authorization_sha256'],
+            'question_request': {'question': payload['question'], 'model_alias': profile['id']},
+            'packet': ({'case_id': context['packet']['body']['case_id'], 'sha256': context['packet']['sha256']}
+                       if context['packet'] else None),
+            'evidence_source': source,
+            'runtime_contract': {'code': runtime_before, 'code_after': runtime_identity()},
+            'model_profile': {k: v for k, v in profile.items() if k not in {'key_env', 'endpoint'}},
+            'model': {'alias': profile['id'], 'provider': profile['provider_id'],
+                      'model_id': profile['requested_model'], 'api_surface': profile['adapter_id'],
+                      'parameters': payload.get('generation', {}), 'generation_confirmed': False},
+            'prompt': {'version': scenarios.VERSION, 'system_prompt': 'Versioned role contracts',
+                       'sha256': result['contract_sha256']},
+            'verification_criteria': {'scientific_status': 'not_scored'},
+            'harness_result': result, 'checks': [],
+            'scenario_contract_version':2 if scenario=='fixed_evidence' else 1,
+            **({'packet_projection_version':2,'packet_index_sha256':result['packet_index_sha256']}
+               if scenario=='fixed_evidence' else {}),
+            'observability': result.get('observability', {'state': 'disabled'}),
+            'model_output': {'raw_text': result['response']['resposta']} if result['response'] else None,
+            'error': {'stage': 'harness', 'type': result['status'], 'message': result['final_state']['error']}
+                     if result['final_state'] and 'error' in result['final_state'] else None,
+            'identity': {'principal_id': principal.id, 'author_verified': True}}
+        run = storage.create_run(principal.username, snapshot)
+        observer.bind_run(run['id'])
+        observer.annotate({'app_run_id':run['id'],'harness_run_id':harness_id,'job_id':job_id})
+        observer.finish(result)
+        run['observability_current']=receipts.current(run['id'],principal.id) if observer.enabled else None
+        return run
     except Exception as exc:
-        real_pilot.preserve_failed_persistence(snapshot, exc)
+        failure={'status':'persistence_error' if snapshot is not None else 'execution_error',
+                 'final_state':{'error':'persistence_error' if snapshot is not None else 'execution_error'}}
+        if snapshot is not None:
+            try:real_pilot.preserve_failed_persistence(snapshot, exc)
+            except Exception:pass
+        observer.finish(failure)
         raise

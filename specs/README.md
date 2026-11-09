@@ -1,3 +1,7 @@
+> **SPEC-015 contrato 3, engenharia local em 08/11/2026:** [correção de A e dois ajustes do LangSmith](active/SPEC-015/corrections-v3.md). Implementado e [aprovado em revisão independente local](active/SPEC-015/evidence/v3/review.json), com [conclusão v3](active/SPEC-015/evidence/v3/completion.json). [Ativação local A/B e LangSmith verificada](../docs/bancada_operacao.md), sem score científico. O aceite anterior do contrato 2 permanece histórico.
+
+> **Proposta de migração em 08/11/2026:** [SPEC-015 — LangGraph, agentes, ferramentas e LangSmith opcional](active/SPEC-015/SPEC.md). Implementação do contrato 2 autorizada em 08/11/2026: grafo real e LangSmith opcional implementados, engenharia local aprovada em revisão independente. Exportação desligada por padrão; envio hospedado sintético A/B confirmado por leitura da API (11/26 spans); renderização na sessão do usuário não inspecionada. Preserva ModelService e A/B; a correção funcional de A permanece separada.
+
 > **Fontes consolidadas em 07/11/2026:** a DW V2, seus 166 CSVs, contrato, DER e scripts agora estão no checkout principal. O worktree anterior é histórico. [Mapa de fontes e arquivo](../docs/fontes_ativas_e_arquivo.md). A integração não recarregou bancos nem atribuiu score.
 
 > **SPEC-014 concluída em engenharia local (06/11/2026):** preflight do catálogo e bloqueio de fonte corrigidos e aprovados em nova revisão independente. Não há nova inferência remota nem pontuação científica. Ver `specs/active/SPEC-014/evidence/local-integration.json`.

@@ -1,0 +1,794 @@
+{
+  "spec_id": "SPEC-015",
+  "contract_version": 2,
+  "status": "completed",
+  "thread_id": "01a1bc15-78b1-7360-821c-b8099bdd20d2",
+  "runtime": {
+    "classification": "normal_implementation",
+    "model": "Active Codex session; exact model identifier not exposed",
+    "reasoning": "Session default; legacy runtime labels not invoked"
+  },
+  "changed_files": [
+    {
+      "path": ".gitignore",
+      "change": "modified"
+    },
+    {
+      "path": "README.md",
+      "change": "modified"
+    },
+    {
+      "path": "docs/arquitetura_inferencia_compartilhada.md",
+      "change": "modified"
+    },
+    {
+      "path": "docs/organizacao_inference_api.md",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/Dockerfile",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/compose.yaml",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/HarnessRounds.tsx",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/RunDetail.tsx",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/requirements.txt",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/scripts/verify_spec013_local_chain.py",
+      "change": "deleted"
+    },
+    {
+      "path": "inference_api/scripts/verify_spec013_storage_local.py",
+      "change": "deleted"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/__init__.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/contracts.json",
+      "change": "deleted"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/engine.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/local_queries.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/openai_audit.py",
+      "change": "deleted"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/runtime_identity.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/scenarios.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/synthetic_demo.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/typed_detail.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/config.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/executions/service.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/model_service/service.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_agent_harness.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_request_budget.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_spec013_http.py",
+      "change": "deleted"
+    },
+    {
+      "path": "inference_api/tests/test_spec013_local_queries.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_specialist_query_contract.py",
+      "change": "modified"
+    },
+    {
+      "path": "specs/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "docs/langsmith_bancada.md",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/ObservabilityLink.test.tsx",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/ObservabilityLink.tsx",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/observabilityPresentation.ts",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/observability.env.example",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/requirements.lock",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/scripts/capture_spec015_baseline.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/scripts/verify_spec015_langsmith.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/scripts/verify_spec015_local.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/__init__.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/answer_writer.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/base.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/consolidated_specialist.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/evidence_reviewer.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/financial_specialist.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/industrial_specialist.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/question_analyst.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/registry.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/runner.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/source_selector.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/context/__init__.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/context/projections.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/context/views.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/contracts/__init__.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/contracts/data_access.json",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/contracts/fixed_evidence.json",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/contracts/input.json",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/contracts/loader.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/graph/__init__.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/graph/builder.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/graph/execution.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/graph/nodes.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/graph/routing.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/graph/state.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/policies/__init__.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/policies/budgets.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/policies/fixed_evidence.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/policies/repairs.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/policies/tool_access.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/tools/__init__.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/tools/base.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/tools/contributors.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/tools/dw_query.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/tools/financial_query.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/tools/industrial_query.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/tools/registry.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/tools/trace.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/data_access/queries/__init__.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/data_access/queries/local_queries.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/data_access/queries/typed_detail.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/observability/__init__.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/observability/config.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/observability/contracts.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/observability/langsmith_sink.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/observability/noop.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/observability/sanitize.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/observability/service.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/browser_spec015.cjs",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/spec015_cases.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec015_differential.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec015_observability.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec015_structure.py",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/SPEC.execution.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/SPEC.md",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/architecture-contract.md",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/differential-baseline.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/engineering-validation.md",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/legacy-inventory.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/lifecycle.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/local-integration.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/observability-validation.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/review-attempt-1.md",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/review-input-hashes.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/review.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/runtime-final.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/structural-validation.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/validation-results.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/observability-contract.md",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/completion.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/post-review-reconciliation.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/hosted-synthetic-check.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/hosted-synthetic-check-attempt-1.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/hosted-synthetic-check-attempt-2.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/hosted-readback-attempt-2.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/hosted-readback.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/hosted-fix-review.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/hosted-fix-review-attempt-1.json",
+      "change": "added"
+    },
+    {
+      "path": "specs/active/SPEC-015/evidence/runtime-before-hosted-fix.json",
+      "change": "added"
+    }
+  ],
+  "artifacts": [
+    "specs/active/SPEC-015/evidence/engineering-validation.md",
+    "specs/active/SPEC-015/evidence/validation-results.json",
+    "specs/active/SPEC-015/evidence/local-integration.json",
+    "specs/active/SPEC-015/evidence/observability-validation.json",
+    "specs/active/SPEC-015/evidence/structural-validation.json",
+    "specs/active/SPEC-015/evidence/legacy-inventory.json",
+    "specs/active/SPEC-015/evidence/differential-baseline.json",
+    "specs/active/SPEC-015/evidence/runtime-final.json",
+    "specs/active/SPEC-015/evidence/review.json",
+    "specs/active/SPEC-015/evidence/hosted-synthetic-check.json",
+    "specs/active/SPEC-015/evidence/hosted-synthetic-check-attempt-1.json",
+    "specs/active/SPEC-015/evidence/hosted-synthetic-check-attempt-2.json",
+    "specs/active/SPEC-015/evidence/hosted-readback-attempt-2.json",
+    "specs/active/SPEC-015/evidence/hosted-readback.json",
+    "specs/active/SPEC-015/evidence/hosted-fix-review.json",
+    "specs/active/SPEC-015/evidence/hosted-fix-review-attempt-1.json",
+    "specs/active/SPEC-015/evidence/runtime-before-hosted-fix.json"
+  ],
+  "acceptance_evidence": [
+    {
+      "id": "AC-001",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/engineering-validation.md",
+        "specs/active/SPEC-015/evidence/review.json"
+      ],
+      "notes": [
+        "Local engineering only; hosted panel remains pending login/key, without scientific score."
+      ]
+    },
+    {
+      "id": "AC-002",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/engineering-validation.md",
+        "specs/active/SPEC-015/evidence/review.json"
+      ],
+      "notes": [
+        "Local engineering only; hosted panel remains pending login/key, without scientific score."
+      ]
+    },
+    {
+      "id": "AC-003",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/engineering-validation.md",
+        "specs/active/SPEC-015/evidence/review.json"
+      ],
+      "notes": [
+        "Local engineering only; hosted panel remains pending login/key, without scientific score."
+      ]
+    },
+    {
+      "id": "AC-004",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/engineering-validation.md",
+        "specs/active/SPEC-015/evidence/review.json"
+      ],
+      "notes": [
+        "Local engineering only; hosted panel remains pending login/key, without scientific score."
+      ]
+    },
+    {
+      "id": "AC-005",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/engineering-validation.md",
+        "specs/active/SPEC-015/evidence/review.json"
+      ],
+      "notes": [
+        "Local engineering only; hosted panel remains pending login/key, without scientific score."
+      ]
+    },
+    {
+      "id": "AC-006",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/engineering-validation.md",
+        "specs/active/SPEC-015/evidence/review.json"
+      ],
+      "notes": [
+        "Local engineering only; hosted panel remains pending login/key, without scientific score."
+      ]
+    },
+    {
+      "id": "AC-007",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/engineering-validation.md",
+        "specs/active/SPEC-015/evidence/review.json"
+      ],
+      "notes": [
+        "Local engineering only; hosted panel remains pending login/key, without scientific score."
+      ]
+    },
+    {
+      "id": "AC-008",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/engineering-validation.md",
+        "specs/active/SPEC-015/evidence/review.json"
+      ],
+      "notes": [
+        "Local engineering only; hosted panel remains pending login/key, without scientific score."
+      ]
+    },
+    {
+      "id": "AC-009",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/engineering-validation.md",
+        "specs/active/SPEC-015/evidence/review.json"
+      ],
+      "notes": [
+        "Local engineering only; hosted panel remains pending login/key, without scientific score."
+      ]
+    },
+    {
+      "id": "AC-010",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/engineering-validation.md",
+        "specs/active/SPEC-015/evidence/review.json"
+      ],
+      "notes": [
+        "Local engineering only; hosted panel remains pending login/key, without scientific score."
+      ]
+    },
+    {
+      "id": "AC-011",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/engineering-validation.md",
+        "specs/active/SPEC-015/evidence/review.json"
+      ],
+      "notes": [
+        "Local engineering only; hosted panel remains pending login/key, without scientific score."
+      ]
+    },
+    {
+      "id": "AC-012",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/engineering-validation.md",
+        "specs/active/SPEC-015/evidence/review.json"
+      ],
+      "notes": [
+        "Local engineering only; hosted panel remains pending login/key, without scientific score."
+      ]
+    },
+    {
+      "id": "AC-013",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/engineering-validation.md",
+        "specs/active/SPEC-015/evidence/review.json"
+      ],
+      "notes": [
+        "Local engineering only; hosted panel remains pending login/key, without scientific score."
+      ]
+    }
+  ],
+  "validation_evidence": [
+    {
+      "validation_id": "VAL-001",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/validation-results.json"
+      ],
+      "notes": [
+        "Executed in this session; reviewer independently checked focused suite and durable evidence."
+      ]
+    },
+    {
+      "validation_id": "VAL-002",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s model_evaluation/tests -v",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/validation-results.json"
+      ],
+      "notes": [
+        "Executed in this session; reviewer independently checked focused suite and durable evidence."
+      ]
+    },
+    {
+      "validation_id": "VAL-003",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_*.py -v",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/validation-results.json"
+      ],
+      "notes": [
+        "Executed in this session; reviewer independently checked focused suite and durable evidence."
+      ]
+    },
+    {
+      "validation_id": "VAL-004",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/verify_spec015_local.py",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/validation-results.json"
+      ],
+      "notes": [
+        "Executed in this session; reviewer independently checked focused suite and durable evidence."
+      ]
+    },
+    {
+      "validation_id": "VAL-005",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py test",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/validation-results.json"
+      ],
+      "notes": [
+        "Executed in this session; reviewer independently checked focused suite and durable evidence."
+      ]
+    },
+    {
+      "validation_id": "VAL-006",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py typecheck",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/validation-results.json"
+      ],
+      "notes": [
+        "Executed in this session; reviewer independently checked focused suite and durable evidence."
+      ]
+    },
+    {
+      "validation_id": "VAL-007",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py lint",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/validation-results.json"
+      ],
+      "notes": [
+        "Executed in this session; reviewer independently checked focused suite and durable evidence."
+      ]
+    },
+    {
+      "validation_id": "VAL-008",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py build",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/validation-results.json"
+      ],
+      "notes": [
+        "Executed in this session; reviewer independently checked focused suite and durable evidence."
+      ]
+    },
+    {
+      "validation_id": "VAL-009",
+      "canonical_command": "Revisar instalacao limpa/lock, consumidores, hashes protegidos e criterios AC-001 a AC-013. registrar evidence/engineering-validation.md.",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/validation-results.json"
+      ],
+      "notes": [
+        "Executed in this session; reviewer independently checked focused suite and durable evidence."
+      ]
+    },
+    {
+      "validation_id": "VAL-010",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_observability*.py -v",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/validation-results.json"
+      ],
+      "notes": [
+        "Executed in this session; reviewer independently checked focused suite and durable evidence."
+      ]
+    }
+  ],
+  "deviations": [
+    "Exact active model identifiers unavailable; existing designated implementation chat and inherited independent review agent used instead of invoking unavailable legacy aliases.",
+    "Historical orchestration-only tests archived with exact originals and coverage replacement map; boundary/transport tests retained."
+  ],
+  "unresolved_items": [
+    "Remote synthetic A/B traces and exact API hierarchy/inputs/outputs verified; visual rendering inside user authenticated browser not inspected. Backend export stays off."
+  ],
+  "needs_design": null,
+  "usage": null
+}

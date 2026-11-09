@@ -1,0 +1,18 @@
+test_authorization_existence_uuid_and_lock_precede_remote_reads (test_spec015_v3_reconciliation.ReconciliationTests.test_authorization_existence_uuid_and_lock_precede_remote_reads) ... ok
+test_collection_off_can_read_only_original_trusted_destination (test_spec015_v3_reconciliation.ReconciliationTests.test_collection_off_can_read_only_original_trusted_destination) ... ok
+test_complete_tree_public_dto_and_failed_later_read_preserves_verified_url (test_spec015_v3_reconciliation.ReconciliationTests.test_complete_tree_public_dto_and_failed_later_read_preserves_verified_url) ... ok
+test_exact_128_complete_spans_can_be_verified (test_spec015_v3_reconciliation.ReconciliationTests.test_exact_128_complete_spans_can_be_verified) ... ok
+test_partial_same_count_wrong_ids_parents_trace_duplicate_and_limit (test_spec015_v3_reconciliation.ReconciliationTests.test_partial_same_count_wrong_ids_parents_trace_duplicate_and_limit) ... ok
+test_receipt_read_or_write_failure_returns_last_authorized_dto_not_null (test_spec015_v3_reconciliation.ReconciliationTests.test_receipt_read_or_write_failure_returns_last_authorized_dto_not_null) ... ok
+test_root_not_indexed_destination_unavailable_invalid_url_no_remote_writes (test_spec015_v3_reconciliation.ReconciliationTests.test_root_not_indexed_destination_unavailable_invalid_url_no_remote_writes) ... ok
+test_actual_sdk_serialization_only_root_and_bounded_trace_query (test_spec015_v3_reconciliation.SDKReadTests.test_actual_sdk_serialization_only_root_and_bounded_trace_query) ... D:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA\inference_api\src\inference_api\observability\reconciliation.py:78: LangSmithDeprecationWarning: read_run() is deprecated and will be removed after Jan 31, 2027. Use client.runs.retrieve() instead.See https://docs.langchain.com/langsmith/smithdb-sdk-migration-runs#runs-retrieve for the migration guide.
+  root=client.read_run(trace_id)
+ok
+test_hosted_page_limit_100_and_cursor_keep_three_reads_128_spans (test_spec015_v3_reconciliation.SDKReadTests.test_hosted_page_limit_100_and_cursor_keep_three_reads_128_spans) ... ok
+test_physical_request_deadline_redirect_size_and_operation_limits (test_spec015_v3_reconciliation.SDKReadTests.test_physical_request_deadline_redirect_size_and_operation_limits) ... ok
+test_slow_headers_and_oversize_body_cannot_exceed_read_budget (test_spec015_v3_reconciliation.SDKReadTests.test_slow_headers_and_oversize_body_cannot_exceed_read_budget) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.630s
+
+OK

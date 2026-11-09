@@ -1,0 +1,133 @@
+{
+  "spec_id": "SPEC-015",
+  "contract_version": 3,
+  "status": "approved",
+  "thread_id": null,
+  "runtime": {
+    "classification": "critical_review",
+    "model": "Inherited current Codex runtime; exact model identifier not exposed to this independent reviewer",
+    "reasoning": "Inherited reasoning configuration; exact level not exposed"
+  },
+  "review_input": [
+    "inference_api/src/inference_api/model_service/registry.py",
+    "inference_api/frontend/src/features/bench/BenchPage.tsx",
+    "inference_api/tests/test_bancada_activation.py",
+    "specs/active/SPEC-015/evidence/v3/review.json",
+    "specs/active/SPEC-015/evidence/v3/review-input-hashes.json",
+    "specs/active/SPEC-015/evidence/activation-2026-11-08/backend.log",
+    "specs/active/SPEC-015/evidence/activation-2026-11-08/frontend-test.log",
+    "inference_api/scripts/start_bancada.ps1",
+    "inference_api/src/inference_api/observability/reconciliation.py",
+    "inference_api/tests/test_spec015_v3_reconciliation.py",
+    "specs/active/SPEC-015/evidence/activation-2026-11-08/reconciliation-tests.log"
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": [
+        "inference_api/tests/test_bancada_activation.py",
+        "specs/active/SPEC-015/evidence/activation-2026-11-08/backend.log",
+        "specs/active/SPEC-015/evidence/activation-2026-11-08/frontend-test.log"
+      ],
+      "notes": [
+        "Reviewer explicitly set INFERENCE_OBSERVABILITY=off before local tests. New activation test passed (one method,0.025s), preserving legacy receipt and bundle exact-match cases.",
+        "Reviewer independently exercised nine additional synthetic-only negative cases: mismatched destination/decision/spec/scenario/data/limits and invalid empty/non-list/over100-entry bundles all rejected.",
+        "Inspected reported broader logs: backend144 tests passed with8 prior opt-in DB skips, frontend23 tests passed. Reviewer did not rerun the full suite or contact the running server."
+      ]
+    },
+    {
+      "category": "json_contracts",
+      "result": "changed_as_approved",
+      "evidence": [
+        "inference_api/src/inference_api/model_service/registry.py",
+        "inference_api/tests/test_bancada_activation.py"
+      ],
+      "notes": [
+        "Backend-only receipt wrapper {schema_version:1,authorizations:[receipts]} supports bounded1–100 entries. Legacy single-receipt authorization remains valid.",
+        "A matching entry still requires approved decision, SPEC-014 scope, exact profile SHA256, configured endpoint, scenario, data hash and limits. The returned authorization digest identifies the matched entry, not the broad bundle. No HTTP-controlled destination/profile/configuration source was added."
+      ]
+    },
+    {
+      "category": "decisions",
+      "result": "changed_as_approved",
+      "evidence": [
+        "inference_api/frontend/src/features/bench/BenchPage.tsx"
+      ],
+      "notes": [
+        "Interactive BenchPage defaults intentionally change to reasoning low and output limit2048 for authorized exploratory use. Reasoning is submitted only when the selected profile declares support. Backend parameter validation remains unchanged.",
+        "These defaults are an intentional configuration change; they do not make new runs scientifically equivalent to prior differently configured runs or grant scientific scores.",
+        "Review scope is the post-v3 code delta only. Actual application migration/backup, running-server PID/port, process-only tracing activation and remote delivery were not independently verified because this review was explicitly read-only/offline and forbidden to interact with those services."
+      ]
+    },
+    {
+      "category": "persistence",
+      "result": "preserved",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-input-hashes.json"
+      ],
+      "notes": [
+        "The original post-v3 review found registry.py and BenchPage.tsx changed. This follow-up separately reviews reconciliation.py and its tests for bounded read pagination; it introduces no receipt-write, SQL migration or snapshot-mutation delta."
+      ]
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-input-hashes.json"
+      ],
+      "notes": [
+        "The scoped post-v3 changes covered by this cumulative activation review are registry.py, BenchPage.tsx, the new activation test/launcher, and bounded reconciliation reader/test updates. Other previously reviewed product paths remain outside this delta; source proof does not certify ignored data or remote state."
+      ]
+    },
+    {
+      "category": "cli",
+      "result": "changed_as_approved",
+      "evidence": [
+        "inference_api/scripts/start_bancada.ps1",
+        "inference_api/run.py",
+        "inference_api/src/inference_api/api/server.py"
+      ],
+      "notes": [
+        "Read-only inspection and PowerShell parser validation only; launcher was not executed and existing active server/run were not contacted or altered. Parser reported no errors.",
+        "Launcher resolves paths from PSScriptRoot, refuses a preexisting listener on8765, uses Start-Process with WindowStyle Hidden, redirects only local ignored logs and stores the launched PID.",
+        "Child tracing is explicit via -WithLangSmith; otherwise the child receives off. Parent INFERENCE_OBSERVABILITY and PYTHONUNBUFFERED values are restored in finally. Existing backend dotenv loader does not override these explicit process values.",
+        "Health checking is bounded to20 attempts with1-second request timeout and250ms sleeps after exceptions. It tests the existing basic status=up endpoint; it does not certify provider credentials, model availability or hosted trace delivery.",
+        "No blocking issue found in this scoped static/parser review. Actual launch behavior and current process health are not independently certified."
+      ]
+    },
+    {
+      "category": "json_contracts",
+      "result": "changed_as_approved",
+      "evidence": [
+        "inference_api/src/inference_api/observability/reconciliation.py",
+        "inference_api/tests/test_spec015_v3_reconciliation.py",
+        "specs/active/SPEC-015/evidence/activation-2026-11-08/reconciliation-tests.log"
+      ],
+      "notes": [
+        "Read-only LangSmith run queries now obey the observed hosted per-page maximum100 while retaining the overall ceiling128. The reader uses one root GET plus at most two trace-filtered query pages, with explicit stop_after_attempt=1, existing no-retry transport and existing10-second ReadSession deadline.",
+        "The first page requests100 and the second at most the remaining28. A remaining cursor after page two returns remote_read_limit without a fourth request. Responses larger than the requested page remain rejected.",
+        "Independent review found and reproduced a stale >=128 post-read guard that rejected an exact complete128-span tree. The implementation corrected it to >128; positive exact128 verification and127/128/129 pagination regressions now pass.",
+        "Independently reran all11 reconciliation methods with INFERENCE_OBSERVABILITY=off: passed in0.581s. Tests cover actual locked SDK/local fake Session serialization, at most3 physical reads, pagination boundaries, owner/destination safeguards, immutable DTO fallback and deadline/size limits. No model/tool/export dispatch is added.",
+        "This approval does not certify the claimed hosted17-span readback or interact with the running B job/server; reviewer made no network/hosted/DB/model calls."
+      ]
+    }
+  ],
+  "findings": [],
+  "evidence": [
+    "Independent new-test command with explicit INFERENCE_OBSERVABILITY=off: inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_bancada_activation.py -v; exit0;1 method passed in0.025s.",
+    "Independent nine-case synthetic exact-match/invalid-bundle negative checks passed with tracing explicitly off.",
+    "Independent git diff --check exit0.",
+    "No real credentials, hosted services, running API server, paid models or research/application database were accessed by the reviewer. Prior v3 review artifacts were not overwritten.",
+    "SHA256 inference_api/src/inference_api/model_service/registry.py: a39cabcbd8416dc3561583f2689f7bfbdc51b0cd0b2004785495b8492e455aa1",
+    "SHA256 inference_api/frontend/src/features/bench/BenchPage.tsx: 63a319a332283246e8a8be7f462b1b0616aa1e86b864058f3926be5d0a06819f",
+    "SHA256 inference_api/tests/test_bancada_activation.py: ccd5c444c272469723f5c84b54394fb9e1e66a67aeb11b39472c69cedf6e9fff",
+    "Independent PowerShell Parser::ParseFile on inference_api/scripts/start_bancada.ps1: no parser errors; no launcher execution or health HTTP call performed.",
+    "SHA256 inference_api/scripts/start_bancada.ps1: 28caa4df5d9874c3d7524c2ac3cdda5355c9d2ff6a182f4ca9b589b65bff3cd7",
+    "Independent pagination follow-up command with INFERENCE_OBSERVABILITY=off: inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_v3_reconciliation.py -v; exit0;11 methods passed in0.581s.",
+    "Independent follow-up git diff --check exit0.",
+    "SHA256 inference_api/src/inference_api/observability/reconciliation.py: 71e494fde661c7ec3982bb429ffa6bfbf56fc6af6998d77e826960a740807610",
+    "SHA256 inference_api/tests/test_spec015_v3_reconciliation.py: 1ba5d9755dcfef9457b2a11779cbf7a9d7c24dba224244dd5001ee087097f844"
+  ],
+  "usage": null
+}

@@ -1,0 +1,19 @@
+test_matrix_hierarchy_identity_tokens_and_no_duplicates (test_spec015_observability.ObservabilityTests.test_matrix_hierarchy_identity_tokens_and_no_duplicates) ... ok
+test_off_ignores_global_flags_and_creds_no_network (test_spec015_observability.ObservabilityTests.test_off_ignores_global_flags_and_creds_no_network) ... ok
+test_off_on_parity_and_A_no_database_even_fingerprints (test_spec015_observability.ObservabilityTests.test_off_on_parity_and_A_no_database_even_fingerprints) ... ok
+test_opaque_tokens_metadata_hash_and_invalid_config_are_isolated (test_spec015_observability.ObservabilityTests.test_opaque_tokens_metadata_hash_and_invalid_config_are_isolated) ... ok
+test_production_constructor_with_real_sdk_and_local_transport (test_spec015_observability.ObservabilityTests.test_production_constructor_with_real_sdk_and_local_transport) ... D:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA\inference_api\src\inference_api\observability\langsmith_sink.py:30: LangSmithDeprecationWarning: read_run() is deprecated and will be removed after Jan 31, 2027. Use client.runs.retrieve() instead.See https://docs.langchain.com/langsmith/smithdb-sdk-migration-runs#runs-retrieve for the migration guide.
+  url = self.client.read_run(event['id']).url
+ok
+test_queue_full_flush_bounded_and_duplicate_end (test_spec015_observability.ObservabilityTests.test_queue_full_flush_bounded_and_duplicate_end) ... ok
+test_reasoning_is_subtype_and_unknown_is_unknown (test_spec015_observability.ObservabilityTests.test_reasoning_is_subtype_and_unknown_is_unknown) ... ok
+test_redaction_before_queue_never_mutates_local_inputs (test_spec015_observability.ObservabilityTests.test_redaction_before_queue_never_mutates_local_inputs) ... ok
+test_repairs_errors_and_no_cross_run_context (test_spec015_observability.ObservabilityTests.test_repairs_errors_and_no_cross_run_context) ... ok
+test_sdk_serialization_and_private_url_without_socket (test_spec015_observability.ObservabilityTests.test_sdk_serialization_and_private_url_without_socket) ... ok
+test_sdk_timeout_no_retry_and_response_preserved (test_spec015_observability.ObservabilityTests.test_sdk_timeout_no_retry_and_response_preserved) ... ok
+test_snapshot_does_not_end_or_submit_again (test_spec015_observability.ObservabilityTests.test_snapshot_does_not_end_or_submit_again) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 1.440s
+
+OK

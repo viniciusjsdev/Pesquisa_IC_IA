@@ -1,0 +1,24 @@
+flowchart LR
+  INPUT["Bancada: pergunta + cenário + modelo"] --> MODE{"Cenário"}
+  MODE -->|A| PACKET["Validar pacote imutável e hash"]
+  PACKET --> INDEX["Índice dos itens: domínio semântico, origem, grão e cobertura"]
+  INDEX --> ANALYST["Analista: necessidades e lacunas"]
+  ANALYST --> SELECT["Selecionador: item disponível do pacote"]
+  SELECT --> FOUND{"Item adequado disponível?"}
+  FOUND -->|sim| SPECIALIST["Especialista: analisar item sem consultar banco"]
+  SPECIALIST --> REVIEW["Revisor: evidências atendem à pergunta?"]
+  REVIEW -->|"outra evidência do pacote e orçamento"| SELECT
+  REVIEW -->|"suficiente ou lacuna sem solução no pacote"| WRITE["Redator: resposta sustentada + limitações"]
+  FOUND -->|não| WRITE
+  MODE -->|B| B["Grafo de consultas existente: comportamento preservado"]
+  WRITE --> STORE["Persistir resultado e snapshot imutável"]
+  B --> STORE
+  STORE --> ROOT["Encerrar raiz: sucesso ou erro técnico sanitizado"]
+  STORE -. "falha de persistência" .-> FAIL["Preservar evidência local de emergência + raiz com erro"]
+  ROOT -. "exportação autorizada, sem repetir inferência" .-> SMITH["LangSmith"]
+  FAIL -.-> SMITH
+  READ["Bancada: Atualizar monitoramento"] --> AUTH["Autenticar, autorizar run e destino congelado"]
+  AUTH --> GET["Ler raiz e spans existentes, sem reenvio"]
+  SMITH -.-> GET
+  GET --> SIDE["Atualizar somente registro separado de observabilidade"]
+  SIDE --> VIEW["Mostrar estado reconciliado e link privado"]

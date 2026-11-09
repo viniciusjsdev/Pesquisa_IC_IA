@@ -1,3 +1,5 @@
 psycopg2-binary==2.9.12
 python-dotenv==1.2.3
 jsonschema==4.26.0
+langgraph==1.2.20
+langsmith==0.14.17

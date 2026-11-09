@@ -1,0 +1,214 @@
+{
+  "kind": "local_synthetic_fixture",
+  "external_inference": false,
+  "research_cluster_access": false,
+  "database": {
+    "host": "127.0.0.1",
+    "port": 55684,
+    "cluster": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\inference_api\\.local\\spec015-integration-75d9772d\\pgdata",
+    "fixture_version": "spec014_fixture_v1",
+    "stopped": true
+  },
+  "runs": [
+    {
+      "id": "e3bea94c-4cab-4437-acfa-a402ee46c958",
+      "scenario": "data_access",
+      "adapter": "groq_chat",
+      "status": "contract_error",
+      "observability": {
+        "state": "submitted",
+        "content_mode": "redacted",
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 3,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 0,
+      "sha256": "08b0cd8d023bca61e3b4fef8999ba0c3bbb8408e8715a0cd228f67d6091bb3ff"
+    },
+    {
+      "id": "ca2d4890-dae4-4f79-bf3d-03a4895ffe1a",
+      "scenario": "data_access",
+      "adapter": "chat_completions",
+      "status": "answered_unverified",
+      "observability": {
+        "state": "submitted",
+        "content_mode": "redacted",
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 26,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 3,
+      "sha256": "cd82e98370001d15f5d9259685e4057c26dacaa39834fa3e5f797fb14d1cd979"
+    },
+    {
+      "id": "2faa88e0-7918-4047-af69-f3c3578745a9",
+      "scenario": "fixed_evidence",
+      "adapter": "chat_completions",
+      "status": "answered_unverified",
+      "observability": {
+        "state": "submitted",
+        "content_mode": "redacted",
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 11,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 0,
+      "sha256": "e1b82559ce1b958344c28a2a416094d09716d5047f72dd61721e2001794fb3d8"
+    },
+    {
+      "id": "160ffe2d-44c9-40c2-9c0d-10367c701144",
+      "scenario": "data_access",
+      "adapter": "groq_chat",
+      "status": "answered_unverified",
+      "observability": {
+        "state": "failed",
+        "content_mode": "redacted",
+        "failed_events": 26,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 0,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 3,
+      "sha256": "dfc6eff074e5abca7bae25b4867f546e3614bf74b97f764982438dc6f31ddc14"
+    },
+    {
+      "id": "cd95ce9d-e4b5-4468-a89c-b52ce6fb56bc",
+      "scenario": "fixed_evidence",
+      "adapter": "groq_chat",
+      "status": "answered_unverified",
+      "observability": {
+        "state": "submitted",
+        "content_mode": "redacted",
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 11,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 0,
+      "sha256": "c0f7845bde86e55557bd49cf114f84e966d58c86251b596559c37b4e9dd21e1a"
+    },
+    {
+      "id": "25051224-4793-4f63-ae1b-5a2e119e2727",
+      "scenario": "data_access",
+      "adapter": "openai_responses",
+      "status": "answered_unverified",
+      "observability": {
+        "state": "submitted",
+        "content_mode": "redacted",
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 26,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 3,
+      "sha256": "20697c838a9f1ecf8ae43115e926ab7a10f99f4a5b9c152ddb6401d7a0d64d16"
+    },
+    {
+      "id": "31921e87-8fc6-4e78-b0d8-50d180cf7595",
+      "scenario": "fixed_evidence",
+      "adapter": "openai_responses",
+      "status": "answered_unverified",
+      "observability": {
+        "state": "submitted",
+        "content_mode": "redacted",
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 11,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 0,
+      "sha256": "52252be44f3e2edc00193e3434044471d1815071c1b930ee48b571c602dc6321"
+    }
+  ],
+  "browser": {
+    "fixture": true,
+    "scenarios": [
+      {
+        "adapter": "openai_responses",
+        "scenario": "fixed_evidence",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "openai_responses",
+        "scenario": "data_access",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "groq_chat",
+        "scenario": "fixed_evidence",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "groq_chat",
+        "scenario": "data_access",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "chat_completions",
+        "scenario": "fixed_evidence",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "chat_completions",
+        "scenario": "data_access",
+        "status": "answered_unverified"
+      }
+    ],
+    "downloads": [
+      {
+        "id": "31921e87-8fc6-4e78-b0d8-50d180cf7595",
+        "version": 7
+      },
+      {
+        "id": "25051224-4793-4f63-ae1b-5a2e119e2727",
+        "version": 7
+      },
+      {
+        "id": "cd95ce9d-e4b5-4468-a89c-b52ce6fb56bc",
+        "version": 7
+      },
+      {
+        "id": "160ffe2d-44c9-40c2-9c0d-10367c701144",
+        "version": 7
+      },
+      {
+        "id": "2faa88e0-7918-4047-af69-f3c3578745a9",
+        "version": 7
+      },
+      {
+        "id": "ca2d4890-dae4-4f79-bf3d-03a4895ffe1a",
+        "version": 7
+      }
+    ],
+    "page_errors": [],
+    "error_visible": true,
+    "legacy_export": true,
+    "refresh_reopen": true
+  },
+  "query_sources": [
+    "dw_paradas",
+    "ind_parada",
+    "fin_resultado",
+    "dw_paradas",
+    "ind_parada",
+    "fin_resultado",
+    "dw_paradas",
+    "ind_parada",
+    "fin_resultado"
+  ],
+  "fingerprint_calls": 8,
+  "legacy_hash_unchanged": true,
+  "telemetry_sink": "local_memory_only",
+  "hosted_panel_validated": false,
+  "status": "passed"
+}

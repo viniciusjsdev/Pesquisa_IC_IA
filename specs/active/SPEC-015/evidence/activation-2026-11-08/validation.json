@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-08",
+  "scope": "Technical activation and commit readiness, not scientific validation",
+  "review": "approved",
+  "backend": {
+    "tests": 146,
+    "skipped": 8
+  },
+  "spec015_methods": 49,
+  "reconciliation_methods": 11,
+  "frontend_tests": 23,
+  "frontend_typecheck_exit": 0,
+  "frontend_lint_exit": 0,
+  "frontend_build_exit": 0,
+  "raw_evidence_preserved": true,
+  "staged_diff_check": "git -c core.whitespace=-blank-at-eof diff --cached --check",
+  "diff_check_note": "Ignore blank-line-at-EOF warnings in unchanged audited source and raw evidence logs; preserve reviewed bytes/hashes.",
+  "evidence_hashes": {
+    "backend.log": "0d0a82d07792d31f0ded7910ad1b460fd73ee893f36e510a082a600e19bda2d5",
+    "spec015-tests.log": "4d9976821763291d1ae23ee4ccd7ac1351fa8b97b77ed0d80bd5cd3d5e500269",
+    "reconciliation-tests.log": "d4a2213b970bcf99dc9b1939463a01b4b5be115b6c2eaf17f4a1be581b9a02b3",
+    "frontend-test.log": "3019fb9bf71c674cde2721c2b3b33a2f7599d27cb2e318330d8833c6a5f9b9f7",
+    "frontend-typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "frontend-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "frontend-build.log": "4d1377687649082b9c6509ff341aea62646f029c3267237f1345d399b452d6bc"
+  },
+  "private_configuration": "Ignored .local files retain credentials, transmission receipts, DB backup and raw snapshots.",
+  "scientific_status": "not_scored"
+}

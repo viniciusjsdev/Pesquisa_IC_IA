@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 from uuid import UUID
 
 from inference_api import auth, budget, dw_tools, evidence_packets, jobs, limits, models, service, storage
+from inference_api.observability import reconciliation, receipts
 
 ROOT = Path(__file__).resolve().parents[3]
 WEB = ROOT / "frontend" / "dist"
@@ -171,9 +172,14 @@ class Handler(BaseHTTPRequestHandler):
                 service._validate_input(data)
                 with limits.reserve(principal.id):
                     self._send(201, service.execute_run(data, principal))
+            elif method=='POST' and path.startswith('/api/runs/') and path.endswith('/observability/reconcile'):
+                run_id=str(UUID(path[len('/api/runs/'):-len('/observability/reconcile')]))
+                if int(self.headers.get('Content-Length','0')):
+                    if self._body():raise ValueError('reconciliation_body_forbidden')
+                self._send(200,{'observability_current':reconciliation.reconcile(run_id,principal)})
             elif method == "GET" and path.startswith("/api/runs/"):
                 run_id = str(UUID(path.removeprefix("/api/runs/")))
-                result = storage.get_run(run_id)
+                result = storage.get_run(run_id,principal_id=principal.id)
                 self._send(200 if result else 404, result or {"error": "not_found"})
             elif method == "POST" and path.startswith("/api/runs/") and path.endswith("/feedback"):
                 run_id = str(UUID(path[len("/api/runs/"):-len("/feedback")]))
@@ -182,6 +188,12 @@ class Handler(BaseHTTPRequestHandler):
                 self._send(201, result)
             else:
                 self._send(404, {"error": "not_found"})
+        except reconciliation.NotFound as exc:
+            self._send(404,{'error':str(exc)})
+        except reconciliation.Forbidden as exc:
+            self._send(403,{'error':str(exc)})
+        except receipts.ReconciliationBusy:
+            self._send(409,{'error':'reconciliation_in_progress'})
         except (auth.LoginBusy, limits.BusyError, limits.QuotaError) as exc:
             self._send(429, {"error": str(exc)})
         except storage.RevisionConflict as exc:

@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-08",
+  "purpose": "real model scenario B via Bancada, user-submitted",
+  "run_id": "892016c5-9c2c-4aae-a18c-e254416aad21",
+  "job_id": "5645f005-01d5-4b86-be80-f033a6d9b803",
+  "harness_run_id": "362c04b0-8e00-4796-9f53-64ce14fd326e",
+  "status": "answered_unverified",
+  "model": "gpt-6-luna",
+  "reasoning_effort_requested": "low",
+  "output_token_limit_requested": null,
+  "model_calls": 8,
+  "queries": 2,
+  "query_attempts": 2,
+  "specialists": [
+    "industrial",
+    "financeiro"
+  ],
+  "sources": [
+    "paradas_maquinas_geradas",
+    "resultados_financeiros"
+  ],
+  "usage": {
+    "input": 21066,
+    "output": 2500,
+    "total": 23566,
+    "reasoning": 712
+  },
+  "langsmith": {
+    "trace_id": "1ed70461-5966-5b99-9ea5-b889c3fb5193",
+    "url": "https://smith.langchain.com/o/4fdabc4f-acd1-4808-abd8-538421b1a7bb/projects/p/2d3f742d-43c6-4b9e-a956-991720c908f2/r/1ed70461-5966-5b99-9ea5-b889c3fb5193?trace_id=1ed70461-5966-5b99-9ea5-b889c3fb5193&start_time=2026-11-08T19:01:50.248815",
+    "remote_spans": 19,
+    "root_verified": true,
+    "parents_verified": true,
+    "remote_llm_spans": 8,
+    "remote_tool_spans": 2,
+    "visual_panel_verified": false
+  },
+  "scientific_status": "not_scored",
+  "raw_snapshot_private_path": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\inference_api\\.local\\spec015-real-b-20261108\\persisted-run.json"
+}

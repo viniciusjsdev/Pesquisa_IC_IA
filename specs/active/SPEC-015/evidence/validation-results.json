@@ -1,0 +1,115 @@
+{
+  "date": "2026-11-08",
+  "results": [
+    {
+      "id": "VAL-001",
+      "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\inference_api\\.local\\spec015-hosted-fix-backend.log",
+      "notes": [
+        "Rerun after hosted SDK constructor and bounded verifier lifetime fixes."
+      ]
+    },
+    {
+      "id": "VAL-002",
+      "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s model_evaluation/tests -v",
+      "exit_code": 0,
+      "result": "passed",
+      "elapsed_seconds": 0.734,
+      "log": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\inference_api\\.local\\spec015-VAL-002.log"
+    },
+    {
+      "id": "VAL-003",
+      "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_*.py -v",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\inference_api\\.local\\spec015-hosted-fix-final-focused.log",
+      "notes": [
+        "Rerun after hosted SDK constructor and bounded verifier lifetime fixes."
+      ]
+    },
+    {
+      "id": "VAL-004",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/verify_spec015_local.py",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\inference_api\\.local\\spec015-hosted-fix-local-integration.log",
+      "notes": [
+        "Rerun after hosted SDK constructor and bounded verifier lifetime fixes."
+      ]
+    },
+    {
+      "id": "VAL-005",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py test",
+      "exit_code": 0,
+      "result": "passed",
+      "elapsed_seconds": 3.675,
+      "log": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\inference_api\\.local\\spec015-VAL-005.log"
+    },
+    {
+      "id": "VAL-006",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py typecheck",
+      "exit_code": 0,
+      "result": "passed",
+      "elapsed_seconds": 3.015,
+      "log": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\inference_api\\.local\\spec015-VAL-006.log"
+    },
+    {
+      "id": "VAL-007",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py lint",
+      "exit_code": 0,
+      "result": "passed",
+      "elapsed_seconds": 4.131,
+      "log": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\inference_api\\.local\\spec015-VAL-007.log"
+    },
+    {
+      "id": "VAL-008",
+      "command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py build",
+      "exit_code": 0,
+      "result": "passed",
+      "elapsed_seconds": 1.242,
+      "log": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\inference_api\\.local\\spec015-VAL-008.log"
+    },
+    {
+      "id": "VAL-010",
+      "command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_observability*.py -v",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\inference_api\\.local\\spec015-hosted-fix-final-observability.log",
+      "notes": [
+        "Rerun after hosted SDK constructor and bounded verifier lifetime fixes."
+      ]
+    },
+    {
+      "id": "VAL-009",
+      "command": "Manual reconciliation: engineering-validation.md, structural-validation.json, legacy-inventory.json, clean installation/tests",
+      "exit_code": 0,
+      "result": "passed",
+      "evidence": [
+        "engineering-validation.md",
+        "structural-validation.json",
+        "legacy-inventory.json",
+        "observability-validation.json"
+      ]
+    }
+  ],
+  "final_runtime_sha256": "d9e4fda7a1033eaf8f19e8981e5de5c3eae020e67ec93abc25760c23d373c141",
+  "followup_checks": [
+    {
+      "command": "inference_api/.venv/Scripts/python.exe -m pip check",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "inference_api/.local/spec015-clean/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_*.py -v",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "inference_api/.local/spec015-clean-tests.log",
+      "notes": [
+        "16 methods passed in isolated clean lock environment; subsequent source change only adds root configuration hashes, covered by final focused rerun."
+      ]
+    }
+  ],
+  "hosted_followup_review": "hosted-fix-review.json"
+}

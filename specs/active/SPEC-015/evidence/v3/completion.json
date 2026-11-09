@@ -1,0 +1,603 @@
+{
+  "spec_id": "SPEC-015",
+  "contract_version": 3,
+  "status": "completed",
+  "thread_id": "01a1bc15-78b1-7360-821c-b8099bdd20d2",
+  "runtime": {
+    "classification": "normal_implementation",
+    "model": "Active designated Codex session; exact model identifier not exposed",
+    "reasoning": "Active session configuration; exact level not exposed"
+  },
+  "changed_files": [
+    {
+      "path": "inference_api/frontend/src/features/bench/benchService.ts",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/HarnessRounds.tsx",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/ObservabilityLink.test.tsx",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/ObservabilityLink.tsx",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/observabilityPresentation.ts",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/frontend/src/features/bench/RunDetail.tsx",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/evidence_reviewer.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/question_analyst.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/runner.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/agents/source_selector.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/context/projections.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/context/views.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/contracts/fixed_evidence.json",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/contracts/input.json",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/contracts/loader.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/graph/builder.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/graph/execution.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/graph/nodes.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/graph/state.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/policies/fixed_evidence.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/scenarios.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/api/server.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/executions/jobs.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/executions/service.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/observability/config.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/observability/contracts.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/observability/noop.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/observability/service.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/persistence/storage.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/spec014_fixture.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_spec014.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/tests/test_spec015_differential.py",
+      "change": "modified"
+    },
+    {
+      "path": "README.md",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "docs/arquitetura_inferencia_compartilhada.md",
+      "change": "modified"
+    },
+    {
+      "path": "docs/organizacao_inference_api.md",
+      "change": "modified"
+    },
+    {
+      "path": "docs/langsmith_bancada.md",
+      "change": "modified"
+    },
+    {
+      "path": "specs/README.md",
+      "change": "modified"
+    },
+    {
+      "path": "specs/active/SPEC-015/SPEC.md",
+      "change": "modified"
+    },
+    {
+      "path": "specs/active/SPEC-015/SPEC.execution.json",
+      "change": "modified"
+    },
+    {
+      "path": "specs/active/SPEC-015/corrections-v3.md",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/run.py",
+      "change": "modified"
+    },
+    {
+      "path": "inference_api/src/inference_api/agent_harness/context/packet_index.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/observability/receipts.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/src/inference_api/observability/reconciliation.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/migrations/004_observability_up.sql",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/migrations/004_observability_down.sql",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/spec015_v3_fixture.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec015_v3_regressions.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec015_v3_packet.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec015_v3_reconciliation.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/test_spec015_v3_http.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/scripts/verify_spec015_v3_local.py",
+      "change": "added"
+    },
+    {
+      "path": "inference_api/tests/browser_spec015_v3.cjs",
+      "change": "added"
+    }
+  ],
+  "artifacts": [
+    "specs/active/SPEC-015/evidence/v3/backend.log",
+    "specs/active/SPEC-015/evidence/v3/bancada-A-monitoramento.png",
+    "specs/active/SPEC-015/evidence/v3/baseline-check.json",
+    "specs/active/SPEC-015/evidence/v3/browser-report.json",
+    "specs/active/SPEC-015/evidence/v3/clean-backend.log",
+    "specs/active/SPEC-015/evidence/v3/clean-install.log",
+    "specs/active/SPEC-015/evidence/v3/diff-check.log",
+    "specs/active/SPEC-015/evidence/v3/engineering-validation.md",
+    "specs/active/SPEC-015/evidence/v3/frontend-build.log",
+    "specs/active/SPEC-015/evidence/v3/frontend-lint.log",
+    "specs/active/SPEC-015/evidence/v3/frontend-test.log",
+    "specs/active/SPEC-015/evidence/v3/frontend-typecheck.log",
+    "specs/active/SPEC-015/evidence/v3/integration-artifacts.json",
+    "specs/active/SPEC-015/evidence/v3/integration.log",
+    "specs/active/SPEC-015/evidence/v3/lifecycle.json",
+    "specs/active/SPEC-015/evidence/v3/local-integration.json",
+    "specs/active/SPEC-015/evidence/v3/model-evaluation.log",
+    "specs/active/SPEC-015/evidence/v3/observability-tests.log",
+    "specs/active/SPEC-015/evidence/v3/regressions-before.log",
+    "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+    "specs/active/SPEC-015/evidence/v3/review-attempt-1.md",
+    "specs/active/SPEC-015/evidence/v3/review-input-hashes.json",
+    "specs/active/SPEC-015/evidence/v3/review.json",
+    "specs/active/SPEC-015/evidence/v3/spec-validation.log",
+    "specs/active/SPEC-015/evidence/v3/spec015-tests.log",
+    "specs/active/SPEC-015/evidence/v3/v3-tests.log",
+    "specs/active/SPEC-015/evidence/v3/validation-results.json"
+  ],
+  "acceptance_evidence": [
+    {
+      "id": "AC-001",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Real compiled graph, separate nodes/modules and constrained repair/budget edges inspected; no legacy algorithm reintroduced."
+      ]
+    },
+    {
+      "id": "AC-002",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "A research DB/catalog/fingerprint access blocked in local tests. Query service routing and prior boundary suites retained; integration records nine B source reads and zero A reads."
+      ]
+    },
+    {
+      "id": "AC-003",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Selected packet item staging, examined-only Writer context, same-profile identity, separate runs and telemetry context isolation verified."
+      ]
+    },
+    {
+      "id": "AC-004",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "39 B baseline cases retain exact effective HTTP requests/results. A intentionally has new semantic/protocol fixtures; historical 78-entry baseline preserved as historical evidence."
+      ]
+    },
+    {
+      "id": "AC-005",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Explicit repairs, budgets, recurrence guard and error receipts verified. Additional independent 45-case budget/repair matrix has no unhandled exception."
+      ]
+    },
+    {
+      "id": "AC-006",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Recorded old snapshot export/readback and unchanged snapshot digest; optional observability_current is a sibling field. Runtime identity still recursively covers new code."
+      ]
+    },
+    {
+      "id": "AC-007",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Recorded A/B by three adapter UI matrix uses only local synthetic HTTP model transport."
+      ]
+    },
+    {
+      "id": "AC-008",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Inspected verifier and recorded eight UI/auth/job/graph/response/history runs on a stopped disposable PostgreSQL cluster."
+      ]
+    },
+    {
+      "id": "AC-009",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Compared baseline-v3 source changes and invariants; inspected clean lock-install and clean-backend143/8skip logs. No paid/remote infrastructure evidence inferred."
+      ]
+    },
+    {
+      "id": "AC-010",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "This independent contract-3 engineering review resolves initial findings and approves the corrected local implementation; no scientific scoring."
+      ]
+    },
+    {
+      "id": "AC-011",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Existing12 telemetry tests pass for hierarchy, unique IDs, actual SDK serialization, tokens including unknown/reasoning, configuration hashes and off/on parity."
+      ]
+    },
+    {
+      "id": "AC-012",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Slow receipt writer no longer blocks flush; final delivery forces coalesced persistence. Off/global-flag, privacy, failure, bounded queue and concurrent-run tests pass."
+      ]
+    },
+    {
+      "id": "AC-013",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Inspected23 frontend tests plus integration for private links, pending/failed/verified states, historical fallback and manual-only reads. No hosted v3 panel validation claimed."
+      ]
+    },
+    {
+      "id": "AC-014",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "A fixtures cover machine+financial, consolidated product/material, distinct period IDs, empty-item metadata and physical DW origin; packet exporter/schema and source-query ASTs remain unchanged."
+      ]
+    },
+    {
+      "id": "AC-015",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Missing domain, no source, contradiction, empty observation, no progress, budgets, JSON repair and invented refs tested; unexamined rows cannot reach reserved Writer."
+      ]
+    },
+    {
+      "id": "AC-016",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Managed root remains open during run persistence; technical root errors, insufficient-evidence non-error, single close and original persistence exception preservation verified."
+      ]
+    },
+    {
+      "id": "AC-017",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Expected IDs/parents/root trace/uniqueness verified; remote partial and equal-count wrong trees fail verification. Last authorized receipt/link survives read/write error; integration proves snapshot immutability and later readback."
+      ]
+    },
+    {
+      "id": "AC-018",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Owner/auth/UUID/body/destination checks precede reads; HTTP401/400/403/404/409/200 verified. SDK reads bounded to configured root/query. Integration tests additive idempotent migration, actual advisory locking and non-destructive rollback."
+      ]
+    },
+    {
+      "id": "AC-019",
+      "result": "passed",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": [
+        "Recorded eight-run integration covers corrected A, unchanged B, absent-domain partial answer, root technical error, delayed export/root404 then manual verified link. Reviewed independently; no production deployment inferred."
+      ]
+    }
+  ],
+  "validation_evidence": [
+    {
+      "validation_id": "VAL-001",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -v",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/backend.log"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-002",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s model_evaluation/tests -v",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/model-evaluation.log"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-003",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_*.py -v",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/spec015-tests.log"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-004",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/verify_spec015_v3_local.py",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/integration.log"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-005",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py test",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/frontend-test.log"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-006",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py typecheck",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/frontend-typecheck.log"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-007",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py lint",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/frontend-lint.log"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-008",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe inference_api/scripts/validate_frontend.py build",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/frontend-build.log"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-009",
+      "canonical_command": "Revisar baseline v3, preservacao dos contratos anteriores, migracao aditiva e criterios AC-001 a AC-019. Registrar evidence/v3/engineering-validation.md.",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": null,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/engineering-validation.md"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-010",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_observability*.py -v",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/observability-tests.log"
+      ],
+      "notes": []
+    },
+    {
+      "validation_id": "VAL-011",
+      "canonical_command": "inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_v3_*.py -v",
+      "verification": "reported",
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/v3-tests.log"
+      ],
+      "notes": []
+    }
+  ],
+  "deviations": [
+    "User explicitly authorized implementation/testing/review after the design-only stage. Original documentation model aliases were not invoked; effective session runtime is recorded without claiming an unavailable model identity.",
+    "Validation uses only local synthetic models/telemetry and disposable PostgreSQL. Real application migration/server activation and hosted contract3 verification are outside this engineering delivery."
+  ],
+  "unresolved_items": [],
+  "needs_design": null,
+  "usage": null
+}

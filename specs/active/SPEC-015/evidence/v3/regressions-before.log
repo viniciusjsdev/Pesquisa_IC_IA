@@ -1,0 +1,49 @@
+test_A_understands_industrial_and_financial_packet_without_query (test_spec015_v3_regressions.Regressions.test_A_understands_industrial_and_financial_packet_without_query) ... FAIL
+test_root_has_technical_error_for_timeout (test_spec015_v3_regressions.Regressions.test_root_has_technical_error_for_timeout) ... FAIL
+test_service_closes_root_after_persistence_not_inside_graph (test_spec015_v3_regressions.Regressions.test_service_closes_root_after_persistence_not_inside_graph) ... FAIL
+
+======================================================================
+FAIL: test_A_understands_industrial_and_financial_packet_without_query (test_spec015_v3_regressions.Regressions.test_A_understands_industrial_and_financial_packet_without_query)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA\inference_api\tests\test_spec015_v3_regressions.py", line 26, in test_A_understands_industrial_and_financial_packet_without_query
+    self.assertEqual(result['status'],'answered_unverified',result['final_state'])
+AssertionError: 'contract_error' != 'answered_unverified'
+- contract_error
++ answered_unverified
+ : {'error': 'domain_outside_index'}
+
+======================================================================
+FAIL: test_root_has_technical_error_for_timeout (test_spec015_v3_regressions.Regressions.test_root_has_technical_error_for_timeout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA\inference_api\tests\test_spec015_v3_regressions.py", line 36, in test_root_has_technical_error_for_timeout
+    self.assertEqual(root['error'],'provider_timeout')
+AssertionError: None != 'provider_timeout'
+
+======================================================================
+FAIL: test_service_closes_root_after_persistence_not_inside_graph (test_spec015_v3_regressions.Regressions.test_service_closes_root_after_persistence_not_inside_graph)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA\inference_api\tests\test_spec015_v3_regressions.py", line 54, in test_service_closes_root_after_persistence_not_inside_graph
+    service.execute_run(payload,Principal('00000000-0000-4000-8000-000000000001','Vinicius'),prepared=context)
+  File "D:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA\inference_api\src\inference_api\executions\service.py", line 197, in execute_run
+    return storage.create_run(principal.username, snapshot)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\unittest\mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\unittest\mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\unittest\mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Projetos\Github_ViniciusJ\Pesquisa_IC_IA\inference_api\tests\test_spec015_v3_regressions.py", line 44, in persist
+    self.assertNotIn('root',obs.ended)
+AssertionError: 'root' unexpectedly found in {'tool_01', 'call_02:llm', 'call_01:llm', 'call_02', 'call_03', 'call_01', 'call_03:llm', 'root'}
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.145s
+
+FAILED (failures=3)

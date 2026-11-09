@@ -20,9 +20,9 @@ export function BenchPage() {
   const [packetKey, setPacketKey] = useState('');
   const [modelAlias, setModelAlias] = useState('');
   const [temperature, setTemperature] = useState(0);
-  const [outputLimit, setOutputLimit] = useState('');
+  const [outputLimit, setOutputLimit] = useState('2048');
   const [seed, setSeed] = useState('');
-  const [reasoning, setReasoning] = useState('medium');
+  const [reasoning, setReasoning] = useState('low');
   const scenarios = useQuery({ queryKey: ['bench', 'scenarios'], queryFn: benchService.scenarios });
   const [result, setResult] = useState<Run | null>(null);
   const [selectedRun, setSelectedRun] = useState('');

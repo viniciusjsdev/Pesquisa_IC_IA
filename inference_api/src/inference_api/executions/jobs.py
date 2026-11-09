@@ -22,7 +22,7 @@ def _execute(job_id: str, payload: dict, principal: Principal, prepared=None) ->
     try:
         with limits.reserve(principal.id):
             storage.update_job(job_id, "accepted", "running")
-            run = service.execute_run(payload, principal, prepared=prepared)
+            run = service.execute_run(payload, principal, prepared=prepared,job_id=job_id)
             storage.update_job(job_id, "running", "completed", run_id=run["id"])
     except (limits.BusyError, limits.QuotaError) as exc:
         storage.update_job(job_id, "accepted", "busy", error=str(exc))

@@ -1,0 +1,85 @@
+{
+  "spec_id": "SPEC-015",
+  "contract_version": 2,
+  "status": "approved",
+  "thread_id": null,
+  "runtime": {
+    "classification": "critical_review",
+    "model": "Inherited current Codex runtime; exact model identifier not exposed to this reviewer",
+    "reasoning": "Inherited reasoning configuration; exact level not exposed"
+  },
+  "review_input": [
+    "inference_api/src/inference_api/observability/langsmith_sink.py",
+    "inference_api/src/inference_api/observability/service.py",
+    "inference_api/src/inference_api/observability/noop.py",
+    "inference_api/scripts/verify_spec015_langsmith.py",
+    "inference_api/tests/test_spec015_observability.py",
+    "specs/active/SPEC-015/evidence/review.json",
+    "specs/active/SPEC-015/evidence/hosted-readback-attempt-2.json",
+    "specs/active/SPEC-015/evidence/hosted-readback.json"
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": [
+        "inference_api/tests/test_spec015_observability.py"
+      ],
+      "notes": [
+        "Independently reran all 18 focused SPEC-015 methods on the api_urls-only final constructor: passed in 9.262 seconds, including 12 observability methods and 78 frozen-baseline differential cases.",
+        "The added production-constructor regression calls the real locked LangSmith SDK constructor with a local fake requests Session, covering the prior injected-client blind spot. The snapshot regression confirms repeated state inspection does not submit or end events again.",
+        "Production-constructor regression sets a synthetic alternative LANGSMITH_RUNS_ENDPOINTS and asserts every local fake Session POST/GET stays on the configured backend endpoint."
+      ]
+    },
+    {
+      "category": "cli",
+      "result": "changed_as_approved",
+      "evidence": [
+        "inference_api/scripts/verify_spec015_langsmith.py",
+        "specs/active/SPEC-015/evidence/hosted-readback-attempt-2.json"
+      ],
+      "notes": [
+        "Dedicated explicitly opted-in synthetic CLI retains observers and keeps its process alive for a shared maximum 20-second delivery window, then reads snapshots. It does not retry events or model/tool calls.",
+        "Ordinary Observer.finish retains its maximum two-second wait. A receipt already present prevents starting another diagnostic send. Prior hosted readback identifies A complete at 11 spans and B partial at two spans with no root; this is evidence of the earlier incomplete attempt, not proof of current complete delivery.",
+        "Inspected subsequent hosted-readback.json as supplied evidence: A contains 11 distinct spans with one root, B 26 with one root, and every parent resolves within its corresponding trace. Independently checked these recorded IDs/counts/hierarchies locally. This reviewer did not independently fetch the remote account or visually inspect the hosted panel."
+      ]
+    },
+    {
+      "category": "json_contracts",
+      "result": "preserved",
+      "evidence": [
+        "inference_api/src/inference_api/observability/service.py",
+        "inference_api/tests/test_spec015_differential.py"
+      ],
+      "notes": [
+        "Observer.snapshot returns additive export state without ending/submitting another span. No graph/model payload, prompt, query, budget or scientific status change is introduced by this delta."
+      ]
+    },
+    {
+      "category": "decisions",
+      "result": "preserved",
+      "evidence": [
+        "inference_api/src/inference_api/observability/langsmith_sink.py",
+        "inference_api/src/inference_api/observability/noop.py"
+      ],
+      "notes": [
+        "Final constructor supplies api_urls={configured_endpoint: configured_key} only, without simultaneous api_url/api_key constructor arguments. The locked SDK accepts this and sets the configured primary endpoint. Explicit per-create api_url/api_key overrides are retained.",
+        "Inspected pinned SDK destination code and reran the real-constructor/local-fake-transport regression: POST and root GET remain on the configured endpoint; no hosted service was contacted by this reviewer.",
+        "No hosted requests, real credentials, research databases or paid models were accessed by this reviewer. Approval covers the bounded source correction; completion and visual inspection of the hosted panel require subsequent direct evidence."
+      ]
+    }
+  ],
+  "findings": [],
+  "evidence": [
+    "Independent git diff --check: exit 0.",
+    "Original review.json preserved; this is a scoped follow-up to the constructor/snapshot/diagnostic-lifetime delta.",
+    "Independent local command: inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_*.py -v; exit 0; 18 tests passed in 9.262 seconds.",
+    "Independent local recorded-readback validation: A11/B26 unique spans; both roots present; all parent IDs resolve; one root per trace. No remote request.",
+    "SHA256 inference_api/src/inference_api/observability/langsmith_sink.py: ee0ec5972bd9232d55501fb723f76e6eddc895a63891931a8d1dbbf91e5ef9db",
+    "SHA256 inference_api/src/inference_api/observability/service.py: 8f78f3f6bf8377f86cbeaa67734dd37e35e0bcedea946781e4c2a074c2e6b574",
+    "SHA256 inference_api/src/inference_api/observability/noop.py: d0f1607a14d2dabe782577f5e3435f5dba0c8d486fda8ce9f3c16c3485bea151",
+    "SHA256 inference_api/scripts/verify_spec015_langsmith.py: 04b893c4966ba2164ebe7a41ccad69d6b36dc9f12f7e34d43666abc4abce99fe",
+    "SHA256 inference_api/tests/test_spec015_observability.py: d34b0e7214d908a24ead385ddd0fdf42410c882dbc8617b9c8da7ee613d0a200"
+  ],
+  "usage": null
+}

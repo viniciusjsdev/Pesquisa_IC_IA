@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-08",
+  "reason": "SPEC-014 retired HTTP protocols; SPEC-015 single graph facade. Original files preserved before removing obsolete algorithms/entrypoints and their protocol-specific tests.",
+  "files": [
+    {
+      "source": "inference_api/src/inference_api/agent_harness/engine.py",
+      "archive": "D:\\Projetos\\Github_ViniciusJ\\_arquivo_Pesquisa_IC_IA\\spec015-legacy-20261108\\inference_api\\src\\inference_api\\agent_harness\\engine.py",
+      "sha256": "9ec3d8d4b25c14e2cb1b62be7c627391201afc513716eb7d2c9ce7b56655458e"
+    },
+    {
+      "source": "inference_api/src/inference_api/agent_harness/synthetic_demo.py",
+      "archive": "D:\\Projetos\\Github_ViniciusJ\\_arquivo_Pesquisa_IC_IA\\spec015-legacy-20261108\\inference_api\\src\\inference_api\\agent_harness\\synthetic_demo.py",
+      "sha256": "e9ce0fc1f5c97a41bc6368b4a7f5079ac36a21f1959534bf77ca835bb1f6ed1f"
+    },
+    {
+      "source": "inference_api/src/inference_api/agent_harness/openai_audit.py",
+      "archive": "D:\\Projetos\\Github_ViniciusJ\\_arquivo_Pesquisa_IC_IA\\spec015-legacy-20261108\\inference_api\\src\\inference_api\\agent_harness\\openai_audit.py",
+      "sha256": "4bc7330b40b4cc7e7078d681c1e82af4b910ba597c21936e4eb5c7dd9ebe7802"
+    },
+    {
+      "source": "inference_api/scripts/verify_spec013_local_chain.py",
+      "archive": "D:\\Projetos\\Github_ViniciusJ\\_arquivo_Pesquisa_IC_IA\\spec015-legacy-20261108\\inference_api\\scripts\\verify_spec013_local_chain.py",
+      "sha256": "bec9bac6bc900de757b1903988a029888d69ee9ae575d947dde531921743d6ff"
+    },
+    {
+      "source": "inference_api/scripts/verify_spec013_storage_local.py",
+      "archive": "D:\\Projetos\\Github_ViniciusJ\\_arquivo_Pesquisa_IC_IA\\spec015-legacy-20261108\\inference_api\\scripts\\verify_spec013_storage_local.py",
+      "sha256": "01b208cbd50bf3dfcf44100d7c4140604cb3f89c686a0994406c6ba8d7b4d18b"
+    },
+    {
+      "source": "inference_api/tests/test_agent_harness.py",
+      "archive": "D:\\Projetos\\Github_ViniciusJ\\_arquivo_Pesquisa_IC_IA\\spec015-legacy-20261108\\inference_api\\tests\\test_agent_harness.py",
+      "sha256": "d7843949a968f1d8f3121ec7c8e4fe7c642da4d59e2890048309fbfc664c5cdb"
+    },
+    {
+      "source": "inference_api/tests/test_specialist_query_contract.py",
+      "archive": "D:\\Projetos\\Github_ViniciusJ\\_arquivo_Pesquisa_IC_IA\\spec015-legacy-20261108\\inference_api\\tests\\test_specialist_query_contract.py",
+      "sha256": "aedbac53079bbf6f9898abffc65c1b8515fa19650698501cee09b63c8a1a42c8"
+    },
+    {
+      "source": "inference_api/tests/test_request_budget.py",
+      "archive": "D:\\Projetos\\Github_ViniciusJ\\_arquivo_Pesquisa_IC_IA\\spec015-legacy-20261108\\inference_api\\tests\\test_request_budget.py",
+      "sha256": "a03f10ea2b818a9e3a75889a03d9d1485719afe0c5410d40228283479e584381"
+    },
+    {
+      "source": "inference_api/tests/test_spec013_local_queries.py",
+      "archive": "D:\\Projetos\\Github_ViniciusJ\\_arquivo_Pesquisa_IC_IA\\spec015-legacy-20261108\\inference_api\\tests\\test_spec013_local_queries.py",
+      "sha256": "1dc301d80c40e1b28016dbc145b9de1e506c0278ef6f74df848fc56575b7322c"
+    },
+    {
+      "source": "inference_api/tests/test_spec013_http.py",
+      "archive": "D:\\Projetos\\Github_ViniciusJ\\_arquivo_Pesquisa_IC_IA\\spec015-legacy-20261108\\inference_api\\tests\\test_spec013_http.py",
+      "sha256": "d1b31da843a0cec024d0b6c01d0b8d6fcafa8bcfe3e345696071737f7dd19297"
+    },
+    {
+      "source": "inference_api/src/inference_api/agent_harness/contracts.json",
+      "archive": "D:\\Projetos\\Github_ViniciusJ\\_arquivo_Pesquisa_IC_IA\\spec015-legacy-20261108\\inference_api\\src\\inference_api\\agent_harness\\contracts.json",
+      "sha256": "26363f2504fb43eeb8a883eaba536a1bcb5513b9c9f4ccf0b87d9df12d491096"
+    },
+    {
+      "source": "inference_api/src/inference_api/agent_harness/README.md",
+      "archive": "D:\\Projetos\\Github_ViniciusJ\\_arquivo_Pesquisa_IC_IA\\spec015-legacy-20261108\\inference_api\\src\\inference_api\\agent_harness\\README.md",
+      "sha256": "e92e69c4953391f124f09209a123cb230b910b3687f35d25d91f32cb5b84ac3c"
+    }
+  ]
+}

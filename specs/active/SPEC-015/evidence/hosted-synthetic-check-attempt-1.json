@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-08",
+  "synthetic_only": true,
+  "external_inference": false,
+  "research_database_access": false,
+  "content_mode": "redacted",
+  "runs": [
+    {
+      "run_id": "24960497-55e7-4f21-87de-d617437d19b8",
+      "scenario": "fixed_evidence",
+      "status": "answered_unverified",
+      "model_calls": 5,
+      "queries": 0,
+      "observability": {
+        "state": "disabled",
+        "diagnostic": "observability_initialization_failed"
+      }
+    },
+    {
+      "run_id": "b5d43710-b23d-40e5-9b95-aa37d25cc97d",
+      "scenario": "data_access",
+      "status": "answered_unverified",
+      "model_calls": 11,
+      "queries": 3,
+      "observability": {
+        "state": "disabled",
+        "diagnostic": "observability_initialization_failed"
+      }
+    }
+  ],
+  "visual_panel_verified": false
+}

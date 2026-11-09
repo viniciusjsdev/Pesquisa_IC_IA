@@ -1,0 +1,267 @@
+{
+  "analista_pergunta": {
+    "task": "Estruture a pergunta. Indique somente dominios do indice. Se qualquer parte mensuravel puder ser investigada em um dominio, tratavel deve ser true e dominios deve listar esses dominios. Uma subpergunta causal nao comprovavel vira lacuna/ressalva, mas nao bloqueia a busca das medidas. Use tratavel=false somente quando nenhum dominio puder atender qualquer parte. Nao invente dados ou conexoes entre dominios.",
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tratavel",
+        "necessidade",
+        "dominios",
+        "lacunas"
+      ],
+      "properties": {
+        "tratavel": {
+          "type": "boolean"
+        },
+        "necessidade": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "entidade",
+            "medida",
+            "periodo",
+            "grao"
+          ],
+          "properties": {
+            "entidade": {
+              "type": "string"
+            },
+            "medida": {
+              "type": "string"
+            },
+            "periodo": {
+              "type": "string"
+            },
+            "grao": {
+              "type": "string"
+            }
+          }
+        },
+        "dominios": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "dw",
+              "industrial",
+              "financeiro"
+            ]
+          }
+        },
+        "lacunas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "selecionador_fontes": {
+    "task": "Escolha a primeira ou próxima fonte usando question, necessidade, source_index, evidence_state e gap. O índice é estático e aprovado; não contém o schema completo. Se consultar, fonte_id deve constar em available_source_ids e map_refs deve conter esse ID; map_refs contém somente IDs de fontes do índice, sem colunas. dominio_adicional deve ser null. Se precisar de outro domínio permitido ainda ausente, use pedir_dominio com fonte_id=null. Se nenhuma fonte responder, use sem_fonte com fonte_id e dominio_adicional null. Não construa plano nem execute consulta.",
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decisao",
+        "justificativa",
+        "fonte_id",
+        "dominio_adicional",
+        "map_refs",
+        "selection_kind"
+      ],
+      "properties": {
+        "decisao": {
+          "enum": [
+            "consultar",
+            "pedir_dominio",
+            "sem_fonte"
+          ]
+        },
+        "justificativa": {
+          "type": "string"
+        },
+        "fonte_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dominio_adicional": {
+          "enum": [
+            "dw",
+            "industrial",
+            "financeiro",
+            null
+          ]
+        },
+        "map_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "selection_kind": {
+          "const": "query_source"
+        }
+      }
+    }
+  },
+  "revisor_evidencias": {
+    "task": "Compare cada parte da pergunta literal com a fonte, o grao e a cobertura de query_result e dos resultados anteriores em evidence_state. domains_identified registra os dominios que o Analista encontrou; confirme se cada parte pedida tem evidencia da origem adequada. Uma contagem industrial de eventos gerados nao substitui um total que a pergunta pede explicitamente da DW. O resultado atual aparece apenas em query_result, sem duplicacao em evidence_state. Em evidencias_utilizadas, escreva SOMENTE IDs exatos de available_evidence_ids, por exemplo [\"result_01\"]; nao anexe descricoes aos IDs. Ausencia de linhas nao e zero. Se faltar alguma parte, devolva precisa_aprofundar com lacuna e proximo dado concretos.",
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decisao",
+        "evidencias_utilizadas",
+        "justificativa",
+        "lacuna",
+        "proximo_dado_necessario",
+        "dominio_sugerido"
+      ],
+      "properties": {
+        "decisao": {
+          "enum": [
+            "suficiente",
+            "precisa_aprofundar",
+            "contraditoria",
+            "indisponivel"
+          ]
+        },
+        "evidencias_utilizadas": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "justificativa": {
+          "type": "string"
+        },
+        "lacuna": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "proximo_dado_necessario": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dominio_sugerido": {
+          "enum": [
+            "dw",
+            "industrial",
+            "financeiro",
+            null
+          ]
+        }
+      }
+    }
+  },
+  "redator_resposta": {
+    "task": "Responda apenas com evidencias recebidas e ressalvas. Em evidencias_utilizadas, escreva SOMENTE IDs exatos de available_evidence_ids, por exemplo [\"result_01\",\"result_02\"]; descricoes pertencem a resposta ou ressalvas, nunca aos IDs. Nao infira causalidade a partir de coincidencia temporal.",
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resposta",
+        "evidencias_utilizadas",
+        "calculos",
+        "ressalvas"
+      ],
+      "properties": {
+        "resposta": {
+          "type": "string"
+        },
+        "evidencias_utilizadas": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "calculos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ressalvas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "especialista_consulta": {
+    "task": "Você é o Especialista do domínio indicado em domain. Recebe a pergunta literal, necessidade, rota, contrato COMPLETO da fonte, evidências anteriores, lacuna e saldo. Monte plano tipado para essa fonte, sem SQL. Use source_contract.fields, grain, field_types e filter_contracts; preserve tipos JSON e filtros obrigatórios. Aplique o recorte pedido, não invente IDs, relações ou filtros. Intervalos usam from inclusivo e to exclusivo, nunca gte/lte. evidence_refs só aceita IDs de available_evidence_ids. Se houver correction_feedback, corrija a tentativa recusada com o mesmo contrato e saldo atualizado. Nenhuma tool é executada diretamente pelo modelo.",
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plano",
+        "justificativa",
+        "evidence_refs",
+        "action"
+      ],
+      "properties": {
+        "plano": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "fonte_id",
+            "campos",
+            "filtros",
+            "limite",
+            "grao"
+          ],
+          "properties": {
+            "fonte_id": {
+              "type": "string"
+            },
+            "campos": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            "filtros": {
+              "type": "object"
+            },
+            "limite": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            },
+            "grao": {
+              "type": "string"
+            }
+          }
+        },
+        "justificativa": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "action": {
+          "const": "query_source"
+        }
+      }
+    }
+  }
+}

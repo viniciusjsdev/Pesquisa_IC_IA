@@ -1,0 +1,240 @@
+{
+  "kind": "local_synthetic_fixture",
+  "external_inference": false,
+  "research_cluster_access": false,
+  "database": {
+    "host": "127.0.0.1",
+    "port": 63265,
+    "cluster": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\inference_api\\.local\\spec015-v3-integration-356c0891\\pgdata",
+    "fixture_version": "spec014_fixture_v1",
+    "stopped": true
+  },
+  "runs": [
+    {
+      "id": "9df1c364-3f08-4267-9285-09b44a7a81c6",
+      "scenario": "data_access",
+      "adapter": "groq_chat",
+      "status": "contract_error",
+      "observability": {
+        "state": "pending",
+        "content_mode": "redacted",
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 2,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 0,
+      "sha256": "67b585041f8521e9cfe6737b535014857a27cbe0936c84e9627985c63a134c5b"
+    },
+    {
+      "id": "9f7eec61-f415-459f-9594-c503ffa18d6a",
+      "scenario": "fixed_evidence",
+      "adapter": "groq_chat",
+      "status": "insufficient_evidence",
+      "observability": {
+        "state": "pending",
+        "content_mode": "redacted",
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 10,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 0,
+      "sha256": "f1f5bc8ec0ef726910759f5789a1f17e9fbff18b110e09399598675857b1c691"
+    },
+    {
+      "id": "bbe33e63-63ea-4078-819f-c2b9e48422ab",
+      "scenario": "data_access",
+      "adapter": "chat_completions",
+      "status": "answered_unverified",
+      "observability": {
+        "state": "pending",
+        "content_mode": "redacted",
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 25,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 3,
+      "sha256": "113e1db5317490658c3c0dcb59a1f3a518f985efe055687ebd3ee988a7549f92"
+    },
+    {
+      "id": "7e3726cd-2dbc-470c-b01e-e182e438dd3f",
+      "scenario": "fixed_evidence",
+      "adapter": "chat_completions",
+      "status": "answered_unverified",
+      "observability": {
+        "state": "pending",
+        "content_mode": "redacted",
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 16,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 0,
+      "sha256": "33c055a8afb2483f1ec38bdaa877f3d6d98ef530bb18d0d1192d6b4b0e638641"
+    },
+    {
+      "id": "7cacdf5c-8d07-4820-9255-ec0178b52ab8",
+      "scenario": "data_access",
+      "adapter": "groq_chat",
+      "status": "answered_unverified",
+      "observability": {
+        "state": "pending",
+        "content_mode": "redacted",
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 25,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 3,
+      "sha256": "29b770018a6319b30b798a9d0faa7151ea11190a5ff238a01d33e9c4f2d38854"
+    },
+    {
+      "id": "17e103ca-ea5f-45fc-8a14-ae1c146d4907",
+      "scenario": "fixed_evidence",
+      "adapter": "groq_chat",
+      "status": "answered_unverified",
+      "observability": {
+        "state": "pending",
+        "content_mode": "redacted",
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 16,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 0,
+      "sha256": "dbb880c76de1097ddeeeb130835395a258a27295470b6c24d005e85044a48aee"
+    },
+    {
+      "id": "b4ff08ae-5e51-4a6a-a7dc-0e608daba1b8",
+      "scenario": "data_access",
+      "adapter": "openai_responses",
+      "status": "answered_unverified",
+      "observability": {
+        "state": "pending",
+        "content_mode": "redacted",
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 25,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 3,
+      "sha256": "d310a3834d9d6d9818587c1b98fae978f46634a5fc3ca1f017a92b864850fa3a"
+    },
+    {
+      "id": "23648be2-845b-424c-994a-e7f3aa400349",
+      "scenario": "fixed_evidence",
+      "adapter": "openai_responses",
+      "status": "answered_unverified",
+      "observability": {
+        "state": "pending",
+        "content_mode": "redacted",
+        "failed_events": 0,
+        "dropped_events": 0,
+        "pending_events": 0,
+        "submitted_events": 16,
+        "instrumentation_version": "spec015.observability.v1"
+      },
+      "queries": 0,
+      "sha256": "9ca3db2b86ab9ccc6ee2b264cf185441e0ec34570c5855a054f99881e30fe1ec"
+    }
+  ],
+  "browser": {
+    "fixture": true,
+    "scenarios": [
+      {
+        "adapter": "openai_responses",
+        "scenario": "fixed_evidence",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "openai_responses",
+        "scenario": "data_access",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "groq_chat",
+        "scenario": "fixed_evidence",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "groq_chat",
+        "scenario": "data_access",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "chat_completions",
+        "scenario": "fixed_evidence",
+        "status": "answered_unverified"
+      },
+      {
+        "adapter": "chat_completions",
+        "scenario": "data_access",
+        "status": "answered_unverified"
+      }
+    ],
+    "downloads": [
+      {
+        "id": "23648be2-845b-424c-994a-e7f3aa400349",
+        "version": 7
+      },
+      {
+        "id": "b4ff08ae-5e51-4a6a-a7dc-0e608daba1b8",
+        "version": 7
+      },
+      {
+        "id": "17e103ca-ea5f-45fc-8a14-ae1c146d4907",
+        "version": 7
+      },
+      {
+        "id": "7cacdf5c-8d07-4820-9255-ec0178b52ab8",
+        "version": 7
+      },
+      {
+        "id": "7e3726cd-2dbc-470c-b01e-e182e438dd3f",
+        "version": 7
+      },
+      {
+        "id": "bbe33e63-63ea-4078-819f-c2b9e48422ab",
+        "version": 7
+      }
+    ],
+    "page_errors": [],
+    "reconciliation_pending_then_verified": true,
+    "absent_domain_partial_answer": true,
+    "error_visible": true,
+    "legacy_export": true,
+    "refresh_reopen": true
+  },
+  "query_sources": [
+    "dw_paradas",
+    "ind_parada",
+    "fin_resultado",
+    "dw_paradas",
+    "ind_parada",
+    "fin_resultado",
+    "dw_paradas",
+    "ind_parada",
+    "fin_resultado"
+  ],
+  "fingerprint_calls": 8,
+  "legacy_hash_unchanged": true,
+  "telemetry_sink": "local_memory_only",
+  "hosted_panel_validated": false,
+  "root_once_and_error_verified": true,
+  "receipt_restart_verified": true,
+  "migration_idempotent": true,
+  "rollback_preserves_receipts": true,
+  "advisory_lock_verified": true,
+  "snapshot_hash_unchanged": true,
+  "reconciliation_reads": 2,
+  "status": "passed"
+}

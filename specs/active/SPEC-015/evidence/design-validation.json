@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-08",
+  "scope": "Documentation and executable specification only. No product code, runtime install, model inference, database changes or scientific scoring.",
+  "spec_validator_require_ready": "passed",
+  "execution_manifest_jsonschema": "passed",
+  "snapshot_file_count": 323,
+  "baseline_changes": [
+    "inference_api/README.md"
+  ],
+  "baseline_change_reason": "Added link to proposed SPEC in front README. All inventoried source, tests and historical SPEC evidence unchanged.",
+  "product_tests_run": false,
+  "implementation_status": "not_started",
+  "runtime_dispatch": "not_performed; legacy policy aliases require effective-runtime binding before dispatch"
+}

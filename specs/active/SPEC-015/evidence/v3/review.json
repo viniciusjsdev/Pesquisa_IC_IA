@@ -1,0 +1,130 @@
+{
+  "spec_id": "SPEC-015",
+  "contract_version": 3,
+  "status": "approved",
+  "thread_id": null,
+  "runtime": {
+    "classification": "critical_review",
+    "model": "Inherited current Codex runtime; exact model identifier not exposed to this independent reviewer",
+    "reasoning": "Inherited reasoning configuration; exact level not exposed"
+  },
+  "review_input": [
+    "specs/active/SPEC-015/SPEC.md",
+    "specs/active/SPEC-015/corrections-v3.md",
+    "specs/active/SPEC-015/evidence/baseline-snapshot-v3.json",
+    "specs/active/SPEC-015/evidence/structural-baseline-v3.json",
+    "specs/active/SPEC-015/evidence/v3/engineering-validation.md",
+    "specs/active/SPEC-015/evidence/v3/validation-results.json",
+    "specs/active/SPEC-015/evidence/v3/local-integration.json",
+    "specs/active/SPEC-015/evidence/v3/baseline-check.json",
+    "specs/active/SPEC-015/evidence/v3/review-input-hashes.json",
+    "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+    "specs/active/SPEC-015/evidence/v3/integration-artifacts.json"
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/spec015-tests.log",
+        "specs/active/SPEC-015/evidence/v3/backend.log",
+        "specs/active/SPEC-015/evidence/v3/clean-backend.log",
+        "specs/active/SPEC-015/evidence/v3/regressions-before.log"
+      ],
+      "notes": [
+        "Independently reran all47 focused methods on final corrected source: passed in5.785s, including29 v3 methods and39 preserved B differential cases.",
+        "Independent additional45-case matrix of budgets1–9 and malformed output in each of5 roles has no unhandled exceptions after the role-switch repair reset.",
+        "Inspected canonical backend and clean-backend logs:143 tests passed with8 existing opt-in database skips; model_evaluation21 and frontend23 passed. Disposable v3 integration supplies required database/UI proof rather than treating skips as passes."
+      ]
+    },
+    {
+      "category": "cli",
+      "result": "changed_as_approved",
+      "evidence": [
+        "inference_api/scripts/verify_spec015_v3_local.py",
+        "specs/active/SPEC-015/evidence/v3/local-integration.json"
+      ],
+      "notes": [
+        "Dedicated v3 verifier writes its own evidence and uses synthetic models/data, disposable PostgreSQL and fake telemetry. Previous contract evidence is separate. No legacy alternative orchestration reintroduced."
+      ]
+    },
+    {
+      "category": "json_contracts",
+      "result": "changed_as_approved",
+      "evidence": [
+        "inference_api/src/inference_api/agent_harness/contracts/fixed_evidence.json",
+        "inference_api/src/inference_api/agent_harness/contracts/input.json",
+        "inference_api/src/inference_api/agent_harness/contracts/data_access.json"
+      ],
+      "notes": [
+        "A intentionally moves to semantic packet projection/protocol2, separate from unchanged B effective contracts. Data-access contract file matches baseline-v3 hash; B exact-request differential passes.",
+        "Public receipt DTO is additive outside snapshots; reconciliation now preserves the last authorized non-null DTO on storage read/write failure."
+      ]
+    },
+    {
+      "category": "persistence",
+      "result": "changed_as_approved",
+      "evidence": [
+        "inference_api/src/inference_api/observability/receipts.py",
+        "inference_api/src/inference_api/executions/service.py",
+        "specs/active/SPEC-015/evidence/v3/local-integration.json"
+      ],
+      "notes": [
+        "Receipt counters/expected IDs/destination/correlation live outside immutable snapshots. Coalescing writer serializes export progress; root seals only after final run persistence outcome.",
+        "Integration evidence covers actual SQL, repeated migration, advisory lock rejection, readback after delivery, preserved verified link on later read error and unchanged snapshot digests."
+      ]
+    },
+    {
+      "category": "schemas",
+      "result": "changed_as_approved",
+      "evidence": [
+        "inference_api/migrations/004_observability_up.sql",
+        "inference_api/migrations/004_observability_down.sql",
+        "specs/active/SPEC-015/evidence/v3/baseline-check.json"
+      ],
+      "notes": [
+        "Migration004 adds application-only receipt/destination tables and uses the explicit existing migration path with logical backup. Rollback preserves data/tables.",
+        "DW/industrial/financial source SQL, packet schema/exporter and data service modules match the design baseline. No real application migration was inferred from disposable evidence."
+      ]
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/baseline-check.json",
+        "specs/active/SPEC-015/evidence/baseline-snapshot-v3.json"
+      ],
+      "notes": [
+        "320-file baseline comparison records287 unchanged and33 changes within approved scope; no missing files. Independently compared source delta and verified B contracts, query services, adapters and packet exporter hashes.",
+        "Protected-data proof is limited to inventoried paths; this review does not claim a new full audit of ignored CSV datasets, weights, checkpoints or scientific outputs."
+      ]
+    },
+    {
+      "category": "decisions",
+      "result": "preserved",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/v3/review-attempt-1.md",
+        "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json"
+      ],
+      "notes": [
+        "Initial budget-edge/evidence-staging, final receipt update, slow-read deadline, slow-store flush, frontend lint, null receipt and repair-context boundary findings are corrected with regression coverage. No unresolved local engineering blocker remains in reviewed source.",
+        "Approval applies to local engineering AC001–019. Contract3 has not been deployed/restarted on the real server or migrated into the real application database, and its hosted panel was not revalidated. Previous hosted contract2 traces are historical evidence only.",
+        "No paid model call, hosted API call, research database operation, external deployment or scientific adjudication was performed by this reviewer. Scientific status remains not_scored."
+      ]
+    }
+  ],
+  "findings": [],
+  "evidence": [
+    "specs/active/SPEC-015/evidence/v3/review-attempt-1.md",
+    "specs/active/SPEC-015/evidence/v3/review-input-hashes.json",
+    "specs/active/SPEC-015/evidence/v3/review-ac-assessment.json",
+    "Independent canonical focused run: inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_*.py -v; exit0;47 passed in5.785s.",
+    "Independent canonical frontend lint passed; git diff --check passed.",
+    "Independent45-case budget/repair boundary matrix (9 budgets by5 model roles) completed without unhandled exceptions.",
+    "Inspected final gate logs, baseline reconciliation and eight-run disposable PostgreSQL/UI integration including migration/rollback/locking/snapshot invariants.",
+    "Final validation-results.json contains all11 gates passed; independently verified every recorded evidence_sha256 against the corresponding current log.",
+    "Final integration-artifacts.json15 files independently hash-verified; inspected openai_responses-A.png from the disposable local browser run, showing manual monitoring control, verified private link, industrial/financial packet trajectory and final unscored answer. This is local-fake monitoring evidence, not a hosted contract3 check.",
+    "Compared final product files to review-input-hashes.json after final gate consolidation: no reviewed product source changed."
+  ],
+  "usage": null
+}

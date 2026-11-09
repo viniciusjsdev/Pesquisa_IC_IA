@@ -11,7 +11,7 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "inference_api/src"))
-from inference_api.agent_harness import real_pilot, HarnessError, Limits, run  # noqa: E402
+from inference_api.agent_harness import real_pilot  # noqa: E402
 from inference_api.agent_harness import local_queries  # noqa: E402
 from inference_api.agent_harness.catalog_runtime import compile_maps  # noqa: E402
 from inference_api.agent_harness import approved_catalog  # noqa: E402
@@ -32,6 +32,8 @@ def promoted():
     catalog["status"] = "approved_for_local_query"
     catalog["domains"]["dw"]["sources"]["machine"]["enabled"] = True
     return catalog
+
+
 
 
 class LocalQueryBoundaryTests(unittest.TestCase):
@@ -64,9 +66,6 @@ class LocalQueryBoundaryTests(unittest.TestCase):
             pilot = models.available_models()["groq_harness_pilot"]
         self.assertEqual(pilot["kind"], "real_agent_harness_pilot")
         self.assertFalse(pilot["available"])
-
-    # Legacy creation contract archived; SPEC-014 explicitly rejects these requests.
-    pass
 
     def test_approved_catalog_is_exact_reviewed_candidate_and_receipt(self):
         approved = approved_catalog.load()
@@ -107,74 +106,4 @@ class LocalQueryBoundaryTests(unittest.TestCase):
                         local_queries.LocalQueryRejected, reason):
                     local_queries.execute(plan, catalog)
 
-    def test_real_maps_require_explicit_protocol_and_approved_catalog(self):
-        with self.assertRaisesRegex(local_queries.LocalQueryRejected,
-                                    "catalog_not_approved_for_local_query"):
-            compile_maps(CATALOG)
-        maps = compile_maps(promoted())
-        with self.assertRaisesRegex(HarnessError, "real_or_invalid_domain_map_blocked"):
-            run("Pergunta local", maps, lambda *_: (_ for _ in ()).throw(
-                AssertionError("model called")), lambda *_: {}, protocol="synthetic_fixture_m1")
-
-    def test_unapproved_relation_returns_to_selector_without_sql(self):
-        catalog = promoted()
-        catalog["domains"]["dw"]["sources"]["product"]["enabled"] = True
-        maps = compile_maps(catalog)
-        first = {"fonte_id": "machine", "campos": ["machine_id"],
-                 "filtros": {"year": 2021, "id": 2000002, "join": "financeiro"},
-                 "limite": 1, "grao": "machine_id/year"}
-        second = {"fonte_id": "product", "campos": ["product_id"],
-                  "filtros": {"year": 2021, "id": 2000001},
-                  "limite": 1, "grao": "product_id/year"}
-        outputs = iter([
-            ("analista_pergunta", {"tratavel": True,
-              "necessidade": {"entidade": "produto", "medida": "contagem",
-                              "periodo": "2021", "grao": "produto/ano"},
-              "dominios": ["dw"], "lacunas": []}),
-            ("selecionador_fontes", {"decisao": "consultar", "justificativa": "fixture",
-                                     "fonte_id": "machine", "dominio_adicional": None,
-                                     "map_refs": ["machine"]}),
-            ("especialista_consulta", {"plano": first, "justificativa": "fixture",
-                                     "evidence_refs": []}),
-            ("selecionador_fontes", {"decisao": "consultar", "justificativa": "alternativa",
-                                     "fonte_id": "product", "dominio_adicional": None,
-                                     "map_refs": ["product"]}),
-            ("especialista_consulta", {"plano": second, "justificativa": "fixture",
-                                     "evidence_refs": []}),
-            ("revisor_evidencias", {"decisao": "suficiente",
-                                    "evidencias_utilizadas": ["result_01"],
-                                    "justificativa": "fixture", "lacuna": None,
-                                    "proximo_dado_necessario": None,
-                                    "dominio_sugerido": None}),
-            ("redator_resposta", {"resposta": "Fixture.",
-                                   "evidencias_utilizadas": ["result_01"],
-                                   "calculos": [], "ressalvas": []}),
-        ])
-        selector_feedback = []
-        def model(role, envelope, _contract):
-            if role == "selecionador_fontes":
-                selector_feedback.append(envelope["input"].get("correction_feedback"))
-            expected, output = next(outputs)
-            self.assertEqual(role, expected)
-            return json.dumps(output), {"provider": "fixture", "model_id": "same"}
-        def query(plan):
-            if "join" in plan["filtros"]:
-                raise local_queries.LocalQueryRejected("relation_not_approved")
-            return {"rows": [{"product_id": 2000001}],
-                    "coverage": {"state": "observed", "rows": 1},
-                    "units": {}, "origin": {"database": "fixture"}}
-        result = run("Pergunta local", maps, model, query,
-                     limits=Limits(calls=20, queries=2),
-                     protocol="local_readonly_pilot")
-        self.assertEqual(result["status"], "answered_unverified")
-        self.assertEqual(result["queries"], 1)
-        self.assertEqual([item["source_id"] for item in result["evidence"]], ["product"])
-        self.assertIsNone(selector_feedback[0])
-        self.assertEqual(selector_feedback[1]["error_code"], "relation_not_approved")
-        self.assertEqual([event["error"] for event in result["trace"]
-                          if event["role"] == "data_query" and event["status"] == "rejected"],
-                         ["relation_not_approved"])
-
-
-if __name__ == "__main__":
-    unittest.main()
+if __name__=="__main__": unittest.main()

@@ -1,0 +1,26 @@
+test_invalid_manifest_fails_before_verify_or_query (test_export.ExportTests.test_invalid_manifest_fails_before_verify_or_query) ... ok
+test_invalid_unicode_question_fails_before_database_access (test_export.ExportTests.test_invalid_unicode_question_fails_before_database_access) ... ok
+test_limits_fail_before_publication (test_export.ExportTests.test_limits_fail_before_publication) ... ok
+test_packet_byte_verifier_rejects_semantic_tampering (test_export.ExportTests.test_packet_byte_verifier_rejects_semantic_tampering) ... ok
+test_partial_or_conflicting_existing_file_blocks_entire_batch (test_export.ExportTests.test_partial_or_conflicting_existing_file_blocks_entire_batch) ... ok
+test_repeat_reuses_bytes_without_rewrite_and_divergence_preserves_original (test_export.ExportTests.test_repeat_reuses_bytes_without_rewrite_and_divergence_preserves_original) ... ok
+test_schema_accepts_all_five_fixed_query_shapes (test_export.ExportTests.test_schema_accepts_all_five_fixed_query_shapes) ... ok
+test_schema_hash_and_no_observation (test_export.ExportTests.test_schema_hash_and_no_observation) ... ok
+test_schema_rejects_tampered_filters_coverage_and_row (test_export.ExportTests.test_schema_rejects_tampered_filters_coverage_and_row) ... ok
+test_three_domains_and_code_fingerprint_change (test_export.ExportTests.test_three_domains_and_code_fingerprint_change) ... ok
+test_v2_explicit_packet_and_v1_compatibility (test_export.ExportTests.test_v2_explicit_packet_and_v1_compatibility) ... ok
+test_financial_no_observation_is_distinct_from_zero (test_fixed_queries_metadata.FixedQueryMetadataTests.test_financial_no_observation_is_distinct_from_zero) ... ok
+test_financial_observation_builds_own_metadata (test_fixed_queries_metadata.FixedQueryMetadataTests.test_financial_observation_builds_own_metadata) ... ok
+test_adjudication_is_bound_to_complete_run_and_canonical_content (test_harness_score.HarnessScoreTests.test_adjudication_is_bound_to_complete_run_and_canonical_content) ... ok
+test_approved_no_observation_is_citable_without_treating_it_as_zero (test_harness_score.HarnessScoreTests.test_approved_no_observation_is_citable_without_treating_it_as_zero) ... ok
+test_incomplete_mismatch_and_stale_adjudication (test_harness_score.HarnessScoreTests.test_incomplete_mismatch_and_stale_adjudication) ... ok
+test_prepared_review_has_exact_objects_and_no_approval (test_harness_score.HarnessScoreTests.test_prepared_review_has_exact_objects_and_no_approval) ... ok
+test_requires_case_and_run_review_before_any_score (test_harness_score.HarnessScoreTests.test_requires_case_and_run_review_before_any_score) ... ok
+test_reviewed_card_keeps_dimensions_separate (test_harness_score.HarnessScoreTests.test_reviewed_card_keeps_dimensions_separate) ... ok
+test_route_alternative_and_unobserved_reference (test_harness_score.HarnessScoreTests.test_route_alternative_and_unobserved_reference) ... ok
+test_exact_packet_and_reference_then_tamper (test_review_gate.ReviewGateTests.test_exact_packet_and_reference_then_tamper) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.218s
+
+OK

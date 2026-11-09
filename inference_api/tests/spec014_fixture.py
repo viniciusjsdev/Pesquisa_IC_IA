@@ -21,7 +21,7 @@ def profile(adapter='groq_chat'):
 
 def packet():
     body = {'case_id': 'fixture', 'question': QUESTION,
-            'evidence_items': [{'grain': 'fixture/year', 'rows': [{'value': 42}],
+            'evidence_items': [{'query': 'machine', 'year': 2020, 'grain': 'fixture/year', 'rows': [{'value': 42}],
                 'coverage': {'rows': 1, 'state': 'observed'}, 'units': {'value': 'fixture'}}]}
     return {'body': body, 'sha256': digest(body)}
 
@@ -31,10 +31,10 @@ def answer(envelope):
     fixed = envelope['scenario'] == 'fixed_evidence'
     if role == 'analista_pergunta':
         return {'tratavel': True, 'necessidade': dict(entidade='fixture', medida='total', periodo='2020', grao='fixture'),
-                'dominios': ['dw'] if fixed else ['dw', 'industrial', 'financeiro'], 'lacunas': []}
+                'dominios': ['industrial'] if fixed else ['dw', 'industrial', 'financeiro'], 'lacunas': []}
     if role == 'selecionador_fontes':
         sid = i['available_source_ids'][0] if fixed else ['dw_paradas', 'ind_parada', 'fin_resultado'][min(r-1, 2)]
-        return {'selection_kind': 'packet_source' if fixed else 'query_source', 'decisao': 'consultar',
+        return {'selection_kind': 'packet_source' if fixed else 'query_source', 'decisao': 'analisar_item' if fixed else 'consultar',
                 'justificativa': 'Fonte fixture', 'fonte_id': sid, 'dominio_adicional': None, 'map_refs': [sid]}
     if role == 'especialista_consulta':
         if fixed:

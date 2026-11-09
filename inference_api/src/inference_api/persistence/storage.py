@@ -39,6 +39,25 @@ CREATE TABLE IF NOT EXISTS feedback (
 MIGRATION = Path(__file__).resolve().parents[3] / "migrations" / "001_identity_up.sql"
 CRITERIA_MIGRATION = Path(__file__).resolve().parents[3] / "migrations" / "002_criteria_up.sql"
 JOBS_MIGRATION = Path(__file__).resolve().parents[3] / "migrations" / "003_run_jobs_up.sql"
+OBSERVABILITY_MIGRATION = Path(__file__).resolve().parents[3] / "migrations" / "004_observability_up.sql"
+
+def migrate_observability(backup_path: Path,pg_dump: str='pg_dump') -> None:
+    """Explicit, additive application-DB migration; never invoked on startup."""
+    params=app_db_params()
+    if params['dbname']!='db_inference_app':raise ValueError('observability_application_database_required')
+    backup_path=backup_path.resolve()
+    if backup_path.exists():raise ValueError('Backup path already exists')
+    backup_path.parent.mkdir(parents=True,exist_ok=True)
+    with closing(psycopg2.connect(**params)) as conn,conn,conn.cursor() as cur:
+        cur.execute('SELECT version FROM inference_schema_migrations')
+        if not {1,2,3}<={row[0] for row in cur.fetchall()}:raise ValueError('Application migrations 1-3 required')
+    result=subprocess.run([pg_dump,'--format=custom','--file',str(backup_path),'--host',params['host'],
+        '--port',str(params['port']),'--username',params['user'],'--dbname',params['dbname']],
+        env=dict(os.environ,PGPASSWORD=params['password']),capture_output=True,check=False)
+    if result.returncode or not backup_path.is_file() or not backup_path.stat().st_size:
+        raise RuntimeError('Logical backup failed; observability migration not applied')
+    with closing(psycopg2.connect(**params)) as conn,conn,conn.cursor() as cur:
+        cur.execute(OBSERVABILITY_MIGRATION.read_text(encoding='utf-8'))
 
 
 class RevisionConflict(Exception):
@@ -327,12 +346,16 @@ def create_run(author: str, snapshot: dict) -> dict:
             return _jsonable(cursor.fetchone())
 
 
-def get_run(run_id: str) -> dict | None:
+def get_run(run_id: str,principal_id=None) -> dict | None:
     with psycopg2.connect(**app_db_params()) as connection:
         with connection.cursor(cursor_factory=RealDictCursor) as cursor:
             cursor.execute("SELECT id, created_at, author, snapshot FROM runs WHERE id = %s", (run_id,))
             row = cursor.fetchone()
-            return _jsonable(row) if row else None
+            result=_jsonable(row) if row else None
+    if result:
+        from inference_api.observability.receipts import current
+        result['observability_current']=current(run_id,principal_id)
+    return result
 
 
 def list_runs() -> list:

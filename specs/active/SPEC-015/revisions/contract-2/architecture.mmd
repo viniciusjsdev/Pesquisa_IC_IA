@@ -1,0 +1,36 @@
+flowchart LR
+  UI["Bancada: pergunta, cenário e modelo"] --> JOB["Execuções: autorização, job e snapshot"]
+  JOB --> START
+  subgraph GRAPH["LangGraph StateGraph · estado isolado por run · transições explícitas"]
+    START((Início)) --> ANALYST["Analista da Pergunta"]
+    ANALYST --> SELECT["Selecionador de Fontes"]
+    SELECT --> FOUND{"Fonte disponível?"}
+    FOUND -->|não| WRITE["Redator da Resposta"]
+    FOUND -->|sim| CONTEXT["Projetar contexto da fonte selecionada"]
+    CONTEXT --> SPECIALIST["Especialista: consolidado, industrial ou financeiro"]
+    SPECIALIST --> SCENARIO{"Cenário?"}
+    SCENARIO -->|"A: pacote fixo"| PACKET["Validar referências e registrar análise do pacote"]
+    SCENARIO -->|"B: consulta"| TOOL["Tool: validar plano e executar leitura"]
+    TOOL --> RESULT{"Resultado?"}
+    RESULT -->|"erro corrigível e orçamento"| REPAIR["Devolver erro estruturado ao mesmo Especialista"]
+    REPAIR --> SPECIALIST
+    RESULT -->|"terminal ou limite de reparo"| ERROR["Falha registrada, sem reenvio automático"]
+    RESULT -->|evidência| REVIEW["Revisor das Evidências"]
+    PACKET --> REVIEW
+    REVIEW --> ENOUGH{"Evidência suficiente?"}
+    ENOUGH -->|sim| WRITE
+    ENOUGH -->|"não, orçamento disponível"| SELECT
+    ENOUGH -->|"não, encerrar com lacunas"| WRITE
+    WRITE --> FINISH((Fim))
+    ERROR --> FINISH
+  end
+  FINISH --> SAVE["Persistir trajetória, resposta ou erro; sem score científico"]
+  LLM["ModelService existente → adaptador do provedor"] -. "uma chamada por invocação de papel" .-> GRAPH
+  RULES["Antes de cada chamada: orçamento e cancelamento. JSON inválido: reparo explícito limitado. Sem retry do framework."] -.-> GRAPH
+  MAP["Mapa estático aprovado em B; pacote congelado em A"] -.-> CONTEXT
+  DB[("DW · industrial · financeiro, somente leitura")] -.-> TOOL
+  GRAPH -. "eventos correlacionados, cópia sanitizada" .-> OBS["Observabilidade opcional · habilitação explícita por run"]
+  LLM -. "mensagens, tokens, duração e erro" .-> OBS
+  TOOL -. "plano e resultado permitidos" .-> OBS
+  OBS -. "envio assíncrono e limitado, quando autorizado" .-> SMITH["LangSmith · execução / agente / LLM / tool"]
+  OBS -. "estado e link opcional; sem substituir histórico" .-> SAVE

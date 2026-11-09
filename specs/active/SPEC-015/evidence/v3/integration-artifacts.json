@@ -1,0 +1,66 @@
+{
+  "work_directory": "D:\\Projetos\\Github_ViniciusJ\\Pesquisa_IC_IA\\inference_api\\.local\\spec015-v3-integration-356c0891",
+  "fixture_only": true,
+  "files": [
+    {
+      "name": "browser-report.json",
+      "sha256": "6ffef7e7e64297693ea93876e87a63b2aad76f026952a0d9e53906dc059bcef7"
+    },
+    {
+      "name": "chat_completions-A.png",
+      "sha256": "d3f7a471f6a4994d6f0e1b62d41872c1e0eec37dc8fd74460018ca0f7f760530"
+    },
+    {
+      "name": "chat_completions-B.png",
+      "sha256": "426d5aeafaaa3bec4d457d7754616d25965bd9056a522932ec8ed1744d775bb6"
+    },
+    {
+      "name": "groq_chat-A.png",
+      "sha256": "6f40b62edad1b9f1e048b4436c29672649704f1d4ca92126e455c2539b0823e6"
+    },
+    {
+      "name": "groq_chat-B.png",
+      "sha256": "e35394b2a5287b8be1d9556ada18b2ec0e2ad5ce14513fe9bc3174b4e8dff099"
+    },
+    {
+      "name": "legacy.json",
+      "sha256": "d95a2547f187dcec3f8534e70464ddfbabe6f994744b7cdeddc2255de4110164"
+    },
+    {
+      "name": "openai_responses-A.png",
+      "sha256": "510b998126ca13a104bd4cd99389aa51d1b283f000d6e0d2e158ee27c7282ae9"
+    },
+    {
+      "name": "openai_responses-B.png",
+      "sha256": "98d60da8f204ecb78690108c06fe8a7d919b2b03a71c38b8da44693f3782db5a"
+    },
+    {
+      "name": "run-17e103ca-ea5f-45fc-8a14-ae1c146d4907.json",
+      "sha256": "5f658a4f6f1acd25314014213294cec0ba3afb219d76e8397860adc64c3fe26a"
+    },
+    {
+      "name": "run-23648be2-845b-424c-994a-e7f3aa400349.json",
+      "sha256": "88571c30f4487945f049fe97f561a4f0ec4e00f246afe7ed5bfba012c142d45b"
+    },
+    {
+      "name": "run-7cacdf5c-8d07-4820-9255-ec0178b52ab8.json",
+      "sha256": "bff1df7772b9facbf1e00149870d4a30ec0ffd9c90fa1c69cf0b8bff07d22e46"
+    },
+    {
+      "name": "run-7e3726cd-2dbc-470c-b01e-e182e438dd3f.json",
+      "sha256": "dff579e65c06c29a0db1074b5f9a27625518c046139b6b74897b7c8342e231eb"
+    },
+    {
+      "name": "run-b4ff08ae-5e51-4a6a-a7dc-0e608daba1b8.json",
+      "sha256": "c9310e1a5e099ad8d6354de425aaadfbb35f458c086241549b196f092c3a6e58"
+    },
+    {
+      "name": "run-bbe33e63-63ea-4078-819f-c2b9e48422ab.json",
+      "sha256": "b5c1308309ef8c18d5be46dc8afd0583ac80e6fd1f8f87adf7437d35104793d1"
+    },
+    {
+      "name": "runs.json",
+      "sha256": "24ad26576629fe25f90c70d2c2f7e7a1345046c94370c2c05574782778d3d216"
+    }
+  ]
+}

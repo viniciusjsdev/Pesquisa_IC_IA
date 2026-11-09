@@ -1,0 +1,121 @@
+{
+  "spec_id": "SPEC-015",
+  "contract_version": 2,
+  "status": "approved",
+  "thread_id": null,
+  "runtime": {
+    "classification": "critical_review",
+    "model": "Inherited current Codex runtime; exact model identifier not exposed to this reviewer",
+    "reasoning": "Inherited reasoning configuration; exact level not exposed"
+  },
+  "review_input": [
+    "specs/active/SPEC-015/SPEC.md",
+    "specs/active/SPEC-015/architecture-contract.md",
+    "specs/active/SPEC-015/observability-contract.md",
+    "specs/active/SPEC-015/evidence/engineering-validation.md",
+    "specs/active/SPEC-015/evidence/validation-results.json",
+    "specs/active/SPEC-015/evidence/local-integration.json",
+    "specs/active/SPEC-015/evidence/structural-validation.json",
+    "specs/active/SPEC-015/evidence/legacy-inventory.json",
+    "specs/active/SPEC-015/evidence/observability-validation.json",
+    "specs/active/SPEC-015/evidence/review-input-hashes.json"
+  ],
+  "baseline_assessment": [
+    {
+      "category": "tests",
+      "result": "changed_as_approved",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/differential-baseline.json",
+        "specs/active/SPEC-015/evidence/validation-results.json",
+        "specs/active/SPEC-015/evidence/legacy-inventory.json"
+      ],
+      "notes": [
+        "Independently reran all 16 focused SPEC-015 methods after corrections: passed, including 78 frozen-baseline differential cases and 10 observability methods.",
+        "Inspected canonical validation logs: backend 112 tests with 8 existing database opt-in skips; model_evaluation 21; frontend 21. Disposable PostgreSQL/UI evidence covers seven synthetic runs, export/history and telemetry failure isolation.",
+        "Thirty-six retired-protocol methods were archived rather than rewritten to assert changed semantics; independent provider/data-boundary/filter tests remain active."
+      ]
+    },
+    {
+      "category": "cli",
+      "result": "changed_as_approved",
+      "evidence": [
+        "inference_api/src/inference_api/agent_harness/__init__.py",
+        "inference_api/src/inference_api/agent_harness/engine.py",
+        "specs/active/SPEC-015/evidence/legacy-inventory.json"
+      ],
+      "notes": [
+        "Public run delegates to scenarios.run and StateGraph; old engine algorithm removed. Historical obsolete paid/DB diagnostic entry points retired. Twelve original archive file hashes independently verified."
+      ]
+    },
+    {
+      "category": "json_contracts",
+      "result": "preserved",
+      "evidence": [
+        "inference_api/src/inference_api/agent_harness/contracts/",
+        "inference_api/tests/test_spec015_differential.py"
+      ],
+      "notes": [
+        "Effective Python-generated baseline schemas included in extraction. Differential comparison retains exact HTTP bodies, prompt/schema/envelope ordering, model/tool calls, result/error/status and budgets; only declared code/framework/telemetry identity and latency fields normalized."
+      ]
+    },
+    {
+      "category": "persistence",
+      "result": "preserved",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/local-integration.json",
+        "inference_api/src/inference_api/executions/service.py"
+      ],
+      "notes": [
+        "Optional telemetry metadata is additive; v3/v7 historical export/readback and unchanged legacy digest demonstrated by disposable integration. LangGraph has no persistent checkpoint/store."
+      ]
+    },
+    {
+      "category": "schemas",
+      "result": "preserved",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/structural-validation.json",
+        "inference_api/src/inference_api/data_access/queries/local_queries.py",
+        "inference_api/src/inference_api/data_access/queries/typed_detail.py"
+      ],
+      "notes": [
+        "Independently compared all top-level query service function/class ASTs against baseline Git: identical. No SQL schema/data migration introduced."
+      ]
+    },
+    {
+      "category": "protected_paths",
+      "result": "preserved",
+      "evidence": [
+        "specs/active/SPEC-015/evidence/baseline-snapshot.json",
+        "specs/active/SPEC-015/evidence/observability-validation.json"
+      ],
+      "notes": [
+        "Independently verified 186 selected baseline snapshot paths spanning prior SPEC-013/014 evidence, fixed queries and model_evaluation; hashes unchanged. Implementation report separately verifies its 155 protected-path subset."
+      ]
+    },
+    {
+      "category": "decisions",
+      "result": "preserved",
+      "evidence": [
+        "inference_api/src/inference_api/agent_harness/graph/",
+        "inference_api/src/inference_api/observability/",
+        "specs/active/SPEC-015/evidence/observability-validation.json"
+      ],
+      "notes": [
+        "Approved for local engineering only. Original review findings corrected, including opaque/malformed credential handling, invalid-config/URL isolation, metadata hashes, and single graph facade. Root profile/generation/config/runtime/data fingerprints use existing frozen local information.",
+        "Export remains explicitly opt-in; global SDK flag alone cannot enable it. Metadata mode omits payload content. Bounded queue, no telemetry/provider retry, local fake SDK transport and A zero-database tests pass.",
+        "Hosted LangSmith panel and actual private-link account access remain unverified pending login/key and explicit configured synthetic run. No research-data export or scientific scoring is approved by this review.",
+        "Pinned SDK read_run API emits a deprecation warning; it remains available in the locked SDK. No claim of future-version compatibility or hosted network equivalence."
+      ]
+    }
+  ],
+  "findings": [],
+  "evidence": [
+    "specs/active/SPEC-015/evidence/review-attempt-1.md",
+    "specs/active/SPEC-015/evidence/review-input-hashes.json",
+    "Independent local command: inference_api/.venv/Scripts/python.exe -m unittest discover -s inference_api/tests -p test_spec015_*.py -v; exit 0; 16 tests passed in 6.190s, including 78 differential cases.",
+    "Independent local command: inference_api/.venv/Scripts/python.exe -m pip check; exit 0; no broken requirements.",
+    "Independent checks: 12 external archive file SHA256 values verified; 186 protected snapshot paths unchanged; local_queries and typed_detail function/class ASTs identical to baseline; git diff --check exit 0.",
+    "No hosted/external API, real model, research database, infrastructure operation, or scientific adjudication was performed by this reviewer."
+  ],
+  "usage": null
+}

@@ -1,3 +1,11 @@
+> **SPEC-015 contrato 3, engenharia local em 08/11/2026:** [correção de A e dois ajustes do LangSmith](../specs/active/SPEC-015/corrections-v3.md). Implementado e aprovado em revisão independente local. A multidomínio corrigido, raiz após persistência e reconciliação manual com receipt durável. [Parecer v3](../specs/active/SPEC-015/evidence/v3/review.json). [Ambiente local ativado e conferido em 08/11/2026](../docs/bancada_operacao.md), com A/B real e LangSmith. Sem score científico.
+
+> **LangGraph e painel:** [configuração do LangSmith e limites de validação](../docs/langsmith_bancada.md). A execução ativa usa `agent_harness/scenarios.py` → `graph/`; os comandos históricos abaixo não substituem esse caminho.
+
+> **Ensaio real B em 08/11/2026:** [recibo e readback LangSmith](../specs/active/SPEC-015/evidence/real-b-ui-2026-11-08.json). Submissão manual pela Bancada com `gpt-6-luna`, esforço baixo: oito chamadas, especialistas industrial/financeiro, duas consultas e 19 spans confirmados. Resultado `answered_unverified`, sem score científico; saída enviada sem teto solicitado.
+
+> **Proposta de migração em 08/11/2026:** [SPEC-015 — LangGraph, agentes, ferramentas e LangSmith opcional](../specs/active/SPEC-015/SPEC.md). Implementação do contrato 2 autorizada em 08/11/2026: grafo real e LangSmith opcional implementados, engenharia local aprovada em revisão independente. Exportação desligada por padrão; envio hospedado sintético A/B confirmado por leitura da API (11/26 spans); renderização na sessão do usuário não inspecionada. Preserva ModelService e A/B; a correção funcional de A permanece separada.
+
 > **Mapa dos módulos da API:** [organização por responsabilidade](../docs/organizacao_inference_api.md). Os contratos dos cenários A e B seguem a SPEC-014.
 
 > **Fontes consolidadas em 07/11/2026:** a DW V2, seus 166 CSVs, contrato, DER e scripts agora estão no checkout principal. O worktree anterior é histórico. [Mapa de fontes e arquivo](../docs/fontes_ativas_e_arquivo.md). A integração não recarregou bancos nem atribuiu score.
@@ -724,7 +732,7 @@ o escopo local em 15/10/2026.
 ## Rodar localmente
 
 Use o Python de um ambiente próprio com as dependências de
-[`requirements.txt`](requirements.txt). Na raiz do repositório, em PowerShell:
+[`requirements.txt`](requirements.txt), com resolução reprodutível em [`requirements.lock`](requirements.lock). Na raiz do repositório, em PowerShell:
 
 O modo direto requer um build de `frontend/` com Node 24 e npm 11 antes de
 `serve`; o build local fica em `frontend/dist/`. Com o cluster Windows, o
@@ -745,7 +753,7 @@ do front na imagem, sem Node ou Python instalados no host.
 
 ```powershell
 BancoModeloUse/.venv/Scripts/python.exe -m venv inference_api/.venv
-inference_api/.venv/Scripts/python.exe -m pip install -r inference_api/requirements.txt
+inference_api/.venv/Scripts/python.exe -m pip install --require-hashes -r inference_api/requirements.lock
 BancoModeloUse/.venv/Scripts/python.exe BancoModeloUse/scripts/local_postgres.py start
 inference_api/.venv/Scripts/python.exe inference_api/run.py init-db
 inference_api/.venv/Scripts/python.exe inference_api/run.py migrate-db --pg-dump 'C:/Program Files/PostgreSQL/15/bin/pg_dump.exe'
